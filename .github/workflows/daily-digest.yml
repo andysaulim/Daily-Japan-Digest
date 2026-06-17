@@ -5,6 +5,11 @@ on:
     # 10:00 UTC = 6:00 AM ET (DST, Mar–Nov) / 5:00 AM ET (standard, Nov–Mar)
     - cron: '0 10 * * *'
   workflow_dispatch:
+    inputs:
+      live_send:
+        description: 'Actually send the email. Leave false for a safe test run (collect + digest + render only; HTML uploaded as an artifact, no email, no archive commit).'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,7 +29,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_PAT || github.token }}
           fetch-depth: 0
 
       - name: Setup Python 3.12
@@ -46,9 +51,27 @@ jobs:
           DIGEST_TO: ${{ secrets.DIGEST_TO }}
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           WEB_URL: ${{ vars.WEB_URL }}
-        run: python run.py
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.live_send }}" != "true" ]; then
+            echo "::notice::TEST RUN — collect + digest + render only (no email, no archive)."
+            python run.py --no-send --no-archive
+          else
+            python run.py
+          fi
+
+      - name: Upload rendered digest (artifact)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-html
+          path: |
+            digest.html
+            digest.json
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Commit tracker state + archive
+        if: ${{ github.event_name == 'schedule' || inputs.live_send == true }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
