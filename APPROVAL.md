@@ -19,6 +19,8 @@ It is a **Japan-as-subject, ally-framed** product: Japan's own government, polit
 
 ## 2. Sources (for review)
 
+> **Complete, exact feed inventory — including every search query — is in [`SOURCES.md`](SOURCES.md).** The summary below is by category; `SOURCES.md` lists all ~99 feeds, the market endpoints, and the reference databases the Claude API draws from.
+
 Sources are organized in four tiers by type and recency window. News is pulled via wire/outlet RSS and Google News site-scoped queries.
 
 ### Tier 1 — News (24-hour window, ~44 sources)

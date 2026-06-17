@@ -41,6 +41,8 @@ collect.py          digest.py           render.py          send_email.py
 
 ## Source Coverage
 
+**Full feed-by-feed inventory (every source + exact query) is in [`SOURCES.md`](SOURCES.md).**
+
 | Tier | Sources | Window | Content |
 | --- | --- | --- | --- |
 | **1 — News** | 40+ feeds | 24h | Wire services, correspondents, Japanese English-language press, US & Japan government, regional reaction |
