@@ -1,0 +1,991 @@
+"""
+Japan Daily Brief — HTML Renderer
+CSIS Japan Chair
+
+Mirrors the Daily-Korea/China-Digest visual language:
+- Navy #1B2A4A header + CSIS palette, gold #D4AC0D accents
+- Arial/Georgia stack
+- Status pills, colored left-borders for category coding
+- Dark Regional Pressure Watch panel (repurposed dark section)
+- Table-based layout, inline CSS, dark-mode-friendly, mobile responsive
+"""
+
+import re as _re
+from datetime import datetime, timezone
+from urllib.parse import urlparse as _urlparse
+
+
+def _clean_src(raw: str) -> str:
+    if not raw:
+        return raw
+    stripped = raw.strip()
+    if _re.match(r'^https?://', stripped) and ' ' not in stripped:
+        try:
+            host = _urlparse(stripped).hostname or ""
+            if host.startswith("www."):
+                host = host[4:]
+            return host if host else raw
+        except Exception:
+            return raw
+    cleaned = _re.sub(r'https?://\S+', '', raw).strip()
+    cleaned = _re.sub(r' +', ' ', cleaned)
+    return cleaned if cleaned else raw
+
+
+def _str(val) -> str:
+    if isinstance(val, list):
+        return val[0] if val else ""
+    return val if isinstance(val, str) else str(val) if val is not None else ""
+
+
+def _esc(text) -> str:
+    if text is None or text == "":
+        return ""
+    text = str(text)
+    if text == "None":
+        return ""
+    return (text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                .replace('"', "&quot;"))
+
+
+def _social_badge(badge_class: str) -> str:
+    return {"sb-p": "#1B2A4A", "sb-r": "#C0392B", "sb-s": "#8E44AD"}.get(badge_class, "#1B2A4A")
+
+
+def _arrow(val) -> str:
+    try:
+        val = float(val)
+    except (TypeError, ValueError):
+        return '<span style="color:#7F8C8D;">—</span>'
+    if val > 0:
+        return f'<span style="color:#27AE60;">&#9650; +{val:.2f}%</span>'
+    if val < 0:
+        return f'<span style="color:#C0392B;">&#9660; {val:.2f}%</span>'
+    return '<span style="color:#7F8C8D;">— flat</span>'
+
+
+def _cds_arrow(val) -> str:
+    try:
+        val = float(val)
+    except (TypeError, ValueError):
+        return '<span style="color:#7F8C8D;">—</span>'
+    if val > 0:
+        return f'<span style="color:#C0392B;">&#9650; +{val:.1f} bps</span>'
+    if val < 0:
+        return f'<span style="color:#27AE60;">&#9660; {val:.1f} bps</span>'
+    return '<span style="color:#7F8C8D;">— flat</span>'
+
+
+def _link_or_text(text: str, url: str,
+                  style: str = "color:#1B2A4A;text-decoration:underline;") -> str:
+    if url and url != "#" and url.startswith("http"):
+        return f'<a href="{_esc(url)}" style="{style}">{text}</a>'
+    return text
+
+
+_SEC = 'style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"'
+_SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #C0392B;border-bottom:1px solid #EBEBEB;" class="sec"'
+
+def _sec_label(label: str, color: str = "#1B2A4A") -> str:
+    """Section label — small-caps with rule, no background pill."""
+    return (f'<div style="font-size:10px;font-weight:700;text-transform:uppercase;'
+            f'letter-spacing:2px;color:{color};font-family:Arial,sans-serif;'
+            f'margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid {color};">'
+            f'{label}</div>')
+
+
+def _word_count(d: dict) -> int:
+    """Count words in ALL visible text — headlines, bodies, notes, every section."""
+    w = 0
+
+    def _w(s):
+        return len(str(s).split()) if s else 0
+
+    # Header
+    w += _w(d.get("re_line"))
+
+    # Morning memo
+    for mi in (d.get("morning_memo") or []):
+        w += _w(mi) if isinstance(mi, str) else _w(mi.get("text", "")) if isinstance(mi, dict) else 0
+
+    # Δ Since Yesterday
+    for item in ((d.get("delta_since_yesterday") or {}).get("items") or []):
+        w += _w(item)
+
+    # Top stories
+    for s in (d.get("top_stories") or []):
+        for f in ("headline", "body", "so_what", "pattern_note", "src_line"):
+            w += _w(s.get(f, ""))
+
+    # Lists with headline + body_text
+    for key in ("overnight_items", "also_today", "business_economy", "indo_pacific"):
+        for it in (d.get(key) or []):
+            w += _w(it.get("headline", ""))
+            w += _w(it.get("body_text", ""))
+
+    # Op-eds + academic
+    for o in (d.get("opeds_today") or []):
+        for f in ("title", "summary", "central_argument", "policy_so_what", "authors"):
+            w += _w(o.get(f, ""))
+    for a in (d.get("academic_today") or []):
+        for f in ("title", "summary", "authors"):
+            w += _w(a.get(f, ""))
+
+    # Japanese government / Diet Watch / Diet sessions / Personnel
+    for g in (d.get("prc_government") or []):
+        for f in ("action", "detail", "official", "ministry"):
+            w += _w(g.get(f, ""))
+    for c in (d.get("congressional_watch") or []):
+        for f in ("committee", "action", "detail"):
+            w += _w(c.get(f, ""))
+    for n in (d.get("npc_politburo") or []):
+        for f in ("body", "action", "detail"):
+            w += _w(n.get(f, ""))
+    for p in (d.get("personnel_changes") or []):
+        for f in ("name", "position", "detail", "predecessor"):
+            w += _w(p.get(f, ""))
+
+    # Calendar + on this day
+    for c in (d.get("calendar_watch") or []):
+        for f in ("headline", "detail"):
+            w += _w(c.get(f, ""))
+    for o in (d.get("on_this_day") or []):
+        for f in ("event", "relevance"):
+            w += _w(o.get(f, ""))
+
+    # Monitored locations
+    for loc in (d.get("monitored_locations") or []):
+        for f in ("name", "note", "csis_product"):
+            w += _w(loc.get(f, ""))
+
+    # Key stat
+    ks = d.get("key_stat") or {}
+    for f in ("label", "context", "source"):
+        w += _w(ks.get(f, ""))
+
+    # Regional Pressure Watch (key: xinhua_delta)
+    xd = d.get("xinhua_delta") or {}
+    for f in ("bottom_line", "china_signal", "dprk_signal", "russia_signal",
+              "senkaku_status", "output_volume", "pm_activity"):
+        w += _w(xd.get(f, ""))
+    for q in (xd.get("key_quotes") or []):
+        if isinstance(q, dict):
+            w += _w(q.get("quote", ""))
+            w += _w(q.get("source_article", ""))
+
+    # Social statements
+    for s in (d.get("social_statements") or []):
+        for f in ("who", "handle_context", "platform_date", "quote_text", "analyst_note"):
+            w += _w(s.get(f, ""))
+
+    # Public sentiment (approval polling)
+    ps = d.get("public_sentiment") or {}
+    ap = ps.get("approval_polling") or {}
+    for f in ("pollster", "poll_date", "cabinet_approval", "cabinet_disapproval", "source_article"):
+        w += _w(ap.get(f, ""))
+    for p in (ps.get("party_support") or []):
+        w += _w(p.get("party", ""))
+    w += _w(ps.get("discourse_flag", ""))
+
+    return w
+
+
+def _chapter(label: str) -> str:
+    """Chapter divider — dark navy band with gold rule, white letterspaced label."""
+    return f"""
+<div style="padding:12px 32px;background:#1B2A4A;text-align:center;" class="sec">
+<div style="height:1px;background:rgba(212,172,13,0.4);margin-bottom:10px;"></div>
+<span style="font-size:9px;font-family:Arial,sans-serif;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:5px;font-weight:700;">{label}</span>
+<div style="height:1px;background:rgba(212,172,13,0.4);margin-top:10px;"></div>
+</div>"""
+
+
+def render_html(digest: dict) -> str:
+    from zoneinfo import ZoneInfo
+    now = datetime.now(ZoneInfo("America/New_York"))
+    date_str = now.strftime("%A, %B %-d, %Y")
+    gen_time = now.strftime("%-I:%M %p ET")
+    re_line = _esc(digest.get("re_line", ""))
+    wc = _word_count(digest)
+    read_min = max(1, round(wc / 250))
+    web_url = digest.get("web_url", "")
+    # Chapter buckets
+    sections_pre = []       # View-in-browser, header, markets, Δ Since Yesterday
+    sections_today = []     # Morning Memo, Top Stories, Overnight Flash, Key Stat
+    sections_analysis = []  # Regional Pressure Watch, Expert Analysts, Public Sentiment, Social Statements
+    sections_trackers = []  # Security Watch, Japanese Gov, US-Japan Alliance & Trade, Diet Watch
+    sections_wire = []      # Business, Indo-Pacific, Also Today, On This Day
+    sections_post = []      # Footer
+
+    # 0. View in browser
+    if web_url:
+        sections_pre.append(f"""
+<div style="background:#F0F0F0;padding:6px 32px;text-align:center;font-size:11px;color:#888;" class="sec">
+Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decoration:none;">Read online &#8594;</a>
+</div>""")
+
+    # 1. Header
+    sections_pre.append(f"""
+<div style="background:#1B2A4A;color:#fff;padding:18px 32px 14px;" class="sec">
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="vertical-align:top;">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
+<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">Japan Daily Brief</h1>
+<div style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
+</td>
+<td style="vertical-align:top;text-align:right;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:3px;">{gen_time}</div>
+<div style="font-size:10px;color:rgba(255,255,255,0.4);">{wc:,} words &middot; {read_min} min read</div>
+</td>
+</tr></table>
+{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid #D4AC0D;font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#D4AC0D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
+</div>""")
+
+    # 2. Market strip (3 rows)
+    m = digest.get("market_indicators") or {}
+    if m:
+        nikkei = m.get("nikkei") or {}
+        topix = m.get("topix") or {}
+        usd_jpy = m.get("usd_jpy") or {}
+        eur_jpy = m.get("eur_jpy") or {}
+        brent = m.get("brent") or {}
+        jgb = m.get("jgb_10y") or {}
+        cds = m.get("japan_cds") or {}
+        boj = m.get("boj_rate") or {}
+        gdp = m.get("gdp_yoy") or {}
+        sections_pre.append(f"""
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
+<tr>
+<td width="33%" align="center" style="padding:12px 8px 10px;">
+<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">Nikkei 225</div>
+<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(nikkei.get("value", "—")))}</div>
+<div style="font-size:11px;">{_arrow(nikkei.get("change_pct", 0))}</div>
+<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {now.strftime("%b %-d")}</div>
+</td>
+<td width="34%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);border-right:1px solid rgba(255,255,255,0.12);">
+<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">TOPIX</div>
+<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(topix.get("value", "—")))}</div>
+<div style="font-size:11px;">{_arrow(topix.get("change_pct", 0))}</div>
+<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {now.strftime("%b %-d")}</div>
+</td>
+<td width="33%" align="center" style="padding:12px 8px 10px;">
+<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">USD/JPY</div>
+<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(usd_jpy.get("value", "—")))}</div>
+<div style="font-size:11px;">{_arrow(usd_jpy.get("change_pct", 0))}</div>
+<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {now.strftime("%b %-d")}</div>
+</td>
+</tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
+<tr>
+<td width="25%" align="center" style="padding:8px;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">EUR/JPY</div>
+<div style="font-size:15px;font-weight:700;">{_esc(str(eur_jpy.get("value", "—")))}</div>
+<div style="font-size:10px;">{_arrow(eur_jpy.get("change_pct", 0))}</div>
+</td>
+<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Brent</div>
+<div style="font-size:15px;font-weight:700;">${_esc(str(brent.get("value", "—")))}</div>
+<div style="font-size:10px;">{_arrow(brent.get("change_pct", 0))}</div>
+</td>
+<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">10Y JGB</div>
+<div style="font-size:15px;font-weight:700;">{_esc(str(jgb.get("value", "—")))}</div>
+<div style="font-size:10px;opacity:0.5;">yield</div>
+</td>
+<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Japan 5Y CDS</div>
+<div style="font-size:15px;font-weight:700;">{_esc(str(cds.get("value", "—")))} bps</div>
+<div style="font-size:10px;">{_cds_arrow(cds.get("change_bps", 0))}</div>
+</td>
+</tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0F1B30;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
+<tr>
+<td width="50%" align="center" style="padding:8px;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">BOJ Policy Rate</div>
+<div style="font-size:15px;font-weight:700;">{_esc(str(boj.get("value", "—")))}</div>
+<div style="font-size:10px;opacity:0.6;">{_esc(str(boj.get("last_change", "")))}</div>
+</td>
+<td width="50%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">GDP (annualized)</div>
+<div style="font-size:15px;font-weight:700;">{_esc(str(gdp.get("value", "—")))}</div>
+<div style="font-size:10px;opacity:0.6;">{_esc(str(gdp.get("source", "Cabinet Office")))}{" · " + _esc(str(gdp.get("period", ""))) if gdp.get("period") else ""}</div>
+</td>
+</tr>
+</table>""")
+
+    # 2c. Δ Since Yesterday Bar
+    delta = digest.get("delta_since_yesterday") or {}
+    items = delta.get("items") or []
+    if items:
+        chip_html = ""
+        for it in items[:6]:
+            chip_html += (f'<span style="display:inline-block;margin:0 4px 4px 0;'
+                          f'padding:3px 10px;background:rgba(255,255,255,0.06);'
+                          f'border:1px solid rgba(255,255,255,0.12);border-radius:14px;'
+                          f'font-size:11px;color:rgba(255,255,255,0.85);'
+                          f'font-family:Arial,sans-serif;">{_esc(it)}</span>')
+        sections_pre.append(f"""
+<div style="padding:10px 32px;background:#0a0f1e;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);" class="sec">
+<span style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.55);margin-right:8px;vertical-align:middle;">Δ Since Yesterday</span>
+{chip_html}
+</div>""")
+
+    # 3. Morning Memo
+    memo = digest.get("morning_memo") or []
+    if memo:
+        memo_html = ""
+        for idx, mi in enumerate(memo[:3], 1):
+            t = _esc(mi) if isinstance(mi, str) else _esc(mi.get("text", "") if isinstance(mi, dict) else str(mi or ""))
+            memo_html += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+<tr>
+<td width="28" style="vertical-align:top;padding-top:1px;">
+<div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">{idx}</div>
+</td>
+<td style="vertical-align:top;padding-left:8px;">
+<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">{t}</div>
+</td>
+</tr>
+</table>"""
+        sections_today.append(f"""
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #D4AC0D;">Today at a Glance</div>
+{memo_html}
+</div>""")
+
+    # 4. Top Stories
+    stories = digest.get("top_stories") or []
+    if stories:
+        sh = ""
+        for s in stories:
+            cat = _esc(_str(s.get("category_tag", s.get("category", ""))))
+            h = _esc(s.get("headline", ""))
+            b_raw = s.get("body", "") or ""
+            b = _esc(b_raw) if b_raw.strip() and b_raw.strip() != s.get("headline", "").strip() else ""
+            sw = _esc(s.get("so_what", ""))
+            pn = _esc(s.get("pattern_note", ""))
+            sl = _esc(_clean_src(s.get("src_line", s.get("source", ""))))
+            url = s.get("url", "")
+            sh += f"""
+<div class="story-card" style="margin-bottom:12px;padding:14px 16px;background:#fff;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
+<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;">{_link_or_text(h, url, style="color:#1B2A4A;text-decoration:none;")}</h3>
+{"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
+{"<p style='margin:0 0 6px 0;font-size:12px;line-height:1.5;color:#555;font-style:italic;'><strong style='color:#1B2A4A;font-style:normal;'>So what:</strong> " + _link_or_text(sw, url, style="color:#555;text-decoration:underline;") + "</p>" if sw else ""}
+{"<p style='margin:0 0 6px 0;font-size:12px;line-height:1.5;color:#777;font-style:italic;'><strong style='color:#555;font-style:normal;'>Pattern:</strong> " + pn + "</p>" if pn else ""}
+<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
+</div>"""
+        sections_today.append(f'<div {_SEC}>{_sec_label("Top Stories")}{sh}</div>')
+
+    # 4b. Overnight Flash
+    overnight = digest.get("overnight_items") or []
+    if overnight:
+        cat_colors = {"China-Japan": "#8E44AD", "Defense": "#C0392B", "DPRK": "#C0392B"}
+        fh = ""
+        for it in overnight:
+            cat_raw = _str(it.get("category", ""))
+            cat = _esc(cat_raw)
+            h = _esc(it.get("headline", ""))
+            b = _esc(it.get("body_text", ""))
+            src = _esc(_clean_src(it.get("source", "")))
+            url = it.get("url", "")
+            bar = cat_colors.get(cat_raw, "#1B2A4A")
+            fh += f"""
+<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
+<div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;">{cat} &middot; {src}</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{b}</div>
+</div>"""
+        sections_today.append(f'<div {_SEC_ALERT}>{_sec_label("&#9889; Overnight Flash", color="#C0392B")}{fh}</div>')
+
+    # 5. Key Stat
+    stat = digest.get("key_stat") or {}
+    if stat and stat.get("number"):
+        sections_today.append(f"""
+<div style="padding:12px 32px;background:#1B2A4A;color:#fff;border-bottom:1px solid #E0E0E0;text-align:center;" class="sec">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;opacity:0.6;margin-bottom:2px;">Stat of the Day</div>
+<div class="key-stat-num" style="font-size:32px;font-weight:700;font-family:Georgia,serif;">{_esc(str(stat.get("number", "")))}</div>
+<div style="font-size:12px;opacity:0.85;margin-top:2px;">{_esc(stat.get("label", ""))}</div>
+<div style="font-size:11px;opacity:0.65;margin-top:4px;font-style:italic;">{_esc(stat.get("context", ""))}</div>
+{"<div style='font-size:10px;opacity:0.45;margin-top:4px;'>Source: " + _esc(stat.get("source", "")) + "</div>" if stat.get("source") else ""}
+</div>""")
+
+    # 6. Regional Pressure Watch — DARK SECTION (key: xinhua_delta)
+    xd = digest.get("xinhua_delta") or {}
+    if xd:
+        def _signal_row(label, color, text):
+            if not text:
+                return ""
+            return (f'<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {color};">'
+                    f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;'
+                    f'color:{color};font-weight:700;margin-bottom:2px;">{label}</div>'
+                    f'<div style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.9);">'
+                    f'{_esc(text)}</div></div>')
+
+        signals_html = ""
+        signals_html += _signal_row("China", "#E67E22", xd.get("china_signal"))
+        signals_html += _signal_row("North Korea", "#C0392B", xd.get("dprk_signal"))
+        signals_html += _signal_row("Russia", "#8E44AD", xd.get("russia_signal"))
+
+        senkaku = _esc(xd.get("senkaku_status", ""))
+        senkaku_html = (f'<div style="margin:6px 0 12px;padding:8px 12px;background:rgba(255,255,255,0.05);'
+                        f'border-radius:4px;font-size:12px;color:rgba(255,255,255,0.85);">'
+                        f'<strong style="color:#D4AC0D;">Senkaku / ECS:</strong> {senkaku}</div>'
+                        if senkaku else "")
+
+        # PM appearance line
+        pm_appeared = xd.get("pm_appearance_today")
+        pm_days = xd.get("pm_days_since_last_appearance")
+        pm_activity = _esc(xd.get("pm_activity", ""))
+        pm_html = ""
+        if pm_appeared is not None or pm_days is not None:
+            pm_status = "PM appeared today" if pm_appeared else "No confirmed PM appearance today"
+            days_str = (f" · {pm_days} day(s) since last confirmed appearance"
+                        if isinstance(pm_days, int) else "")
+            pm_html = (f'<div style="margin-bottom:10px;font-size:12px;color:rgba(255,255,255,0.8);">'
+                       f'<strong style="color:#D4AC0D;">PM Watch:</strong> {_esc(pm_status)}{_esc(days_str)}'
+                       f'{(" — " + pm_activity) if pm_activity else ""}</div>')
+
+        # Key quotes
+        quotes_html = ""
+        for q in (xd.get("key_quotes") or [])[:2]:
+            if isinstance(q, dict) and q.get("quote"):
+                spk = _esc(q.get("speaker", ""))
+                src = _esc(q.get("source_article", ""))
+                meta = " &middot; ".join(x for x in (spk, src) if x)
+                qtext = _esc(q.get("quote", ""))
+                meta_html = (f'<div style="font-style:normal;font-size:10px;opacity:0.6;'
+                             f'margin-top:4px;">{meta}</div>') if meta else ""
+                quotes_html += (f'<blockquote style="margin:6px 0;padding:8px 12px;'
+                                f'background:rgba(255,255,255,0.05);border-left:3px solid #D4AC0D;'
+                                f'font-style:italic;font-size:12px;line-height:1.5;'
+                                f'color:rgba(255,255,255,0.9);">&ldquo;{qtext}&rdquo;'
+                                f'{meta_html}</blockquote>')
+
+        bottom = _esc(xd.get("bottom_line", ""))
+        vol = _esc(xd.get("output_volume", ""))
+        watch = xd.get("watch_flag")
+        watch_badge = ('<span style="display:inline-block;padding:2px 8px;border-radius:3px;'
+                       'font-size:9px;font-weight:700;color:#fff;background:#C0392B;'
+                       'letter-spacing:0.5px;margin-left:8px;">WATCH</span>') if watch else ""
+
+        sections_analysis.append(f"""
+<div style="padding:20px 32px;background:#0a0f1e;color:#fff;border-top:3px solid #D4AC0D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(212,172,13,0.4);">Regional Pressure Watch{watch_badge}</div>
+{("<div style='font-size:10px;color:rgba(255,255,255,0.5);margin-top:-8px;margin-bottom:12px;'>" + vol + "</div>") if vol else ""}
+{pm_html}
+{signals_html if signals_html else "<div style='font-size:12px;color:rgba(255,255,255,0.6);'>No notable adversary activity flagged today.</div>"}
+{senkaku_html}
+{quotes_html}
+{("<div style='margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12);font-size:13px;color:#fff;'><strong style='color:#D4AC0D;'>Bottom line:</strong> " + bottom + "</div>") if bottom else ""}
+</div>""")
+
+    # 7. Security & Location Watch — only sites with real evidence today
+    locations = digest.get("monitored_locations") or []
+    if locations:
+        badge_styles = {
+            "activity": ("#D4AC0D", "#FDF6E3", "Active"),
+            "elevated": ("#E67E22", "#FFF3E0", "Elevated"),
+            "alert": ("#C0392B", "#FBE9E7", "Alert"),
+        }
+        active = [l for l in locations if l.get("status") not in ("normal", None, "")]
+        total = len(locations)
+        baseline = sum(1 for l in locations if l.get("status") == "normal")
+
+        if active:
+            loc_cards = ""
+            for i in range(0, len(active), 2):
+                rc = ""
+                for j in range(i, min(i + 2, len(active))):
+                    loc = active[j]
+                    nm = _esc(loc.get("name", ""))
+                    st = loc.get("status", "activity")
+                    note = _esc(loc.get("note", ""))
+                    last = _esc(loc.get("last_source_date", ""))
+                    dirn = loc.get("direction", "")
+                    csis = _esc(loc.get("csis_product", ""))
+                    bc, bb, bl = badge_styles.get(st, ("#7F8C8D", "#F5F5F5", "Monitor"))
+                    if dirn == "up":
+                        bl += " &#9650;"
+                    elif dirn == "down":
+                        bl += " &#9660;"
+                    badge = (f'<span style="display:inline-block;padding:2px 8px;'
+                             f'border-radius:3px;font-size:9px;font-weight:700;color:#fff;'
+                             f'background:{bc};letter-spacing:0.5px;">{bl}</span>')
+                    nh = (f'<div style="font-size:11px;line-height:1.4;color:#555;'
+                          f'margin-top:4px;">{note}</div>' if note else "")
+                    lh = (f'<div style="font-size:9px;color:#999;margin-top:3px;">'
+                          f'&#9201; {last}</div>' if last else "")
+                    ch = (f'<div style="font-size:9px;color:#aaa;margin-top:2px;'
+                          f'font-family:monospace;">{csis}</div>' if csis else "")
+                    rc += f"""<td style="width:50%;padding:4px;vertical-align:top;">
+<div style="background:{bb};border-radius:4px;padding:10px 12px;border-left:3px solid {bc};">
+<div style="font-size:12px;font-weight:700;color:#1B2A4A;margin-bottom:4px;">{nm}</div>
+<div style="margin-bottom:2px;">{badge}</div>
+{nh}
+{lh}
+{ch}
+</div>
+</td>"""
+                if len(active) - i == 1:
+                    rc += '<td style="width:50%;padding:4px;"></td>'
+                loc_cards += f"<tr>{rc}</tr>"
+
+            baseline_footer = (f'<div style="font-size:10px;color:#999;margin-top:10px;'
+                               f'padding-top:8px;border-top:1px solid #EEE;font-style:italic;">'
+                               f'{baseline} other monitored sites tracked at baseline · References: '
+                               f'<a href="https://amti.csis.org" style="color:#888;">CSIS AMTI</a>, '
+                               f'<a href="https://beyondparallel.csis.org" style="color:#888;">Beyond Parallel</a>, '
+                               f'<a href="https://missilethreat.csis.org" style="color:#888;">CSIS Missile Defense</a></div>')
+
+            sections_trackers.append(f"""<div {_SEC}>
+{_sec_label("Security &amp; Location Watch")}
+<div style="font-size:11px;color:#888;font-style:italic;margin-top:-8px;margin-bottom:12px;">{len(active)} of {total} monitored sites flagged</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">{loc_cards}</table>
+{baseline_footer}
+</div>""")
+        else:
+            sections_trackers.append(f"""<div {_SEC}>
+{_sec_label("Security &amp; Location Watch")}
+<div style="font-size:12px;color:#555;">All {total} monitored sites at baseline today. No new activity flags.</div>
+<div style="font-size:10px;color:#aaa;margin-top:6px;">Tracked: Senkaku/ECS · DPRK launch geography · Northern Territories · USFJ basing</div>
+</div>""")
+
+    # 8. Japanese Government (gov cards + personnel + Diet sessions + calendar)
+    prc_gov = digest.get("prc_government") or []
+    personnel = digest.get("personnel_changes") or []
+    npc = digest.get("npc_politburo") or []
+    calendar = digest.get("calendar_watch") or []
+    if prc_gov or personnel or npc or calendar:
+        gov_rows_html = ""
+        for it in prc_gov:
+            mn = _esc(it.get("ministry", ""))
+            mjp = _esc(it.get("ministry_jp", ""))
+            act = _esc(it.get("action", ""))
+            det = _esc(it.get("detail", ""))
+            url = it.get("url", "")
+            lbl = _esc(it.get("source_label", ""))
+            off = _esc(it.get("official", ""))
+            hdr_parts = []
+            if mjp:
+                hdr_parts.append(f'<span style="font-size:11px;color:#666;">{mjp}</span>')
+            if mn:
+                hdr_parts.append(f'<span style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.6px;">{mn}</span>')
+            if off:
+                hdr_parts.append(f'<span style="font-size:11px;color:#999;font-style:italic;">{off}</span>')
+            hdr = ' <span style="color:#ccc;">·</span> '.join(hdr_parts)
+            slink = ""
+            if url and url != "#" and url.startswith("http"):
+                sl = lbl if lbl else mn.lower()
+                slink = f'<div style="margin-top:6px;font-size:11px;color:#888;">→ <a href="{_esc(url)}" style="color:#888;text-decoration:none;">{_esc(sl)} ↗</a></div>'
+            elif lbl:
+                slink = f'<div style="margin-top:6px;font-size:11px;color:#888;">→ {_esc(lbl)}</div>'
+            gov_rows_html += f"""
+<div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div style="margin-bottom:6px;">{hdr}</div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">{act}</div>
+<div style="font-size:12px;line-height:1.55;color:#555;">{det}</div>
+{slink}
+</div>"""
+        gov_grid = gov_rows_html if prc_gov else ""
+
+        pers_html = ""
+        if personnel:
+            ac = {"appointed": "#27AE60", "nominated": "#2980B9", "resigned": "#E67E22",
+                  "dismissed": "#C0392B", "confirmed": "#16A085", "reshuffled": "#8E44AD",
+                  "rotated": "#8E44AD"}
+            pi = ""
+            for p in personnel:
+                pos = _esc(p.get("position", ""))
+                nm = _esc(p.get("name", ""))
+                a = p.get("action", "appointed")
+                det = _esc(p.get("detail", ""))
+                pred = _esc(p.get("predecessor", "")) if p.get("predecessor") else ""
+                ac_c = ac.get(a, "#1B2A4A")
+                bg = f'<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;color:#fff;background:{ac_c};text-transform:uppercase;margin-left:6px;">{_esc(a)}</span>'
+                pl = f'<div style="font-size:11px;color:#888;margin-top:2px;">Succeeds: {pred}</div>' if pred else ""
+                pi += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {ac_c};">
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{nm}{bg}</div>
+<div style="font-size:12px;color:#555;">{pos}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{det}</div>
+{pl}
+</div>"""
+            pers_html = f"""<div style="margin-top:16px;">
+<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#2C3E50;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Personnel Changes</div>
+{pi}
+</div>"""
+
+        npc_html = ""
+        if npc:
+            ni = ""
+            for n in npc:
+                body = _esc(n.get("body", ""))
+                act = _esc(n.get("action", ""))
+                det = _esc(n.get("detail", ""))
+                url = n.get("url", "")
+                ni += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #7F8C8D;">
+<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{body}</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{det}</div>
+</div>"""
+            npc_html = f"""<div style="margin-top:16px;">
+<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#7F8C8D;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Diet Sessions / LDP</div>
+{ni}
+</div>"""
+
+        cal_html = ""
+        if calendar:
+            ci = ""
+            for c in calendar:
+                cm = _esc(c.get("month", ""))
+                cd = _esc(str(c.get("day", "")))
+                ch = _esc(c.get("headline", ""))
+                cdet = _esc(c.get("detail", ""))
+                ci += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
+<div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">{cm}</div>
+<div style="font-size:18px;font-weight:300;color:#1B2A4A;line-height:1.2;">{cd}</div>
+</td>
+<td style="padding:10px 0;vertical-align:top;">
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">{ch}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{cdet}</div>
+</td>
+</tr>
+</table>"""
+            cal_html = f"""<div style="margin-top:20px;">
+<div style="padding:8px 0;border-bottom:1px solid #1B2A4A;margin-bottom:4px;">
+<span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;">Upcoming</span>
+</div>
+{ci}
+</div>"""
+
+        ds = _esc(str(digest.get("digest_date", "")))
+        sections_trackers.append(f"""
+<div {_SEC}>
+{_sec_label("Japanese Government")}
+<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ{(" · " + ds) if ds else ""}</div>
+{gov_grid}{pers_html}{npc_html}{cal_html}
+</div>""")
+
+    # 9. US–Japan Alliance & Trade
+    trade = digest.get("us_china_trade") or {}
+    if trade:
+        body = ""
+        tt = trade.get("tariff_tracker") or {}
+        if tt:
+            h_auto = _esc(str(tt.get("headline_auto_rate", "")))
+            s122 = _esc(str(tt.get("section_122_surcharge", "")))
+            deal = _esc(str(tt.get("trade_deal_status", "")))
+            lc = _esc(str(tt.get("last_change", "")))
+            nt = _esc(str(tt.get("next_trigger", "")))
+            s232 = tt.get("section_232_rates", {})
+            sr = ""
+            for sec, rate in s232.items():
+                sr += f"""<tr style="border-bottom:1px solid #F0E0E0;">
+<td style="padding:4px 6px 4px 0;font-size:11px;font-weight:600;color:#1B2A4A;">{_esc(str(sec).title())}</td>
+<td style="padding:4px 6px;font-size:13px;font-weight:700;color:#C0392B;text-align:center;">{_esc(str(rate))}</td>
+<td style="padding:4px 6px;font-size:9px;color:#888;text-transform:uppercase;">Section 232</td>
+</tr>"""
+            nl = f'<div style="margin-top:4px;font-size:10px;color:#2980B9;">Next trigger: {nt}</div>' if nt else ""
+            dl = f'<div style="margin-top:4px;font-size:11px;color:#666;">Trade deal: {deal}</div>' if deal else ""
+            body += f"""<div style="margin-bottom:16px;padding:12px 14px;background:#FFF5F5;border-radius:4px;border:1px solid #F0D0D0;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:600;margin-bottom:6px;">US Tariffs on Japan</div>
+<div style="margin-bottom:6px;">
+<span style="font-size:11px;color:#666;">Autos (Sec 232):</span> <span style="font-size:14px;font-weight:700;color:#C0392B;">{h_auto}</span> ·
+<span style="font-size:11px;color:#666;">Sec 122 surcharge:</span> <span style="font-size:14px;font-weight:700;color:#E67E22;">{s122}</span>
+</div>
+{'<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;border-top:1px solid #F0E0E0;">' + sr + '</table>' if sr else ''}
+{dl}
+<div style="margin-top:8px;font-size:10px;color:#999;">{lc}</div>
+{nl}
+</div>"""
+
+        al = trade.get("alliance_tracker") or {}
+        if al:
+            ds_goal = _esc(str(al.get("defense_spending_goal", "")))
+            art5 = _esc(str(al.get("article5_senkaku", "")))
+            hns = _esc(str(al.get("host_nation_support", "")))
+            usfj = _esc(str(al.get("usfj_realignment", "")))
+            rows = ""
+            for label, val in (("Defense spending goal", ds_goal),
+                               ("Article 5 / Senkakus", art5),
+                               ("Host-nation support", hns),
+                               ("USFJ realignment", usfj)):
+                if val:
+                    rows += (f'<tr style="border-bottom:1px solid #DCE6F0;">'
+                             f'<td style="padding:4px 6px 4px 0;font-size:11px;font-weight:600;color:#1B2A4A;">{label}</td>'
+                             f'<td style="padding:4px 0;font-size:11px;color:#555;">{val}</td></tr>')
+            if rows:
+                body += f"""<div style="margin-bottom:16px;padding:12px 14px;background:#F0F7FF;border-radius:4px;border:1px solid #D6E9F8;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;font-weight:600;margin-bottom:6px;">Alliance Dashboard</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table>
+</div>"""
+
+        deals = trade.get("deals") or []
+        if deals:
+            dr = ""
+            for d in deals[:4]:
+                hd = _esc(d.get("headline", ""))
+                val = _esc(d.get("value", "")) if d.get("value") else ""
+                parties = _esc(d.get("parties", ""))
+                det = _esc(d.get("detail", ""))
+                url = d.get("url", "")
+                dr += f"""<div style="margin-bottom:6px;padding-left:10px;border-left:2px solid #16A085;">
+<div style="font-size:12px;font-weight:600;color:#1B2A4A;">{_link_or_text(hd, url)}{(' <span style="color:#888;font-weight:400;font-size:11px;">· ' + val + '</span>') if val else ''}</div>
+<div style="font-size:11px;color:#555;">{parties}{(' — ' + det) if det else ''}</div>
+</div>"""
+            body += f"""<div style="margin-bottom:16px;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#16A085;font-weight:600;margin-bottom:6px;">New Agreements / Pledges</div>
+{dr}
+</div>"""
+
+        if body:
+            sections_trackers.append(f'<div {_SEC}>{_sec_label("US&ndash;Japan Alliance &amp; Trade")}{body}</div>')
+
+    # 10. Business & Economy
+    biz = digest.get("business_economy") or []
+    if biz:
+        bh = ""
+        for b in biz[:6]:
+            h = _esc(b.get("headline", ""))
+            bt = _esc(b.get("body_text", ""))
+            url = b.get("url", "")
+            src = _esc(b.get("source", ""))
+            sec = _esc(b.get("sector", ""))
+            comps = b.get("companies", [])
+            cs = ", ".join(_esc(c) for c in comps) if comps else ""
+            bh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #D4AC0D;">
+<div style="font-size:11px;color:#888;text-transform:uppercase;">{sec} · {src}{(' · ' + cs) if cs else ''}</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{bt}</div>
+</div>"""
+        sections_wire.append(f'<div {_SEC}>{_sec_label("Business &amp; Economy")}{bh}</div>')
+
+    # 11. Indo-Pacific
+    ip = digest.get("indo_pacific") or []
+    if ip:
+        rc = {"China-Japan": "#8E44AD", "Korea-Japan": "#2C3E50", "DPRK": "#C0392B",
+              "Trilateral": "#16A085", "Indo-Pacific": "#7F8C8D"}
+        ih = ""
+        for it in ip[:6]:
+            r = it.get("region_tag", "Indo-Pacific")
+            bar = rc.get(r, "#7F8C8D")
+            h = _esc(it.get("headline", ""))
+            bt = _esc(it.get("body_text", ""))
+            url = it.get("url", "")
+            src = _esc(_clean_src(it.get("source", "")))
+            ih += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
+<div style="font-size:11px;color:{bar};text-transform:uppercase;font-weight:600;">{_esc(r)} · {src}</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{bt}</div>
+</div>"""
+        sections_wire.append(f'<div {_SEC}>{_sec_label("Indo-Pacific")}{ih}</div>')
+
+    # 12. Diet Watch (key: congressional_watch)
+    cw = digest.get("congressional_watch") or []
+    if cw:
+        ch = ""
+        for c in cw:
+            comm = _esc(c.get("committee", ""))
+            act = _esc(c.get("action", ""))
+            det = _esc(c.get("detail", ""))
+            url = c.get("url", "")
+            ch += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #2C3E50;">
+<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{comm}</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{det}</div>
+</div>"""
+        sections_trackers.append(f'<div {_SEC}>{_sec_label("Diet Watch")}{ch}</div>')
+
+    # 13. Expert Analysts
+    opeds = digest.get("opeds_today") or []
+    academics = digest.get("academic_today") or []
+    if opeds or academics:
+        body = ""
+        if opeds:
+            body += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Op-Eds &amp; Think Tank Commentary</div>'
+            for o in opeds[:6]:
+                title = _esc(o.get("title") or o.get("headline", ""))
+                src = _esc(o.get("source", ""))
+                auth = _esc(o.get("authors", ""))
+                ca = _esc(o.get("central_argument", ""))
+                sm = _esc(o.get("summary", ""))
+                ps = _esc(o.get("policy_so_what", ""))
+                url = o.get("url", "")
+                body += f"""<div style="margin-bottom:14px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+<div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src}{(' · ' + auth) if auth else ''}</div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:6px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
+{"<div style='font-size:12px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>" + ca + "</div>" if ca else ""}
+{"<div style='font-size:11px;line-height:1.5;color:#666;'>" + sm + "</div>" if sm else ""}
+{"<div style='font-size:11px;color:#2980B9;margin-top:4px;font-weight:600;'>" + ps + "</div>" if ps else ""}
+</div>"""
+        if academics:
+            body += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#8E44AD;margin:14px 0 8px 0;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Academic Journals</div>'
+            for a in academics[:4]:
+                title = _esc(a.get("title", ""))
+                src = _esc(a.get("source", ""))
+                tier = _esc(a.get("journal_tier", ""))
+                auth = _esc(a.get("authors", ""))
+                sm = _esc(a.get("summary", ""))
+                url = a.get("url", "")
+                body += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #8E44AD;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+<div style="font-size:10px;color:#8E44AD;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src} · {tier}{(' · ' + auth) if auth else ''}</div>
+<div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
+<div style="font-size:12px;line-height:1.5;color:#555;">{sm}</div>
+</div>"""
+        sections_analysis.append(f'<div {_SEC}>{_sec_label("Expert Analysts")}{body}</div>')
+
+    # 14. Public Sentiment — cabinet approval & party support
+    ps = digest.get("public_sentiment") or {}
+    ap = ps.get("approval_polling") or {}
+    party = ps.get("party_support") or []
+    disc = _esc(ps.get("discourse_flag", ""))
+    if (ap and ap.get("cabinet_approval")) or party or disc:
+        poll_body = ""
+        if ap and ap.get("cabinet_approval"):
+            pollster = _esc(ap.get("pollster", ""))
+            pdate = _esc(ap.get("poll_date", ""))
+            appr = _esc(str(ap.get("cabinet_approval", "")))
+            disappr = _esc(str(ap.get("cabinet_disapproval", "")))
+            chg = _esc(str(ap.get("approval_change", ""))) if ap.get("approval_change") else ""
+            src = _esc(ap.get("source_article", ""))
+            chg_html = f' <span style="font-size:11px;color:#888;">({chg})</span>' if chg else ""
+            poll_body += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+<tr>
+<td width="50%" align="center" style="padding:10px;background:#EAF5EA;border-radius:4px;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Approve</div>
+<div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
+</td>
+<td width="4"></td>
+<td width="50%" align="center" style="padding:10px;background:#FBECEC;border-radius:4px;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:700;">Disapprove</div>
+<div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{disappr}</div>
+</td>
+</tr>
+</table>
+<div style="font-size:10px;color:#888;margin-bottom:10px;">{pollster}{(' · ' + pdate) if pdate else ''}{(' · ' + src) if src else ''}</div>"""
+
+        if party:
+            pr = ""
+            for p in party[:6]:
+                pn = _esc(p.get("party", ""))
+                pp = _esc(str(p.get("support_pct", "")))
+                pr += f"""<tr style="border-bottom:1px solid #EEE;">
+<td style="padding:4px 6px 4px 0;font-size:12px;color:#1B2A4A;">{pn}</td>
+<td style="padding:4px 0;font-size:12px;font-weight:700;color:#1B2A4A;text-align:right;">{pp}</td>
+</tr>"""
+            poll_body += f"""<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#2C3E50;margin:6px 0;">Party Support (same poll)</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">{pr}</table>"""
+
+        if disc:
+            poll_body += f'<div style="font-size:12px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> {disc}</div>'
+
+        sections_analysis.append(f'<div {_SEC}>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>')
+
+    # 15. Social Statements
+    stmts = digest.get("social_statements") or []
+    if stmts:
+        sh = ""
+        for s in stmts[:6]:
+            who = _esc(s.get("who", ""))
+            ctx = _esc(s.get("handle_context", ""))
+            pd = _esc(s.get("platform_date", ""))
+            q = _esc(s.get("quote_text", ""))
+            nt = _esc(s.get("analyst_note", ""))
+            bc = _social_badge(s.get("badge_class", "sb-p"))
+            url = s.get("url", "")
+            src_link = ("<div style='font-size:10px;color:#888;margin-top:4px;'>" + _link_or_text("source", url, style="color:#888;text-decoration:underline;") + "</div>") if url and url != "#" and url.startswith("http") else ""
+            sh += f"""<div style="margin-bottom:14px;padding:12px;background:#FAFAF5;border-radius:4px;border-left:3px solid {bc};">
+<div style="font-size:12px;color:#888;text-transform:uppercase;letter-spacing:0.5px;">{pd}</div>
+<div style="font-size:14px;font-weight:600;color:#1B2A4A;margin:2px 0;">{who} <span style="font-size:11px;color:#888;font-weight:400;">· {ctx}</span></div>
+<blockquote style="margin:6px 0;padding:8px 12px;background:#fff;border-left:3px solid {bc};font-style:italic;font-size:13px;line-height:1.5;color:#333;font-family:Georgia,serif;">&ldquo;{q}&rdquo;</blockquote>
+{"<div style='font-size:11px;color:#555;margin-top:4px;'><strong>Note:</strong> " + nt + "</div>" if nt else ""}
+{src_link}
+</div>"""
+        sections_analysis.append(f'<div {_SEC}>{_sec_label("Social Statements")}{sh}</div>')
+
+    # 16. Also Today
+    also = digest.get("also_today") or []
+    if also:
+        wc_ = {"China-Japan": "#8E44AD", "Defense": "#C0392B", "DPRK": "#C0392B"}
+        ah = ""
+        for a in also[:6]:
+            cr_ = _str(a.get("category", ""))
+            c = _esc(cr_)
+            h = _esc(a.get("headline", ""))
+            b = _esc(a.get("body_text", ""))
+            url = a.get("url", "")
+            src = _esc(_clean_src(a.get("source", "")))
+            bar = wc_.get(cr_, "#7F8C8D")
+            ah += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
+<div style="font-size:10px;color:#888;text-transform:uppercase;">{c} &middot; {src}</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
+<div style="font-size:12px;line-height:1.4;color:#555;">{b}</div>
+</div>"""
+        sections_wire.append(f'<div {_SEC}>{_sec_label("Also Today / The Wire")}{ah}</div>')
+
+    # 17. On This Day
+    otd = digest.get("on_this_day") or []
+    if otd:
+        oh = ""
+        for it in otd[:1]:
+            oh += f"""<div style="padding:12px 14px;background:#FAFAF5;border-radius:4px;border-left:3px solid #7F8C8D;">
+<div style="font-size:11px;color:#7F8C8D;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">{_esc(it.get("date", ""))}</div>
+<div style="font-size:14px;font-weight:600;color:#1B2A4A;font-family:Georgia,serif;margin:4px 0;">{_esc(it.get("event", ""))}</div>
+<div style="font-size:12px;color:#555;font-style:italic;line-height:1.5;">{_esc(it.get("relevance", ""))}</div>
+</div>"""
+        sections_wire.append(f'<div {_SEC}>{_sec_label("On This Day")}{oh}</div>')
+
+    # Footer
+    sections_post.append(f"""
+<div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec">
+<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
+CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated {gen_time}
+</div>
+<a href="#top" style="font-size:10px;color:rgba(255,255,255,0.4);text-decoration:none;letter-spacing:1px;">&#8593; Back to top</a>
+</div>""")
+
+    sections = (
+        sections_pre +
+        sections_today +
+        sections_analysis +
+        ([_chapter("TRACKERS")] if sections_trackers else []) + sections_trackers +
+        ([_chapter("WIRE")] if sections_wire else []) + sections_wire +
+        sections_post
+    )
+
+    body_html = "\n".join(s for s in sections if s)
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Japan Daily Brief</title>
+<style>
+body {{ margin:0; padding:0; background:#fff; font-family:Arial,sans-serif; color:#333; }}
+.container {{ max-width:680px; margin:0 auto; background:#fff; }}
+@media only screen and (max-width: 600px) {{
+  .container {{ width:100% !important; }}
+  .sec {{ padding-left:16px !important; padding-right:16px !important; }}
+}}
+</style>
+</head>
+<body>
+<a name="top"></a>
+<div class="container">
+{body_html}
+</div>
+</body>
+</html>"""
+
+
+if __name__ == "__main__":
+    import json
+    with open("test_digest.json") as f:
+        d = json.load(f)
+    html = render_html(d)
+    with open("preview.html", "w") as f:
+        f.write(html)
+    print(f"Rendered {len(html):,} bytes")

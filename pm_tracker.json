@@ -1,0 +1,19 @@
+{
+  "appearances": [
+    {
+      "date": "2026-06-16",
+      "activity": "SEED DATA — Prime Minister attended an Upper House plenary session and held a brief press availability (placeholder seed; verify against live articles).",
+      "source": "seed",
+      "url": "",
+      "recorded_at": "2026-06-16T09:00:00+00:00"
+    },
+    {
+      "date": "2026-06-13",
+      "activity": "SEED DATA — Prime Minister met with a visiting foreign delegation at the Kantei (placeholder seed; verify against live articles).",
+      "source": "seed",
+      "url": "",
+      "recorded_at": "2026-06-13T09:00:00+00:00"
+    }
+  ],
+  "last_updated": "2026-06-16T09:00:00+00:00"
+}

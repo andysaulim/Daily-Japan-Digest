@@ -1,0 +1,13 @@
+{
+  "daily_signals": {
+    "2026-06-16": {
+      "signals": {
+        "china_signal": "SEED DATA — routine China Coast Guard presence reported in the Senkaku contiguous zone (placeholder; verify against live articles).",
+        "dprk_signal": "SEED DATA — no notable DPRK launch activity reported (placeholder; verify against live articles).",
+        "russia_signal": "SEED DATA — no notable Russian air-sea activity near Japan reported (placeholder; verify against live articles)."
+      },
+      "watch_flag": false
+    }
+  },
+  "last_updated": "2026-06-16T09:00:00+00:00"
+}

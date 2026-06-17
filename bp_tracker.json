@@ -1,0 +1,68 @@
+{
+  "locations": {
+    "Senkaku Islands / East China Sea ADIZ": {
+      "status": "activity",
+      "note": "China Coast Guard maintains near-daily presence in the contiguous zone; recurring territorial-water intrusions and JASDF scrambles against PLA aircraft.",
+      "last_source_date": "2026-06-15",
+      "direction": "up",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "Sea of Japan (DPRK missile splashdown zone)": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "Tsushima / Korea Strait": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "Okinawa / USFJ (Kadena, Futenma, Henoko)": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "Yonaguni / Ishigaki (Nansei buildup)": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "Northern Territories / Sea of Okhotsk": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "Nemuro Strait": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "DPRK launch sites (Sohae/Tongchang-ri, Punggye-ri)": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    },
+    "Okinotorishima EEZ": {
+      "status": "normal",
+      "note": "No new reporting yet.",
+      "last_source_date": "2026-06-10",
+      "direction": "",
+      "updated_at": "2026-06-16T09:00:00+00:00"
+    }
+  },
+  "last_updated": "2026-06-16T09:00:00+00:00"
+}
