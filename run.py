@@ -357,8 +357,7 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── Sanitise URLs ───────────────────────────────────────────────────
     print("\n🔗 Sanitising URLs...")
     collected_urls: set = set()
-    for tier in ("tier1", "tier2", "tier3", "tier4",
-                 "pm_tracker_articles", "security_watch_articles"):
+    for tier in ("tier1", "tier2", "tier3", "tier4", "pm_tracker_articles"):
         for art in (payload.get(tier) or []):
             u = art.get("url", "")
             if u:
@@ -381,12 +380,6 @@ def run_pipeline(args: argparse.Namespace) -> int:
         update_region(digest)
     except Exception as e:
         print(f"⚠ Region tracker update failed (non-fatal): {e}")
-
-    try:
-        from bp_tracker import update_from_digest as update_bp
-        update_bp(digest)
-    except Exception as e:
-        print(f"⚠ BP tracker update failed (non-fatal): {e}")
 
     # ─── Validate ────────────────────────────────────────────────────────
     print("\n🔍 Validating digest...")

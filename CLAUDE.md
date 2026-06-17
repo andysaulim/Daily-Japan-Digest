@@ -15,20 +15,19 @@ Orchestrated by `run.py`. Triggered via GitHub Actions `workflow_dispatch` + a 1
 | File | Role |
 |------|------|
 | `run.py` | Pipeline orchestrator — runs collect → digest → validate → render → send |
-| `collect.py` | Parallel RSS scraper, market data (Nikkei, TOPIX, USD/JPY, EUR/JPY, Brent, JGB, BOJ rate, CDS), PM-appearance feeds, security-watch feeds |
+| `collect.py` | Parallel RSS scraper, market data (Nikkei, TOPIX, USD/JPY, EUR/JPY, Brent, JGB, BOJ rate, CDS), PM-appearance feeds |
 | `digest.py` | Claude API integration — system prompt, structured JSON output, Sonnet-first (`claude-sonnet-4-6`) with Opus retry (`claude-opus-4-8`) |
 | `render.py` | HTML email renderer — table-based layout, inline CSS, dark mode, mobile responsive |
 | `send_email.py` | Gmail SMTP sender (SSL, port 465) |
 | `databases.py` | Verified Japan reference timelines (Senkaku/ECS incidents, US-Japan alliance milestones, DPRK missiles over/near Japan) |
 | `pm_tracker.py` | Japanese Prime Minister appearance log — "days since last seen" (7-day anomaly threshold) |
 | `region_tracker.py` | Adversary-signal baseline — rolling China / DPRK / Russia signal history toward Japan |
-| `bp_tracker.py` | 9 Japan security-watch location statuses (Senkaku, Sea of Japan, Okinawa/USFJ, Northern Territories, DPRK launch sites, etc.) |
 | `tension_scorer.py` | Japan regional tension index — Senkaku/ECS + DPRK + Russia axes |
 | `update_readme.py` | Auto-updates README with latest run stats |
 
 ## Persistent State
 
-Tracker files (`pm_tracker.json`, `region_tracker.json`, `bp_tracker.json`) are cached across GitHub Actions runs. They prevent the AI from hallucinating baselines — real historical data is injected into the prompt instead.
+Tracker files (`pm_tracker.json`, `region_tracker.json`) are cached across GitHub Actions runs. They prevent the AI from hallucinating baselines — real historical data is injected into the prompt instead.
 
 ## Feed Tiers
 

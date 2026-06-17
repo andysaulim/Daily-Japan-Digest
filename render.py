@@ -153,11 +153,6 @@ def _word_count(d: dict) -> int:
         for f in ("event", "relevance"):
             w += _w(o.get(f, ""))
 
-    # Monitored locations
-    for loc in (d.get("monitored_locations") or []):
-        for f in ("name", "note", "csis_product"):
-            w += _w(loc.get(f, ""))
-
     # Key stat
     ks = d.get("key_stat") or {}
     for f in ("label", "context", "source"):
@@ -479,77 +474,6 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 {senkaku_html}
 {quotes_html}
 {("<div style='margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12);font-size:13px;color:#fff;'><strong style='color:#D4AC0D;'>Bottom line:</strong> " + bottom + "</div>") if bottom else ""}
-</div>""")
-
-    # 7. Security & Location Watch — only sites with real evidence today
-    locations = digest.get("monitored_locations") or []
-    if locations:
-        badge_styles = {
-            "activity": ("#D4AC0D", "#FDF6E3", "Active"),
-            "elevated": ("#E67E22", "#FFF3E0", "Elevated"),
-            "alert": ("#C0392B", "#FBE9E7", "Alert"),
-        }
-        active = [l for l in locations if l.get("status") not in ("normal", None, "")]
-        total = len(locations)
-        baseline = sum(1 for l in locations if l.get("status") == "normal")
-
-        if active:
-            loc_cards = ""
-            for i in range(0, len(active), 2):
-                rc = ""
-                for j in range(i, min(i + 2, len(active))):
-                    loc = active[j]
-                    nm = _esc(loc.get("name", ""))
-                    st = loc.get("status", "activity")
-                    note = _esc(loc.get("note", ""))
-                    last = _esc(loc.get("last_source_date", ""))
-                    dirn = loc.get("direction", "")
-                    csis = _esc(loc.get("csis_product", ""))
-                    bc, bb, bl = badge_styles.get(st, ("#7F8C8D", "#F5F5F5", "Monitor"))
-                    if dirn == "up":
-                        bl += " &#9650;"
-                    elif dirn == "down":
-                        bl += " &#9660;"
-                    badge = (f'<span style="display:inline-block;padding:2px 8px;'
-                             f'border-radius:3px;font-size:9px;font-weight:700;color:#fff;'
-                             f'background:{bc};letter-spacing:0.5px;">{bl}</span>')
-                    nh = (f'<div style="font-size:11px;line-height:1.4;color:#555;'
-                          f'margin-top:4px;">{note}</div>' if note else "")
-                    lh = (f'<div style="font-size:9px;color:#999;margin-top:3px;">'
-                          f'&#9201; {last}</div>' if last else "")
-                    ch = (f'<div style="font-size:9px;color:#aaa;margin-top:2px;'
-                          f'font-family:monospace;">{csis}</div>' if csis else "")
-                    rc += f"""<td style="width:50%;padding:4px;vertical-align:top;">
-<div style="background:{bb};border-radius:4px;padding:10px 12px;border-left:3px solid {bc};">
-<div style="font-size:12px;font-weight:700;color:#1B2A4A;margin-bottom:4px;">{nm}</div>
-<div style="margin-bottom:2px;">{badge}</div>
-{nh}
-{lh}
-{ch}
-</div>
-</td>"""
-                if len(active) - i == 1:
-                    rc += '<td style="width:50%;padding:4px;"></td>'
-                loc_cards += f"<tr>{rc}</tr>"
-
-            baseline_footer = (f'<div style="font-size:10px;color:#999;margin-top:10px;'
-                               f'padding-top:8px;border-top:1px solid #EEE;font-style:italic;">'
-                               f'{baseline} other monitored sites tracked at baseline · References: '
-                               f'<a href="https://amti.csis.org" style="color:#888;">CSIS AMTI</a>, '
-                               f'<a href="https://beyondparallel.csis.org" style="color:#888;">Beyond Parallel</a>, '
-                               f'<a href="https://missilethreat.csis.org" style="color:#888;">CSIS Missile Defense</a></div>')
-
-            sections_trackers.append(f"""<div {_SEC}>
-{_sec_label("Security &amp; Location Watch")}
-<div style="font-size:11px;color:#888;font-style:italic;margin-top:-8px;margin-bottom:12px;">{len(active)} of {total} monitored sites flagged</div>
-<table width="100%" cellpadding="0" cellspacing="0" border="0">{loc_cards}</table>
-{baseline_footer}
-</div>""")
-        else:
-            sections_trackers.append(f"""<div {_SEC}>
-{_sec_label("Security &amp; Location Watch")}
-<div style="font-size:12px;color:#555;">All {total} monitored sites at baseline today. No new activity flags.</div>
-<div style="font-size:10px;color:#aaa;margin-top:6px;">Tracked: Senkaku/ECS · DPRK launch geography · Northern Territories · USFJ basing</div>
 </div>""")
 
     # 8. Japanese Government (gov cards + personnel + Diet sessions + calendar)

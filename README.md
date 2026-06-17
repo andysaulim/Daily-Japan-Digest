@@ -50,6 +50,8 @@ collect.py          digest.py           render.py          send_email.py
 | **3 — Academic** | 11 feeds | 72h | Journals (Int'l Security, Asian Survey, Journal of Japanese Studies, Social Science Japan Journal) — A+/A/B tiers |
 | **4 — Gov Primary + Adversary** | 9 feeds | 48h | Kantei, Chief Cabinet Sec, MOFA, MOD/Joint Staff, METI, BOJ + China/DPRK/Russia signals toward Japan |
 
+*A separate PM-appearance tracker (5 feeds, 72h) flags the Prime Minister's public schedule.*
+
 **Prestige outlet rule:** Japan stories from WSJ, NYT, WaPo, Bloomberg, FT, The Economist, CNN, Reuters, CNBC, NHK, Kyodo, Japan Times, Nikkei Asia are always included.
 
 ---
@@ -69,31 +71,14 @@ collect.py          digest.py           render.py          send_email.py
 | 9 | Expert Analysts | Op-eds + academic journals |
 | 10 | Public Sentiment | Cabinet approval & party support (NHK/Jiji/Yomiuri/Asahi/Kyodo, same-poll rule) |
 | 11 | Social Statements | Quotes from the PM, ministers, BOJ Governor, US/allied officials |
-| 12 | Security & Location Watch | 9 Japan security-watch sites — only active sites shown |
-| 13 | Japanese Government | Kantei, Cabinet Sec, MOFA, MOD/Joint Staff, METI, MOF, BOJ + Personnel + Diet Sessions/LDP + Calendar |
-| 14 | US–Japan Alliance & Trade | Section 232 autos/steel, Section 122, trade-deal status, alliance dashboard (Article 5, defense spending, HNS, USFJ) |
-| 15 | Diet Watch | House of Representatives / House of Councillors, key bills, budget |
-| 16 | Business & Economy | Major corporates, semiconductors (Rapidus, JASM), macro indicators |
-| 17 | Indo-Pacific | China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan |
-| 18 | Also Today / The Wire | Up to 6 third-tier items |
-| 19 | On This Day | Verified historical event matching today's exact date |
-| 20 | Footer | — |
-
----
-
-## Monitored Locations
-
-| # | Location | Reference product |
-| - | - | - |
-| 1 | Senkaku Islands / East China Sea ADIZ | CSIS AMTI (East China Sea) |
-| 2 | Sea of Japan (DPRK missile splashdown zone) | CSIS Missile Defense Project |
-| 3 | Tsushima / Korea Strait | — |
-| 4 | Okinawa / USFJ (Kadena, Futenma, Henoko) | — |
-| 5 | Yonaguni / Ishigaki (Nansei buildup) | — |
-| 6 | Northern Territories / Sea of Okhotsk | — |
-| 7 | Nemuro Strait | — |
-| 8 | DPRK launch sites (Sohae/Tongchang-ri, Punggye-ri) | CSIS Beyond Parallel / Missile Defense |
-| 9 | Okinotorishima EEZ | — |
+| 12 | Japanese Government | Kantei, Cabinet Sec, MOFA, MOD/Joint Staff, METI, MOF, BOJ + Personnel + Diet Sessions/LDP + Calendar |
+| 13 | US–Japan Alliance & Trade | Section 232 autos/steel, Section 122, trade-deal status, alliance dashboard (Article 5, defense spending, HNS, USFJ) |
+| 14 | Diet Watch | House of Representatives / House of Councillors, key bills, budget |
+| 15 | Business & Economy | Major corporates, semiconductors (Rapidus, JASM), macro indicators |
+| 16 | Indo-Pacific | China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan |
+| 17 | Also Today / The Wire | Up to 6 third-tier items |
+| 18 | On This Day | Verified historical event matching today's exact date |
+| 19 | Footer | — |
 
 ---
 
@@ -167,8 +152,6 @@ Required secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASS`, `DIGEST_T
 ├── pm_tracker.json          # Appearance history
 ├── region_tracker.py        # Adversary-signal baseline (China/DPRK/Russia)
 ├── region_tracker.json      # Signal history
-├── bp_tracker.py            # Japan security-watch location tracker
-├── bp_tracker.json          # Location status history
 ├── tension_scorer.py        # Senkaku/ECS · DPRK · Russia tension
 ├── update_readme.py         # README auto-updater
 ├── requirements.txt

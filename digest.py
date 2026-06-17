@@ -42,8 +42,6 @@ SOURCE-OR-SKIP PRINCIPLE: For EVERY factual claim you write, you must be able to
 
 - HISTORICAL CLAIMS: Do NOT cite specific historical dates or precedents from memory. pattern_note and analyst_note fields should ONLY reference precedents that are mentioned in today's source articles or the reference baselines provided in this prompt. If no relevant precedent appears in the provided data, set the field to null rather than inventing one. A wrong date is worse than no date.
 
-- FACILITY / LOCATION STATUS: For monitored_locations, if today's articles contain a new report about a location (satellite imagery, CSIS analysis, news article), update that location's status and note from the article. If no article mentions a location today, CARRY FORWARD the last known status and note from the LOCATIONS HISTORY tracker — do NOT blank it to "No new reporting". The tracker preserves context from prior reports so readers always see the most recent known status. Only set note to "No new reporting" if a location has NEVER had a report in the tracker history.
-
 - OMISSIONS & STREAKS: Do NOT claim "X absent for N days" or "no mention of Y for N days" unless the tracker data provided in this prompt supports the specific count. If no tracker history is available, do not fabricate streak counts.
 
 - ARITHMETIC & TOTALS: When this prompt provides a PRE-CALCULATED total, percentage, or sum, use it EXACTLY as given. Do NOT recalculate — LLMs make arithmetic errors. Only adjust a pre-calculated value if today's articles introduce a NEW data point not already in the baseline.
@@ -250,7 +248,7 @@ _REGIONAL_FULL_INSTRUCTIONS = (
     "- china_signal: 1-2 sentences on today's notable China activity or statements toward Japan — China Coast Guard / PLA activity near the Senkakus, China MOFA statements on Japan/Senkaku/Taiwan, survey vessels. null if nothing notable today.\n"
     "- dprk_signal: 1-2 sentences on North Korean missile/nuclear activity affecting Japan (launches, EEZ splashdowns, overflights, KCNA statements naming Japan). null if nothing notable.\n"
     "- russia_signal: 1-2 sentences on Russian activity bearing on Japan — Northern Territories, Sea of Okhotsk, air-sea incursions near Hokkaido, statements on the territorial dispute. null if nothing notable.\n"
-    "- senkaku_status: 1 sentence on the current Senkaku / East China Sea status (e.g. CCG patrol-day pattern, intrusions, scrambles), drawing on today's articles or the LOCATIONS HISTORY tracker. null if no data.\n"
+    "- senkaku_status: 1 sentence on the current Senkaku / East China Sea status (e.g. CCG patrol-day pattern, intrusions, scrambles), drawing on today's articles. null if no data.\n"
     "- key_quotes: up to 2 direct quotes most analytically significant today from an adversary government (China MOFA, KCNA, Russian MFA/TASS) OR from a Japanese government response. Each: quote (exact text, translated if needed), source_article (title), speaker (if attributed). Empty array if nothing notable.\n"
     "- output_volume: string assessment of how much Tier 4 material came in today (e.g. \"Normal — 14 items\"). Use the SUMMARY above for the count.\n"
     "- silence_today: boolean — true only if complete Tier 4 blackout (rare)\n"
@@ -374,20 +372,6 @@ Cross-reference these reports with Tier 4 data."""
     except Exception:
         pass
 
-    # Monitored locations history
-    bp_block = ""
-    try:
-        from bp_tracker import build_context_block as bp_context
-        bp_history = bp_context()
-        if bp_history:
-            bp_block = f"""
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{bp_history}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
-    except Exception:
-        pass
-
     # Tier 4 block — gate on actual data
     if _has_tier4_data(payload):
         tier4_block = (
@@ -428,7 +412,6 @@ VERIFIED UPCOMING DATES
 {market_block}
 {pm_block}
 {region_block}
-{bp_block}
 {db_block}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -498,8 +481,6 @@ Return a digest object with:
 - on_this_day: array with at most 1 historical Japan event matching TODAY's EXACT calendar date (month + day). Use VERIFIED JAPAN DATES list ONLY. Empty array if no verified event falls on today's date. Each: date (e.g. "August 15, 1945"), event (1 sentence), relevance (1 sentence connecting to current situation).
 
 - key_stat: a single striking statistic from TODAY's articles — must be different from yesterday. Object: number (e.g. "¥2.3T", "53%", "12"), label (under 60 chars), context (1 sentence), source (article it came from).
-
-- monitored_locations: array of the 9 Japan security-watch location status objects. GROUNDING: If today's articles report on a location, update from the article. If no article mentions a location, COPY the tracker's last-known note VERBATIM. Never replace a substantive tracker note with "No new reporting". Each: name (must match a tracker name), block ("security_watch"), status (normal/activity/elevated/alert), note (1-2 sentences), last_source_date, direction ("up"/"down"/""), csis_product (from tracker).
 
 - prc_government: REPURPOSED AS JAPANESE GOVERNMENT — array of Japanese government actions from today's news (Kantei/PMO, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ, NSS). Each: ministry (English, e.g. "Ministry of Foreign Affairs"), ministry_jp (Japanese, e.g. 外務省, 防衛省, 経済産業省, 日本銀行, 官邸), official (name + title, only if named in an article), action (1-line headline), detail (1-2 sentences), source_label (e.g. "MOFA", "MOD/Joint Staff", "BOJ", "Kantei"), url.
 

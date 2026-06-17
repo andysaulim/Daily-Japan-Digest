@@ -1,6 +1,6 @@
 # Sources — Daily Japan Digest
 
-Full, exact inventory of every source the pipeline pulls before anything reaches the Claude API. This is the complete input surface: **~99 RSS/news feeds across 4 tiers + 3 tracker feed groups**, plus live market endpoints and static reference databases. Nothing else is fed to the model — and per the **source-or-skip** rule, every claim in the digest must trace to one of these inputs or a reference baseline (no memory-based assertions).
+Full, exact inventory of every source the pipeline pulls before anything reaches the Claude API. This is the complete input surface: **~90 RSS/news feeds across 4 tiers + a PM-appearance tracker group**, plus live market endpoints and static reference databases. Nothing else is fed to the model — and per the **source-or-skip** rule, every claim in the digest must trace to one of these inputs or a reference baseline (no memory-based assertions).
 
 > **How feeds are queried.** Most feeds are Google News RSS searches scoped to a specific outlet/domain (shown as the search string below); some are the outlet's direct RSS. Each tier has a recency window — articles older than the window are dropped. Tier 1 is keyword-filtered for Japan relevance; lifestyle/entertainment is hard-blocked.
 
@@ -163,24 +163,6 @@ Feeds the persistent PM-appearance log ("days since last seen"). Queries are lea
 
 ---
 
-## Security & Location Watch (72-hour window · 9 feeds)
-
-Feeds the monitored-locations grid.
-
-| Location | Query |
-|---|---|
-| Senkaku / East China Sea | `"Senkaku" OR "East China Sea" coast guard OR CCG OR scramble Japan` |
-| Sea of Japan (DPRK) | `"North Korea" missile "Sea of Japan" OR "EEZ" OR "J-Alert"` |
-| Tsushima / Korea Strait | `"Tsushima" OR "Korea Strait" Japan vessel OR navy` |
-| Okinawa / USFJ | `Okinawa "Futenma" OR "Henoko" OR "Kadena" US forces` |
-| Yonaguni / Ishigaki | `"Yonaguni" OR "Ishigaki" Self-Defense OR missile OR radar` |
-| Northern Territories / Kuril | `"Northern Territories" OR "Kuril" Russia Japan military` |
-| Nemuro Strait | `"Nemuro" OR Hokkaido Russia vessel OR aircraft` |
-| DPRK launch sites | `"Sohae" OR "Tongchang-ri" OR "Punggye-ri" North Korea satellite` |
-| Okinotorishima EEZ | `"Okinotorishima" China survey OR research vessel EEZ` |
-
----
-
 ## Market data (live, fetched each run)
 
 | Indicator | Primary source | Fallback |
@@ -207,7 +189,7 @@ Provided as ground-truth context so the model never guesses historical baselines
 - **US–Japan alliance milestone timeline** — treaty and basing milestones.
 - **DPRK launches over/near Japan** — 1998 Taepodong, 2017 overflights, 2022 overflight.
 
-Plus persistent JSON trackers carried across runs (`pm_tracker.json`, `region_tracker.json`, `bp_tracker.json`) so streaks, signal baselines, and location statuses are real history rather than model recall.
+Plus persistent JSON trackers carried across runs (`pm_tracker.json`, `region_tracker.json`) so PM-appearance streaks and adversary-signal baselines are real history rather than model recall.
 
 ---
 

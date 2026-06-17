@@ -1,7 +1,7 @@
 """
 Japan Daily Brief — Collector
 
-Scrapes RSS feeds across four tiers + market data + monitored location feeds.
+Scrapes RSS feeds across four tiers + market data + PM-appearance feeds.
 Mirrors the Daily-Korea-Digest / Daily-China-Digest collector architecture with
 Japan-specific sources.
 
@@ -167,20 +167,6 @@ PM_TRACKER_FEEDS = {
     "PM press conf":       _gnews("Japan+%22Prime+Minister%22+%22press+conference%22+OR+statement+OR+remarks"),
     "PM diplomacy":        _gnews("Japan+%22Prime+Minister%22+summit+OR+bilateral+OR+%22telephone+talks%22"),
     "PM (Ishiba)":         _gnews("%22Ishiba%22+Japan+Prime+Minister"),
-}
-
-
-# ── SECURITY-WATCH LOCATION FEEDS (72h window) ────────────────────────────────
-SECURITY_WATCH_FEEDS = {
-    "Senkaku / ECS":       _gnews("%22Senkaku%22+OR+%22East+China+Sea%22+coast+guard+OR+CCG+OR+scramble+Japan"),
-    "Sea of Japan DPRK":   _gnews("%22North+Korea%22+missile+%22Sea+of+Japan%22+OR+%22EEZ%22+OR+%22J-Alert%22"),
-    "Tsushima Strait":     _gnews("%22Tsushima%22+OR+%22Korea+Strait%22+Japan+vessel+OR+navy"),
-    "Okinawa USFJ":        _gnews("Okinawa+%22Futenma%22+OR+%22Henoko%22+OR+%22Kadena%22+US+forces"),
-    "Yonaguni/Ishigaki":   _gnews("%22Yonaguni%22+OR+%22Ishigaki%22+Self-Defense+OR+missile+OR+radar"),
-    "Northern Territories": _gnews("%22Northern+Territories%22+OR+%22Kuril%22+Russia+Japan+military"),
-    "Nemuro Strait":       _gnews("%22Nemuro%22+OR+Hokkaido+Russia+vessel+OR+aircraft"),
-    "DPRK launch sites":   _gnews("%22Sohae%22+OR+%22Tongchang-ri%22+OR+%22Punggye-ri%22+North+Korea+satellite"),
-    "Okinotorishima EEZ":  _gnews("%22Okinotorishima%22+China+survey+OR+research+vessel+EEZ"),
 }
 
 
@@ -474,19 +460,6 @@ def _collect_pm_tracker() -> list:
     """Collect recent Japanese Prime Minister appearance/activity reports."""
     articles = []
     results = _fetch_feeds_parallel(PM_TRACKER_FEEDS)
-    for source, (entries, _) in results.items():
-        for entry in entries:
-            if not _is_recent(entry, hours=72):
-                continue
-            article = _entry_to_article(entry, source, lang="EN")
-            articles.append(article)
-    return _dedup(articles)
-
-
-def _collect_security_watch() -> list:
-    """Collect Japan security-watch articles (Senkaku, DPRK, Russia, USFJ)."""
-    articles = []
-    results = _fetch_feeds_parallel(SECURITY_WATCH_FEEDS)
     for source, (entries, _) in results.items():
         for entry in entries:
             if not _is_recent(entry, hours=72):
@@ -860,10 +833,6 @@ def collect_all() -> dict:
     pm_articles = _collect_pm_tracker()
     print(f"  ✔ {len(pm_articles)} PM-related articles")
 
-    print("\n🔍 Security-watch feeds (72h window)...")
-    sw_articles = _collect_security_watch()
-    print(f"  ✔ {len(sw_articles)} security-watch articles")
-
     print("\n💹 Market data...")
     markets = _collect_markets()
     print(f"  ✔ {sum(1 for v in markets.values() if v)} indicators")
@@ -882,7 +851,6 @@ def collect_all() -> dict:
         "tier3": tier3,
         "tier4": tier4,
         "pm_tracker_articles": pm_articles,
-        "security_watch_articles": sw_articles,
         "market_indicators": markets,
         "messaging_summary": msg_summary,
         "source_health": _source_health,

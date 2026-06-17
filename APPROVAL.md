@@ -5,7 +5,7 @@
 **Status:** Built, not yet live. **Nothing sends until the Japan Chair signs off.**
 **Cadence:** Daily, 6:00 AM ET · HTML email + public web archive
 
-This document is for editorial review. It lays out every **source**, the **newsletter structure**, the **topics covered**, the **monitored locations**, the **polling inputs**, and the **editorial rules**. Mark up anything you want added, dropped, or reweighted. A short list of **items needing your decision** is at the bottom.
+This document is for editorial review. It lays out every **source**, the **newsletter structure**, the **topics covered**, the **polling inputs**, and the **editorial rules**. Mark up anything you want added, dropped, or reweighted. A short list of **items needing your decision** is at the bottom.
 
 ---
 
@@ -19,7 +19,7 @@ It is a **Japan-as-subject, ally-framed** product: Japan's own government, polit
 
 ## 2. Sources (for review)
 
-> **Complete, exact feed inventory — including every search query — is in [`SOURCES.md`](SOURCES.md).** The summary below is by category; `SOURCES.md` lists all ~99 feeds, the market endpoints, and the reference databases the Claude API draws from.
+> **Complete, exact feed inventory — including every search query — is in [`SOURCES.md`](SOURCES.md).** The summary below is by category; `SOURCES.md` lists all ~90 feeds, the market endpoints, and the reference databases the Claude API draws from.
 
 Sources are organized in four tiers by type and recency window. News is pulled via wire/outlet RSS and Google News site-scoped queries.
 
@@ -59,18 +59,17 @@ A Japan story from **WSJ, NYT, WaPo, Bloomberg, FT, The Economist, CNN, Reuters,
 5. **Top Stories** — 2–4 biggest hard-news items, each with a "so what" and (when sourced) a precedent note
 6. **Overnight Flash** — up to 6 secondary items
 7. **Regional Pressure Watch** *(dark section)* — adversary signals: China/Senkaku, North Korea, Russia (see §5)
-8. **Security & Location Watch** — status of monitored sites (see §6)
-9. **Japanese Government** — Kantei, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ
-10. **US–Japan Alliance & Trade** — tariff/defense/alliance dashboard
-11. **Business & Economy** — corporates, BOJ, macro
-12. **Indo-Pacific** — China-Japan, Korea-Japan, DPRK, trilateral, Quad, Taiwan, SE Asia, Australia, India
-13. **Diet Watch** — House of Representatives, House of Councillors, budget, key bills, LDP leadership
-14. **Expert Analysts** — Tier 2 op-eds + Tier 3 academic
-15. **Public Sentiment & Approval Polling** — cabinet approval & party support (see §7)
-16. **Social Statements** — sourced quotes from senior officials
-17. **Also Today / The Wire** — up to 6 brief items
-18. **On This Day** — a verified historical Japan event matching today's date
-19. **Footer**
+8. **Japanese Government** — Kantei, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ
+9. **US–Japan Alliance & Trade** — tariff/defense/alliance dashboard
+10. **Business & Economy** — corporates, BOJ, macro
+11. **Indo-Pacific** — China-Japan, Korea-Japan, DPRK, trilateral, Quad, Taiwan, SE Asia, Australia, India
+12. **Diet Watch** — House of Representatives, House of Councillors, budget, key bills, LDP leadership
+13. **Expert Analysts** — Tier 2 op-eds + Tier 3 academic
+14. **Public Sentiment & Approval Polling** — cabinet approval & party support (see §6)
+15. **Social Statements** — sourced quotes from senior officials
+16. **Also Today / The Wire** — up to 6 brief items
+17. **On This Day** — a verified historical Japan event matching today's date
+18. **Footer**
 
 ---
 
@@ -88,32 +87,14 @@ The dark section tracks, each day: a **China signal** (MOFA statements on Japan,
 
 ---
 
-## 6. Monitored locations (Security & Location Watch)
-
-| # | Location | Focus |
-|---|----------|-------|
-| 1 | Senkaku Islands / East China Sea ADIZ | CCG intrusions, JASDF scrambles |
-| 2 | Sea of Japan | DPRK missile splashdown zone / EEZ |
-| 3 | Tsushima / Korea Strait | maritime & ROK-adjacent activity |
-| 4 | Okinawa / USFJ (Kadena, Futenma, Henoko) | basing & realignment |
-| 5 | Yonaguni / Ishigaki | Nansei (Southwest Islands) SDF buildup |
-| 6 | Northern Territories / Sea of Okhotsk | Russian activity |
-| 7 | Nemuro Strait | Russia-adjacent maritime |
-| 8 | DPRK launch sites (Tongchang-ri/Sohae, Punggye-ri) | launch geography relevant to Japan |
-| 9 | Okinotorishima EEZ | Chinese survey-vessel activity |
-
-*Add/remove sites as you see fit.*
-
----
-
-## 7. Public Sentiment & Approval Polling
+## 6. Public Sentiment & Approval Polling
 
 Cabinet approval and party support drawn from **NHK, Jiji, Yomiuri, Asahi, and Kyodo** monthly polls.
 **Same-poll rule:** every figure in a set must come from the *same pollster and the same survey date* — pollsters are never mixed within one number set, and the pollster + date range is always cited.
 
 ---
 
-## 8. Editorial & quality rules
+## 7. Editorial & quality rules
 
 - **Source-or-skip:** every factual claim traces to a collected article or a provided reference baseline — no memory-based assertions. An omission beats an invention.
 - **No editorializing:** facts, numbers, attributions, and connective context only; the expert reader draws conclusions.
@@ -129,7 +110,7 @@ Cabinet approval and party support drawn from **NHK, Jiji, Yomiuri, Asahi, and K
 
 ---
 
-## 9. Schedule & delivery
+## 8. Schedule & delivery
 
 - **Daily 6:00 AM ET** via GitHub Actions (with later fallback runs). Manual trigger available.
 - HTML email via Gmail (recipient list configured separately) + permanent web archive on GitHub Pages.
@@ -137,12 +118,12 @@ Cabinet approval and party support drawn from **NHK, Jiji, Yomiuri, Asahi, and K
 
 ---
 
-## 10. Items needing your decision / verification
+## 9. Items needing your decision / verification
 
 1. **Sitting Prime Minister.** The leadership reference is seeded with the last-known PM (Ishiba, LDP, since Oct 2024) and flagged "verify." Please confirm the current PM and cabinet so the seed baseline is correct on day one. *(The live pipeline always defers to the name in the day's articles regardless.)*
 2. **Recipient list.** Who receives it at launch? (Configured as a secret, not in code.)
 3. **US–Japan trade/tariff baseline.** The alliance-and-trade baseline (Section 232 autos/steel, any 2024–25 US-Japan tariff arrangement, host-nation support, the 2% GDP defense plan) is marked "verify" — please confirm the current state you want as the standing baseline.
-4. **Source adds/drops.** Any outlets, think tanks, journals, or monitored locations to add or remove?
+4. **Source adds/drops.** Any outlets, think tanks, or journals to add or remove?
 5. **Section weighting.** Any section you want promoted, demoted, or cut (e.g., emphasis on Diet Watch vs. Alliance vs. Regional Pressure Watch)?
 6. **Go-live date.**
 
