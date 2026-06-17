@@ -1,0 +1,6 @@
+__pycache__/
+.claude/
+collected.json
+digest.json
+digest.html
+preview.html
