@@ -195,15 +195,20 @@ _LIFESTYLE_FILTER = re.compile(
 # ── PRESTIGE JOURNALIST FLAGGING (Japan correspondents) ───────────────────────
 PRESTIGE_JOURNALISTS = {
     # NYT Tokyo
-    "Motoko Rich", "River Akira Davis", "Hisako Ueno",
-    # FT Tokyo
-    "Leo Lewis", "Kana Inagaki", "Harry Dempsey",
+    "Motoko Rich", "River Akira Davis", "Hisako Ueno", "Kiuko Notoya",
+    # Washington Post Tokyo
+    "Michelle Ye Hee Lee", "Julia Mio Inuma",
     # WSJ Tokyo
-    "Peter Landers", "Megumi Fujikawa", "Miho Inada",
+    "Peter Landers", "Megumi Fujikawa", "Miho Inada", "Chieko Tsuneoka",
+    # FT Tokyo
+    "Leo Lewis", "Kana Inagaki", "Harry Dempsey", "Eri Sugiura",
     # Reuters Tokyo
-    "Tim Kelly", "Kiyoshi Takenaka", "Sakura Murakami",
+    "Tim Kelly", "Kiyoshi Takenaka", "Sakura Murakami", "Kantaro Komiya",
+    "John Geddie",
     # Bloomberg Tokyo
-    "Isabel Reynolds", "Yuko Takeo",
+    "Isabel Reynolds", "Yuki Hagiwara", "Erica Yokoyama",
+    # AP Tokyo
+    "Mari Yamaguchi",
     # Nikkei
     "Rurika Imahashi",
 }
