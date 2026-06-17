@@ -159,7 +159,7 @@ Feeds the persistent PM-appearance log ("days since last seen"). Queries are lea
 | PM Diet | `Japan "Prime Minister" Diet OR "Lower House" OR "Upper House" session` |
 | PM press conference | `Japan "Prime Minister" "press conference" OR statement OR remarks` |
 | PM diplomacy | `Japan "Prime Minister" summit OR bilateral OR "telephone talks"` |
-| PM (name fallback) | `"Ishiba" Japan Prime Minister` |
+| PM (by name) | `"Takaichi" OR "Ishiba" Japan Prime Minister` |
 
 ---
 

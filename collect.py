@@ -160,13 +160,13 @@ TIER4_FEEDS = {
 
 # ── PM APPEARANCE TRACKER (72h window) ────────────────────────────────────────
 # Robust to PM turnover: a generic "Japan Prime Minister" query plus a
-# last-known-name secondary query ("Ishiba"). Live articles are authoritative.
+# last-known-name secondary query (current PM Takaichi, prior PM Ishiba). Live articles are authoritative.
 PM_TRACKER_FEEDS = {
     "PM appearance":       _gnews("%22Japanese+Prime+Minister%22+OR+%22Japan%27s+Prime+Minister%22+attended+OR+visited+OR+met+OR+spoke"),
     "PM Diet":             _gnews("Japan+%22Prime+Minister%22+Diet+OR+%22Lower+House%22+OR+%22Upper+House%22+session"),
     "PM press conf":       _gnews("Japan+%22Prime+Minister%22+%22press+conference%22+OR+statement+OR+remarks"),
     "PM diplomacy":        _gnews("Japan+%22Prime+Minister%22+summit+OR+bilateral+OR+%22telephone+talks%22"),
-    "PM (Ishiba)":         _gnews("%22Ishiba%22+Japan+Prime+Minister"),
+    "PM (by name)":        _gnews("%22Takaichi%22+OR+%22Ishiba%22+Japan+Prime+Minister"),
 }
 
 
@@ -176,7 +176,7 @@ JAPAN_KEYWORDS = re.compile(
     r"|\bkomeito\b|\bcdp\b|\bdpp\b|\bself[\s-]?defense\b|\bjsdf\b|\bsdf\b"
     r"|\bsenkaku\b|\bdiaoyu\b|\bokinawa\b|\busfj\b|\bnansei\b|\bryukyu\b"
     r"|\bnikkei\b|\btopix\b|\bboj\b|\bbank\s*of\s*japan\b|\byen\b|\bueda\b"
-    r"|\bprime\s*minister\b.*\bjapan\b|\bishiba\b|\bnorthern\s*territories\b"
+    r"|\bprime\s*minister\b.*\bjapan\b|\btakaichi\b|\bishiba\b|\bnorthern\s*territories\b"
     r"|\bkuril\b|\babe\b|\bkishida\b"
     r"|日本|日本人|東京|自民党|国会|尖閣|防衛省|外務省|日銀|沖縄|自衛隊",
     re.IGNORECASE,
@@ -195,7 +195,7 @@ _LIFESTYLE_FILTER = re.compile(
 # ── PRESTIGE JOURNALIST FLAGGING (Japan correspondents) ───────────────────────
 PRESTIGE_JOURNALISTS = {
     # NYT Tokyo
-    "Motoko Rich", "River Akira Davis", "Hisako Ueno", "Kiuko Notoya",
+    "River Akira Davis", "Hisako Ueno", "Kiuko Notoya",
     # Washington Post Tokyo
     "Michelle Ye Hee Lee", "Julia Mio Inuma",
     # WSJ Tokyo

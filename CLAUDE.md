@@ -39,7 +39,7 @@ Tracker files (`pm_tracker.json`, `region_tracker.json`) are cached across GitHu
 ## Critical Rules
 
 - **SOURCE-OR-SKIP**: Every claim in the digest must trace to a collected article or a prompt baseline. No memory-based assertions.
-- **PM identity**: The sitting Prime Minister may have changed since the model's training cutoff. ALWAYS use the name from today's articles. Last-known seed: Shigeru Ishiba (LDP, since Oct 2024) — verify.
+- **PM identity**: The sitting Prime Minister may have changed since the model's training cutoff. ALWAYS use the name from today's articles. Current seed: Sanae Takaichi (LDP, first female PM; succeeded Ishiba) — verify.
 - **Same-poll-date rule**: All `public_sentiment` polling numbers must come from the same pollster (NHK/Jiji/Yomiuri/Asahi/Kyodo) and the same survey date range — never mix.
 - **Prestige enforcement**: Japan stories from WSJ, NYT, WaPo, Bloomberg, FT, Economist, CNN, Reuters, CNBC, NHK, Kyodo, Japan Times, Nikkei Asia must appear if they published.
 - **Section-key coupling**: `digest.py`, `render.py`, and `run.py` share top-level dict keys. Several China-era keys are retained but relabeled in the UI: `xinhua_delta` = Regional Pressure Watch, `prc_government` = Japanese Government, `us_china_trade` = US-Japan Alliance & Trade, `congressional_watch` = Diet Watch, `npc_politburo` = Diet Sessions / LDP. Rename in all three files if you change one.

@@ -79,7 +79,7 @@ CSIS PRODUCTS — MANDATORY INCLUSION: If ANY same-day article appears from the 
 
 JOURNALIST FLAGGING: The following reporters have special Japan expertise. When their bylines appear, treat the story as higher priority and note the journalist in your analysis:
 
-- Motoko Rich (NYT Tokyo bureau chief), River Akira Davis, Hisako Ueno (NYT Tokyo)
+- River Akira Davis, Hisako Ueno, Kiuko Notoya (NYT Tokyo)
 - Michelle Ye Hee Lee (WaPo Tokyo bureau chief), Julia Mio Inuma (WaPo Tokyo)
 - Peter Landers, Megumi Fujikawa, Miho Inada, Chieko Tsuneoka (WSJ Tokyo)
 - Leo Lewis, Kana Inagaki, Harry Dempsey, Eri Sugiura (FT Tokyo)
@@ -143,8 +143,8 @@ Return ONLY valid JSON. No markdown, no preamble, no commentary outside the JSON
 _POLITICAL_LEADERS = """\
 CURRENT POLITICAL LEADERS — REFERENCE (VERIFY from today's articles; leadership may have changed):
 
-JAPAN GOVERNMENT (as of early 2026 — the sitting Prime Minister and cabinet may have changed; ALWAYS use the name from today's articles if it differs):
-- Prime Minister: Shigeru Ishiba (LDP), in office since Oct 2024 — VERIFY; if today's articles name a different PM, USE THAT NAME. Do not assume Ishiba is still PM.
+JAPAN GOVERNMENT (the sitting Prime Minister and cabinet may have changed; ALWAYS use the name from today's articles if it differs):
+- Prime Minister: Sanae Takaichi (LDP) — Japan's first female prime minister; succeeded Shigeru Ishiba. VERIFY tenure and cabinet from today's articles; if an article names a different PM, USE THAT NAME.
 - Chief Cabinet Secretary: VERIFY from today's articles (rotates with cabinet reshuffles)
 - Foreign Minister (Gaimusho / MOFA): VERIFY from today's articles
 - Defense Minister (MOD): VERIFY from today's articles

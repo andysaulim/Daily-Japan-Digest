@@ -120,7 +120,7 @@ Cabinet approval and party support drawn from **NHK, Jiji, Yomiuri, Asahi, and K
 
 ## 9. Items needing your decision / verification
 
-1. **Sitting Prime Minister.** The leadership reference is seeded with the last-known PM (Ishiba, LDP, since Oct 2024) and flagged "verify." Please confirm the current PM and cabinet so the seed baseline is correct on day one. *(The live pipeline always defers to the name in the day's articles regardless.)*
+1. **Sitting Prime Minister.** The leadership reference is seeded with **Sanae Takaichi** (LDP, Japan's first female PM, who succeeded Ishiba). Please confirm her cabinet lineup (Chief Cabinet Secretary, Foreign/Defense/Finance/METI ministers) so the seed baseline is complete. *(The live pipeline always defers to the name in the day's articles regardless.)*
 2. **Recipient list.** Who receives it at launch? (Configured as a secret, not in code.)
 3. **US–Japan trade/tariff baseline.** The alliance-and-trade baseline (Section 232 autos/steel, any 2024–25 US-Japan tariff arrangement, host-nation support, the 2% GDP defense plan) is marked "verify" — please confirm the current state you want as the standing baseline.
 4. **Source adds/drops.** Any outlets, think tanks, or journals to add or remove?
