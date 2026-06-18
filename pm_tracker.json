@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-06-18",
+      "activity": "PM Takaichi concluded the G7 Evian Summit, confirmed all her proposals were adopted in the final communique, held a bilateral with Italian President Meloni, and issued statements on the US-Iran deal and Strait of Hormuz.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-18T18:39:14.152630+00:00"
+    },
+    {
       "date": "2026-06-16",
       "activity": "SEED DATA — Prime Minister attended an Upper House plenary session and held a brief press availability (placeholder seed; verify against live articles).",
       "source": "seed",
@@ -15,5 +22,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-06-16T09:00:00+00:00"
+  "last_updated": "2026-06-18T18:39:14.152663+00:00"
 }

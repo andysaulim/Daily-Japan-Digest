@@ -7,7 +7,14 @@
         "russia_signal": "SEED DATA — no notable Russian air-sea activity near Japan reported (placeholder; verify against live articles)."
       },
       "watch_flag": false
+    },
+    "2026-06-18": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and formally rejected Defense Minister Koizumi's challenge to China's military spending d",
+        "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy; North Korean state media separately touted industrial output exceeding targets."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-16T09:00:00+00:00"
+  "last_updated": "2026-06-18T18:39:14.152923+00:00"
 }
