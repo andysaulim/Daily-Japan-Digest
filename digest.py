@@ -465,7 +465,7 @@ TIER 4: JAPANESE GOVERNMENT PRIMARY + ADVERSARY SIGNAL (last 48h)
 DIGEST SYNTHESIS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-TARGET LENGTH — HARD MINIMUM 1,000 WORDS (5-minute read). Aim for 1,200-1,400 words.
+TARGET LENGTH — 1,000-1,300 words (a tight 5-minute read). HARD MINIMUM 1,000 words; do NOT exceed ~1,400 words. Be concise: prefer fewer, higher-signal items over completeness, and cut any sentence that doesn't add a fact.
 
 Return a digest object with:
 
@@ -491,29 +491,29 @@ Return a digest object with:
 
 - calendar_watch: array of 4-5 key upcoming events in next 14-30 days (MIN 4, MAX 5). Only use events from (a) today's articles with dates, (b) VERIFIED UPCOMING DATES, or (c) baselines. Each: month (3-letter), day (int), headline, detail (1-2 sentences).
 
-- overnight_items: 6 items MAX. Source diversity MANDATORY (max 3 from any single source). Topic diversity MANDATORY. Each: url (verbatim from input), source, category, headline (under 100 chars), body_text (2-3 sentences, 50-70 words).
+- overnight_items: 4 items MAX. Source diversity MANDATORY (max 3 from any single source). Topic diversity MANDATORY. Each: url (verbatim from input), source, category, headline (under 100 chars), body_text (2 sentences, ~35-45 words).
 
-- top_stories: 2-4 biggest HARD NEWS stories — aim for 3 typical, 2 slow days, 4 when multiple major stories. From wires/correspondents/Japanese press/government — NOT op-eds or think tank commentary. TOPIC DIVERSITY MANDATORY. Each: url (verbatim from input), source, category_tag (Alliance/China-Japan/Korea-Japan/DPRK/Economy-BOJ/Politics-Diet/Defense/Technology/Indo-Pacific/Energy), headline, body (MAX 3 sentences, aim for 2 — facts: who/what/when/specifics), so_what (1 sentence — specific decision/meeting/timeline this affects, only if it appears in today's articles or calendar_watch), pattern_note (1 sentence with historical precedent ONLY if it appears in today's articles or reference data; else null), src_line.
+- top_stories: 2-4 biggest HARD NEWS stories — aim for 3 typical, 2 slow days, 4 when multiple major stories. From wires/correspondents/Japanese press/government — NOT op-eds or think tank commentary. TOPIC DIVERSITY MANDATORY. Each: url (verbatim from input), source, category_tag (Alliance/China-Japan/Korea-Japan/DPRK/Economy-BOJ/Politics-Diet/Defense/Technology/Indo-Pacific/Energy), headline, body (MAX 2 sentences — facts: who/what/when/specifics), so_what (1 sentence — specific decision/meeting/timeline this affects, only if it appears in today's articles or calendar_watch), pattern_note (1 sentence with historical precedent ONLY if it appears in today's articles or reference data; else null), src_line.
 
-- also_today: up to 6 remaining articles score >= 4. Each: url (verbatim from input), source, category, headline, body_text (1-2 sentences), color_bar_class (cb-navy=Alliance, cb-red=Defense, cb-lt=Trade/Economy, cb-mid=Diplomacy, cb-tech=Technology, cb-biz=Politics).
+- also_today: up to 4 remaining articles score >= 4. Each: url (verbatim from input), source, category, headline, body_text (1 sentence), color_bar_class (cb-navy=Alliance, cb-red=Defense, cb-lt=Trade/Economy, cb-mid=Diplomacy, cb-tech=Technology, cb-biz=Politics).
 
 - us_china_trade: REPURPOSED AS US-JAPAN ALLIANCE & TRADE — object with sub-blocks (NO REPETITION across sub-blocks):
   - tariff_tracker: object with headline_auto_rate (current Section 232 auto rate as applied to Japan), section_232_rates (object: steel, aluminum, autos), section_122_surcharge (string), trade_deal_status (1 phrase — verify), last_change (string), next_trigger (string). Use the ALLIANCE & TRADE BASELINES above as default; only change if today's articles report new action.
   - alliance_tracker: object with defense_spending_goal ("2% of GDP by FY2027"), article5_senkaku ("affirmed — covers Senkakus"), host_nation_support (1 phrase, verify), usfj_realignment ("Futenma → Henoko, contested"). Carry forward unless today's articles update.
   - deals: array of NEW US-Japan agreements, investment pledges, or defense-cooperation announcements reported TODAY. Each: url, source, headline, value (or null), parties, detail (1 sentence).
 
-- business_economy: array up to 6 Japan business/economy items. Each: url (verbatim from input), source, headline, body_text (1-2 sentences with specific numbers), companies (array of names), sector (tech/auto/energy/finance/manufacturing/semiconductors/macro).
+- business_economy: array up to 4 Japan business/economy items. Each: url (verbatim from input), source, headline, body_text (1-2 sentences with specific numbers), companies (array of names), sector (tech/auto/energy/finance/manufacturing/semiconductors/macro).
 
-- indo_pacific: array of 4-6 items covering China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan, Southeast Asia, Australia, India as they relate to Japan. Each: url (verbatim from input), source, headline, body_text (1-2 sentences), category (china-japan, senkaku, korea-japan, dprk-missile, trilateral, quad, taiwan, southeast-asia, australia, india), region_tag ("China-Japan" / "Korea-Japan" / "DPRK" / "Trilateral" / "Indo-Pacific").
+- indo_pacific: array of 3-4 items covering China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan, Southeast Asia, Australia, India as they relate to Japan. Each: url (verbatim from input), source, headline, body_text (1 sentence), category (china-japan, senkaku, korea-japan, dprk-missile, trilateral, quad, taiwan, southeast-asia, australia, india), region_tag ("China-Japan" / "Korea-Japan" / "DPRK" / "Trilateral" / "Indo-Pacific").
 
-- social_statements: 3-6 quotes from senior officials. ATTRIBUTION RULE: quote MUST be a statement made BY the named person in their OFFICIAL CAPACITY on a policy-relevant topic. Prioritize the Japanese PM, Chief Cabinet Secretary, Foreign/Defense/Finance Ministers, BOJ Governor; US officials (Trump, Rubio, Hegseth, Bessent, Greer); and relevant foreign leaders. Use the name from the article.
+- social_statements: 3-4 quotes from senior officials. ATTRIBUTION RULE: quote MUST be a statement made BY the named person in their OFFICIAL CAPACITY on a policy-relevant topic. Prioritize the Japanese PM, Chief Cabinet Secretary, Foreign/Defense/Finance Ministers, BOJ Governor; US officials (Trump, Rubio, Hegseth, Bessent, Greer); and relevant foreign leaders. Use the name from the article.
 
 Each: avatar_initials (2 letters), who (name), handle_context (title/role), platform_date (source · date), quote_text (direct quote), analyst_note (1 sentence factual context only from today's articles or reference data; no interpretation), badge_class (sb-p=policy, sb-r=security/red, sb-s=specialist/purple), url.
 
 - personnel_changes: array of Japan cabinet/ministerial/SDF/ambassador personnel changes from today's news. Each: position, name, action (appointed/resigned/dismissed/nominated/confirmed/reshuffled), detail (1-2 sentences), predecessor (if relevant).
 
 - public_sentiment: Japan cabinet approval & party-support polling block. SAME-POLL-DATE RULE: all figures in approval_polling must come from ONE survey by ONE pollster for ONE date range. Object with:
-  - approval_polling: object or null with pollster (NHK / Jiji / Yomiuri / Asahi / Kyodo), poll_date (date range string), cabinet_approval (e.g. "42%"), cabinet_disapproval (e.g. "38%"), approval_change (vs prior same-pollster poll, e.g. "↓3" or null), source_article (title). null if no poll in today's articles (or carry forward the most recent cited poll, clearly labeled with its original date).
+  - approval_polling: object or null with pollster (NHK / Jiji / Yomiuri / Asahi / Kyodo), poll_date (date range string, e.g. "Jun 13-15"), cabinet_approval (e.g. "42%"), cabinet_disapproval (e.g. "38%"), approval_change (vs prior same-pollster poll, e.g. "↓3" or null), source_label (SHORT issuer label only, e.g. "Jiji poll" or "NHK monthly poll" — NOT the article headline). Provide cabinet_disapproval whenever the same poll reports it; if the source only gives approval, set cabinet_disapproval to null (the renderer shows approval alone). null if no poll in today's articles (or carry forward the most recent cited poll, clearly labeled with its original date).
   - party_support: array (max 6) of {{party, support_pct}} from the SAME poll as approval_polling. Empty if no poll.
   - discourse_flag: 1 sentence on a notable domestic-political dynamic from today's articles (e.g. coalition strain, leadership challenge, scandal), or null.
 

@@ -248,27 +248,33 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
         cds = m.get("japan_cds") or {}
         boj = m.get("boj_rate") or {}
         gdp = m.get("gdp_yoy") or {}
+        _topix_val = str(topix.get("value", "—"))
+        _has_topix = _topix_val not in ("—", "", "None")
+        _asof = now.strftime("%b %-d")
+        _nikkei_cell = f"""<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">Nikkei 225</div>
+<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(nikkei.get("value", "—")))}</div>
+<div style="font-size:11px;">{_arrow(nikkei.get("change_pct", 0))}</div>
+<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
+        _usdjpy_cell = f"""<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">USD/JPY</div>
+<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(usd_jpy.get("value", "—")))}</div>
+<div style="font-size:11px;">{_arrow(usd_jpy.get("change_pct", 0))}</div>
+<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
+        if _has_topix:
+            _topix_cell = f"""<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">TOPIX</div>
+<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(_topix_val)}</div>
+<div style="font-size:11px;">{_arrow(topix.get("change_pct", 0))}</div>
+<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
+            _top_row = (f'<td width="33%" align="center" style="padding:12px 8px 10px;">{_nikkei_cell}</td>'
+                        f'<td width="34%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);border-right:1px solid rgba(255,255,255,0.12);">{_topix_cell}</td>'
+                        f'<td width="33%" align="center" style="padding:12px 8px 10px;">{_usdjpy_cell}</td>')
+        else:
+            # TOPIX unavailable from data sources — show Nikkei | USD/JPY two-across, no broken cell.
+            _top_row = (f'<td width="50%" align="center" style="padding:12px 8px 10px;">{_nikkei_cell}</td>'
+                        f'<td width="50%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);">{_usdjpy_cell}</td>')
         sections_pre.append(f"""
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
 <tr>
-<td width="33%" align="center" style="padding:12px 8px 10px;">
-<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">Nikkei 225</div>
-<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(nikkei.get("value", "—")))}</div>
-<div style="font-size:11px;">{_arrow(nikkei.get("change_pct", 0))}</div>
-<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {now.strftime("%b %-d")}</div>
-</td>
-<td width="34%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);border-right:1px solid rgba(255,255,255,0.12);">
-<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">TOPIX</div>
-<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(topix.get("value", "—")))}</div>
-<div style="font-size:11px;">{_arrow(topix.get("change_pct", 0))}</div>
-<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {now.strftime("%b %-d")}</div>
-</td>
-<td width="33%" align="center" style="padding:12px 8px 10px;">
-<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">USD/JPY</div>
-<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(usd_jpy.get("value", "—")))}</div>
-<div style="font-size:11px;">{_arrow(usd_jpy.get("change_pct", 0))}</div>
-<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {now.strftime("%b %-d")}</div>
-</td>
+{_top_row}
 </tr>
 </table>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
@@ -774,9 +780,10 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             appr = _esc(str(ap.get("cabinet_approval", "")))
             disappr = _esc(str(ap.get("cabinet_disapproval", "")))
             chg = _esc(str(ap.get("approval_change", ""))) if ap.get("approval_change") else ""
-            src = _esc(ap.get("source_article", ""))
             chg_html = f' <span style="font-size:11px;color:#888;">({chg})</span>' if chg else ""
-            poll_body += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+            has_disappr = disappr and disappr not in ("—", "None")
+            if has_disappr:
+                stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
 <tr>
 <td width="50%" align="center" style="padding:10px;background:#EAF5EA;border-radius:4px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Approve</div>
@@ -788,8 +795,18 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{disappr}</div>
 </td>
 </tr>
-</table>
-<div style="font-size:10px;color:#888;margin-bottom:10px;">{pollster}{(' · ' + pdate) if pdate else ''}{(' · ' + src) if src else ''}</div>"""
+</table>"""
+            else:
+                # Disapproval not reported in the same poll — show approval alone, no empty box.
+                stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+<tr>
+<td align="center" style="padding:10px;background:#EAF5EA;border-radius:4px;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Cabinet Approval</div>
+<div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
+</td>
+</tr>
+</table>"""
+            poll_body += stat_row + f"""<div style="font-size:10px;color:#888;margin-bottom:10px;">{pollster}{(' · ' + pdate) if pdate else ''}</div>"""
 
         if party:
             pr = ""
