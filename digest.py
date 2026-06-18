@@ -422,15 +422,13 @@ TIER 1: NEWS ARTICLES (last 24h)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {tier_json(payload.get("tier1", []))}
 
-For EACH article, return:
-- url, source, translated_title (English title — translate if Japanese)
-- categories: array of: Alliance / China-Japan / Korea-Japan / DPRK / Economy-BOJ / Politics-Diet / Defense / Technology / Indo-Pacific / Energy
-- relevance_score: 1-10 (10 = essential for a Japan policy analyst today)
-- summary: 1-2 sentences in clear policy-analyst prose
-- policy_so_what: For score >= 7 only. 1 sentence.
-- pattern_note: For ESCALATION or ANOMALY only. 1 sentence citing precedent ONLY if mentioned in today's articles or the reference databases. Do NOT cite from memory.
-- alliance_relevance: 1 sentence on US-Japan alliance implications if relevant, else null
-- is_reaction_source: true if Global Times, Xinhua, KCNA, TASS, RT
+Score and triage these Tier 1 articles INTERNALLY — do NOT emit a per-article array for Tier 1. Use them to populate the curated output sections defined under DIGEST SYNTHESIS below (top_stories, overnight_items, also_today, indo_pacific, business_economy). Only those synthesized sections are part of the output.
+
+When triaging, for each article weigh:
+- categories: Alliance / China-Japan / Korea-Japan / DPRK / Economy-BOJ / Politics-Diet / Defense / Technology / Indo-Pacific / Energy
+- relevance to a Japan policy analyst today (10 = essential)
+- whether it is a reaction source (Global Times, Xinhua, KCNA, TASS, RT) — attribute accordingly
+- US-Japan alliance implications, and any escalation/anomaly precedent that appears in today's articles or the reference databases (never cite precedent from memory)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TIER 2: OP-EDS & PRESTIGE COMMENTARY → OUTPUT: opeds_today
@@ -633,7 +631,7 @@ FAST_MODEL = "claude-sonnet-4-6"
 PRIMARY_MODEL = "claude-opus-4-8"
 
 
-def _stream_claude(client, messages: list, max_tokens: int = 16000,
+def _stream_claude(client, messages: list, max_tokens: int = 32000,
                   retries: int = 3, model: str | None = None) -> dict:
     use_model = model or PRIMARY_MODEL
     model_label = use_model.split("-")[1]
@@ -692,7 +690,7 @@ def _stream_claude(client, messages: list, max_tokens: int = 16000,
                 raise
 
 
-def _call_claude(client, user_prompt: str, max_tokens: int = 16000,
+def _call_claude(client, user_prompt: str, max_tokens: int = 32000,
                 model: str | None = None) -> dict:
     return _stream_claude(client, [{"role": "user", "content": user_prompt}],
                          max_tokens, model=model)
@@ -781,10 +779,13 @@ def generate_digest(payload: dict, db_context: str = "") -> dict:
             return digest
 
         except (anthropic.APIError, anthropic.APIConnectionError,
-               httpx.RemoteProtocolError, httpx.StreamError) as e:
+               httpx.RemoteProtocolError, httpx.StreamError,
+               json.JSONDecodeError, ValueError) as e:
+            # JSONDecodeError/ValueError usually mean a truncated or fence-wrapped
+            # response — retry (escalating to Opus on attempt >= 1) rather than crash.
             if attempt < MAX_ATTEMPTS - 1:
                 wait = 5 * (attempt + 1)
-                print(f"   ⚠ API error (retrying in {wait}s): {e}")
+                print(f"   ⚠ Generation error (retrying in {wait}s): {type(e).__name__}: {str(e)[:160]}")
                 time.sleep(wait)
             else:
                 raise
