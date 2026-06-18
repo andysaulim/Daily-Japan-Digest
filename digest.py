@@ -631,7 +631,6 @@ def _robust_json_parse(raw: str) -> dict:
 
 FAST_MODEL = "claude-sonnet-4-6"
 PRIMARY_MODEL = "claude-opus-4-8"
-_JSON_PREFILL = '{"'
 
 
 def _stream_claude(client, messages: list, max_tokens: int = 16000,
@@ -639,9 +638,10 @@ def _stream_claude(client, messages: list, max_tokens: int = 16000,
     use_model = model or PRIMARY_MODEL
     model_label = use_model.split("-")[1]
 
-    prefilled_messages = list(messages) + [
-        {"role": "assistant", "content": _JSON_PREFILL}
-    ]
+    # NOTE: The Claude 4.6/4.7/4.8 family does not support assistant-message
+    # prefill — a trailing {"role":"assistant"} turn returns a 400. The prompt
+    # already requires pure JSON; _robust_json_parse() strips any stray fences.
+    request_messages = list(messages)
 
     for attempt in range(retries):
         try:
@@ -655,7 +655,7 @@ def _stream_claude(client, messages: list, max_tokens: int = 16000,
                     "text": SYSTEM_PROMPT,
                     "cache_control": {"type": "ephemeral"},
                 }],
-                messages=prefilled_messages,
+                messages=request_messages,
             ) as stream:
                 for text in stream.text_stream:
                     collected.append(text)
@@ -665,7 +665,7 @@ def _stream_claude(client, messages: list, max_tokens: int = 16000,
                 print(f"   ⚠ Response truncated ({response.usage.output_tokens} tokens)")
 
             elapsed = time.time() - t0
-            raw_text = _JSON_PREFILL + "".join(collected)
+            raw_text = "".join(collected)
 
             if not raw_text.strip():
                 raise ValueError("Empty response from Claude API")
