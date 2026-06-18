@@ -43,7 +43,7 @@ International Security, International Organization, Security Studies, The Washin
 **Adversary signal:** China MOFA statements on Japan, North Korea (launches/statements affecting Japan), Russia (statements on Japan / Northern Territories).
 
 ### Market data (daily strip)
-Nikkei 225, TOPIX, USD/JPY, EUR/JPY, Brent crude, 10-year JGB yield, Bank of Japan policy rate, Japan 5Y CDS, GDP. *(Scraped live with sane fallbacks if a feed is down.)*
+Nikkei 225, USD/JPY, EUR/JPY, Brent crude, 10-year JGB yield, Bank of Japan policy rate, Japan 5Y CDS, GDP. *(Scraped live with sane fallbacks if a feed is down.)*
 
 ### Prestige outlets — mandatory inclusion
 A Japan story from **WSJ, NYT, WaPo, Bloomberg, FT, The Economist, CNN, Reuters, Nikkei Asia, or Japan Times** is never dropped.
@@ -53,7 +53,7 @@ A Japan story from **WSJ, NYT, WaPo, Bloomberg, FT, The Economist, CNN, Reuters,
 ## 3. Newsletter structure (sections in delivery order)
 
 1. **Header** — date, RE: line (one-sentence theme summary), editor's note
-2. **Market Strip** — Nikkei · TOPIX · USD/JPY · EUR/JPY · 10Y JGB · BOJ rate · Brent
+2. **Market Strip** — Nikkei · USD/JPY · EUR/JPY · 10Y JGB · BOJ rate · Brent
 3. **Morning Memo** — exactly 3 one-line items (the elevator brief)
 4. **Key Stat** — one striking number from the day's news
 5. **Top Stories** — 2–4 biggest hard-news items, each with a "so what" and (when sourced) a precedent note

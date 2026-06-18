@@ -530,7 +530,6 @@ def _collect_markets() -> dict:
 
     Symbols:
       - Nikkei 225
-      - TOPIX (may be unreliable — falls back gracefully)
       - USD/JPY
       - EUR/JPY
       - Brent crude
@@ -542,30 +541,26 @@ def _collect_markets() -> dict:
     """
     YAHOO_SYMBOLS = {
         "nikkei":   "^N225",
-        "topix":    "^TPX",
         "usd_jpy":  "JPY=X",
         "eur_jpy":  "EURJPY=X",
         "brent":    "BZ=F",
     }
     STOOQ_SYMBOLS = {
         "nikkei":   "^nkx",
-        "topix":    "^tpx",
         "usd_jpy":  "usdjpy",
         "eur_jpy":  "eurjpy",
         "brent":    "cb.f",
     }
     _SANITY_RANGES = {
-        # Wide bands: tolerate the elevated 2026 market regime (Nikkei ran ~71k)
-        # while still rejecting clearly-bad ticks (e.g. ^TPX returning ~105).
+        # Wide band: tolerate the elevated 2026 market regime (Nikkei ran ~71k).
         "nikkei":   (15000, 150000),
-        "topix":    (1000, 12000),
         "usd_jpy":  (80, 250),
         "eur_jpy":  (90, 300),
         "brent":    (20, 250),
     }
 
     def _format_value(key, price):
-        if key in ("nikkei", "topix"):
+        if key == "nikkei":
             return f"{price:,.2f}"
         return f"{price:.2f}"
 
