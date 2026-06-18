@@ -143,13 +143,14 @@ Return ONLY valid JSON. No markdown, no preamble, no commentary outside the JSON
 _POLITICAL_LEADERS = """\
 CURRENT POLITICAL LEADERS — REFERENCE (VERIFY from today's articles; leadership may have changed):
 
-JAPAN GOVERNMENT (the sitting Prime Minister and cabinet may have changed; ALWAYS use the name from today's articles if it differs):
-- Prime Minister: Sanae Takaichi (LDP) — Japan's first female prime minister; succeeded Shigeru Ishiba. VERIFY tenure and cabinet from today's articles; if an article names a different PM, USE THAT NAME.
-- Chief Cabinet Secretary: VERIFY from today's articles (rotates with cabinet reshuffles)
-- Foreign Minister (Gaimusho / MOFA): VERIFY from today's articles
-- Defense Minister (MOD): VERIFY from today's articles
-- Finance Minister (MOF): VERIFY from today's articles
-- METI Minister: VERIFY from today's articles
+JAPAN GOVERNMENT (Takaichi Cabinet, inaugurated Oct 21 2025, reshuffled Feb 18 2026 — VERIFY from today's articles; ALWAYS use the name from today's articles if it differs):
+- Prime Minister: Sanae Takaichi (LDP) — Japan's first female prime minister; succeeded Shigeru Ishiba (since Oct 21 2025). If an article names a different PM, USE THAT NAME.
+- Chief Cabinet Secretary: Minoru Kihara
+- Foreign Minister (Gaimusho / MOFA): Toshimitsu Motegi
+- Defense Minister (MOD): Shinjiro Koizumi
+- Finance Minister (MOF): Satsuki Katayama — Japan's first female finance minister
+- METI Minister: Ryosei Akazawa — also led US tariff negotiations
+- Internal Affairs & Communications Minister: Yoshimasa Hayashi
 - Bank of Japan Governor: Kazuo Ueda — since April 2023 (verify)
 - LDP leadership (President = PM by convention; Secretary-General, Policy Research Council chair): VERIFY
 - Komeito (LDP's coalition partner): leader VERIFY from articles
