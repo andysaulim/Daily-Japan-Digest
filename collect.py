@@ -555,11 +555,13 @@ def _collect_markets() -> dict:
         "brent":    "cb.f",
     }
     _SANITY_RANGES = {
-        "nikkei":   (20000, 60000),
-        "topix":    (1500, 4000),
-        "usd_jpy":  (100, 200),
-        "eur_jpy":  (110, 220),
-        "brent":    (40, 200),
+        # Wide bands: tolerate the elevated 2026 market regime (Nikkei ran ~71k)
+        # while still rejecting clearly-bad ticks (e.g. ^TPX returning ~105).
+        "nikkei":   (15000, 150000),
+        "topix":    (1000, 12000),
+        "usd_jpy":  (80, 250),
+        "eur_jpy":  (90, 300),
+        "brent":    (20, 250),
     }
 
     def _format_value(key, price):
