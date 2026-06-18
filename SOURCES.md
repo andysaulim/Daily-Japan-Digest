@@ -168,7 +168,6 @@ Feeds the persistent PM-appearance log ("days since last seen"). Queries are lea
 | Indicator | Primary source | Fallback |
 |---|---|---|
 | Nikkei 225 (`^N225`) | Yahoo Finance | Stooq |
-| TOPIX (`^TPX`) | Yahoo Finance | Stooq |
 | USD/JPY (`JPY=X`) | Yahoo Finance | Stooq |
 | EUR/JPY (`EURJPY=X`) | Yahoo Finance | Stooq |
 | Brent crude (`BZ=F`) | Yahoo Finance | Stooq |

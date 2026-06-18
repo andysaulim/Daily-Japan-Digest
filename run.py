@@ -132,17 +132,73 @@ def _validate_digest(digest: dict) -> list[str]:
 # ARCHIVE TO GITHUB PAGES
 # ─────────────────────────────────────────────────────────────────────────────
 
+def _decode_gnews_url(url: str, timeout: int = 8) -> str | None:
+    """Decode a Google News RSS article URL to the real publisher URL via Google's
+    batchexecute endpoint. Returns the real URL, or None on any failure.
+
+    Modern Google News RSS links (news.google.com/rss/articles/CBMi...) do not
+    HTTP-redirect; the real URL must be recovered by (1) scraping a per-article
+    signature + timestamp from the article page, then (2) POSTing them to the
+    batchexecute endpoint. (Algorithm per the widely-used gnews URL decoders.)
+    """
+    from urllib.parse import urlparse as _up, quote as _quote
+    import re as _re
+    try:
+        art_id = _up(url).path.split("/")[-1]
+        if not art_id or len(art_id) < 20:
+            return None
+        ua = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"}
+        r = _requests.get(f"https://news.google.com/rss/articles/{art_id}",
+                          timeout=timeout, headers=ua)
+        if not r.ok:
+            return None
+        sg = _re.search(r'data-n-a-sg="([^"]+)"', r.text)
+        ts = _re.search(r'data-n-a-ts="([^"]+)"', r.text)
+        if not (sg and ts):
+            return None
+        inner = ('["garturlreq",[["X","X",["X","X"],null,null,1,1,"US:en",null,1,'
+                 'null,null,null,null,null,0,1],"X","X",1,[1,1,1],1,1,null,0,0,null,0],'
+                 f'"{art_id}",{ts.group(1)},"{sg.group(1)}"]')
+        freq = json.dumps([[["Fbv4je", inner]]])
+        resp = _requests.post(
+            "https://news.google.com/_/DotsSplashUi/data/batchexecute",
+            data="f.req=" + _quote(freq),
+            headers={"content-type": "application/x-www-form-urlencoded;charset=UTF-8", **ua},
+            timeout=timeout,
+        )
+        if not resp.ok:
+            return None
+        arr = json.loads(resp.text.split("\n\n")[1])
+        real = json.loads(arr[0][2])[1]
+        return real if isinstance(real, str) and real.startswith("http") else None
+    except Exception:
+        return None
+
+
 def _resolve_google_url(url: str) -> str:
-    """Follow a Google News redirect URL to get the real article URL."""
+    """Resolve a Google News RSS URL to the real article URL.
+
+    Tries the batchexecute decoder first, then a plain redirect-follow. If both
+    fail, KEEPS the Google News URL — it still resolves to the article in a
+    browser — rather than dropping the link entirely.
+    """
+    if "news.google.com" not in url:
+        return url
+    decoded = _decode_gnews_url(url)
+    if decoded:
+        return decoded
     try:
         resp = _requests.get(
             url, allow_redirects=True, timeout=6,
             headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
         )
         final = resp.url
-        return final if final and not final.startswith("https://news.google.com") else url
+        if final and not final.startswith("https://news.google.com"):
+            return final
     except Exception:
-        return url
+        pass
+    return url  # keep the Google News URL — browser-resolvable, better than blank
 
 
 def _resolve_payload_urls(payload: dict) -> dict:
@@ -239,12 +295,16 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
             google_urls[url] = url
 
     if google_urls:
-        print(f"   ↻ Resolving {len(google_urls)} Google News redirect(s)...")
-        with _ThreadPoolExecutor(max_workers=10) as pool:
+        print(f"   ↻ Decoding {len(google_urls)} Google News URL(s)...")
+        with _ThreadPoolExecutor(max_workers=6) as pool:
             futures = {pool.submit(_resolve_google_url, u): u for u in google_urls}
             for future in _as_completed(futures):
                 original = futures[future]
                 google_urls[original] = future.result()
+
+        decoded = sum(1 for v in google_urls.values() if "news.google.com" not in v)
+        print(f"   ✓ {decoded}/{len(google_urls)} decoded to real article URLs "
+              f"(rest keep their browser-resolvable Google News link)")
 
         for section in _URL_SECTIONS:
             for item in (digest.get(section) or []):
@@ -253,15 +313,6 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
         for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
             if isinstance(item, dict) and item.get("url") in google_urls:
                 item["url"] = google_urls[item["url"]]
-
-    # Strip any remaining news.google.com URLs — broken in email clients
-    for section in _URL_SECTIONS:
-        for item in (digest.get(section) or []):
-            if isinstance(item, dict) and "news.google.com" in (item.get("url") or ""):
-                item["url"] = ""
-    for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
-        if isinstance(item, dict) and "news.google.com" in (item.get("url") or ""):
-            item["url"] = ""
 
     return digest
 
@@ -335,9 +386,9 @@ def run_pipeline(args: argparse.Namespace) -> int:
         print(f"\n✅ Dry run complete. Cached to {COLLECTED_JSON.name}")
         return 0
 
-    # ─── Pre-resolve Google News redirect URLs in payload ────────────────
-    print("\n🔗 Pre-resolving Google News URLs in payload...")
-    payload = _resolve_payload_urls(payload)
+    # ─── Google News URLs are decoded post-digest in _sanitise_urls ──────
+    # (only the ~30 URLs that actually land in the digest, not all ~120 —
+    # avoids hammering Google's endpoint and tripping rate limits).
 
     # ─── Reference database context (Japan timelines) ────────────────────
     db_context = ""

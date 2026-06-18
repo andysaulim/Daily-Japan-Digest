@@ -10,14 +10,14 @@ Automated daily intelligence briefing on Japan and the US-Japan alliance for the
 
 | Metric | Value |
 | --- | --- |
-| Last generated | — |
-| Digest date | — |
-| Articles collected | — |
-| Unique sources | — |
-| Top stories | — |
-| Overnight items | — |
-| Word count | — |
-| PM appeared | — |
+| Last generated | Jun 18, 2026 at 2:39 PM ET |
+| Digest date | Thursday, June 18, 2026 |
+| Articles collected | 53 |
+| Unique sources | 13 |
+| Top stories | 4 |
+| Overnight items | 6 |
+| Word count | ~1,774 |
+| PM appeared | Yes |
 
 ## How It Works
 
@@ -29,7 +29,7 @@ collect.py          digest.py           render.py          send_email.py
   + region watch        (Senkaku, alliance, DPRK)
 ```
 
-1. **Collect** — Scrapes 60+ RSS feeds in parallel across 4 tiers, plus market data (Nikkei 225, TOPIX, USD/JPY, EUR/JPY, Brent, 10Y JGB, BOJ policy rate, Japan 5Y CDS)
+1. **Collect** — Scrapes 60+ RSS feeds in parallel across 4 tiers, plus market data (Nikkei 225, USD/JPY, EUR/JPY, Brent, 10Y JGB, BOJ policy rate, Japan 5Y CDS)
 2. **Enrich** — Injects verified Japan reference timelines: Senkaku/East China Sea incidents, US-Japan alliance milestones, DPRK missiles over/near Japan
 3. **Digest** — Claude Sonnet (`claude-sonnet-4-6`) generates the initial briefing; Opus (`claude-opus-4-8`) escalates on retry if content minimums aren't met (target 1,200–1,400 words)
 4. **Validate** — Pre-send quality gate: word count, source diversity, duplicates, prestige outlet inclusion, data integrity
@@ -61,7 +61,7 @@ collect.py          digest.py           render.py          send_email.py
 | # | Section | Description |
 | - | - | - |
 | 1 | Header | Date · RE line · editor's note |
-| 2 | Market Strip | Nikkei 225 · TOPIX · USD/JPY · EUR/JPY · Brent · 10Y JGB · Japan 5Y CDS · BOJ policy rate · GDP |
+| 2 | Market Strip | Nikkei 225 · USD/JPY · EUR/JPY · Brent · 10Y JGB · Japan 5Y CDS · BOJ policy rate · GDP |
 | 3 | Δ Since Yesterday | What moved: BOJ, tariffs, scrambles, CCG presence, DPRK launches |
 | 4 | Morning Memo | Top 3 stories at a glance — elevator brief |
 | 5 | Top Stories | 2–4 biggest hard news stories with "So what" + pattern_note |

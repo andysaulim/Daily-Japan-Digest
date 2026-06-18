@@ -15,7 +15,7 @@ Orchestrated by `run.py`. Triggered via GitHub Actions `workflow_dispatch` + a 1
 | File | Role |
 |------|------|
 | `run.py` | Pipeline orchestrator — runs collect → digest → validate → render → send |
-| `collect.py` | Parallel RSS scraper, market data (Nikkei, TOPIX, USD/JPY, EUR/JPY, Brent, JGB, BOJ rate, CDS), PM-appearance feeds |
+| `collect.py` | Parallel RSS scraper, market data (Nikkei, USD/JPY, EUR/JPY, Brent, JGB, BOJ rate, CDS), PM-appearance feeds |
 | `digest.py` | Claude API integration — system prompt, structured JSON output, Sonnet-first (`claude-sonnet-4-6`) with Opus retry (`claude-opus-4-8`) |
 | `render.py` | HTML email renderer — table-based layout, inline CSS, dark mode, mobile responsive |
 | `send_email.py` | Gmail SMTP sender (SSL, port 465) |
