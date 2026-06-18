@@ -6,6 +6,10 @@ on:
     - cron: '0 10 * * *'
   workflow_dispatch:
     inputs:
+      dry_run:
+        description: 'Collection only — no API key needed. Scrapes all feeds + market data, uploads collected.json. Skips digest/render/send.'
+        type: boolean
+        default: false
       live_send:
         description: 'Actually send the email. Leave false for a safe test run (collect + digest + render only; HTML uploaded as an artifact, no email, no archive commit).'
         type: boolean
@@ -52,7 +56,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           WEB_URL: ${{ vars.WEB_URL }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.live_send }}" != "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "::notice::DRY RUN — collection only (no API key required). Skips digest/render/send."
+            python run.py --dry-run
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.live_send }}" != "true" ]; then
             echo "::notice::TEST RUN — collect + digest + render only (no email, no archive)."
             python run.py --no-send --no-archive
           else
@@ -63,8 +70,9 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: digest-html
+          name: digest-output
           path: |
+            collected.json
             digest.html
             digest.json
           if-no-files-found: ignore
