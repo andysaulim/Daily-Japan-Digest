@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-06-19",
+      "activity": "PM Takaichi's office posted the G7 Evian Summit Day 3 readout confirming her participation in an AI adoption working lunch and bilateral meetings; she separately acknowledged advancing food-tax reduction talks.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-19T13:32:52.481810+00:00"
+    },
+    {
       "date": "2026-06-18",
       "activity": "PM Takaichi concluded the G7 Evian Summit, confirmed all her proposals were adopted in the final communique, held a bilateral with Italian President Meloni, and issued statements on the US-Iran deal and Strait of Hormuz.",
       "source": "digest",
@@ -22,5 +29,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-06-18T18:39:14.152663+00:00"
+  "last_updated": "2026-06-19T13:32:52.481842+00:00"
 }

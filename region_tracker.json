@@ -14,7 +14,14 @@
         "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy; North Korean state media separately touted industrial output exceeding targets."
       },
       "watch_flag": false
+    },
+    "2026-06-19": {
+      "signals": {
+        "china_signal": "Chinese Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and China formally rejected Defense Minister Koizumi's challenge to China's officially re",
+        "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy reporting on June 18-19."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-18T18:39:14.152923+00:00"
+  "last_updated": "2026-06-19T13:32:52.482140+00:00"
 }
