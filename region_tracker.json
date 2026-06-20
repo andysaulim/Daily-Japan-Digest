@@ -21,7 +21,13 @@
         "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy reporting on June 18-19."
       },
       "watch_flag": false
+    },
+    "2026-06-20": {
+      "signals": {
+        "china_signal": "China's foreign ministry rebuked US deterrence consultations with South Korea and Japan, calling trilateral coordination destabilizing; Beijing separately maintained criticism of PM Takaichi's G7 Evian rare-earth remarks as 'stoking confrontation.' China's key mineral exports to Japan stayed at low "
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-19T13:32:52.482140+00:00"
+  "last_updated": "2026-06-20T11:54:29.661747+00:00"
 }
