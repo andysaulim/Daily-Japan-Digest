@@ -34,7 +34,13 @@
         "dprk_signal": "Ukrainian military assessments indicate North Korean ballistic missiles deployed by Russia have shown improved accuracy, per Kyodo News — a technical development relevant to Japan's missile defense planning and DPRK program tracking."
       },
       "watch_flag": false
+    },
+    "2026-06-22": {
+      "signals": {
+        "china_signal": "China's foreign ministry, via Xinhua, characterized Japan's defense buildup as a 'retrogression' and 'path of no return' — its sharpest formulation to date — while separately urging Japan to conduct 'soul-searching' over a wartime atrocity report, per Global Times. Both statements coincide with the "
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-21T12:08:37.995870+00:00"
+  "last_updated": "2026-06-22T15:17:17.100122+00:00"
 }
