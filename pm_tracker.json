@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-06-23",
+      "activity": "PM Takaichi published a contributed article to France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan posting dated June 22-23.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-23T12:32:49.031737+00:00"
+    },
+    {
       "date": "2026-06-22",
       "activity": "PM Takaichi published a contributed article in France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan.",
       "source": "digest",
@@ -50,5 +57,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-06-22T15:17:17.099823+00:00"
+  "last_updated": "2026-06-23T12:32:49.031772+00:00"
 }
