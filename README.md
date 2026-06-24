@@ -84,6 +84,8 @@ collect.py          digest.py           render.py          send_email.py
 
 ## Setup
 
+**Full setup & operations guide: [`SETUP.md`](SETUP.md)** (secrets, GitHub Actions, local runs, troubleshooting, go-live checklist).
+
 ### Prerequisites
 - Python 3.12+
 - Anthropic API key (Claude Sonnet)
