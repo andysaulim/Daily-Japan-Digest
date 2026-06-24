@@ -10,13 +10,13 @@ Automated daily intelligence briefing on Japan and the US-Japan alliance for the
 
 | Metric | Value |
 | --- | --- |
-| Last generated | Jun 18, 2026 at 2:39 PM ET |
-| Digest date | Thursday, June 18, 2026 |
-| Articles collected | 53 |
-| Unique sources | 13 |
-| Top stories | 4 |
-| Overnight items | 6 |
-| Word count | ~1,774 |
+| Last generated | Jun 24, 2026 at 8:18 AM ET |
+| Digest date | Wednesday, June 24, 2026 |
+| Articles collected | 52 |
+| Unique sources | 6 |
+| Top stories | 3 |
+| Overnight items | 4 |
+| Word count | ~1,146 |
 | PM appeared | Yes |
 
 ## How It Works
@@ -83,6 +83,8 @@ collect.py          digest.py           render.py          send_email.py
 ---
 
 ## Setup
+
+**Full setup & operations guide: [`SETUP.md`](SETUP.md)** (secrets, GitHub Actions, local runs, troubleshooting, go-live checklist).
 
 ### Prerequisites
 - Python 3.12+
