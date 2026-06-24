@@ -47,7 +47,14 @@
         "dprk_signal": "North Korea tested a new multi-purpose missile launch system per KCNA, and Kim Jong Un publicly asserted the country will exercise its position as a nuclear state while warning of nuclear war risk and vowing faster defense buildup. Mainichi separately reported Kim characterized Japan as turning into"
       },
       "watch_flag": false
+    },
+    "2026-06-24": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 press conference called on the international community to remain vigilant against Japan's 'neo-militarism' and characterized Japan's remilitarization as a 'retrogression' and 'path of no return.' Simultaneously, Beijing detained two Jap",
+        "dprk_signal": "Kim Jong Un asserted North Korea will exercise its nuclear state status and warned of nuclear war risk while vowing faster defense buildup; North Korea separately commissioned its largest-ever warship, per Reuters, Türkiye Today, and Egypt Independent."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-23T12:32:49.032082+00:00"
+  "last_updated": "2026-06-24T12:18:42.154882+00:00"
 }
