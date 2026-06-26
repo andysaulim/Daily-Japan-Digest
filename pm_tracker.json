@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-06-26",
+      "activity": "PM Takaichi spoke to the press regarding the M7.2 earthquake off the coast of Iwate Prefecture, per the Prime Minister's Office of Japan.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-26T12:11:25.065309+00:00"
+    },
+    {
       "date": "2026-06-24",
       "activity": "PM Takaichi attended the 81st anniversary memorial ceremony for the Battle of Okinawa and was heckled by anti-war protesters; her Le Figaro contributed article was also posted by the Prime Minister's Office.",
       "source": "digest",
@@ -64,5 +71,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-06-24T12:18:42.154574+00:00"
+  "last_updated": "2026-06-26T12:11:25.065346+00:00"
 }

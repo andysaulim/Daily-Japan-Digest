@@ -54,7 +54,14 @@
         "dprk_signal": "Kim Jong Un asserted North Korea will exercise its nuclear state status and warned of nuclear war risk while vowing faster defense buildup; North Korea separately commissioned its largest-ever warship, per Reuters, Türkiye Today, and Egypt Independent."
       },
       "watch_flag": false
+    },
+    "2026-06-26": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — a message framed around the ongoing rare-earth export restrictions and the Fuji Electric worker detentions. China simultaneously defended patrols east of Taiwan and rej",
+        "dprk_signal": "Kim Jong Un oversaw ballistic missile tests and KCNA reported a successful test of tactical nuclear strike capability against South Korean power stations; North Korea also commissioned its first-in-class guided-missile destroyer, Choe Hyon, and announced plans for a cruiser, a step-change in DPRK su"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-24T12:18:42.154882+00:00"
+  "last_updated": "2026-06-26T12:11:25.065677+00:00"
 }
