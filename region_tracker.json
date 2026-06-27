@@ -61,7 +61,14 @@
         "dprk_signal": "Kim Jong Un oversaw ballistic missile tests and KCNA reported a successful test of tactical nuclear strike capability against South Korean power stations; North Korea also commissioned its first-in-class guided-missile destroyer, Choe Hyon, and announced plans for a cruiser, a step-change in DPRK su"
       },
       "watch_flag": false
+    },
+    "2026-06-27": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — framing pressure around rare-earth export restrictions and Fuji Electric worker detentions in China. Japan separately filed a formal protest over Chinese gas drilling i",
+        "dprk_signal": "Kim Jong Un oversaw tests of ballistic missiles, a modernized multiple-launch rocket system, and a tactical nuclear-strike system targeting South Korean power stations, per KCNA; North Korea simultaneously commissioned the Choe Hyon, its first-in-class 5,000-ton guided-missile destroyer, and announc"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-06-26T12:11:25.065677+00:00"
+  "last_updated": "2026-06-27T11:24:16.769029+00:00"
 }
