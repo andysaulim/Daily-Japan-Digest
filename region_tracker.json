@@ -68,7 +68,15 @@
         "dprk_signal": "Kim Jong Un oversaw tests of ballistic missiles, a modernized multiple-launch rocket system, and a tactical nuclear-strike system targeting South Korean power stations, per KCNA; North Korea simultaneously commissioned the Choe Hyon, its first-in-class 5,000-ton guided-missile destroyer, and announc"
       },
       "watch_flag": true
+    },
+    "2026-06-28": {
+      "signals": {
+        "china_signal": "Chinese and Russian bombers and fighter jets conducted a joint air patrol over the Sea of Japan and surrounding waters, per Japan Times and NHK World. Xinhua separately published a commentary characterizing PM Takaichi's political funds investigation as evidence of 'political-business collusion behi",
+        "dprk_signal": "Tier 4 data confirms North Korea tested a modernized multiple-launch rocket system and a ballistic missile, per Caliber.Az and Russian defense outlet reporting, and commissioned the Choe Hyon, its first-in-class 5,000-ton guided-missile destroyer, per Marine Insight. Japan, the US, and South Korea h",
+        "russia_signal": "Russia participated in the joint air patrol with China over the Sea of Japan, per Japan Times and NHK; no separate Russia-specific Northern Territories or Hokkaido activity reported in today's articles."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-06-27T11:24:16.769029+00:00"
+  "last_updated": "2026-06-28T11:44:53.945191+00:00"
 }
