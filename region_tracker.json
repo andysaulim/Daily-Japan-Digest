@@ -84,7 +84,14 @@
         "russia_signal": "Russia participated alongside China in a joint bomber and fighter jet patrol near Japan in the Sea of Japan region; Japan conveyed concerns to Moscow through diplomatic channels, per Jiji Press. No separate Northern Territories or Hokkaido-specific Russian activity was reported in today's articles."
       },
       "watch_flag": false
+    },
+    "2026-06-30": {
+      "signals": {
+        "china_signal": "China added 20 more Japanese entities to its dual-use export control blacklist on June 29-30, bringing cumulative blacklistings to at least 40 organizations; China's Foreign Ministry dismissed Tokyo's objections to CCG activities east of Taiwan as illegitimate while characterizing those operations a",
+        "dprk_signal": "North Korea issued formal denunciations of ongoing US-Japan joint military drills, warning both Washington and Tokyo against continuing such exercises. South Korea confirmed close coordination with the US following the belated disclosure of North Korea's latest missile launch."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-29T14:03:10.742104+00:00"
+  "last_updated": "2026-06-30T12:09:47.944547+00:00"
 }
