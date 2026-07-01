@@ -91,7 +91,13 @@
         "dprk_signal": "North Korea issued formal denunciations of ongoing US-Japan joint military drills, warning both Washington and Tokyo against continuing such exercises. South Korea confirmed close coordination with the US following the belated disclosure of North Korea's latest missile launch."
       },
       "watch_flag": false
+    },
+    "2026-07-01": {
+      "signals": {
+        "china_signal": "China arrested two Japanese nationals in Dalian and its Foreign Ministry told Tokyo to 'educate' nationals on Chinese law. Beijing also protested Japan's joint maritime activities with the Philippines, formally characterizing them as an infringement of China's maritime rights, while demanding Japan "
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-06-30T12:09:47.944547+00:00"
+  "last_updated": "2026-07-01T12:33:18.073580+00:00"
 }

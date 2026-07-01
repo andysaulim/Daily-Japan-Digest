@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-01",
+      "activity": "PM Takaichi departed Japan for New Delhi on July 1 for a summit with Indian PM Modi, published a contributed article in the Times of India, and recorded a video message for the 50th anniversary of the NARA Treaty commemorative dinner.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-01T12:33:18.073249+00:00"
+    },
+    {
       "date": "2026-06-26",
       "activity": "PM Takaichi spoke to the press regarding the M7.2 earthquake off the coast of Iwate Prefecture, per the Prime Minister's Office of Japan.",
       "source": "digest",
@@ -71,5 +78,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-06-26T12:11:25.065346+00:00"
+  "last_updated": "2026-07-01T12:33:18.073280+00:00"
 }
