@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-02",
+      "activity": "PM Takaichi concluded the annual Japan-India summit in New Delhi with PM Modi, signing AI, defense, and energy deals, with 150 firms committing $12.5 billion in investment.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-02T12:07:07.689995+00:00"
+    },
+    {
       "date": "2026-07-01",
       "activity": "PM Takaichi departed Japan for New Delhi on July 1 for a summit with Indian PM Modi, published a contributed article in the Times of India, and recorded a video message for the 50th anniversary of the NARA Treaty commemorative dinner.",
       "source": "digest",
@@ -78,5 +85,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-01T12:33:18.073280+00:00"
+  "last_updated": "2026-07-02T12:07:07.690034+00:00"
 }
