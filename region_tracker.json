@@ -104,7 +104,13 @@
         "russia_signal": "Russia and China conducted another joint bomber mission near Japan and South Korea, per USNI News, continuing a pattern of coordinated air patrols documented in the regional tracker since at least June 28-29."
       },
       "watch_flag": false
+    },
+    "2026-07-03": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry issued at least five coordinated statements rejecting Japan's updated Free and Open Indo-Pacific framework, characterizing it as sowing 'division and rivalry,' and separately warned that India-Japan critical minerals cooperation 'should not target or harm the interests of an"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-02T12:07:07.690402+00:00"
+  "last_updated": "2026-07-03T12:05:17.172859+00:00"
 }
