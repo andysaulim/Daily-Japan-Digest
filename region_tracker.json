@@ -118,7 +118,14 @@
         "russia_signal": "No new Russia-specific Northern Territories, Hokkaido, or bilateral Japan-Russia activity is reported in today's articles. The announced Chinese-Russian joint naval drills off China's coast (Nikkei Asia) continues the pattern of Sino-Russian military coordination documented in the regional tracker."
       },
       "watch_flag": false
+    },
+    "2026-07-06": {
+      "signals": {
+        "china_signal": "China test-fired a submarine-launched ballistic missile into the South Pacific nuclear-free zone, with Japan informed by Chinese authorities, per Kyodo and Nikkei Asia; the test follows China's recent SLBM and naval expansion activity and occurred within waters covered by the Treaty of Rarotonga. Ch",
+        "dprk_signal": "Kim Jong Un personally oversaw cruise missile launches and multiple weapons tests from the guided-missile destroyer Kang Kon, North Korea's recently repaired surface combatant, per KCNA-sourced reporting confirmed by Reuters, Yonhap, Japan Times, and Straits Times; separately, North Korea tested new"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-05T11:27:29.457974+00:00"
+  "last_updated": "2026-07-06T13:42:53.829505+00:00"
 }
