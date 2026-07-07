@@ -125,7 +125,14 @@
         "dprk_signal": "Kim Jong Un personally oversaw cruise missile launches and multiple weapons tests from the guided-missile destroyer Kang Kon, North Korea's recently repaired surface combatant, per KCNA-sourced reporting confirmed by Reuters, Yonhap, Japan Times, and Straits Times; separately, North Korea tested new"
       },
       "watch_flag": true
+    },
+    "2026-07-07": {
+      "signals": {
+        "china_signal": "Two China Coast Guard ships entered Japanese territorial waters off the Senkaku Islands on July 7, while China's state media simultaneously rebuked Tokyo for what Beijing characterized as interference with Chinese scientific research operations near the Diaoyu Dao. China's SLBM test into the South P",
+        "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' continuing a messaging campaign that directly targets Japan's counterstrike capability program; Kim Jong Un oversaw cruise missile launches from the Kang Kon destroyer and "
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-06T13:42:53.829505+00:00"
+  "last_updated": "2026-07-07T12:28:04.070042+00:00"
 }
