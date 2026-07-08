@@ -132,7 +132,14 @@
         "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' continuing a messaging campaign that directly targets Japan's counterstrike capability program; Kim Jong Un oversaw cruise missile launches from the Kang Kon destroyer and "
       },
       "watch_flag": true
+    },
+    "2026-07-08": {
+      "signals": {
+        "china_signal": "China and Japan issued contradictory official accounts of a confrontation near the Senkaku / Diaoyu Islands, while China's Global Times rebuked Tokyo for alleged interference with Chinese scientific research operations near the Diaoyu Dao. China's Foreign Ministry dismissed regional concerns over it",
+        "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' directly targeting Japan's counterstrike capability program; separately, North Korea is reported to be flexing naval capabilities ahead of anticipated China-Russia joint dr"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-07T12:28:04.070042+00:00"
+  "last_updated": "2026-07-08T11:48:09.986519+00:00"
 }
