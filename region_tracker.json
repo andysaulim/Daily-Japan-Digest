@@ -139,7 +139,14 @@
         "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' directly targeting Japan's counterstrike capability program; separately, North Korea is reported to be flexing naval capabilities ahead of anticipated China-Russia joint dr"
       },
       "watch_flag": true
+    },
+    "2026-07-09": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry told countries not to 'overread' Beijing's SLBM test into the South Pacific, in direct response to the US-Japan-South Korea trilateral joint statement of concern. China's detention of two Japanese nationals in Dalian, first reported in early July, received renewed coverage v",
+        "dprk_signal": "North Korea's guided-missile destroyer Kang Kon — which capsized at its own launch ceremony — is now entering service, per 19FortyFive, adding to the DPRK surface strike capability that Kim Jong Un has used for recent weapons tests. North Korean state media continued messaging characterizing Japan-S"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-08T11:48:09.986519+00:00"
+  "last_updated": "2026-07-09T12:30:39.934336+00:00"
 }

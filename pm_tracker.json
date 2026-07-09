@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-09",
+      "activity": "PM Takaichi was scheduled to hold a debate with opposition leaders and was referenced in Diet session reporting, per Nippon.com and China Daily.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-09T12:30:39.933883+00:00"
+    },
+    {
       "date": "2026-07-08",
       "activity": "PM Takaichi paid tribute to former PM Abe on the fourth anniversary of his assassination and was referenced in Diet session reporting as accepting opposition demands to resume upper house deliberations.",
       "source": "digest",
@@ -99,5 +106,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-08T11:48:09.986086+00:00"
+  "last_updated": "2026-07-09T12:30:39.933919+00:00"
 }
