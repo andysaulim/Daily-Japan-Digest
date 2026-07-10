@@ -146,7 +146,15 @@
         "dprk_signal": "North Korea's guided-missile destroyer Kang Kon — which capsized at its own launch ceremony — is now entering service, per 19FortyFive, adding to the DPRK surface strike capability that Kim Jong Un has used for recent weapons tests. North Korean state media continued messaging characterizing Japan-S"
       },
       "watch_flag": false
+    },
+    "2026-07-10": {
+      "signals": {
+        "china_signal": "The US-Japan-South Korea trilateral is conducting a joint investigation into China's July 6 SLBM test into the South Pacific nuclear-free zone, per VOI.id; the July 7-8 CCG Senkaku intrusion pattern from the regional tracker has not been superseded by new territorial-waters reporting in today's feed",
+        "dprk_signal": "North Korea publicly vowed to accelerate its nuclear buildup and military intelligence capabilities, while the Kang Kon guided-missile destroyer — which capsized at its commissioning ceremony — advanced toward operational service, per 19FortyFive and The Standard.",
+        "russia_signal": "Russia's Education Minister visited one of the four islands Japan claims as its Northern Territories, per Jiji Press; no new naval or air incursion near Hokkaido was reported in today's feed."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-09T12:30:39.934336+00:00"
+  "last_updated": "2026-07-10T12:23:56.684078+00:00"
 }
