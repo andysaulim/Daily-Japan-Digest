@@ -154,7 +154,14 @@
         "russia_signal": "Russia's Education Minister visited one of the four islands Japan claims as its Northern Territories, per Jiji Press; no new naval or air incursion near Hokkaido was reported in today's feed."
       },
       "watch_flag": false
+    },
+    "2026-07-11": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry directed a message to NATO to 'abandon Cold War mentality,' a formulation Beijing has applied to Japan's engagement with NATO and Western security forums. Nikkei Asia reports China has stepped up its simultaneous maritime push against both the Philippines and Japan, framing ",
+        "dprk_signal": "KCNA reported North Korea has decided to expand its nuclear force 'both in quality and quantity' while modernizing its military and strengthening combat readiness, continuing a messaging campaign that has specifically targeted Japan's counterstrike capability program in recent weeks per the regional"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-10T12:23:56.684078+00:00"
+  "last_updated": "2026-07-11T10:57:49.047430+00:00"
 }
