@@ -161,7 +161,15 @@
         "dprk_signal": "KCNA reported North Korea has decided to expand its nuclear force 'both in quality and quantity' while modernizing its military and strengthening combat readiness, continuing a messaging campaign that has specifically targeted Japan's counterstrike capability program in recent weeks per the regional"
       },
       "watch_flag": false
+    },
+    "2026-07-12": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry issued a statement to NATO calling for abandonment of 'Cold War mentality,' a formulation Beijing has repeatedly applied to Japan's NATO engagement and Western security alignment. No new Senkaku territorial-waters intrusion is reported in today's feed; the July 7-8 CCG intru",
+        "dprk_signal": "KCNA reported North Korea has decided to expand its nuclear force 'both in quality and quantity' while modernizing its military and strengthening combat readiness, continuing a messaging campaign that has specifically targeted Japan's counterstrike capability program in recent weeks.",
+        "russia_signal": "The New York Times and Japan Times published a detailed report on Russian intelligence operations inside Japan, describing networks that expanded after Russia's 2022 invasion of Ukraine. No new Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-11T10:57:49.047430+00:00"
+  "last_updated": "2026-07-12T11:07:01.080836+00:00"
 }
