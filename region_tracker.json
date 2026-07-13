@@ -169,7 +169,13 @@
         "russia_signal": "The New York Times and Japan Times published a detailed report on Russian intelligence operations inside Japan, describing networks that expanded after Russia's 2022 invasion of Ukraine. No new Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
       },
       "watch_flag": false
+    },
+    "2026-07-13": {
+      "signals": {
+        "china_signal": "China's foreign ministry lodged stern representations with Japan over the foreign minister's co-signature of a 14-nation joint statement reaffirming the 2016 South China Sea arbitral ruling as legally binding, with Beijing's spokesperson 'strongly deploring' the statement and warning against 'stirri"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-12T11:07:01.080836+00:00"
+  "last_updated": "2026-07-13T12:29:53.260233+00:00"
 }
