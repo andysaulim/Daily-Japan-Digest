@@ -151,6 +151,7 @@ JAPAN GOVERNMENT (Takaichi Cabinet, inaugurated Oct 21 2025, reshuffled Feb 18 2
 - Finance Minister (MOF): Satsuki Katayama — Japan's first female finance minister
 - METI Minister: Ryosei Akazawa — also led US tariff negotiations
 - Internal Affairs & Communications Minister: Yoshimasa Hayashi
+- Minister for Economic Security: Kimi Onoda — also handles the "foreign nationals" (foreign residents/immigration policy coordination) portfolio
 - Bank of Japan Governor: Kazuo Ueda — since April 2023 (verify)
 - LDP leadership (President = PM by convention; Secretary-General, Policy Research Council chair): VERIFY
 - Komeito (LDP's coalition partner): leader VERIFY from articles
