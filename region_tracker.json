@@ -181,7 +181,14 @@
         "china_signal": "China launched a two-track diplomatic response after Japan's foreign minister co-signed a 14-nation joint statement reaffirming the 2016 South China Sea arbitral ruling as legally binding: Beijing summoned Japan's ambassador and simultaneously had the Chinese Embassy in Japan file a separate solemn "
       },
       "watch_flag": false
+    },
+    "2026-07-15": {
+      "signals": {
+        "china_signal": "No new China Coast Guard territorial-waters intrusion or PLA activity near the Senkakus is reported in today's feed. The tracker's last recorded China signal was July 14, when Beijing summoned Japan's ambassador and the Chinese Embassy filed a solemn representation over Japan's co-signature of a 14-",
+        "russia_signal": "The Guardian published a detailed report on Russian intelligence networks operating inside Japan, noting expansion after Russia's 2022 invasion of Ukraine. Japan officially acknowledged a growing counter-espionage need in response; no new Northern Territories or Hokkaido air-sea incursion is reporte"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-14T11:21:49.268001+00:00"
+  "last_updated": "2026-07-15T11:25:49.721474+00:00"
 }
