@@ -188,7 +188,14 @@
         "russia_signal": "The Guardian published a detailed report on Russian intelligence networks operating inside Japan, noting expansion after Russia's 2022 invasion of Ukraine. Japan officially acknowledged a growing counter-espionage need in response; no new Northern Territories or Hokkaido air-sea incursion is reporte"
       },
       "watch_flag": false
+    },
+    "2026-07-16": {
+      "signals": {
+        "china_signal": "Global Times published two pieces amplifying Chinese expert criticism of Japan's co-signature of the 14-nation South China Sea arbitral-ruling statement, framing Tokyo's posture as reflecting 'strategic ambitions' and warning Japan to consider whether its own maritime rights could be undermined — co",
+        "dprk_signal": "The US, South Korea, and Japan defense chiefs convened in Washington specifically to coordinate on North Korea threats; separately, StratNews Global reports Japan is weighing nuclear option discussions in response to simultaneous DPRK nuclear expansion declarations and China pressure."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-15T11:25:49.721474+00:00"
+  "last_updated": "2026-07-16T01:09:47.985335+00:00"
 }

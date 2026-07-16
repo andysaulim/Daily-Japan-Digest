@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi publicly stated tax-cut talks are expected to conclude by early August and is engaged in Diet session extension deliberations.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T01:09:47.984856+00:00"
+    },
+    {
       "date": "2026-07-15",
       "activity": "PM Takaichi publicly stated that the government's draft economic blueprint is not the cause of the bond market rout, spoke at WebX 2026 pledging expanded startup and Web3 funding, and the government held press conferences through the Deputy Chief Cabinet Secretary.",
       "source": "digest",
@@ -113,5 +120,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-15T11:25:49.721025+00:00"
+  "last_updated": "2026-07-16T01:09:47.984888+00:00"
 }
