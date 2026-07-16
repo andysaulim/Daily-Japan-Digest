@@ -610,6 +610,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             deal = _esc(str(tt.get("trade_deal_status", "")))
             lc = _esc(str(tt.get("last_change", "")))
             nt = _esc(str(tt.get("next_trigger", "")))
+            s301 = _esc(str(tt.get("section_301_watch", "") or ""))
+            invf = _esc(str(tt.get("investment_framework", "") or ""))
             s232 = tt.get("section_232_rates", {})
             sr = ""
             for sec, rate in s232.items():
@@ -620,14 +622,18 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 </tr>"""
             nl = f'<div style="margin-top:4px;font-size:10px;color:#2980B9;">Next trigger: {nt}</div>' if nt else ""
             dl = f'<div style="margin-top:4px;font-size:11px;color:#666;">Trade deal: {deal}</div>' if deal else ""
+            il = f'<div style="margin-top:4px;font-size:11px;color:#16A085;font-weight:600;">Investment: {invf}</div>' if invf else ""
+            s3l = f'<div style="margin-top:4px;font-size:10px;color:#8E44AD;">Section 301 watch: {s301}</div>' if s301 else ""
             body += f"""<div style="margin-bottom:16px;padding:12px 14px;background:#FFF5F5;border-radius:4px;border:1px solid #F0D0D0;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:600;margin-bottom:6px;">US Tariffs on Japan</div>
 <div style="margin-bottom:6px;">
-<span style="font-size:11px;color:#666;">Autos (Sec 232):</span> <span style="font-size:14px;font-weight:700;color:#C0392B;">{h_auto}</span> ·
+<span style="font-size:11px;color:#666;">Autos (2025 deal):</span> <span style="font-size:14px;font-weight:700;color:#C0392B;">{h_auto}</span> ·
 <span style="font-size:11px;color:#666;">Sec 122 surcharge:</span> <span style="font-size:14px;font-weight:700;color:#E67E22;">{s122}</span>
 </div>
 {'<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;border-top:1px solid #F0E0E0;">' + sr + '</table>' if sr else ''}
 {dl}
+{il}
+{s3l}
 <div style="margin-top:8px;font-size:10px;color:#999;">{lc}</div>
 {nl}
 </div>"""

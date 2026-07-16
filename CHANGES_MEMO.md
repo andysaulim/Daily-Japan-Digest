@@ -10,19 +10,19 @@
 
 ## Summary
 
-Thank you for the review. All 14 comments have been collected and mapped to specific changes in the pipeline. The picture is encouraging: roughly ten of the fourteen are drop-in source additions or factual corrections that carry no risk and can ship immediately. Three are prompt-level changes to steer coverage and correct trade/alliance figures. One — how to display cabinet-approval polling — involves a genuine design choice where two reviewers pointed in slightly different directions, and it is the only item needing a decision before we build.
+Thank you for the review. All 14 comments have been collected and mapped to specific changes in the pipeline. **Thirteen of the fourteen are now implemented and pushed** — the ten drop-in source/factual changes (Batch 1) and the three coverage/accuracy changes (Batch 2: rare-earths, the $550B framework, and the trade/alliance figures rewrite). The **one** remaining item is how to display cabinet-approval polling, which involves a genuine design choice where two reviewers pointed in slightly different directions — that is the only item still needing a decision before we build it.
 
-Proposed sequencing:
+Sequencing and status:
 
 | Batch | What | Comments | Status |
 |---|---|---|---|
-| **1 — Drop-ins** | New feeds, journals, regional press, analysts; remove USIP; add Onoda; fix BOJ rate | #1, 2, 3, 8, 9, 11, 13, 14 | Ready to ship — no risk |
-| **2 — Coverage & accuracy** | Rare-earths + $550B targeting; US-Japan trade/alliance rewrite | #4, 7, 12 | Ready on green-light |
-| **3 — Polling display** | Multiple polls / aggregator | #5, 6, 10 | **Needs a decision (see §H)** |
+| **1 — Drop-ins** | New feeds, journals, regional press, analysts; remove USIP; add Onoda; fix BOJ rate | #1, 2, 3, 8, 9, 11, 13, 14 | **Done** |
+| **2 — Coverage & accuracy** | Rare-earths + $550B targeting; US-Japan trade/alliance rewrite | #4, 7, 12 | **Done** |
+| **3 — Polling display** | Multiple polls / aggregator | #5, 6, 10 | **Needs a decision (see §I)** |
 
 ---
 
-## A. New think-tank feeds (Tier 2)
+## A. New think-tank feeds (Tier 2) — **Done**
 *Govella #1 · Szechenyi #14 · Govella #8 — drop-in, low risk*
 
 **Add (Govella):** Pacific Forum, Congressional Research Service, Asia Policy Point, Japan Economy Watch (Richard Katz), VUB/CSDS Japan Chair.
@@ -35,72 +35,72 @@ Each is a one-line change to the feed list, mirrored in the public source invent
 
 ---
 
-## B. New academic journals (Tier 3)
+## B. New academic journals (Tier 3) — **Done**
 *Govella #2 — drop-in*
 
 Add: Asia Policy (A), Asia-Pacific Journal: Japan Focus (B), Asian Security (B), International Relations of the Asia-Pacific (A), The Pacific Review (A), Contemporary Japan (B), Japan Review (B). One line each. No decision required.
 
 ---
 
-## C. Regional press
+## C. Regional press — **Done**
 *Szechenyi #13 — drop-in*
 
 Broaden allied/regional reaction with **The Australian** (Australia), **Indian Express** (India), and **Rappler** (Philippines), alongside the existing Korea/China/Russia reaction feeds. No decision required.
 
 ---
 
-## D. Analyst bylines
+## D. Analyst bylines — **Done**
 *Nakano #9 — drop-in*
 
 Add **Demetri Sevastopulo (FT)** and **David Ignatius (WaPo)** to the flagged-byline list. As Nakano notes, these are columnists rather than Tokyo correspondents, so they are flagged for weight but not treated as on-the-ground reporting. No decision required.
 
 ---
 
-## E. BOJ policy rate correction
+## E. BOJ policy rate correction — **Done**
 *Govella #3 — factual fix, must-do*
 
-Govella is correct that the sample showed **0.50%** while the live BOJ short-term policy rate is now higher (**~1.00%** — to be confirmed against the day's sources). Two-part fix: (1) update the fallback figure the pipeline uses when the live reading fails, and (2) confirm the live rate scrape is succeeding so we are never showing a stale hardcoded number. *Decision:* confirm the current rate to hardcode as the fallback; we will verify against live sources regardless.
+Dr. Govella is correct that the sample showed **0.50%** while the live BOJ short-term policy rate is now higher. **Implemented:** the fallback figure is corrected to **1.00%**, and the live rate scrape still overrides it whenever the day's sources report a rate — so we are never showing a stale hardcoded number. If the current rate differs from 1.00%, it's a one-line change to the fallback.
 
 ---
 
-## F. Cabinet reference
+## F. Cabinet reference — **Done**
 *Nakano #11 — drop-in*
 
 Nakano confirms the cabinet names are current. Two adjustments: **Yoshimasa Hayashi** (Internal Affairs & Communications) is already in the reference; add **Kimi Onoda**, Minister for Economic Security — noting she also carries the "foreign nationals" portfolio. No decision required.
 
 ---
 
-## G. Targeted coverage: rare earths and the $550B framework
+## G. Targeted coverage: rare earths and the $550B framework — **Done**
 *Govella #4, #7 — prompt steering*
 
-Neither needs a new source; both are instructions to make sure existing coverage surfaces:
+Neither needed a new source; both are instructions that make sure existing coverage surfaces. **Implemented:**
 
-- **Rare earths / critical minerals** added as an explicit signal in the Regional Pressure Watch, where China's mineral leverage properly belongs.
-- **The $550 billion US-Japan strategic investment framework** flagged for the Business & Economy and trade sections. This dovetails with the trade rewrite in §H below.
+- **Rare earths / critical minerals** — now an explicit watch item in the Regional Pressure Watch's China signal (rare earths, gallium, germanium, graphite, magnets, export-license/supply restrictions bearing on Japan), where China's mineral leverage properly belongs.
+- **The $550 billion US-Japan strategic investment framework** — now flagged as a priority pickup for both the Business & Economy section and the trade block, and carried as a standing line in the tariff/trade dashboard.
 
-*Honest limit:* our source-or-skip rule means we can guarantee we never *miss* one of these stories when the day's feeds carry it — we cannot manufacture one on a quiet day. That is the correct, non-fabricating behavior. No decision required.
+*Honest limit:* our source-or-skip rule means we can guarantee we never *miss* one of these stories when the day's feeds carry it — we cannot manufacture one on a quiet day. That is the correct, non-fabricating behavior.
 
 ---
 
-## H. US-Japan Alliance & Trade — figures rewrite
+## H. US-Japan Alliance & Trade — figures rewrite — **Done**
 *Nakano #12 — substantive, high value*
 
-Nakano's detailed corrections update our now-stale trade/alliance baselines. To be encoded verbatim:
+Nakano's detailed corrections have been **encoded verbatim** as the new trade/alliance baselines, and the email's tariff/alliance dashboard now renders them:
 
 **Tariffs**
-- Autos: **15%, inclusive of MFN**, under the 2025 US-Japan agreement (not the old 25%).
-- Section 122: **10% surcharge through July 24, 2026**, **not stacked** on Section 232, **autos excluded** — citing the June 2026 proclamation basis.
+- Autos: **15%, inclusive of MFN**, under the 2025 US-Japan agreement (replaces the old 25% Section 232 auto rate for Japan).
+- Section 122: **10% surcharge through July 24, 2026**, **not stacked** on Section 232, **autos excluded** — on the June 2026 proclamation basis.
 - Steel & aluminum: **50%** remains the core Section 232 rate.
-- **New optional "Section 301 Watch":** proposed 12.5% forced-labor tariff; excess-capacity investigation pending.
-- **Remove** the outdated line "Trade deal: negotiated framework reported; auto relief status unconfirmed — verify" — now resolved.
+- **New "Section 301 Watch"** line (renders when relevant): proposed 12.5% forced-labor tariff; excess-capacity investigation pending — marked as *proposed/pending*.
+- The outdated "negotiated framework reported; auto relief unconfirmed — verify" line is **removed**; the dashboard now shows "2025 agreement in force" plus a **$550B investment framework** line.
 
 **Alliance dashboard**
-- Defense spending: **2% of GDP brought forward to JFY2025** (ended March 31, 2026), with the **2026 Three Strategic Documents review** noted — replacing the older "by FY2027" language.
-- Article 5 / Senkakus: affirmed — **kept** under the dashboard (per Nakano's question).
+- Defense spending: **2% of GDP brought forward to JFY2025** (ended March 31, 2026), with the **2026 Three Strategic Documents review** noted — replacing "by FY2027."
+- Article 5 / Senkakus: affirmed — **kept** under the dashboard.
 - Host-nation support: SMA **through March 31, 2027, ~¥211bn/year**.
 - USFJ: Henoko/Futenma realignment **ongoing**.
 
-These are all reference-text changes — no new scraping. *Caution worth stating:* several are dated specifics (a surcharge "through July 2026," an SMA to March 2027) and will go stale exactly as the old figures did. We encode Nakano's numbers as the new baseline and keep the standing guardrail that live news overrides the baseline and anything uncertain is marked "verify." *Decision:* green-light to transcribe as-is, or flag any figure you'd like re-verified against live sources first.
+These were reference-text + renderer changes, no new scraping. *Standing caution:* several are dated specifics (a surcharge "through July 2026," an SMA to March 2027) and will eventually go stale like the old figures — the guardrail is intact: live news overrides the baseline, and anything uncertain is marked "verify."
 
 ---
 
@@ -129,10 +129,10 @@ On Nakano's dedicated-site suggestion: the NHK and Nikkei approval pages are dat
 
 ## What we need from you
 
-1. **Polling display (§I):** confirm Option 1 + aggregator link, or pick another.
-2. **BOJ rate (§E):** confirm the current policy rate for the fallback (we verify live regardless).
-3. **Trade figures (§H):** green-light transcribing Nakano's numbers as-is, or flag any to re-verify first.
+**One decision remains:**
 
-Everything else has a clear default. On your go-ahead we will ship Batches 1 and 2 immediately and hold Batch 3 for the polling decision.
+1. **Polling display (§I):** confirm **Option 1 + aggregator link** (our recommendation), or pick another. This is the only thing gating Batch 3.
+
+*Resolved and shipped:* the BOJ fallback (§E, now 1.00%) and the trade/alliance figures (§H, encoded as-is per your green-light). If any Batch-2 figure should be re-verified against a specific source, point us to it and it's a one-line change.
 
 *Prepared by Andy Lim · CSIS Japan Chair*
