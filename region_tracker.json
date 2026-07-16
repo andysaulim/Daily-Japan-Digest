@@ -7,7 +7,14 @@
         "russia_signal": "SEED DATA — no notable Russian air-sea activity near Japan reported (placeholder; verify against live articles)."
       },
       "watch_flag": false
+    },
+    "2026-07-16": {
+      "signals": {
+        "china_signal": "China's Global Times published two pieces targeting Japan: one characterizing Japan's South China Sea stance and India-Japan defense cooperation as 'strategic ambitions' and 'opportunistic,' and a second warning that countries backing the South China Sea arbitral award should consider risks to their",
+        "dprk_signal": "The US, Japan, and South Korea defense chiefs met in Washington and issued a joint statement reaffirming trilateral cooperation on North Korea denuclearization; a StratNews Global report flagged Japanese deliberation on a nuclear option in response to China and DPRK pressure."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-06-16T09:00:00+00:00"
+  "last_updated": "2026-07-16T13:56:48.504094+00:00"
 }

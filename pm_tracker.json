@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi made public statements on tax-cut talks, the bond market rout, and the Diet session, per Jiji Press and Japan Times reporting on July 16.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T13:56:48.503785+00:00"
+    },
+    {
       "date": "2026-06-16",
       "activity": "SEED DATA — Prime Minister attended an Upper House plenary session and held a brief press availability (placeholder seed; verify against live articles).",
       "source": "seed",
@@ -15,5 +22,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-06-16T09:00:00+00:00"
+  "last_updated": "2026-07-16T13:56:48.503816+00:00"
 }
