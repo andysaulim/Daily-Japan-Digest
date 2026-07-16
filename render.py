@@ -4,7 +4,7 @@ CSIS Japan Chair
 
 Mirrors the Daily-Korea/China-Digest visual language (ported from the
 Korea brief's Q3-2026 renderer):
-- Navy #1B2A4A header + CSIS palette, gold #D4AC0D accents
+- Navy #1B2A4A header + Hinomaru red #BC002D accents (flag disc mark)
 - System font stack; monospace for machine-measured numbers/dates
 - Shadowed, rounded story cards; floating card wrapper on a #F2F3F5 ground
 - Dark Regional Pressure Watch panel (repurposed dark section)
@@ -16,6 +16,19 @@ Korea brief's Q3-2026 renderer):
 import re as _re
 from datetime import datetime, timezone
 from urllib.parse import urlparse as _urlparse
+
+
+# ── Palette ───────────────────────────────────────────────────────────────
+NAVY = "#1B2A4A"
+HINOMARU_RED = "#BC002D"          # official Japanese flag crimson (JIS)
+HINOMARU_RED_SOFT = "rgba(188,0,45,0.5)"
+
+
+def _hinomaru(size: int = 16) -> str:
+    """Inline Hinomaru (Japanese flag) red-disc mark."""
+    return (f'<span style="display:inline-block;width:{size}px;height:{size}px;'
+            f'border-radius:50%;background:{HINOMARU_RED};vertical-align:middle;'
+            f'margin-right:9px;"></span>')
 
 
 def _clean_src(raw: str) -> str:
@@ -89,11 +102,11 @@ def _link_or_text(text: str, url: str,
 _SEC = 'style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"'
 _SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #C0392B;border-bottom:1px solid #EBEBEB;" class="sec"'
 
-def _sec_label(label: str, color: str = "#1B2A4A") -> str:
-    """Section label — small-caps with rule, no background pill."""
+def _sec_label(label: str, color: str = NAVY, rule: str = HINOMARU_RED) -> str:
+    """Section label — navy small-caps over a Hinomaru-red rule, no pill."""
     return (f'<div style="font-size:10px;font-weight:700;text-transform:uppercase;'
             f'letter-spacing:2px;color:{color};font-family:Arial,sans-serif;'
-            f'margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid {color};">'
+            f'margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid {rule};">'
             f'{label}</div>')
 
 
@@ -189,12 +202,12 @@ def _word_count(d: dict) -> int:
 
 
 def _chapter(label: str) -> str:
-    """Chapter divider — dark navy band with gold rule, white letterspaced label."""
+    """Chapter divider — dark navy band with Hinomaru-red rule, white letterspaced label."""
     return f"""
 <div style="padding:12px 32px;background:#1B2A4A;text-align:center;" class="sec">
-<div style="height:1px;background:rgba(212,172,13,0.4);margin-bottom:10px;"></div>
+<div style="height:1px;background:rgba(188,0,45,0.5);margin-bottom:10px;"></div>
 <span style="font-size:9px;font-family:Arial,sans-serif;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:5px;font-weight:700;">{label}</span>
-<div style="height:1px;background:rgba(212,172,13,0.4);margin-top:10px;"></div>
+<div style="height:1px;background:rgba(188,0,45,0.5);margin-top:10px;"></div>
 </div>"""
 
 
@@ -227,8 +240,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="background:#1B2A4A;color:#fff;padding:18px 32px 14px;" class="sec">
 <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="vertical-align:top;">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">Japan Daily Brief</h1>
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
+<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
 <div style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
 </td>
 <td style="vertical-align:top;text-align:right;">
@@ -236,7 +249,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'Courier New',Courier,monospace;">{wc:,} words &middot; {read_min} min read</div>
 </td>
 </tr></table>
-{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid #D4AC0D;font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#D4AC0D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
+{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid #BC002D;font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#BC002D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
 </div>""")
 
     # 2. Market strip (3 rows)
@@ -354,7 +367,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 </table>"""
         sections_today.append(f"""
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #D4AC0D;">Today at a Glance</div>
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Today at a Glance</div>
 {memo_html}
 </div>""")
 
@@ -401,7 +414,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:12px;line-height:1.4;color:#555;">{b}</div>
 </div>"""
-        sections_today.append(f'<div {_SEC_ALERT}>{_sec_label("&#9889; Overnight Flash", color="#C0392B")}{fh}</div>')
+        sections_today.append(f'<div {_SEC_ALERT}>{_sec_label("&#9889; Overnight Flash", color="#C0392B", rule="#C0392B")}{fh}</div>')
 
     # 5. Key Stat
     stat = digest.get("key_stat") or {}
@@ -435,7 +448,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
         senkaku = _esc(xd.get("senkaku_status", ""))
         senkaku_html = (f'<div style="margin:6px 0 12px;padding:8px 12px;background:rgba(255,255,255,0.05);'
                         f'border-radius:4px;font-size:12px;color:rgba(255,255,255,0.85);">'
-                        f'<strong style="color:#D4AC0D;">Senkaku / ECS:</strong> {senkaku}</div>'
+                        f'<strong style="color:#BC002D;">Senkaku / ECS:</strong> {senkaku}</div>'
                         if senkaku else "")
 
         # PM appearance line
@@ -448,7 +461,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             days_str = (f" · {pm_days} day(s) since last confirmed appearance"
                         if isinstance(pm_days, int) else "")
             pm_html = (f'<div style="margin-bottom:10px;font-size:12px;color:rgba(255,255,255,0.8);">'
-                       f'<strong style="color:#D4AC0D;">PM Watch:</strong> {_esc(pm_status)}{_esc(days_str)}'
+                       f'<strong style="color:#BC002D;">PM Watch:</strong> {_esc(pm_status)}{_esc(days_str)}'
                        f'{(" — " + pm_activity) if pm_activity else ""}</div>')
 
         # Key quotes
@@ -462,7 +475,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                 meta_html = (f'<div style="font-style:normal;font-size:10px;opacity:0.6;'
                              f'margin-top:4px;">{meta}</div>') if meta else ""
                 quotes_html += (f'<blockquote style="margin:6px 0;padding:8px 12px;'
-                                f'background:rgba(255,255,255,0.05);border-left:3px solid #D4AC0D;'
+                                f'background:rgba(255,255,255,0.05);border-left:3px solid #BC002D;'
                                 f'font-style:italic;font-size:12px;line-height:1.5;'
                                 f'color:rgba(255,255,255,0.9);">&ldquo;{qtext}&rdquo;'
                                 f'{meta_html}</blockquote>')
@@ -475,14 +488,14 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                        'letter-spacing:0.5px;margin-left:8px;">WATCH</span>') if watch else ""
 
         sections_analysis.append(f"""
-<div style="padding:20px 32px;background:#0a0f1e;color:#fff;border-top:3px solid #D4AC0D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec watch-dark">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(212,172,13,0.4);">Regional Pressure Watch{watch_badge}</div>
+<div style="padding:20px 32px;background:#0a0f1e;color:#fff;border-top:3px solid #BC002D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec watch-dark">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(188,0,45,0.5);">Regional Pressure Watch{watch_badge}</div>
 {("<div style='font-size:10px;color:rgba(255,255,255,0.5);margin-top:-8px;margin-bottom:12px;'>" + vol + "</div>") if vol else ""}
 {pm_html}
 {signals_html if signals_html else "<div style='font-size:12px;color:rgba(255,255,255,0.6);'>No notable adversary activity flagged today.</div>"}
 {senkaku_html}
 {quotes_html}
-{("<div style='margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12);font-size:13px;color:#fff;'><strong style='color:#D4AC0D;'>Bottom line:</strong> " + bottom + "</div>") if bottom else ""}
+{("<div style='margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12);font-size:13px;color:#fff;'><strong style='color:#BC002D;'>Bottom line:</strong> " + bottom + "</div>") if bottom else ""}
 </div>""")
 
     # 8. Japanese Government (gov cards + personnel + Diet sessions + calendar)
@@ -695,7 +708,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             sec = _esc(b.get("sector", ""))
             comps = b.get("companies", [])
             cs = ", ".join(_esc(c) for c in comps) if comps else ""
-            bh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #D4AC0D;">
+            bh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
 <div style="font-size:11px;color:#888;text-transform:uppercase;">{sec} · {src}{(' · ' + cs) if cs else ''}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:12px;line-height:1.4;color:#555;">{bt}</div>
