@@ -2,12 +2,15 @@
 Japan Daily Brief — HTML Renderer
 CSIS Japan Chair
 
-Mirrors the Daily-Korea/China-Digest visual language:
+Mirrors the Daily-Korea/China-Digest visual language (ported from the
+Korea brief's Q3-2026 renderer):
 - Navy #1B2A4A header + CSIS palette, gold #D4AC0D accents
-- Arial/Georgia stack
-- Status pills, colored left-borders for category coding
+- System font stack; monospace for machine-measured numbers/dates
+- Shadowed, rounded story cards; floating card wrapper on a #F2F3F5 ground
 - Dark Regional Pressure Watch panel (repurposed dark section)
-- Table-based layout, inline CSS, dark-mode-friendly, mobile responsive
+- Table-based layout, inline CSS, with a proper <style> head: CSS reset,
+  full dark-mode support (prefers-color-scheme), mobile + tablet
+  breakpoints, and Outlook (MSO) conditionals
 """
 
 import re as _re
@@ -229,8 +232,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
 </td>
 <td style="vertical-align:top;text-align:right;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:3px;">{gen_time}</div>
-<div style="font-size:10px;color:rgba(255,255,255,0.4);">{wc:,} words &middot; {read_min} min read</div>
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:3px;font-family:'Courier New',Courier,monospace;">{gen_time}</div>
+<div style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'Courier New',Courier,monospace;">{wc:,} words &middot; {read_min} min read</div>
 </td>
 </tr></table>
 {"<div style='margin-top:12px;padding-top:12px;border-top:1px solid #D4AC0D;font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#D4AC0D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
@@ -272,12 +275,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             _top_row = (f'<td width="50%" align="center" style="padding:12px 8px 10px;">{_nikkei_cell}</td>'
                         f'<td width="50%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);">{_usdjpy_cell}</td>')
         sections_pre.append(f"""
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
 <tr>
 {_top_row}
 </tr>
 </table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
 <tr>
 <td width="25%" align="center" style="padding:8px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">EUR/JPY</div>
@@ -301,7 +304,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 </td>
 </tr>
 </table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0F1B30;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#0F1B30;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
 <tr>
 <td width="50%" align="center" style="padding:8px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">BOJ Policy Rate</div>
@@ -369,7 +372,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             sl = _esc(_clean_src(s.get("src_line", s.get("source", ""))))
             url = s.get("url", "")
             sh += f"""
-<div class="story-card" style="margin-bottom:12px;padding:14px 16px;background:#fff;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
 <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
 <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;">{_link_or_text(h, url, style="color:#1B2A4A;text-decoration:none;")}</h3>
 {"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
@@ -472,7 +475,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                        'letter-spacing:0.5px;margin-left:8px;">WATCH</span>') if watch else ""
 
         sections_analysis.append(f"""
-<div style="padding:20px 32px;background:#0a0f1e;color:#fff;border-top:3px solid #D4AC0D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec">
+<div style="padding:20px 32px;background:#0a0f1e;color:#fff;border-top:3px solid #D4AC0D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec watch-dark">
 <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(212,172,13,0.4);">Regional Pressure Watch{watch_badge}</div>
 {("<div style='font-size:10px;color:rgba(255,255,255,0.5);margin-top:-8px;margin-bottom:12px;'>" + vol + "</div>") if vol else ""}
 {pm_html}
@@ -624,7 +627,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             dl = f'<div style="margin-top:4px;font-size:11px;color:#666;">Trade deal: {deal}</div>' if deal else ""
             il = f'<div style="margin-top:4px;font-size:11px;color:#16A085;font-weight:600;">Investment: {invf}</div>' if invf else ""
             s3l = f'<div style="margin-top:4px;font-size:10px;color:#8E44AD;">Section 301 watch: {s301}</div>' if s301 else ""
-            body += f"""<div style="margin-bottom:16px;padding:12px 14px;background:#FFF5F5;border-radius:4px;border:1px solid #F0D0D0;">
+            body += f"""<div class="tariff-box" style="margin-bottom:16px;padding:12px 14px;background:#FFF5F5;border-radius:4px;border:1px solid #F0D0D0;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:600;margin-bottom:6px;">US Tariffs on Japan</div>
 <div style="margin-bottom:6px;">
 <span style="font-size:11px;color:#666;">Autos (2025 deal):</span> <span style="font-size:14px;font-weight:700;color:#C0392B;">{h_auto}</span> ·
@@ -654,7 +657,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                              f'<td style="padding:4px 6px 4px 0;font-size:11px;font-weight:600;color:#1B2A4A;">{label}</td>'
                              f'<td style="padding:4px 0;font-size:11px;color:#555;">{val}</td></tr>')
             if rows:
-                body += f"""<div style="margin-bottom:16px;padding:12px 14px;background:#F0F7FF;border-radius:4px;border:1px solid #D6E9F8;">
+                body += f"""<div class="alliance-box" style="margin-bottom:16px;padding:12px 14px;background:#F0F7FF;border-radius:4px;border:1px solid #D6E9F8;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;font-weight:600;margin-bottom:6px;">Alliance Dashboard</div>
 <table width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table>
 </div>"""
@@ -791,12 +794,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             if has_disappr:
                 stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
 <tr>
-<td width="50%" align="center" style="padding:10px;background:#EAF5EA;border-radius:4px;">
+<td width="50%" align="center" class="sent-approve" style="padding:10px;background:#EAF5EA;border-radius:4px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Approve</div>
 <div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
 </td>
 <td width="4"></td>
-<td width="50%" align="center" style="padding:10px;background:#FBECEC;border-radius:4px;">
+<td width="50%" align="center" class="sent-disapprove" style="padding:10px;background:#FBECEC;border-radius:4px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:700;">Disapprove</div>
 <div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{disappr}</div>
 </td>
@@ -806,7 +809,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                 # Disapproval not reported in the same poll — show approval alone, no empty box.
                 stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
 <tr>
-<td align="center" style="padding:10px;background:#EAF5EA;border-radius:4px;">
+<td align="center" class="sent-approve" style="padding:10px;background:#EAF5EA;border-radius:4px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Cabinet Approval</div>
 <div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
 </td>
@@ -887,9 +890,9 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 
     # Footer
     sections_post.append(f"""
-<div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec">
+<div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec footer">
 <div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
-CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated {gen_time}
+CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
 </div>
 <a href="#top" style="font-size:10px;color:rgba(255,255,255,0.4);text-decoration:none;letter-spacing:1px;">&#8593; Back to top</a>
 </div>""")
@@ -905,25 +908,84 @@ CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated {gen_
 
     body_html = "\n".join(s for s in sections if s)
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Japan Daily Brief</title>
-<style>
-body {{ margin:0; padding:0; background:#fff; font-family:Arial,sans-serif; color:#333; }}
-.container {{ max-width:680px; margin:0 auto; background:#fff; }}
-@media only screen and (max-width: 600px) {{
-  .container {{ width:100% !important; }}
-  .sec {{ padding-left:16px !important; padding-right:16px !important; }}
-}}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Japan Daily Brief &mdash; {_esc(date_str)}</title>
+<style type="text/css">
+  /* Reset */
+  body, table, td, div, p {{ margin:0; padding:0; }}
+  img {{ border:0; display:block; }}
+  /* Data typography — monospace for machine-measured numbers */
+  .mkt-table div[style*="font-weight:700"], .key-stat-num {{ font-family:'Courier New',Courier,monospace !important; }}
+  /* Mobile responsive */
+  @media only screen and (max-width: 620px) {{
+    .wrapper {{ width:100% !important; }}
+    .sec, .footer {{ padding:16px 16px !important; }}
+    h1 {{ font-size:22px !important; }}
+    .key-stat-num {{ font-size:26px !important; }}
+    /* Market strip stays multi-across on phones — smaller mono, tighter pad */
+    .mkt-table td {{ padding:8px 4px 10px !important; }}
+    .mkt-table div[style*="font-size:20px"] {{ font-size:16px !important; }}
+    .mkt-table div[style*="font-size:15px"] {{ font-size:13px !important; }}
+    /* Story cards */
+    .story-card {{ padding:12px 12px !important; }}
+    /* Dark Regional Pressure Watch panel */
+    .watch-dark td {{ padding-left:16px !important; padding-right:16px !important; }}
+    /* Trade dashboard boxes */
+    .tariff-box, .alliance-box {{ padding:10px 12px !important; }}
+    /* Overflow + legibility safety */
+    p, div, td {{ word-wrap:break-word !important; overflow-wrap:break-word !important; }}
+    body, td, div, p, span {{ -webkit-text-size-adjust:100%; }}
+    div[style*="font-size:9px"], span[style*="font-size:9px"] {{ font-size:10px !important; }}
+    a {{ min-height:44px; }}
+    p a, div a, td a {{ min-height:auto; padding:6px 0; }}
+    img {{ max-width:100% !important; height:auto !important; }}
+  }}
+  /* Tablet breakpoint */
+  @media only screen and (min-width: 621px) and (max-width: 768px) {{
+    .wrapper {{ width:100% !important; }}
+    .sec, .footer {{ padding:16px 22px !important; }}
+    h1 {{ font-size:24px !important; }}
+    .mkt-table td {{ padding:10px 10px 12px !important; }}
+  }}
+  /* Dark mode — scoped, non-destructive. The masthead, market strip,
+     Regional Pressure Watch panel, key stat, and footer are already dark
+     surfaces and need no inversion. */
+  @media (prefers-color-scheme: dark) {{
+    body {{ background:#121212 !important; }}
+    .wrapper {{ background:#1a1a1a !important; }}
+    .wrapper .sec {{ background:#1E2126 !important; border-bottom-color:#33373D !important; }}
+    .wrapper h1, .wrapper h2, .wrapper h3 {{ color:#E8E6E1 !important; }}
+    .wrapper .sec p {{ color:#C4C8CE !important; }}
+    .wrapper a {{ color:#6FA8E8 !important; }}
+    .wrapper .footer {{ background:#0F1B30 !important; }}
+    .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
+    /* Trade dashboard light boxes → dark equivalents so they don't glare */
+    .wrapper .tariff-box {{ background:#2A1518 !important; border-color:#5A2A2A !important; }}
+    .wrapper .alliance-box {{ background:#16222F !important; border-color:#274156 !important; }}
+    /* Public Sentiment stat boxes */
+    .wrapper .sent-approve {{ background:#16261B !important; }}
+    .wrapper .sent-disapprove {{ background:#2A1518 !important; }}
+    .wrapper .mkt-table td {{ border-color:rgba(255,255,255,0.08) !important; }}
+  }}
 </style>
+<!--[if mso]>
+<style type="text/css">
+  table {{ border-collapse:collapse; }}
+  .wrapper {{ width:680px; }}
+</style>
+<![endif]-->
 </head>
-<body>
+<body style="margin:0;padding:0;background:#F2F3F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 <a name="top"></a>
-<div class="container">
+<!--[if mso]><table width="680" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td><![endif]-->
+<div class="wrapper" style="max-width:680px;width:100%;margin:0 auto;background:#FFFFFF;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.08);">
 {body_html}
 </div>
+<!--[if mso]></td></tr></table><![endif]-->
 </body>
 </html>"""
 
