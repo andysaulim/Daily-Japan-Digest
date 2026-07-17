@@ -151,6 +151,7 @@ JAPAN GOVERNMENT (Takaichi Cabinet, inaugurated Oct 21 2025, reshuffled Feb 18 2
 - Finance Minister (MOF): Satsuki Katayama — Japan's first female finance minister
 - METI Minister: Ryosei Akazawa — also led US tariff negotiations
 - Internal Affairs & Communications Minister: Yoshimasa Hayashi
+- Minister for Economic Security: Kimi Onoda — also handles the "foreign nationals" (foreign residents/immigration policy coordination) portfolio
 - Bank of Japan Governor: Kazuo Ueda — since April 2023 (verify)
 - LDP leadership (President = PM by convention; Secretary-General, Policy Research Council chair): VERIFY
 - Komeito (LDP's coalition partner): leader VERIFY from articles
@@ -171,19 +172,20 @@ If today's articles name a different officeholder for any position, USE THE NAME
 
 
 _TRADE_BASELINES = """\
-US-JAPAN ALLIANCE & TRADE BASELINES (as of early 2026 — carry forward unless today's articles report a change):
+US-JAPAN ALLIANCE & TRADE BASELINES (as of mid-2026 — carry forward unless today's articles report a change):
 
-TARIFFS APPLIED TO JAPAN (Section 232 / 122 — national-security and emergency authorities apply to allies too):
-- Section 232 Automobiles: 25% on autos and auto parts — a central Japanese concern given the auto sector's weight in Japan-US trade. VERIFY current rate and any Japan-specific carve-out from today's articles.
-- Section 232 Steel & Aluminum: 50% (country exemptions eliminated). Applies to Japan unless a deal carve-out is reported.
-- Section 122 surcharge: temporary global surcharge (10%) with a 150-day statutory limit — applies to Japan the same as other countries. VERIFY status.
-- 2024-2025 US-Japan trade/tariff deal: a negotiated framework on tariffs and investment was reported; STATUS = VERIFY from today's articles (terms, investment pledges, and whether auto relief was granted).
+TARIFFS APPLIED TO JAPAN (Section 232 / 122 under the 2025 US-Japan agreement — national-security and emergency authorities apply to allies too):
+- Automobiles: 15%, INCLUSIVE OF the MFN rate, under the 2025 US-Japan trade agreement (this REPLACES the earlier 25% Section 232 auto rate for Japan). This is the headline auto rate for Japan.
+- Section 232 Steel & Aluminum: 50% remains the core Section 232 rate (country exemptions eliminated). Applies to Japan unless a deal carve-out is reported.
+- Section 122 surcharge: 10% surcharge in effect THROUGH JULY 24, 2026, on the June 2026 proclamation basis. It is NOT stacked on Section 232, and AUTOS ARE EXCLUDED from it. VERIFY expiry/renewal from today's articles.
+- Section 301 Watch (optional, include only if today's articles touch it): a proposed 12.5% forced-labor tariff and a pending excess-capacity investigation — both PROPOSED/PENDING, not in force. Mark clearly as proposed.
+- $550 billion US-Japan strategic investment framework: the flagship investment pledge under the 2025 agreement. Surface any story on its structure, disbursement, project selection, governance, or drawdown in the trade block and Business & Economy. Do NOT invent figures — carry the $550B headline only, and attribute specifics to today's articles.
 
 ALLIANCE & DEFENSE BASELINES:
-- Host-Nation Support ("Sympathy Budget" / omoiyari yosan): Japan funds a large share of USFJ stationing costs under multi-year Special Measures Agreements. VERIFY current cycle.
-- Defense spending: Japan's Dec 2022 National Security Strategy commits to raising defense spending toward 2% of GDP by FY2027, plus a counterstrike (long-range strike) capability. Carry forward unless updated.
-- US-Japan Security Treaty Article 5: the US treaty commitment to defend territories under Japanese administration — successive US administrations have affirmed it covers the Senkaku Islands.
-- USFJ realignment: MCAS Futenma relocation to Henoko (Camp Schwab) remains contested in Okinawa; carry forward.
+- Defense spending: Japan brought its 2%-of-GDP defense-spending target FORWARD to JFY2025 (fiscal year ended March 31, 2026) — no longer "by FY2027". A 2026 review of the Three Strategic Documents (National Security Strategy / National Defense Strategy / Defense Buildup Program) is underway. Carry forward unless today's articles update.
+- US-Japan Security Treaty Article 5: the US treaty commitment to defend territories under Japanese administration — successive US administrations have affirmed it covers the Senkaku Islands. Keep under the alliance dashboard.
+- Host-Nation Support ("Sympathy Budget" / omoiyari yosan): current Special Measures Agreement runs THROUGH MARCH 31, 2027, at approximately ¥211 billion/year. Carry forward unless updated.
+- USFJ realignment: MCAS Futenma relocation to Henoko (Camp Schwab) remains ongoing and contested in Okinawa; carry forward.
 - Semiconductor / economic security cooperation: Rapidus (2nm foundry, Hokkaido), TSMC Kumamoto (JASM) fabs, and Japan's alignment with US export controls on advanced chips to China. Carry forward unless updated.
 
 USE THESE BASELINES EXACTLY unless today's articles report a NEW policy action or status change. Do NOT invent trade or alliance policy items from memory. Mark anything uncertain "verify"."""
@@ -248,7 +250,7 @@ _REGIONAL_FULL_INSTRUCTIONS = (
     "- pm_appearance_today: boolean — cross-reference PM APPEARANCE REPORTS above and today's articles. True if the Prime Minister made any confirmed public appearance, statement, Diet appearance, or meeting in the last 24h. (The PM appears near-daily; true should be common.)\n"
     "- pm_activity: if appeared, 1 sentence on what the PM did, else null\n"
     "- pm_days_since_last_appearance: integer — use the CONFIRMED PM APPEARANCES tracker data above as ground truth.\n"
-    "- china_signal: 1-2 sentences on today's notable China activity or statements toward Japan — China Coast Guard / PLA activity near the Senkakus, China MOFA statements on Japan/Senkaku/Taiwan, survey vessels. null if nothing notable today.\n"
+    "- china_signal: 1-2 sentences on today's notable China activity or statements toward Japan — China Coast Guard / PLA activity near the Senkakus, China MOFA statements on Japan/Senkaku/Taiwan, survey vessels, AND economic-coercion levers, especially RARE EARTHS / CRITICAL MINERALS (Chinese export controls, licensing, or supply restrictions on rare earths, gallium, germanium, graphite, magnets that bear on Japan). Rare-earth / critical-mineral leverage is an explicit signal to surface here whenever today's articles carry it. null if nothing notable today.\n"
     "- dprk_signal: 1-2 sentences on North Korean missile/nuclear activity affecting Japan (launches, EEZ splashdowns, overflights, KCNA statements naming Japan). null if nothing notable.\n"
     "- russia_signal: 1-2 sentences on Russian activity bearing on Japan — Northern Territories, Sea of Okhotsk, air-sea incursions near Hokkaido, statements on the territorial dispute. null if nothing notable.\n"
     "- senkaku_status: 1 sentence on the current Senkaku / East China Sea status (e.g. CCG patrol-day pattern, intrusions, scrambles), drawing on today's articles. null if no data.\n"
@@ -498,17 +500,22 @@ Return a digest object with:
 - also_today: up to 4 remaining articles score >= 4. Each: url (verbatim from input), source, category, headline, body_text (1 sentence), color_bar_class (cb-navy=Alliance, cb-red=Defense, cb-lt=Trade/Economy, cb-mid=Diplomacy, cb-tech=Technology, cb-biz=Politics).
 
 - us_china_trade: REPURPOSED AS US-JAPAN ALLIANCE & TRADE — object with sub-blocks (NO REPETITION across sub-blocks):
-  - tariff_tracker: object with headline_auto_rate (current Section 232 auto rate as applied to Japan), section_232_rates (object: steel, aluminum, autos), section_122_surcharge (string), trade_deal_status (1 phrase — verify), last_change (string), next_trigger (string). Use the ALLIANCE & TRADE BASELINES above as default; only change if today's articles report new action.
-  - alliance_tracker: object with defense_spending_goal ("2% of GDP by FY2027"), article5_senkaku ("affirmed — covers Senkakus"), host_nation_support (1 phrase, verify), usfj_realignment ("Futenma → Henoko, contested"). Carry forward unless today's articles update.
+  - tariff_tracker: object with headline_auto_rate (Japan's headline auto rate — default "15% (incl. MFN, 2025 agreement)"), section_232_rates (object with ONLY steel and aluminum, e.g. {{"steel":"50%","aluminum":"50%"}} — do NOT put autos here; Japan's autos are covered by the 15% 2025-agreement rate, not the old 25% Section 232 rate), section_122_surcharge (string — default "10% through Jul 24, 2026 (autos excluded; not stacked on Section 232)"), section_301_watch (string or null — include ONLY proposed/pending Section 301 items, e.g. "Proposed 12.5% forced-labor tariff; excess-capacity probe pending"; mark as proposed; null if not in today's articles), investment_framework (string or null — the $550 billion US-Japan strategic investment framework; default "$550B strategic investment framework (2025 agreement)"; update specifics only from today's articles, never invent figures), trade_deal_status (1 phrase — default "2025 US-Japan agreement in force"), last_change (string), next_trigger (string — default "Section 122 surcharge expiry Jul 24, 2026"). Use the ALLIANCE & TRADE BASELINES above as default; only change if today's articles report new action.
+  - alliance_tracker: object with defense_spending_goal ("2% of GDP — met, brought forward to JFY2025; Three Strategic Documents under 2026 review"), article5_senkaku ("affirmed — covers Senkakus"), host_nation_support ("SMA through Mar 31, 2027, ~¥211bn/yr"), usfj_realignment ("Futenma → Henoko, ongoing/contested"). Carry forward unless today's articles update.
   - deals: array of NEW US-Japan agreements, investment pledges, or defense-cooperation announcements reported TODAY. Each: url, source, headline, value (or null), parties, detail (1 sentence).
 
-- business_economy: array up to 4 Japan business/economy items. Each: url (verbatim from input), source, headline, body_text (1-2 sentences with specific numbers), companies (array of names), sector (tech/auto/energy/finance/manufacturing/semiconductors/macro).
+- business_economy: array up to 4 Japan business/economy items. Each: url (verbatim from input), source, headline, body_text (1-2 sentences with specific numbers), companies (array of names), sector (tech/auto/energy/finance/manufacturing/semiconductors/macro). PRIORITY: if today's articles carry any item on the $550 billion US-Japan strategic investment framework (structure, project selection, disbursement, governance, or drawdown), include it here.
 
 - indo_pacific: array of 3-4 items covering China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan, Southeast Asia, Australia, India as they relate to Japan. Each: url (verbatim from input), source, headline, body_text (1 sentence), category (china-japan, senkaku, korea-japan, dprk-missile, trilateral, quad, taiwan, southeast-asia, australia, india), region_tag ("China-Japan" / "Korea-Japan" / "DPRK" / "Trilateral" / "Indo-Pacific").
 
-- social_statements: 3-4 quotes from senior officials. ATTRIBUTION RULE: quote MUST be a statement made BY the named person in their OFFICIAL CAPACITY on a policy-relevant topic. Prioritize the Japanese PM, Chief Cabinet Secretary, Foreign/Defense/Finance Ministers, BOJ Governor; US officials (Trump, Rubio, Hegseth, Bessent, Greer); and relevant foreign leaders. Use the name from the article.
+- social_statements: 0-4 VERBATIM quotes from senior officials. This is a QUOTATION section, not a headline digest. HARD RULES:
+  * quote_text MUST be a word-for-word quotation that literally appears (inside quotation marks) in the body of one of today's articles. Do NOT paraphrase. Do NOT convert a headline, a reporter's summary, or the gist of an article into a "quote." Do NOT invent or reconstruct wording.
+  * If an article only reports what someone said in reported/indirect speech (no direct quotation), it does NOT qualify — omit it.
+  * Better to return FEWER statements (or an empty array) than to fabricate or paraphrase a quote. Zero statements is acceptable on days with no clean direct quotes.
+  * ATTRIBUTION: the quote MUST be spoken BY the named person in their OFFICIAL CAPACITY on a policy-relevant topic. Prioritize the Japanese PM, Chief Cabinet Secretary, Foreign/Defense/Finance Ministers, BOJ Governor; US officials (Trump, Rubio, Hegseth, Bessent, Greer); and relevant foreign leaders. Use the name from the article.
+  * The quote_text you output will be rendered inside quotation marks, so it must be genuinely quotable text from the source — nothing else.
 
-Each: avatar_initials (2 letters), who (name), handle_context (title/role), platform_date (source · date), quote_text (direct quote), analyst_note (1 sentence factual context only from today's articles or reference data; no interpretation), badge_class (sb-p=policy, sb-r=security/red, sb-s=specialist/purple), url.
+Each: avatar_initials (2 letters), who (name), handle_context (title/role), platform_date (source · date), quote_text (the verbatim direct quote, no surrounding quotation marks — the renderer adds them), analyst_note (1 sentence factual context only from today's articles or reference data; no interpretation), badge_class (sb-p=policy, sb-r=security/red, sb-s=specialist/purple), url (the article the quote is taken from).
 
 - personnel_changes: array of Japan cabinet/ministerial/SDF/ambassador personnel changes from today's news. Each: position, name, action (appointed/resigned/dismissed/nominated/confirmed/reshuffled), detail (1-2 sentences), predecessor (if relevant).
 

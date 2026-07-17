@@ -1,12 +1,12 @@
 # Sources — Daily Japan Digest
 
-Full, exact inventory of every source the pipeline pulls before anything reaches the Claude API. This is the complete input surface: **~90 RSS/news feeds across 4 tiers + a PM-appearance tracker group**, plus live market endpoints and static reference databases. Nothing else is fed to the model — and per the **source-or-skip** rule, every claim in the digest must trace to one of these inputs or a reference baseline (no memory-based assertions).
+Full, exact inventory of every source the pipeline pulls before anything reaches the Claude API. This is the complete input surface: **~110 RSS/news feeds across 4 tiers + a PM-appearance tracker group**, plus live market endpoints and static reference databases. Nothing else is fed to the model — and per the **source-or-skip** rule, every claim in the digest must trace to one of these inputs or a reference baseline (no memory-based assertions).
 
 > **How feeds are queried.** Most feeds are Google News RSS searches scoped to a specific outlet/domain (shown as the search string below); some are the outlet's direct RSS. Each tier has a recency window — articles older than the window are dropped. Tier 1 is keyword-filtered for Japan relevance; lifestyle/entertainment is hard-blocked.
 
 ---
 
-## Tier 1 — News (24-hour window · 44 feeds)
+## Tier 1 — News (24-hour window · 47 feeds)
 
 ### International press — Japan coverage
 | Source | Query / feed |
@@ -68,6 +68,9 @@ Full, exact inventory of every source the pipeline pulls before anything reaches
 | Global Times (on Japan) | `Japan site:globaltimes.cn` |
 | Xinhua (on Japan) | `Japan site:xinhuanet.com` |
 | TASS (on Japan) | `Japan site:tass.com` |
+| The Australian (on Japan) | `Japan site:theaustralian.com.au` |
+| Indian Express (on Japan) | `Japan site:indianexpress.com` |
+| Rappler (on Japan) | `Japan site:rappler.com` |
 
 ### Specialist
 | Source | Query / feed |
@@ -78,7 +81,7 @@ Full, exact inventory of every source the pipeline pulls before anything reaches
 
 ---
 
-## Tier 2 — Analysis / think tanks (36-hour window · 21 feeds)
+## Tier 2 — Analysis / think tanks (36-hour window · 30 feeds)
 
 Bracketed letter = prestige weight (`A` = top-tier, mandatory-include when same-day; `B` = standard).
 
@@ -98,9 +101,18 @@ Bracketed letter = prestige weight (`A` = top-tier, mandatory-include when same-
 | Lowy Institute | B | `Japan site:lowyinstitute.org` |
 | IISS | A | `Japan site:iiss.org` |
 | Atlantic Council | B | `Japan site:atlanticcouncil.org` |
-| USIP | B | `Japan site:usip.org` |
 | German Marshall Fund | B | `Japan site:gmfus.org` |
 | Asia Society Policy Institute | B | `Japan site:asiasociety.org/policy-institute` |
+| Pacific Forum | A | `site:pacforum.org Japan` |
+| Congressional Research Service | A | `Japan site:crsreports.congress.gov OR "Congressional Research Service"` |
+| Asia Policy Point | B | `site:jiaponline.org OR "Asia Policy Point"` |
+| Japan Economy Watch (Richard Katz) | B | `site:richardkatz.substack.com OR "Japan Economy Watch"` |
+| VUB/CSDS Japan Chair | B | `site:csds.vub.be Japan` |
+| ASAN Institute | B | `Japan site:en.asaninst.org OR "Asan Institute"` |
+| ISEAS–Yusof Ishak Institute | B | `Japan site:iseas.edu.sg` |
+| Genron NPO | B | `site:genron-npo.net OR "Genron NPO"` |
+| Chicago Council on Global Affairs | B | `Japan site:globalaffairs.org OR "Chicago Council"` |
+| Pew Research Center | B | `Japan site:pewresearch.org` |
 | University Japan programs | B | `Japan ("Reischauer" OR "MIT Japan" OR "Georgetown") policy` |
 | Foreign Affairs | A | `Japan site:foreignaffairs.com` |
 | Foreign Policy | B | `Japan site:foreignpolicy.com` |
@@ -108,7 +120,7 @@ Bracketed letter = prestige weight (`A` = top-tier, mandatory-include when same-
 
 ---
 
-## Tier 3 — Academic journals (72-hour window · 11 feeds)
+## Tier 3 — Academic journals (72-hour window · 18 feeds)
 
 Bracketed letter = journal tier (inclusion threshold rises from `A+` → `A` → `B`).
 
@@ -121,9 +133,16 @@ Bracketed letter = journal tier (inclusion threshold rises from `A+` → `A` →
 | Survival (IISS) | A | `"Survival" IISS "Japan"` |
 | Journal of Strategic Studies | A | `"Journal of Strategic Studies" "Japan"` |
 | Journal of East Asian Studies | A | `"Journal of East Asian Studies" "Japan"` |
+| Asia Policy (NBR) | A | `"Asia Policy" NBR "Japan"` |
+| International Relations of the Asia-Pacific | A | `"International Relations of the Asia-Pacific" "Japan"` |
+| The Pacific Review | A | `"The Pacific Review" "Japan"` |
 | Asian Survey | B | `"Asian Survey" "Japan"` |
+| Asian Security | B | `"Asian Security" "Japan"` |
 | Pacific Affairs | B | `"Pacific Affairs" "Japan"` |
+| Asia-Pacific Journal: Japan Focus | B | `site:apjjf.org OR "Asia-Pacific Journal" Japan Focus` |
 | Journal of Japanese Studies | B | `"Journal of Japanese Studies"` |
+| Contemporary Japan | B | `"Contemporary Japan" journal` |
+| Japan Review | B | `"Japan Review" Nichibunken` |
 | Social Science Japan Journal | B | `"Social Science Japan Journal"` |
 
 ---
@@ -172,7 +191,7 @@ Feeds the persistent PM-appearance log ("days since last seen"). Queries are lea
 | EUR/JPY (`EURJPY=X`) | Yahoo Finance | Stooq |
 | Brent crude (`BZ=F`) | Yahoo Finance | Stooq |
 | 10Y JGB yield | worldgovernmentbonds.com | fixed fallback 1.50% |
-| BOJ policy rate | Google News scrape | fixed fallback 0.50% |
+| BOJ policy rate | Google News scrape | fixed fallback 1.00% |
 | Japan 5Y CDS | worldgovernmentbonds.com | fixed fallback ~20 bps |
 | GDP / macro (CPI, core CPI, Tankan, unemployment) | Google News scrape | estimate, marked as such |
 

@@ -1,9 +1,212 @@
 [
   {
+    "date": "2026-07-17",
+    "filename": "2026-07-17.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2100
+  },
+  {
     "date": "2026-07-16",
     "filename": "2026-07-16.html",
     "top_stories": 3,
     "overnight_items": 4,
-    "word_count": 1942
+    "word_count": 1743
+  },
+  {
+    "date": "2026-07-15",
+    "filename": "2026-07-15.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 2073
+  },
+  {
+    "date": "2026-07-14",
+    "filename": "2026-07-14.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2074
+  },
+  {
+    "date": "2026-07-13",
+    "filename": "2026-07-13.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 1594
+  },
+  {
+    "date": "2026-07-12",
+    "filename": "2026-07-12.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1598
+  },
+  {
+    "date": "2026-07-11",
+    "filename": "2026-07-11.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1662
+  },
+  {
+    "date": "2026-07-10",
+    "filename": "2026-07-10.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 1777
+  },
+  {
+    "date": "2026-07-09",
+    "filename": "2026-07-09.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2122
+  },
+  {
+    "date": "2026-07-08",
+    "filename": "2026-07-08.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2280
+  },
+  {
+    "date": "2026-07-07",
+    "filename": "2026-07-07.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2591
+  },
+  {
+    "date": "2026-07-06",
+    "filename": "2026-07-06.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 2135
+  },
+  {
+    "date": "2026-07-05",
+    "filename": "2026-07-05.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1662
+  },
+  {
+    "date": "2026-07-04",
+    "filename": "2026-07-04.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1083
+  },
+  {
+    "date": "2026-07-03",
+    "filename": "2026-07-03.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1977
+  },
+  {
+    "date": "2026-07-02",
+    "filename": "2026-07-02.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2079
+  },
+  {
+    "date": "2026-07-01",
+    "filename": "2026-07-01.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2216
+  },
+  {
+    "date": "2026-06-30",
+    "filename": "2026-06-30.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 2072
+  },
+  {
+    "date": "2026-06-29",
+    "filename": "2026-06-29.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2024
+  },
+  {
+    "date": "2026-06-28",
+    "filename": "2026-06-28.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 1728
+  },
+  {
+    "date": "2026-06-27",
+    "filename": "2026-06-27.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 2105
+  },
+  {
+    "date": "2026-06-26",
+    "filename": "2026-06-26.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 1990
+  },
+  {
+    "date": "2026-06-25",
+    "filename": "2026-06-25.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 928
+  },
+  {
+    "date": "2026-06-24",
+    "filename": "2026-06-24.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1840
+  },
+  {
+    "date": "2026-06-23",
+    "filename": "2026-06-23.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1815
+  },
+  {
+    "date": "2026-06-22",
+    "filename": "2026-06-22.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1739
+  },
+  {
+    "date": "2026-06-21",
+    "filename": "2026-06-21.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1268
+  },
+  {
+    "date": "2026-06-20",
+    "filename": "2026-06-20.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1680
+  },
+  {
+    "date": "2026-06-19",
+    "filename": "2026-06-19.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1960
+  },
+  {
+    "date": "2026-06-18",
+    "filename": "2026-06-18.html",
+    "top_stories": 4,
+    "overnight_items": 6,
+    "word_count": 2761
   }
 ]

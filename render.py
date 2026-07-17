@@ -2,17 +2,38 @@
 Japan Daily Brief — HTML Renderer
 CSIS Japan Chair
 
-Mirrors the Daily-Korea/China-Digest visual language:
-- Navy #1B2A4A header + CSIS palette, gold #D4AC0D accents
-- Arial/Georgia stack
-- Status pills, colored left-borders for category coding
+Mirrors the Daily-Korea/China-Digest visual language (ported from the
+Korea brief's Q3-2026 renderer):
+- Navy #1B2A4A header + Hinomaru red #BC002D accents (flag disc mark)
+- System font stack; monospace for machine-measured numbers/dates
+- Shadowed, rounded story cards; floating card wrapper on a #F2F3F5 ground
 - Dark Regional Pressure Watch panel (repurposed dark section)
-- Table-based layout, inline CSS, dark-mode-friendly, mobile responsive
+- Table-based layout, inline CSS, with a proper <style> head: CSS reset,
+  full dark-mode support (prefers-color-scheme), mobile + tablet
+  breakpoints, and Outlook (MSO) conditionals
 """
 
 import re as _re
 from datetime import datetime, timezone
 from urllib.parse import urlparse as _urlparse
+
+
+# ── Palette ───────────────────────────────────────────────────────────────
+NAVY = "#1B2A4A"
+HINOMARU_RED = "#BC002D"          # official Japanese flag crimson (JIS)
+HINOMARU_RED_SOFT = "rgba(188,0,45,0.5)"
+# On-dark (navy panel) readable variants — dark red/text is unreadable on near-black
+PANEL_NAVY   = "#0E1C33"          # Regional Pressure Watch ground (lighter than near-black)
+RED_ON_NAVY  = "#F2718A"          # Hinomaru red lightened for legibility on navy
+SLATE_LABEL  = "#9DB2CE"          # muted slate-blue label on navy
+TEXT_ON_NAVY = "#E4EAF2"          # near-white body text on navy
+
+
+def _hinomaru(size: int = 16) -> str:
+    """Inline Hinomaru (Japanese flag) red-disc mark."""
+    return (f'<span style="display:inline-block;width:{size}px;height:{size}px;'
+            f'border-radius:50%;background:{HINOMARU_RED};vertical-align:middle;'
+            f'margin-right:9px;"></span>')
 
 
 def _clean_src(raw: str) -> str:
@@ -49,7 +70,7 @@ def _esc(text) -> str:
 
 
 def _social_badge(badge_class: str) -> str:
-    return {"sb-p": "#1B2A4A", "sb-r": "#C0392B", "sb-s": "#8E44AD"}.get(badge_class, "#1B2A4A")
+    return {"sb-p": "#1B2A4A", "sb-r": "#C0392B", "sb-s": "#1B2A4A"}.get(badge_class, "#1B2A4A")
 
 
 def _arrow(val) -> str:
@@ -86,11 +107,11 @@ def _link_or_text(text: str, url: str,
 _SEC = 'style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"'
 _SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #C0392B;border-bottom:1px solid #EBEBEB;" class="sec"'
 
-def _sec_label(label: str, color: str = "#1B2A4A") -> str:
-    """Section label — small-caps with rule, no background pill."""
+def _sec_label(label: str, color: str = NAVY, rule: str = HINOMARU_RED) -> str:
+    """Section label — navy small-caps over a Hinomaru-red rule, no pill."""
     return (f'<div style="font-size:10px;font-weight:700;text-transform:uppercase;'
             f'letter-spacing:2px;color:{color};font-family:Arial,sans-serif;'
-            f'margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid {color};">'
+            f'margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid {rule};">'
             f'{label}</div>')
 
 
@@ -186,12 +207,12 @@ def _word_count(d: dict) -> int:
 
 
 def _chapter(label: str) -> str:
-    """Chapter divider — dark navy band with gold rule, white letterspaced label."""
+    """Chapter divider — dark navy band with Hinomaru-red rule, white letterspaced label."""
     return f"""
 <div style="padding:12px 32px;background:#1B2A4A;text-align:center;" class="sec">
-<div style="height:1px;background:rgba(212,172,13,0.4);margin-bottom:10px;"></div>
+<div style="height:1px;background:rgba(188,0,45,0.5);margin-bottom:10px;"></div>
 <span style="font-size:9px;font-family:Arial,sans-serif;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:5px;font-weight:700;">{label}</span>
-<div style="height:1px;background:rgba(212,172,13,0.4);margin-top:10px;"></div>
+<div style="height:1px;background:rgba(188,0,45,0.5);margin-top:10px;"></div>
 </div>"""
 
 
@@ -216,7 +237,7 @@ def render_html(digest: dict) -> str:
     if web_url:
         sections_pre.append(f"""
 <div style="background:#F0F0F0;padding:6px 32px;text-align:center;font-size:11px;color:#888;" class="sec">
-Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decoration:none;">Read online &#8594;</a>
+Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-decoration:none;">Read online &#8594;</a>
 </div>""")
 
     # 1. Header
@@ -224,16 +245,16 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="background:#1B2A4A;color:#fff;padding:18px 32px 14px;" class="sec">
 <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="vertical-align:top;">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">Japan Daily Brief</h1>
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
+<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
 <div style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
 </td>
 <td style="vertical-align:top;text-align:right;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:3px;">{gen_time}</div>
-<div style="font-size:10px;color:rgba(255,255,255,0.4);">{wc:,} words &middot; {read_min} min read</div>
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:3px;font-family:'Courier New',Courier,monospace;">{gen_time}</div>
+<div style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'Courier New',Courier,monospace;">{wc:,} words &middot; {read_min} min read</div>
 </td>
 </tr></table>
-{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid #D4AC0D;font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#D4AC0D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
+{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid #BC002D;font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#BC002D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
 </div>""")
 
     # 2. Market strip (3 rows)
@@ -272,12 +293,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             _top_row = (f'<td width="50%" align="center" style="padding:12px 8px 10px;">{_nikkei_cell}</td>'
                         f'<td width="50%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);">{_usdjpy_cell}</td>')
         sections_pre.append(f"""
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
 <tr>
 {_top_row}
 </tr>
 </table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
 <tr>
 <td width="25%" align="center" style="padding:8px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">EUR/JPY</div>
@@ -301,7 +322,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 </td>
 </tr>
 </table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0F1B30;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#0F1B30;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
 <tr>
 <td width="50%" align="center" style="padding:8px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">BOJ Policy Rate</div>
@@ -351,7 +372,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 </table>"""
         sections_today.append(f"""
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #D4AC0D;">Today at a Glance</div>
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Today at a Glance</div>
 {memo_html}
 </div>""")
 
@@ -369,7 +390,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             sl = _esc(_clean_src(s.get("src_line", s.get("source", ""))))
             url = s.get("url", "")
             sh += f"""
-<div class="story-card" style="margin-bottom:12px;padding:14px 16px;background:#fff;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
 <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
 <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;">{_link_or_text(h, url, style="color:#1B2A4A;text-decoration:none;")}</h3>
 {"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
@@ -382,7 +403,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
     # 4b. Overnight Flash
     overnight = digest.get("overnight_items") or []
     if overnight:
-        cat_colors = {"China-Japan": "#8E44AD", "Defense": "#C0392B", "DPRK": "#C0392B"}
+        cat_colors = {}  # single navy accent for all overnight bars
         fh = ""
         for it in overnight:
             cat_raw = _str(it.get("category", ""))
@@ -398,7 +419,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:12px;line-height:1.4;color:#555;">{b}</div>
 </div>"""
-        sections_today.append(f'<div {_SEC_ALERT}>{_sec_label("&#9889; Overnight Flash", color="#C0392B")}{fh}</div>')
+        sections_today.append(f'<div {_SEC_ALERT}>{_sec_label("&#9889; Overnight Flash", color="#C0392B", rule="#C0392B")}{fh}</div>')
 
     # 5. Key Stat
     stat = digest.get("key_stat") or {}
@@ -418,21 +439,22 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
         def _signal_row(label, color, text):
             if not text:
                 return ""
-            return (f'<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {color};">'
-                    f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;'
-                    f'color:{color};font-weight:700;margin-bottom:2px;">{label}</div>'
-                    f'<div style="font-size:13px;line-height:1.5;color:rgba(255,255,255,0.9);">'
+            return (f'<div style="margin-bottom:12px;padding-left:12px;border-left:3px solid {color};">'
+                    f'<div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;'
+                    f'color:{color};font-weight:700;margin-bottom:3px;">{label}</div>'
+                    f'<div style="font-size:13px;line-height:1.6;color:{TEXT_ON_NAVY};">'
                     f'{_esc(text)}</div></div>')
 
+        # Single accent for the whole panel — labels differentiate, color doesn't
         signals_html = ""
-        signals_html += _signal_row("China", "#E67E22", xd.get("china_signal"))
-        signals_html += _signal_row("North Korea", "#C0392B", xd.get("dprk_signal"))
-        signals_html += _signal_row("Russia", "#8E44AD", xd.get("russia_signal"))
+        signals_html += _signal_row("China", RED_ON_NAVY, xd.get("china_signal"))
+        signals_html += _signal_row("North Korea", RED_ON_NAVY, xd.get("dprk_signal"))
+        signals_html += _signal_row("Russia", RED_ON_NAVY, xd.get("russia_signal"))
 
         senkaku = _esc(xd.get("senkaku_status", ""))
-        senkaku_html = (f'<div style="margin:6px 0 12px;padding:8px 12px;background:rgba(255,255,255,0.05);'
-                        f'border-radius:4px;font-size:12px;color:rgba(255,255,255,0.85);">'
-                        f'<strong style="color:#D4AC0D;">Senkaku / ECS:</strong> {senkaku}</div>'
+        senkaku_html = (f'<div style="margin:6px 0 12px;padding:9px 13px;background:rgba(255,255,255,0.07);'
+                        f'border-radius:4px;font-size:13px;line-height:1.55;color:{TEXT_ON_NAVY};">'
+                        f'<strong style="color:{RED_ON_NAVY};">Senkaku / ECS:</strong> {senkaku}</div>'
                         if senkaku else "")
 
         # PM appearance line
@@ -444,8 +466,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             pm_status = "PM appeared today" if pm_appeared else "No confirmed PM appearance today"
             days_str = (f" · {pm_days} day(s) since last confirmed appearance"
                         if isinstance(pm_days, int) else "")
-            pm_html = (f'<div style="margin-bottom:10px;font-size:12px;color:rgba(255,255,255,0.8);">'
-                       f'<strong style="color:#D4AC0D;">PM Watch:</strong> {_esc(pm_status)}{_esc(days_str)}'
+            pm_html = (f'<div style="margin-bottom:10px;font-size:13px;color:{TEXT_ON_NAVY};">'
+                       f'<strong style="color:{RED_ON_NAVY};">PM Watch:</strong> {_esc(pm_status)}{_esc(days_str)}'
                        f'{(" — " + pm_activity) if pm_activity else ""}</div>')
 
         # Key quotes
@@ -456,12 +478,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                 src = _esc(q.get("source_article", ""))
                 meta = " &middot; ".join(x for x in (spk, src) if x)
                 qtext = _esc(q.get("quote", ""))
-                meta_html = (f'<div style="font-style:normal;font-size:10px;opacity:0.6;'
+                meta_html = (f'<div style="font-style:normal;font-size:11px;color:{SLATE_LABEL};'
                              f'margin-top:4px;">{meta}</div>') if meta else ""
-                quotes_html += (f'<blockquote style="margin:6px 0;padding:8px 12px;'
-                                f'background:rgba(255,255,255,0.05);border-left:3px solid #D4AC0D;'
-                                f'font-style:italic;font-size:12px;line-height:1.5;'
-                                f'color:rgba(255,255,255,0.9);">&ldquo;{qtext}&rdquo;'
+                quotes_html += (f'<blockquote style="margin:8px 0;padding:9px 13px;'
+                                f'background:rgba(255,255,255,0.07);border-left:3px solid {RED_ON_NAVY};'
+                                f'font-style:italic;font-size:13px;line-height:1.55;'
+                                f'color:{TEXT_ON_NAVY};">&ldquo;{qtext}&rdquo;'
                                 f'{meta_html}</blockquote>')
 
         bottom = _esc(xd.get("bottom_line", ""))
@@ -472,14 +494,14 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                        'letter-spacing:0.5px;margin-left:8px;">WATCH</span>') if watch else ""
 
         sections_analysis.append(f"""
-<div style="padding:20px 32px;background:#0a0f1e;color:#fff;border-top:3px solid #D4AC0D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#D4AC0D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(212,172,13,0.4);">Regional Pressure Watch{watch_badge}</div>
-{("<div style='font-size:10px;color:rgba(255,255,255,0.5);margin-top:-8px;margin-bottom:12px;'>" + vol + "</div>") if vol else ""}
+<div style="padding:20px 32px;background:{PANEL_NAVY};color:{TEXT_ON_NAVY};border-top:3px solid #BC002D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec watch-dark">
+<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:{RED_ON_NAVY};font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(242,113,138,0.55);">Regional Pressure Watch{watch_badge}</div>
+{("<div style='font-size:11px;color:" + SLATE_LABEL + ";margin-top:-8px;margin-bottom:12px;'>" + vol + "</div>") if vol else ""}
 {pm_html}
-{signals_html if signals_html else "<div style='font-size:12px;color:rgba(255,255,255,0.6);'>No notable adversary activity flagged today.</div>"}
+{signals_html if signals_html else "<div style='font-size:13px;color:" + SLATE_LABEL + ";'>No notable adversary activity flagged today.</div>"}
 {senkaku_html}
 {quotes_html}
-{("<div style='margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12);font-size:13px;color:#fff;'><strong style='color:#D4AC0D;'>Bottom line:</strong> " + bottom + "</div>") if bottom else ""}
+{("<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);font-size:14px;line-height:1.55;color:#FFFFFF;'><strong style='color:" + RED_ON_NAVY + ";'>Bottom line:</strong> " + bottom + "</div>") if bottom else ""}
 </div>""")
 
     # 8. Japanese Government (gov cards + personnel + Diet sessions + calendar)
@@ -522,9 +544,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 
         pers_html = ""
         if personnel:
-            ac = {"appointed": "#27AE60", "nominated": "#2980B9", "resigned": "#E67E22",
-                  "dismissed": "#C0392B", "confirmed": "#16A085", "reshuffled": "#8E44AD",
-                  "rotated": "#8E44AD"}
+            ac = {}  # single accent — the action word carries the meaning, not the color
             pi = ""
             for p in personnel:
                 pos = _esc(p.get("position", ""))
@@ -610,26 +630,46 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             deal = _esc(str(tt.get("trade_deal_status", "")))
             lc = _esc(str(tt.get("last_change", "")))
             nt = _esc(str(tt.get("next_trigger", "")))
+            s301 = _esc(str(tt.get("section_301_watch", "") or ""))
+            invf = _esc(str(tt.get("investment_framework", "") or ""))
             s232 = tt.get("section_232_rates", {})
+            # Headline numbers → clean navy metric strip (readable, one accent)
+            strip_cells = [c for c in (("Autos · 2025 deal", h_auto), ("Section 122 surcharge", s122)) if c[1]]
+            strip_html = ""
+            if strip_cells:
+                w = 100 // len(strip_cells)
+                tds = ""
+                for i, (lab, val) in enumerate(strip_cells):
+                    bl = "border-left:1px solid rgba(255,255,255,0.12);" if i else ""
+                    tds += (f'<td width="{w}%" align="center" style="padding:12px 10px;{bl}">'
+                            f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{SLATE_LABEL};margin-bottom:4px;">{lab}</div>'
+                            f'<div style="font-size:18px;font-weight:700;color:#fff;font-family:\'Courier New\',Courier,monospace;">{val}</div></td>')
+                strip_html = (f'<table class="mkt-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
+                              f'style="background:{NAVY};border-radius:4px;margin-bottom:10px;"><tr>{tds}</tr></table>')
+            # Section 232 rates — navy label, single red accent on the value
             sr = ""
             for sec, rate in s232.items():
-                sr += f"""<tr style="border-bottom:1px solid #F0E0E0;">
-<td style="padding:4px 6px 4px 0;font-size:11px;font-weight:600;color:#1B2A4A;">{_esc(str(sec).title())}</td>
-<td style="padding:4px 6px;font-size:13px;font-weight:700;color:#C0392B;text-align:center;">{_esc(str(rate))}</td>
-<td style="padding:4px 6px;font-size:9px;color:#888;text-transform:uppercase;">Section 232</td>
-</tr>"""
-            nl = f'<div style="margin-top:4px;font-size:10px;color:#2980B9;">Next trigger: {nt}</div>' if nt else ""
-            dl = f'<div style="margin-top:4px;font-size:11px;color:#666;">Trade deal: {deal}</div>' if deal else ""
-            body += f"""<div style="margin-bottom:16px;padding:12px 14px;background:#FFF5F5;border-radius:4px;border:1px solid #F0D0D0;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:600;margin-bottom:6px;">US Tariffs on Japan</div>
-<div style="margin-bottom:6px;">
-<span style="font-size:11px;color:#666;">Autos (Sec 232):</span> <span style="font-size:14px;font-weight:700;color:#C0392B;">{h_auto}</span> ·
-<span style="font-size:11px;color:#666;">Sec 122 surcharge:</span> <span style="font-size:14px;font-weight:700;color:#E67E22;">{s122}</span>
-</div>
-{'<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;border-top:1px solid #F0E0E0;">' + sr + '</table>' if sr else ''}
-{dl}
-<div style="margin-top:8px;font-size:10px;color:#999;">{lc}</div>
-{nl}
+                sr += (f'<tr style="border-bottom:1px solid #EEE;">'
+                       f'<td style="padding:5px 6px 5px 0;font-size:12px;font-weight:600;color:{NAVY};">{_esc(str(sec).title())}</td>'
+                       f'<td style="padding:5px 6px;font-size:14px;font-weight:700;color:{HINOMARU_RED};text-align:center;">{_esc(str(rate))}</td>'
+                       f'<td style="padding:5px 6px;font-size:10px;color:#999;text-transform:uppercase;">Section 232</td></tr>')
+            s232_html = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">{sr}</table>') if sr else ""
+            il = (f'<div style="margin-top:6px;font-size:12px;line-height:1.5;color:#333;">'
+                  f'<strong style="color:{NAVY};">Investment framework:</strong> {invf}</div>') if invf else ""
+            s3l = (f'<div style="margin-top:6px;font-size:12px;line-height:1.5;color:#333;">'
+                   f'<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:0.5px;color:#fff;background:{HINOMARU_RED};margin-right:6px;">PROPOSED</span>'
+                   f'<strong style="color:{NAVY};">Section 301 watch:</strong> {s301}</div>') if s301 else ""
+            meta_parts = [x for x in ((("Deal: " + deal) if deal else ""),
+                                      (("Next: " + nt) if nt else ""), lc) if x]
+            meta_line = (f'<div style="margin-top:10px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">'
+                         + " &middot; ".join(meta_parts) + "</div>") if meta_parts else ""
+            body += f"""<div class="tariff-box" style="margin-bottom:16px;padding:14px;background:#FBFBFD;border-radius:6px;border:1px solid #E6E6EC;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:10px;">US Tariffs on Japan</div>
+{strip_html}
+{s232_html}
+{il}
+{s3l}
+{meta_line}
 </div>"""
 
         al = trade.get("alliance_tracker") or {}
@@ -644,12 +684,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                                ("Host-nation support", hns),
                                ("USFJ realignment", usfj)):
                 if val:
-                    rows += (f'<tr style="border-bottom:1px solid #DCE6F0;">'
-                             f'<td style="padding:4px 6px 4px 0;font-size:11px;font-weight:600;color:#1B2A4A;">{label}</td>'
-                             f'<td style="padding:4px 0;font-size:11px;color:#555;">{val}</td></tr>')
+                    rows += (f'<tr style="border-bottom:1px solid #EEE;">'
+                             f'<td style="padding:6px 10px 6px 0;font-size:12px;font-weight:600;color:{NAVY};white-space:nowrap;vertical-align:top;">{label}</td>'
+                             f'<td style="padding:6px 0;font-size:12px;line-height:1.5;color:#333;">{val}</td></tr>')
             if rows:
-                body += f"""<div style="margin-bottom:16px;padding:12px 14px;background:#F0F7FF;border-radius:4px;border:1px solid #D6E9F8;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;font-weight:600;margin-bottom:6px;">Alliance Dashboard</div>
+                body += f"""<div class="alliance-box" style="margin-bottom:16px;padding:14px;background:#FBFBFD;border-radius:6px;border:1px solid #E6E6EC;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:8px;">Alliance Dashboard</div>
 <table width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table>
 </div>"""
 
@@ -662,12 +702,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                 parties = _esc(d.get("parties", ""))
                 det = _esc(d.get("detail", ""))
                 url = d.get("url", "")
-                dr += f"""<div style="margin-bottom:6px;padding-left:10px;border-left:2px solid #16A085;">
-<div style="font-size:12px;font-weight:600;color:#1B2A4A;">{_link_or_text(hd, url)}{(' <span style="color:#888;font-weight:400;font-size:11px;">· ' + val + '</span>') if val else ''}</div>
-<div style="font-size:11px;color:#555;">{parties}{(' — ' + det) if det else ''}</div>
+                dr += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid {HINOMARU_RED};">
+<div style="font-size:13px;font-weight:600;color:{NAVY};line-height:1.4;">{_link_or_text(hd, url)}{(' <span style="color:#888;font-weight:400;font-size:11px;">· ' + val + '</span>') if val else ''}</div>
+<div style="font-size:12px;line-height:1.5;color:#444;">{parties}{(' — ' + det) if det else ''}</div>
 </div>"""
             body += f"""<div style="margin-bottom:16px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#16A085;font-weight:600;margin-bottom:6px;">New Agreements / Pledges</div>
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:8px;">New Agreements / Pledges</div>
 {dr}
 </div>"""
 
@@ -686,7 +726,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             sec = _esc(b.get("sector", ""))
             comps = b.get("companies", [])
             cs = ", ".join(_esc(c) for c in comps) if comps else ""
-            bh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #D4AC0D;">
+            bh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
 <div style="font-size:11px;color:#888;text-transform:uppercase;">{sec} · {src}{(' · ' + cs) if cs else ''}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:12px;line-height:1.4;color:#555;">{bt}</div>
@@ -696,12 +736,10 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
     # 11. Indo-Pacific
     ip = digest.get("indo_pacific") or []
     if ip:
-        rc = {"China-Japan": "#8E44AD", "Korea-Japan": "#2C3E50", "DPRK": "#C0392B",
-              "Trilateral": "#16A085", "Indo-Pacific": "#7F8C8D"}
         ih = ""
         for it in ip[:6]:
             r = it.get("region_tag", "Indo-Pacific")
-            bar = rc.get(r, "#7F8C8D")
+            bar = NAVY
             h = _esc(it.get("headline", ""))
             bt = _esc(it.get("body_text", ""))
             url = it.get("url", "")
@@ -749,10 +787,10 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 <div style="font-size:14px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:6px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 {"<div style='font-size:12px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>" + ca + "</div>" if ca else ""}
 {"<div style='font-size:11px;line-height:1.5;color:#666;'>" + sm + "</div>" if sm else ""}
-{"<div style='font-size:11px;color:#2980B9;margin-top:4px;font-weight:600;'>" + ps + "</div>" if ps else ""}
+{"<div style='font-size:11px;color:#1B2A4A;margin-top:4px;font-weight:600;'>" + ps + "</div>" if ps else ""}
 </div>"""
         if academics:
-            body += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#8E44AD;margin:14px 0 8px 0;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Academic Journals</div>'
+            body += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;margin:14px 0 8px 0;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Academic Journals</div>'
             for a in academics[:4]:
                 title = _esc(a.get("title", ""))
                 src = _esc(a.get("source", ""))
@@ -760,8 +798,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                 auth = _esc(a.get("authors", ""))
                 sm = _esc(a.get("summary", ""))
                 url = a.get("url", "")
-                body += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #8E44AD;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-<div style="font-size:10px;color:#8E44AD;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src} · {tier}{(' · ' + auth) if auth else ''}</div>
+                body += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+<div style="font-size:10px;color:#1B2A4A;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src} · {tier}{(' · ' + auth) if auth else ''}</div>
 <div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 <div style="font-size:12px;line-height:1.5;color:#555;">{sm}</div>
 </div>"""
@@ -785,12 +823,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             if has_disappr:
                 stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
 <tr>
-<td width="50%" align="center" style="padding:10px;background:#EAF5EA;border-radius:4px;">
+<td width="50%" align="center" class="sent-approve" style="padding:10px;background:#EAF5EA;border-radius:4px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Approve</div>
 <div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
 </td>
 <td width="4"></td>
-<td width="50%" align="center" style="padding:10px;background:#FBECEC;border-radius:4px;">
+<td width="50%" align="center" class="sent-disapprove" style="padding:10px;background:#FBECEC;border-radius:4px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:700;">Disapprove</div>
 <div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{disappr}</div>
 </td>
@@ -800,7 +838,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
                 # Disapproval not reported in the same poll — show approval alone, no empty box.
                 stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
 <tr>
-<td align="center" style="padding:10px;background:#EAF5EA;border-radius:4px;">
+<td align="center" class="sent-approve" style="padding:10px;background:#EAF5EA;border-radius:4px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Cabinet Approval</div>
 <div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
 </td>
@@ -835,14 +873,22 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
             pd = _esc(s.get("platform_date", ""))
             q = _esc(s.get("quote_text", ""))
             nt = _esc(s.get("analyst_note", ""))
-            bc = _social_badge(s.get("badge_class", "sb-p"))
+            initials = _esc(s.get("avatar_initials", (who[:2].upper() if who else "?")))
             url = s.get("url", "")
-            src_link = ("<div style='font-size:10px;color:#888;margin-top:4px;'>" + _link_or_text("source", url, style="color:#888;text-decoration:underline;") + "</div>") if url and url != "#" and url.startswith("http") else ""
-            sh += f"""<div style="margin-bottom:14px;padding:12px;background:#FAFAF5;border-radius:4px;border-left:3px solid {bc};">
-<div style="font-size:12px;color:#888;text-transform:uppercase;letter-spacing:0.5px;">{pd}</div>
-<div style="font-size:14px;font-weight:600;color:#1B2A4A;margin:2px 0;">{who} <span style="font-size:11px;color:#888;font-weight:400;">· {ctx}</span></div>
-<blockquote style="margin:6px 0;padding:8px 12px;background:#fff;border-left:3px solid {bc};font-style:italic;font-size:13px;line-height:1.5;color:#333;font-family:Georgia,serif;">&ldquo;{q}&rdquo;</blockquote>
-{"<div style='font-size:11px;color:#555;margin-top:4px;'><strong>Note:</strong> " + nt + "</div>" if nt else ""}
+            meta = " &middot; ".join(x for x in (ctx, pd) if x)
+            src_link = ("<div style='margin-top:6px;'>" + _link_or_text("Source &#8594;", url, style="font-size:11px;color:" + HINOMARU_RED + ";text-decoration:none;") + "</div>") if url and url != "#" and url.startswith("http") else ""
+            sh += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#F7F8FA;border-radius:6px;border-left:3px solid {HINOMARU_RED};">
+<table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr>
+<td width="38" style="vertical-align:middle;">
+<div style="width:38px;height:38px;border-radius:50%;background:{HINOMARU_RED};color:#fff;text-align:center;line-height:38px;font-size:14px;font-weight:700;font-family:Arial,sans-serif;">{initials}</div>
+</td>
+<td style="padding-left:10px;vertical-align:middle;">
+<div style="font-size:13px;font-weight:700;color:{NAVY};">{who}</div>
+<div style="font-size:11px;color:#888;">{meta}</div>
+</td>
+</tr></table>
+<p style="margin:0;font-size:13px;line-height:1.6;color:#2C3E50;font-style:italic;">&ldquo;{q}&rdquo;</p>
+{"<p style='margin:6px 0 0 0;font-size:11px;color:#555;'><strong style='color:" + HINOMARU_RED + ";font-style:normal;'>Analyst:</strong> " + nt + "</p>" if nt else ""}
 {src_link}
 </div>"""
         sections_analysis.append(f'<div {_SEC}>{_sec_label("Social Statements")}{sh}</div>')
@@ -850,7 +896,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
     # 16. Also Today
     also = digest.get("also_today") or []
     if also:
-        wc_ = {"China-Japan": "#8E44AD", "Defense": "#C0392B", "DPRK": "#C0392B"}
+        wc_ = {}  # single navy accent for all wire bars
         ah = ""
         for a in also[:6]:
             cr_ = _str(a.get("category", ""))
@@ -881,9 +927,9 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:#2980B9;text-decorat
 
     # Footer
     sections_post.append(f"""
-<div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec">
+<div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec footer">
 <div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
-CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated {gen_time}
+CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
 </div>
 <a href="#top" style="font-size:10px;color:rgba(255,255,255,0.4);text-decoration:none;letter-spacing:1px;">&#8593; Back to top</a>
 </div>""")
@@ -899,25 +945,84 @@ CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated {gen_
 
     body_html = "\n".join(s for s in sections if s)
     return f"""<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Japan Daily Brief</title>
-<style>
-body {{ margin:0; padding:0; background:#fff; font-family:Arial,sans-serif; color:#333; }}
-.container {{ max-width:680px; margin:0 auto; background:#fff; }}
-@media only screen and (max-width: 600px) {{
-  .container {{ width:100% !important; }}
-  .sec {{ padding-left:16px !important; padding-right:16px !important; }}
-}}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Japan Daily Brief &mdash; {_esc(date_str)}</title>
+<style type="text/css">
+  /* Reset */
+  body, table, td, div, p {{ margin:0; padding:0; }}
+  img {{ border:0; display:block; }}
+  /* Data typography — monospace for machine-measured numbers */
+  .mkt-table div[style*="font-weight:700"], .key-stat-num {{ font-family:'Courier New',Courier,monospace !important; }}
+  /* Mobile responsive */
+  @media only screen and (max-width: 620px) {{
+    .wrapper {{ width:100% !important; }}
+    .sec, .footer {{ padding:16px 16px !important; }}
+    h1 {{ font-size:22px !important; }}
+    .key-stat-num {{ font-size:26px !important; }}
+    /* Market strip stays multi-across on phones — smaller mono, tighter pad */
+    .mkt-table td {{ padding:8px 4px 10px !important; }}
+    .mkt-table div[style*="font-size:20px"] {{ font-size:16px !important; }}
+    .mkt-table div[style*="font-size:15px"] {{ font-size:13px !important; }}
+    /* Story cards */
+    .story-card {{ padding:12px 12px !important; }}
+    /* Dark Regional Pressure Watch panel */
+    .watch-dark td {{ padding-left:16px !important; padding-right:16px !important; }}
+    /* Trade dashboard boxes */
+    .tariff-box, .alliance-box {{ padding:10px 12px !important; }}
+    /* Overflow + legibility safety */
+    p, div, td {{ word-wrap:break-word !important; overflow-wrap:break-word !important; }}
+    body, td, div, p, span {{ -webkit-text-size-adjust:100%; }}
+    div[style*="font-size:9px"], span[style*="font-size:9px"] {{ font-size:10px !important; }}
+    a {{ min-height:44px; }}
+    p a, div a, td a {{ min-height:auto; padding:6px 0; }}
+    img {{ max-width:100% !important; height:auto !important; }}
+  }}
+  /* Tablet breakpoint */
+  @media only screen and (min-width: 621px) and (max-width: 768px) {{
+    .wrapper {{ width:100% !important; }}
+    .sec, .footer {{ padding:16px 22px !important; }}
+    h1 {{ font-size:24px !important; }}
+    .mkt-table td {{ padding:10px 10px 12px !important; }}
+  }}
+  /* Dark mode — scoped, non-destructive. The masthead, market strip,
+     Regional Pressure Watch panel, key stat, and footer are already dark
+     surfaces and need no inversion. */
+  @media (prefers-color-scheme: dark) {{
+    body {{ background:#121212 !important; }}
+    .wrapper {{ background:#1a1a1a !important; }}
+    .wrapper .sec {{ background:#1E2126 !important; border-bottom-color:#33373D !important; }}
+    .wrapper h1, .wrapper h2, .wrapper h3 {{ color:#E8E6E1 !important; }}
+    .wrapper .sec p {{ color:#C4C8CE !important; }}
+    .wrapper a {{ color:#6FA8E8 !important; }}
+    .wrapper .footer {{ background:#0F1B30 !important; }}
+    .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
+    /* Trade dashboard light boxes → neutral dark equivalents */
+    .wrapper .tariff-box, .wrapper .alliance-box {{ background:#22262C !important; border-color:#33373D !important; }}
+    .wrapper .tariff-box strong, .wrapper .alliance-box strong {{ color:#C4C8CE !important; }}
+    /* Public Sentiment stat boxes */
+    .wrapper .sent-approve {{ background:#16261B !important; }}
+    .wrapper .sent-disapprove {{ background:#2A1518 !important; }}
+    .wrapper .mkt-table td {{ border-color:rgba(255,255,255,0.08) !important; }}
+  }}
 </style>
+<!--[if mso]>
+<style type="text/css">
+  table {{ border-collapse:collapse; }}
+  .wrapper {{ width:680px; }}
+</style>
+<![endif]-->
 </head>
-<body>
+<body style="margin:0;padding:0;background:#F2F3F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 <a name="top"></a>
-<div class="container">
+<!--[if mso]><table width="680" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td><![endif]-->
+<div class="wrapper" style="max-width:680px;width:100%;margin:0 auto;background:#FFFFFF;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.08);">
 {body_html}
 </div>
+<!--[if mso]></td></tr></table><![endif]-->
 </body>
 </html>"""
 

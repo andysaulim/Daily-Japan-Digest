@@ -79,6 +79,9 @@ TIER1_FEEDS = {
     "Global Times re Japan": _gnews("Japan+site:globaltimes.cn"),
     "Xinhua re Japan":    _gnews("Japan+site:xinhuanet.com"),
     "TASS re Japan":      _gnews("Japan+site:tass.com"),
+    "The Australian re Japan": _gnews("Japan+site:theaustralian.com.au"),
+    "Indian Express re Japan": _gnews("Japan+site:indianexpress.com"),
+    "Rappler re Japan":   _gnews("Japan+site:rappler.com"),
 
     # ── Specialist Japan outlets ────────────────────────────────────────────
     "The Diplomat Japan": _gnews("Japan+site:thediplomat.com"),
@@ -106,9 +109,22 @@ TIER2_FEEDS = {
     "Lowy Japan":              (_gnews("Japan+site:lowyinstitute.org"), "B"),
     "IISS Japan":              (_gnews("Japan+site:iiss.org"), "A"),
     "Atlantic Council Japan":  (_gnews("Japan+site:atlanticcouncil.org"), "B"),
-    "USIP Japan":              (_gnews("Japan+site:usip.org"), "B"),
     "GMF Japan":               (_gnews("Japan+site:gmfus.org"), "B"),
     "Asia Society Policy":     (_gnews("Japan+site:asiasociety.org/policy-institute"), "B"),
+
+    # Alliance-network specialists (Japan Chair additions)
+    "Pacific Forum":           (_gnews("site:pacforum.org+Japan"), "A"),
+    "CRS (Japan)":             (_gnews("Japan+site:crsreports.congress.gov+OR+%22Congressional+Research+Service%22"), "A"),
+    "Asia Policy Point":       (_gnews("site:jiaponline.org+OR+%22Asia+Policy+Point%22"), "B"),
+    "Japan Economy Watch (Katz)": (_gnews("site:richardkatz.substack.com+OR+%22Japan+Economy+Watch%22"), "B"),
+    "VUB/CSDS Japan Chair":    (_gnews("site:csds.vub.be+Japan"), "B"),
+
+    # Survey / public-opinion data institutions (Japan Chair additions)
+    "ASAN Institute":          (_gnews("Japan+site:en.asaninst.org+OR+%22Asan+Institute%22"), "B"),
+    "ISEAS Yusof Ishak":       (_gnews("Japan+site:iseas.edu.sg"), "B"),
+    "Genron NPO":              (_gnews("site:genron-npo.net+OR+%22Genron+NPO%22"), "B"),
+    "Chicago Council":         (_gnews("Japan+site:globalaffairs.org+OR+%22Chicago+Council%22"), "B"),
+    "Pew Research (Japan)":    (_gnews("Japan+site:pewresearch.org"), "B"),
 
     # University Japan programs (via Google News)
     "MIT/Harvard/G'town Japan": (_gnews("Japan+(%22Reischauer%22+OR+%22MIT+Japan%22+OR+%22Georgetown%22)+policy"), "B"),
@@ -132,11 +148,18 @@ TIER3_FEEDS = {
     "Survival IISS":           (_gnews("%22Survival%22+IISS+%22Japan%22"), "A"),
     "J. Strategic Studies":    (_gnews("%22Journal+of+Strategic+Studies%22+%22Japan%22"), "A"),
     "J. East Asian Studies":   (_gnews("%22Journal+of+East+Asian+Studies%22+%22Japan%22"), "A"),
+    "Asia Policy (NBR)":       (_gnews("%22Asia+Policy%22+NBR+%22Japan%22"), "A"),
+    "Int'l Rel. Asia-Pacific": (_gnews("%22International+Relations+of+the+Asia-Pacific%22+%22Japan%22"), "A"),
+    "The Pacific Review":      (_gnews("%22The+Pacific+Review%22+%22Japan%22"), "A"),
 
     # B tier — Japan / Asia specialist journals
     "Asian Survey":            (_gnews("%22Asian+Survey%22+%22Japan%22"), "B"),
+    "Asian Security":          (_gnews("%22Asian+Security%22+%22Japan%22"), "B"),
     "Pacific Affairs":         (_gnews("%22Pacific+Affairs%22+%22Japan%22"), "B"),
+    "APJ: Japan Focus":        (_gnews("site:apjjf.org+OR+%22Asia-Pacific+Journal%22+Japan+Focus"), "B"),
     "J. Japanese Studies":     (_gnews("%22Journal+of+Japanese+Studies%22"), "B"),
+    "Contemporary Japan":      (_gnews("%22Contemporary+Japan%22+journal"), "B"),
+    "Japan Review":            (_gnews("%22Japan+Review%22+Nichibunken"), "B"),
     "Social Science Japan J.": (_gnews("%22Social+Science+Japan+Journal%22"), "B"),
 }
 
@@ -211,6 +234,8 @@ PRESTIGE_JOURNALISTS = {
     "Mari Yamaguchi",
     # Nikkei
     "Rurika Imahashi",
+    # Washington-based columnists on Japan/alliance (not Tokyo correspondents)
+    "Demetri Sevastopulo", "David Ignatius",
 }
 
 
@@ -722,8 +747,8 @@ def _fetch_boj_rate() -> dict:
                         "as_of": datetime.now(timezone.utc).strftime("%b %d")}
     except Exception as e:
         print(f"  ⚠ BOJ rate fetch error: {e}")
-    print("  ⚠ BOJ policy rate: using fallback (0.50%)")
-    return {"value": "0.50%", "last_change": "", "as_of": ""}
+    print("  ⚠ BOJ policy rate: using fallback (1.00%)")
+    return {"value": "1.00%", "last_change": "", "as_of": ""}
 
 
 def _fetch_japan_cds() -> dict:

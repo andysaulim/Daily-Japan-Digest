@@ -10,13 +10,13 @@ Automated daily intelligence briefing on Japan and the US-Japan alliance for the
 
 | Metric | Value |
 | --- | --- |
-| Last generated | Jul 16, 2026 at 9:56 AM ET |
-| Digest date | Thursday, July 16, 2026 |
+| Last generated | Jul 17, 2026 at 7:18 AM ET |
+| Digest date | Friday, July 17, 2026 |
 | Articles collected | 57 |
-| Unique sources | 12 |
-| Top stories | 3 |
+| Unique sources | 11 |
+| Top stories | 4 |
 | Overnight items | 4 |
-| Word count | ~1,132 |
+| Word count | ~1,340 |
 | PM appeared | Yes |
 
 ## How It Works
@@ -46,8 +46,8 @@ collect.py          digest.py           render.py          send_email.py
 | Tier | Sources | Window | Content |
 | --- | --- | --- | --- |
 | **1 — News** | 40+ feeds | 24h | Wire services, correspondents, Japanese English-language press, US & Japan government, regional reaction |
-| **2 — Analysis** | 21 feeds | 36h | Think tanks (CSIS Japan Chair, Brookings, CFR, RAND, Carnegie, Stimson, Sasakawa, NBR, IISS) — A/B prestige |
-| **3 — Academic** | 11 feeds | 72h | Journals (Int'l Security, Asian Survey, Journal of Japanese Studies, Social Science Japan Journal) — A+/A/B tiers |
+| **2 — Analysis** | 30 feeds | 36h | Think tanks (CSIS Japan Chair, Brookings, CFR, RAND, Carnegie, Stimson, Sasakawa, NBR, IISS, Pacific Forum, CRS) + opinion-data shops (ASAN, ISEAS, Genron NPO, Chicago Council, Pew) — A/B prestige |
+| **3 — Academic** | 18 feeds | 72h | Journals (Int'l Security, Asia Policy, The Pacific Review, IR of the Asia-Pacific, Asian Survey, APJ: Japan Focus) — A+/A/B tiers |
 | **4 — Gov Primary + Adversary** | 9 feeds | 48h | Kantei, Chief Cabinet Sec, MOFA, MOD/Joint Staff, METI, BOJ + China/DPRK/Russia signals toward Japan |
 
 *A separate PM-appearance tracker (5 feeds, 72h) flags the Prime Minister's public schedule.*

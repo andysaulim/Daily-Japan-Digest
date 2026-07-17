@@ -8,13 +8,202 @@
       },
       "watch_flag": false
     },
-    "2026-07-16": {
+    "2026-06-18": {
       "signals": {
-        "china_signal": "China's Global Times published two pieces targeting Japan: one characterizing Japan's South China Sea stance and India-Japan defense cooperation as 'strategic ambitions' and 'opportunistic,' and a second warning that countries backing the South China Sea arbitral award should consider risks to their",
-        "dprk_signal": "The US, Japan, and South Korea defense chiefs met in Washington and issued a joint statement reaffirming trilateral cooperation on North Korea denuclearization; a StratNews Global report flagged Japanese deliberation on a nuclear option in response to China and DPRK pressure."
+        "china_signal": "China's Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and formally rejected Defense Minister Koizumi's challenge to China's military spending d",
+        "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy; North Korean state media separately touted industrial output exceeding targets."
+      },
+      "watch_flag": false
+    },
+    "2026-06-19": {
+      "signals": {
+        "china_signal": "Chinese Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and China formally rejected Defense Minister Koizumi's challenge to China's officially re",
+        "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy reporting on June 18-19."
+      },
+      "watch_flag": false
+    },
+    "2026-06-20": {
+      "signals": {
+        "china_signal": "China's foreign ministry rebuked US deterrence consultations with South Korea and Japan, calling trilateral coordination destabilizing; Beijing separately maintained criticism of PM Takaichi's G7 Evian rare-earth remarks as 'stoking confrontation.' China's key mineral exports to Japan stayed at low "
+      },
+      "watch_flag": false
+    },
+    "2026-06-21": {
+      "signals": {
+        "china_signal": "China's foreign ministry publicly rebuked US deterrence consultations with South Korea and Japan, characterizing trilateral coordination as destabilizing — a continuation of Beijing's post-G7 Evian criticism of Japan's rare-earth and security messaging.",
+        "dprk_signal": "Ukrainian military assessments indicate North Korean ballistic missiles deployed by Russia have shown improved accuracy, per Kyodo News — a technical development relevant to Japan's missile defense planning and DPRK program tracking."
+      },
+      "watch_flag": false
+    },
+    "2026-06-22": {
+      "signals": {
+        "china_signal": "China's foreign ministry, via Xinhua, characterized Japan's defense buildup as a 'retrogression' and 'path of no return' — its sharpest formulation to date — while separately urging Japan to conduct 'soul-searching' over a wartime atrocity report, per Global Times. Both statements coincide with the "
+      },
+      "watch_flag": false
+    },
+    "2026-06-23": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 regular press conference called on the international community to remain vigilant against Japan's 'neo-militarism,' criticized expanding Japan-Ukraine military cooperation as destabilizing, and separately urged Japan to conduct 'serious",
+        "dprk_signal": "North Korea tested a new multi-purpose missile launch system per KCNA, and Kim Jong Un publicly asserted the country will exercise its position as a nuclear state while warning of nuclear war risk and vowing faster defense buildup. Mainichi separately reported Kim characterized Japan as turning into"
+      },
+      "watch_flag": false
+    },
+    "2026-06-24": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 press conference called on the international community to remain vigilant against Japan's 'neo-militarism' and characterized Japan's remilitarization as a 'retrogression' and 'path of no return.' Simultaneously, Beijing detained two Jap",
+        "dprk_signal": "Kim Jong Un asserted North Korea will exercise its nuclear state status and warned of nuclear war risk while vowing faster defense buildup; North Korea separately commissioned its largest-ever warship, per Reuters, Türkiye Today, and Egypt Independent."
+      },
+      "watch_flag": false
+    },
+    "2026-06-26": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — a message framed around the ongoing rare-earth export restrictions and the Fuji Electric worker detentions. China simultaneously defended patrols east of Taiwan and rej",
+        "dprk_signal": "Kim Jong Un oversaw ballistic missile tests and KCNA reported a successful test of tactical nuclear strike capability against South Korean power stations; North Korea also commissioned its first-in-class guided-missile destroyer, Choe Hyon, and announced plans for a cruiser, a step-change in DPRK su"
+      },
+      "watch_flag": false
+    },
+    "2026-06-27": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — framing pressure around rare-earth export restrictions and Fuji Electric worker detentions in China. Japan separately filed a formal protest over Chinese gas drilling i",
+        "dprk_signal": "Kim Jong Un oversaw tests of ballistic missiles, a modernized multiple-launch rocket system, and a tactical nuclear-strike system targeting South Korean power stations, per KCNA; North Korea simultaneously commissioned the Choe Hyon, its first-in-class 5,000-ton guided-missile destroyer, and announc"
       },
       "watch_flag": true
+    },
+    "2026-06-28": {
+      "signals": {
+        "china_signal": "Chinese and Russian bombers and fighter jets conducted a joint air patrol over the Sea of Japan and surrounding waters, per Japan Times and NHK World. Xinhua separately published a commentary characterizing PM Takaichi's political funds investigation as evidence of 'political-business collusion behi",
+        "dprk_signal": "Tier 4 data confirms North Korea tested a modernized multiple-launch rocket system and a ballistic missile, per Caliber.Az and Russian defense outlet reporting, and commissioned the Choe Hyon, its first-in-class 5,000-ton guided-missile destroyer, per Marine Insight. Japan, the US, and South Korea h",
+        "russia_signal": "Russia participated in the joint air patrol with China over the Sea of Japan, per Japan Times and NHK; no separate Russia-specific Northern Territories or Hokkaido activity reported in today's articles."
+      },
+      "watch_flag": true
+    },
+    "2026-06-29": {
+      "signals": {
+        "china_signal": "China added 20 more Japanese entities to its dual-use export control blacklist on June 29, bringing cumulative blacklistings to at least 40 organizations, while Chinese Coast Guard ships repeatedly entered Japan's EEZ and China's Foreign Ministry dismissed Tokyo's objections to CCG activities east o",
+        "dprk_signal": "North Korea issued formal warnings against US-Japan joint military drills, per multiple outlets including Anadolu Agency and Türkiye Today, while South Korea and Japan separately reaffirmed denuclearization goals and agreed to advance defense equipment cooperation talks.",
+        "russia_signal": "Russia participated alongside China in a joint bomber and fighter jet patrol near Japan in the Sea of Japan region; Japan conveyed concerns to Moscow through diplomatic channels, per Jiji Press. No separate Northern Territories or Hokkaido-specific Russian activity was reported in today's articles."
+      },
+      "watch_flag": false
+    },
+    "2026-06-30": {
+      "signals": {
+        "china_signal": "China added 20 more Japanese entities to its dual-use export control blacklist on June 29-30, bringing cumulative blacklistings to at least 40 organizations; China's Foreign Ministry dismissed Tokyo's objections to CCG activities east of Taiwan as illegitimate while characterizing those operations a",
+        "dprk_signal": "North Korea issued formal denunciations of ongoing US-Japan joint military drills, warning both Washington and Tokyo against continuing such exercises. South Korea confirmed close coordination with the US following the belated disclosure of North Korea's latest missile launch."
+      },
+      "watch_flag": false
+    },
+    "2026-07-01": {
+      "signals": {
+        "china_signal": "China arrested two Japanese nationals in Dalian and its Foreign Ministry told Tokyo to 'educate' nationals on Chinese law. Beijing also protested Japan's joint maritime activities with the Philippines, formally characterizing them as an infringement of China's maritime rights, while demanding Japan "
+      },
+      "watch_flag": false
+    },
+    "2026-07-02": {
+      "signals": {
+        "china_signal": "China's Coast Guard ordered a second Japanese survey vessel to halt operations in Japan's EEZ in the East China Sea, prompting a formal MOFA protest; Beijing's Foreign Ministry simultaneously rejected Japan's updated FOIP framework, told Tokyo to 'educate' nationals detained in Dalian, and character",
+        "russia_signal": "Russia and China conducted another joint bomber mission near Japan and South Korea, per USNI News, continuing a pattern of coordinated air patrols documented in the regional tracker since at least June 28-29."
+      },
+      "watch_flag": false
+    },
+    "2026-07-03": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry issued at least five coordinated statements rejecting Japan's updated Free and Open Indo-Pacific framework, characterizing it as sowing 'division and rivalry,' and separately warned that India-Japan critical minerals cooperation 'should not target or harm the interests of an"
+      },
+      "watch_flag": false
+    },
+    "2026-07-05": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry warned that India-Japan bilateral ties 'should not target third parties,' directly responding to the defense co-development pact and critical minerals agreements signed at the Takaichi-Modi summit. Beijing also announced forthcoming Chinese-Russian joint naval drills off Chi",
+        "dprk_signal": "Kim Jong Un personally observed cruise missile launches and weapons tests conducted from aboard the naval destroyer Kang Kon, per KCNA-sourced reporting carried by Reuters and the Japan Times. The tests follow North Korea's June commissioning of the Choe Hyon guided-missile destroyer and Kim's late ",
+        "russia_signal": "No new Russia-specific Northern Territories, Hokkaido, or bilateral Japan-Russia activity is reported in today's articles. The announced Chinese-Russian joint naval drills off China's coast (Nikkei Asia) continues the pattern of Sino-Russian military coordination documented in the regional tracker."
+      },
+      "watch_flag": false
+    },
+    "2026-07-06": {
+      "signals": {
+        "china_signal": "China test-fired a submarine-launched ballistic missile into the South Pacific nuclear-free zone, with Japan informed by Chinese authorities, per Kyodo and Nikkei Asia; the test follows China's recent SLBM and naval expansion activity and occurred within waters covered by the Treaty of Rarotonga. Ch",
+        "dprk_signal": "Kim Jong Un personally oversaw cruise missile launches and multiple weapons tests from the guided-missile destroyer Kang Kon, North Korea's recently repaired surface combatant, per KCNA-sourced reporting confirmed by Reuters, Yonhap, Japan Times, and Straits Times; separately, North Korea tested new"
+      },
+      "watch_flag": true
+    },
+    "2026-07-07": {
+      "signals": {
+        "china_signal": "Two China Coast Guard ships entered Japanese territorial waters off the Senkaku Islands on July 7, while China's state media simultaneously rebuked Tokyo for what Beijing characterized as interference with Chinese scientific research operations near the Diaoyu Dao. China's SLBM test into the South P",
+        "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' continuing a messaging campaign that directly targets Japan's counterstrike capability program; Kim Jong Un oversaw cruise missile launches from the Kang Kon destroyer and "
+      },
+      "watch_flag": true
+    },
+    "2026-07-08": {
+      "signals": {
+        "china_signal": "China and Japan issued contradictory official accounts of a confrontation near the Senkaku / Diaoyu Islands, while China's Global Times rebuked Tokyo for alleged interference with Chinese scientific research operations near the Diaoyu Dao. China's Foreign Ministry dismissed regional concerns over it",
+        "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' directly targeting Japan's counterstrike capability program; separately, North Korea is reported to be flexing naval capabilities ahead of anticipated China-Russia joint dr"
+      },
+      "watch_flag": true
+    },
+    "2026-07-09": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry told countries not to 'overread' Beijing's SLBM test into the South Pacific, in direct response to the US-Japan-South Korea trilateral joint statement of concern. China's detention of two Japanese nationals in Dalian, first reported in early July, received renewed coverage v",
+        "dprk_signal": "North Korea's guided-missile destroyer Kang Kon — which capsized at its own launch ceremony — is now entering service, per 19FortyFive, adding to the DPRK surface strike capability that Kim Jong Un has used for recent weapons tests. North Korean state media continued messaging characterizing Japan-S"
+      },
+      "watch_flag": false
+    },
+    "2026-07-10": {
+      "signals": {
+        "china_signal": "The US-Japan-South Korea trilateral is conducting a joint investigation into China's July 6 SLBM test into the South Pacific nuclear-free zone, per VOI.id; the July 7-8 CCG Senkaku intrusion pattern from the regional tracker has not been superseded by new territorial-waters reporting in today's feed",
+        "dprk_signal": "North Korea publicly vowed to accelerate its nuclear buildup and military intelligence capabilities, while the Kang Kon guided-missile destroyer — which capsized at its commissioning ceremony — advanced toward operational service, per 19FortyFive and The Standard.",
+        "russia_signal": "Russia's Education Minister visited one of the four islands Japan claims as its Northern Territories, per Jiji Press; no new naval or air incursion near Hokkaido was reported in today's feed."
+      },
+      "watch_flag": false
+    },
+    "2026-07-11": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry directed a message to NATO to 'abandon Cold War mentality,' a formulation Beijing has applied to Japan's engagement with NATO and Western security forums. Nikkei Asia reports China has stepped up its simultaneous maritime push against both the Philippines and Japan, framing ",
+        "dprk_signal": "KCNA reported North Korea has decided to expand its nuclear force 'both in quality and quantity' while modernizing its military and strengthening combat readiness, continuing a messaging campaign that has specifically targeted Japan's counterstrike capability program in recent weeks per the regional"
+      },
+      "watch_flag": false
+    },
+    "2026-07-12": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry issued a statement to NATO calling for abandonment of 'Cold War mentality,' a formulation Beijing has repeatedly applied to Japan's NATO engagement and Western security alignment. No new Senkaku territorial-waters intrusion is reported in today's feed; the July 7-8 CCG intru",
+        "dprk_signal": "KCNA reported North Korea has decided to expand its nuclear force 'both in quality and quantity' while modernizing its military and strengthening combat readiness, continuing a messaging campaign that has specifically targeted Japan's counterstrike capability program in recent weeks.",
+        "russia_signal": "The New York Times and Japan Times published a detailed report on Russian intelligence operations inside Japan, describing networks that expanded after Russia's 2022 invasion of Ukraine. No new Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
+      },
+      "watch_flag": false
+    },
+    "2026-07-13": {
+      "signals": {
+        "china_signal": "China's foreign ministry lodged stern representations with Japan over the foreign minister's co-signature of a 14-nation joint statement reaffirming the 2016 South China Sea arbitral ruling as legally binding, with Beijing's spokesperson 'strongly deploring' the statement and warning against 'stirri"
+      },
+      "watch_flag": false
+    },
+    "2026-07-14": {
+      "signals": {
+        "china_signal": "China launched a two-track diplomatic response after Japan's foreign minister co-signed a 14-nation joint statement reaffirming the 2016 South China Sea arbitral ruling as legally binding: Beijing summoned Japan's ambassador and simultaneously had the Chinese Embassy in Japan file a separate solemn "
+      },
+      "watch_flag": false
+    },
+    "2026-07-15": {
+      "signals": {
+        "china_signal": "No new China Coast Guard territorial-waters intrusion or PLA activity near the Senkakus is reported in today's feed. The tracker's last recorded China signal was July 14, when Beijing summoned Japan's ambassador and the Chinese Embassy filed a solemn representation over Japan's co-signature of a 14-",
+        "russia_signal": "The Guardian published a detailed report on Russian intelligence networks operating inside Japan, noting expansion after Russia's 2022 invasion of Ukraine. Japan officially acknowledged a growing counter-espionage need in response; no new Northern Territories or Hokkaido air-sea incursion is reporte"
+      },
+      "watch_flag": false
+    },
+    "2026-07-16": {
+      "signals": {
+        "china_signal": "Global Times published two pieces on July 16 framing Japan's co-signature of the 14-nation South China Sea arbitral-ruling statement as reflecting 'strategic ambitions' and warning that countries backing the 2016 ruling risk undermining their own maritime rights — continuing Beijing's multi-day dipl",
+        "dprk_signal": "The US, South Korean, and Japanese defense chiefs convened in Washington and issued a joint trilateral statement reaffirming cooperation on North Korean denuclearization; StratNews Global separately reports Japan is internally assessing nuclear deterrence options in response to sustained DPRK nuclea",
+        "russia_signal": "No new Northern Territories or Hokkaido air-sea incursion reported in today's feed; the Guardian investigation into Russian espionage networks in Japan remains the active Russia-Japan story in the tracker."
+      },
+      "watch_flag": false
+    },
+    "2026-07-17": {
+      "signals": {
+        "china_signal": "China state media (Global Times and China Daily Asia) published pieces on July 17 characterizing Japan's co-signature of the 14-nation South China Sea arbitral-ruling statement as reflecting 'strategic ambitions' — continuing a multi-day diplomatic pressure campaign that began July 13 with China's f",
+        "dprk_signal": "The US, Japan, and South Korean defense chiefs issued a joint trilateral statement from Washington reaffirming cooperation on North Korean denuclearization; Radio Free Asia separately reported expert assessments that North Korean structures near the DMZ may constitute rocket launch infrastructure."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-16T13:56:48.504094+00:00"
+  "last_updated": "2026-07-17T11:18:55.570297+00:00"
 }

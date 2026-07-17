@@ -1,11 +1,151 @@
 {
   "appearances": [
     {
-      "date": "2026-07-16",
-      "activity": "PM Takaichi made public statements on tax-cut talks, the bond market rout, and the Diet session, per Jiji Press and Japan Times reporting on July 16.",
+      "date": "2026-07-17",
+      "activity": "PM Takaichi stated publicly that GPIF investing in domestic assets is a key priority and that inter-party tax-cut talks are expected to conclude by early August, per Bloomberg and Nippon.com reporting.",
       "source": "digest",
       "url": "",
-      "recorded_at": "2026-07-16T13:56:48.503785+00:00"
+      "recorded_at": "2026-07-17T11:18:55.569712+00:00"
+    },
+    {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi publicly stated tax-cut talks are expected to conclude by early August and is engaged in Diet session extension deliberations.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T01:09:47.984856+00:00"
+    },
+    {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi publicly stated that tax-cut inter-party talks are expected to conclude by early August and the administration plans to extend the Diet session.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T01:35:43.309532+00:00"
+    },
+    {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi publicly stated that inter-party tax-cut talks are expected to conclude by early August and the administration plans to extend the current Diet session.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T11:31:25.952367+00:00"
+    },
+    {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi publicly stated that inter-party tax-cut talks are expected to conclude by early August and the Takaichi administration announced plans to extend the current Diet session.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T13:22:20.202589+00:00"
+    },
+    {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi stated publicly that inter-party tax-cut talks are expected to conclude by early August and the administration plans to extend the Diet session.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T17:57:42.786025+00:00"
+    },
+    {
+      "date": "2026-07-16",
+      "activity": "PM Takaichi publicly stated inter-party tax-cut talks are expected to conclude by early August and the administration plans to extend the current Diet session.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-16T20:26:19.274706+00:00"
+    },
+    {
+      "date": "2026-07-15",
+      "activity": "PM Takaichi publicly stated that the government's draft economic blueprint is not the cause of the bond market rout, spoke at WebX 2026 pledging expanded startup and Web3 funding, and the government held press conferences through the Deputy Chief Cabinet Secretary.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-15T11:25:49.720986+00:00"
+    },
+    {
+      "date": "2026-07-09",
+      "activity": "PM Takaichi was scheduled to hold a debate with opposition leaders and was referenced in Diet session reporting, per Nippon.com and China Daily.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-09T12:30:39.933883+00:00"
+    },
+    {
+      "date": "2026-07-08",
+      "activity": "PM Takaichi paid tribute to former PM Abe on the fourth anniversary of his assassination and was referenced in Diet session reporting as accepting opposition demands to resume upper house deliberations.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-08T11:48:09.986051+00:00"
+    },
+    {
+      "date": "2026-07-03",
+      "activity": "PM Takaichi concluded the 16th India-Japan Annual Summit with PM Modi in New Delhi, co-signing over 100 agreements including the first Japan-India defense co-development pact, and participated in the Japan-India Economic Forum attended by 230+ companies.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-03T12:05:17.172428+00:00"
+    },
+    {
+      "date": "2026-07-02",
+      "activity": "PM Takaichi concluded the annual Japan-India summit in New Delhi with PM Modi, signing AI, defense, and energy deals, with 150 firms committing $12.5 billion in investment.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-02T12:07:07.689995+00:00"
+    },
+    {
+      "date": "2026-07-01",
+      "activity": "PM Takaichi departed Japan for New Delhi on July 1 for a summit with Indian PM Modi, published a contributed article in the Times of India, and recorded a video message for the 50th anniversary of the NARA Treaty commemorative dinner.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-01T12:33:18.073249+00:00"
+    },
+    {
+      "date": "2026-06-26",
+      "activity": "PM Takaichi spoke to the press regarding the M7.2 earthquake off the coast of Iwate Prefecture, per the Prime Minister's Office of Japan.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-26T12:11:25.065309+00:00"
+    },
+    {
+      "date": "2026-06-24",
+      "activity": "PM Takaichi attended the 81st anniversary memorial ceremony for the Battle of Okinawa and was heckled by anti-war protesters; her Le Figaro contributed article was also posted by the Prime Minister's Office.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-24T12:18:42.154539+00:00"
+    },
+    {
+      "date": "2026-06-23",
+      "activity": "PM Takaichi published a contributed article to France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan posting dated June 22-23.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-23T12:32:49.031737+00:00"
+    },
+    {
+      "date": "2026-06-22",
+      "activity": "PM Takaichi published a contributed article in France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-22T15:17:17.099787+00:00"
+    },
+    {
+      "date": "2026-06-21",
+      "activity": "PM Takaichi conducted informal dining outreach to senior LDP members and issued a statement asserting US commitment to the Indo-Pacific has not declined, per arabnews.jp and Asahi Shimbun.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-21T12:08:37.995625+00:00"
+    },
+    {
+      "date": "2026-06-20",
+      "activity": "PM Takaichi's food-tax reduction talks were confirmed advancing per Kyodo News, and she is reported preparing an upcoming India visit with a business delegation including Suzuki and Itochu executives.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-20T11:54:29.661441+00:00"
+    },
+    {
+      "date": "2026-06-19",
+      "activity": "PM Takaichi's office posted the G7 Evian Summit Day 3 readout confirming her participation in an AI adoption working lunch and bilateral meetings; she separately acknowledged advancing food-tax reduction talks.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-19T13:32:52.481810+00:00"
+    },
+    {
+      "date": "2026-06-18",
+      "activity": "PM Takaichi concluded the G7 Evian Summit, confirmed all her proposals were adopted in the final communique, held a bilateral with Italian President Meloni, and issued statements on the US-Iran deal and Strait of Hormuz.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-06-18T18:39:14.152630+00:00"
     },
     {
       "date": "2026-06-16",
@@ -22,5 +162,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-16T13:56:48.503816+00:00"
+  "last_updated": "2026-07-17T11:18:55.569781+00:00"
 }

@@ -26,7 +26,9 @@ def send_digest(html: str, subject: str | None = None,
         True on successful send, False otherwise.
     """
     gmail_user = os.environ.get("GMAIL_USER", "").strip()
-    gmail_pass = os.environ.get("GMAIL_APP_PASS", "").strip()
+    # Gmail shows App Passwords as "xxxx xxxx xxxx xxxx"; strip ALL whitespace
+    # (internal spaces included) so a pasted-with-spaces secret still authenticates.
+    gmail_pass = "".join(os.environ.get("GMAIL_APP_PASS", "").split())
 
     if not gmail_user or not gmail_pass:
         print("⚠ Missing GMAIL_USER or GMAIL_APP_PASS — skipping send")
