@@ -508,9 +508,14 @@ Return a digest object with:
 
 - indo_pacific: array of 3-4 items covering China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan, Southeast Asia, Australia, India as they relate to Japan. Each: url (verbatim from input), source, headline, body_text (1 sentence), category (china-japan, senkaku, korea-japan, dprk-missile, trilateral, quad, taiwan, southeast-asia, australia, india), region_tag ("China-Japan" / "Korea-Japan" / "DPRK" / "Trilateral" / "Indo-Pacific").
 
-- social_statements: 3-4 quotes from senior officials. ATTRIBUTION RULE: quote MUST be a statement made BY the named person in their OFFICIAL CAPACITY on a policy-relevant topic. Prioritize the Japanese PM, Chief Cabinet Secretary, Foreign/Defense/Finance Ministers, BOJ Governor; US officials (Trump, Rubio, Hegseth, Bessent, Greer); and relevant foreign leaders. Use the name from the article.
+- social_statements: 0-4 VERBATIM quotes from senior officials. This is a QUOTATION section, not a headline digest. HARD RULES:
+  * quote_text MUST be a word-for-word quotation that literally appears (inside quotation marks) in the body of one of today's articles. Do NOT paraphrase. Do NOT convert a headline, a reporter's summary, or the gist of an article into a "quote." Do NOT invent or reconstruct wording.
+  * If an article only reports what someone said in reported/indirect speech (no direct quotation), it does NOT qualify — omit it.
+  * Better to return FEWER statements (or an empty array) than to fabricate or paraphrase a quote. Zero statements is acceptable on days with no clean direct quotes.
+  * ATTRIBUTION: the quote MUST be spoken BY the named person in their OFFICIAL CAPACITY on a policy-relevant topic. Prioritize the Japanese PM, Chief Cabinet Secretary, Foreign/Defense/Finance Ministers, BOJ Governor; US officials (Trump, Rubio, Hegseth, Bessent, Greer); and relevant foreign leaders. Use the name from the article.
+  * The quote_text you output will be rendered inside quotation marks, so it must be genuinely quotable text from the source — nothing else.
 
-Each: avatar_initials (2 letters), who (name), handle_context (title/role), platform_date (source · date), quote_text (direct quote), analyst_note (1 sentence factual context only from today's articles or reference data; no interpretation), badge_class (sb-p=policy, sb-r=security/red, sb-s=specialist/purple), url.
+Each: avatar_initials (2 letters), who (name), handle_context (title/role), platform_date (source · date), quote_text (the verbatim direct quote, no surrounding quotation marks — the renderer adds them), analyst_note (1 sentence factual context only from today's articles or reference data; no interpretation), badge_class (sb-p=policy, sb-r=security/red, sb-s=specialist/purple), url (the article the quote is taken from).
 
 - personnel_changes: array of Japan cabinet/ministerial/SDF/ambassador personnel changes from today's news. Each: position, name, action (appointed/resigned/dismissed/nominated/confirmed/reshuffled), detail (1-2 sentences), predecessor (if relevant).
 

@@ -5,6 +5,7 @@ Orchestrates collect → digest → validate → render → send → archive.
 import argparse
 import json
 import os
+import re as _re
 import sys
 import time
 import traceback
@@ -317,6 +318,66 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
     return digest
 
 
+# Sections walked in placement-priority order (highest first). An article kept
+# in a higher-priority section is removed from any lower one — "each article
+# appears in exactly ONE section."
+_DEDUPE_ORDER = (
+    "top_stories", "overnight_items", "prc_government", "congressional_watch",
+    "npc_politburo", "indo_pacific", "business_economy", "also_today",
+)
+
+
+def _norm_title(s) -> str:
+    return _re.sub(r"[^a-z0-9]+", " ", str(s or "").lower()).strip()
+
+
+def _item_identity(item: dict):
+    """A (kind, value) identity for cross-section dedup: URL first, else title."""
+    if not isinstance(item, dict):
+        return None
+    url = (item.get("url") or "").strip()
+    if url and url.startswith("http"):
+        return ("u", url)
+    for f in ("headline", "title", "action", "committee", "body"):
+        t = _norm_title(item.get(f))
+        if len(t) >= 20:          # only dedupe on a substantive title
+            return ("t", t)
+    return None
+
+
+def _dedupe_sections(digest: dict) -> dict:
+    """Drop any article that already appeared in a higher-priority section
+    (matched by URL, or by an identical normalized headline)."""
+    seen: set = set()
+    removed = 0
+
+    def _sweep(items):
+        nonlocal removed
+        kept = []
+        for it in (items or []):
+            ident = _item_identity(it)
+            if ident is not None and ident in seen:
+                removed += 1
+                continue
+            if ident is not None:
+                seen.add(ident)
+            kept.append(it)
+        return kept
+
+    # top_stories and overnight_items first, then trade deals, then the rest
+    digest["top_stories"] = _sweep(digest.get("top_stories"))
+    digest["overnight_items"] = _sweep(digest.get("overnight_items"))
+    trade = digest.get("us_china_trade")
+    if isinstance(trade, dict) and trade.get("deals"):
+        trade["deals"] = _sweep(trade.get("deals"))
+    for section in _DEDUPE_ORDER[2:]:
+        digest[section] = _sweep(digest.get(section))
+
+    if removed:
+        print(f"   ✓ Removed {removed} cross-section duplicate item(s)")
+    return digest
+
+
 def _archive_html(html: str, digest: dict) -> None:
     """Write the dated HTML to public/ for GitHub Pages."""
     PUBLIC_DIR.mkdir(exist_ok=True)
@@ -415,6 +476,9 @@ def run_pipeline(args: argparse.Namespace) -> int:
                 collected_urls.add(u)
     digest = _sanitise_urls(digest, collected_urls)
     print(f"   ✓ URL sanitisation complete ({len(collected_urls)} collected URLs as reference)")
+
+    # ─── De-duplicate across sections (one article, one section) ─────────
+    digest = _dedupe_sections(digest)
 
     DIGEST_JSON.write_text(json.dumps(digest, ensure_ascii=False, indent=2),
                           encoding="utf-8")
