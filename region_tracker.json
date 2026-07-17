@@ -196,7 +196,14 @@
         "russia_signal": "No new Northern Territories or Hokkaido air-sea incursion reported in today's feed; the Guardian investigation into Russian espionage networks in Japan remains the active Russia-Japan story in the tracker."
       },
       "watch_flag": false
+    },
+    "2026-07-17": {
+      "signals": {
+        "china_signal": "China state media (Global Times and China Daily Asia) published pieces on July 17 characterizing Japan's co-signature of the 14-nation South China Sea arbitral-ruling statement as reflecting 'strategic ambitions' — continuing a multi-day diplomatic pressure campaign that began July 13 with China's f",
+        "dprk_signal": "The US, Japan, and South Korean defense chiefs issued a joint trilateral statement from Washington reaffirming cooperation on North Korean denuclearization; Radio Free Asia separately reported expert assessments that North Korean structures near the DMZ may constitute rocket launch infrastructure."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-16T20:26:19.275096+00:00"
+  "last_updated": "2026-07-17T11:18:55.570297+00:00"
 }

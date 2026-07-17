@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-17",
+      "activity": "PM Takaichi stated publicly that GPIF investing in domestic assets is a key priority and that inter-party tax-cut talks are expected to conclude by early August, per Bloomberg and Nippon.com reporting.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-17T11:18:55.569712+00:00"
+    },
+    {
       "date": "2026-07-16",
       "activity": "PM Takaichi publicly stated tax-cut talks are expected to conclude by early August and is engaged in Diet session extension deliberations.",
       "source": "digest",
@@ -155,5 +162,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-16T20:26:19.274737+00:00"
+  "last_updated": "2026-07-17T11:18:55.569781+00:00"
 }
