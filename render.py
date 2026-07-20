@@ -826,17 +826,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
     if polls or party or disc:
         poll_body = ""
         if polls:
-            # Comparison table — Approve AND Disapprove for every pollster (works
-            # for 1-3 rows), so the spread and net picture are both readable.
-            APPR_GREEN = "#1E7E4A"
-            DISA_RED = "#C0392B"
-            header = (
-                '<tr>'
-                '<td style="padding:0 8px 6px 0;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#999;">Pollster</td>'
-                f'<td align="center" style="padding:0 6px 6px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:{APPR_GREEN};font-weight:700;">Approve</td>'
-                f'<td align="center" style="padding:0 6px 6px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:{DISA_RED};font-weight:700;">Disapprove</td>'
-                '<td align="center" style="padding:0 0 6px 6px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#999;">vs prior</td>'
-                '</tr>')
+            # Clean comparison table — one row per pollster (1-3 rows), grey
+            # header, left-aligned, plain values. Approve AND Disapprove shown.
+            def _th(label):
+                return (f'<td style="padding:8px 12px;font-size:10px;text-transform:uppercase;'
+                        f'letter-spacing:0.8px;color:#8A8F98;font-weight:600;">{label}</td>')
+            header = f'<tr style="background:#F2F3F5;">{_th("Pollster")}{_th("Approve")}{_th("Disapprove")}{_th("vs prior")}</tr>'
             rows = ""
             for p in polls:
                 pollster = _esc(p.get("pollster", ""))
@@ -844,18 +839,18 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 appr = _esc(str(p.get("cabinet_approval", "") or "—"))
                 disappr = _esc(str(p.get("cabinet_disapproval", "") or "—"))
                 chg = _esc(str(p.get("approval_change", "") or "—"))
-                date_html = f'<span style="display:block;font-size:10px;color:#999;font-weight:400;">{pdate}</span>' if pdate else ""
+                name = (f'<strong style="color:{NAVY};">{pollster}</strong>'
+                        + (f' <span style="color:#9AA0A8;">&middot; {pdate}</span>' if pdate else ''))
                 rows += (
-                    '<tr style="border-top:1px solid #E8EAEE;">'
-                    f'<td style="padding:9px 8px 9px 0;font-size:12px;color:{NAVY};font-weight:700;vertical-align:middle;">{pollster}{date_html}</td>'
-                    f'<td align="center" style="padding:9px 6px;font-size:18px;font-weight:700;color:{APPR_GREEN};font-family:Georgia,serif;vertical-align:middle;">{appr}</td>'
-                    f'<td align="center" style="padding:9px 6px;font-size:18px;font-weight:700;color:{DISA_RED};font-family:Georgia,serif;vertical-align:middle;">{disappr}</td>'
-                    f'<td align="center" style="padding:9px 0 9px 6px;font-size:12px;color:#888;vertical-align:middle;">{chg}</td>'
+                    '<tr style="border-top:1px solid #EAEBEE;">'
+                    f'<td style="padding:12px;font-size:13px;color:{NAVY};">{name}</td>'
+                    f'<td style="padding:12px;font-size:14px;color:{NAVY};font-weight:600;">{appr}</td>'
+                    f'<td style="padding:12px;font-size:14px;color:{NAVY};font-weight:600;">{disappr}</td>'
+                    f'<td style="padding:12px;font-size:13px;color:#8A8F98;">{chg}</td>'
                     '</tr>')
             poll_body += (
-                '<div style="font-size:10px;color:#888;margin-bottom:8px;">Cabinet approval &amp; disapproval by pollster — figures differ by house</div>'
                 '<table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
-                'style="margin-bottom:10px;background:#F7F8FA;border-radius:6px;padding:6px 12px;">'
+                'style="margin-bottom:12px;">'
                 f'{header}{rows}</table>')
 
         if party:

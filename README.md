@@ -10,13 +10,13 @@ Automated daily intelligence briefing on Japan and the US-Japan alliance for the
 
 | Metric | Value |
 | --- | --- |
-| Last generated | Jul 20, 2026 at 1:55 PM ET |
+| Last generated | Jul 20, 2026 at 2:19 PM ET |
 | Digest date | Monday, July 20, 2026 |
 | Articles collected | 57 |
-| Unique sources | 6 |
-| Top stories | 3 |
+| Unique sources | 5 |
+| Top stories | 4 |
 | Overnight items | 4 |
-| Word count | ~940 |
+| Word count | ~914 |
 | PM appeared | No |
 
 ## How It Works
@@ -131,7 +131,7 @@ Required secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASS`, `DIGEST_T
 
 ## Validation Gates
 
-- **Word count**: Hard minimum 1,000 (target 1,200–1,400)
+- **Word count**: Hard minimum 650 (validation counter; target ~1,200–1,800 as shown in the header)
 - **Section minimums**: 2–4 top stories, ≥3 overnight, exactly 3 morning memo
 - **Source diversity**: No single source >3 times in top + overnight
 - **Prestige outlets**: WSJ/NYT/WaPo/Bloomberg/FT/Economist/CNN/Reuters/NHK/Kyodo/Japan Times/Nikkei never dropped
