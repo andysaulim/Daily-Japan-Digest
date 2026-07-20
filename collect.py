@@ -193,6 +193,22 @@ PM_TRACKER_FEEDS = {
 }
 
 
+# ── CABINET-APPROVAL POLLS (30-day window) ────────────────────────────────────
+# Japanese cabinet-approval polls publish ~monthly PER pollster, so a 24-48h news
+# window usually misses them. These per-pollster searches with a long lookback
+# ensure the latest real poll from each house is available for the Public
+# Sentiment table (the digest carries them forward, labeled with their date).
+POLL_FEEDS = {
+    "NHK poll":     _gnews("NHK+Japan+cabinet+approval+rating+OR+%22support+rate%22"),
+    "Nikkei poll":  _gnews("Nikkei+Japan+cabinet+approval+rating+OR+%22support+rate%22"),
+    "Jiji poll":    _gnews("Jiji+Japan+cabinet+approval+rating+OR+%22support+rate%22"),
+    "Yomiuri poll": _gnews("Yomiuri+Japan+cabinet+approval+rating+OR+%22support+rate%22"),
+    "Kyodo poll":   _gnews("Kyodo+Japan+cabinet+approval+rating+OR+%22support+rate%22"),
+    "Asahi poll":   _gnews("Asahi+Japan+cabinet+approval+rating+OR+%22support+rate%22"),
+    "Mainichi poll":_gnews("Mainichi+Japan+cabinet+approval+rating+OR+%22support+rate%22"),
+}
+
+
 # ── KEYWORD FILTERS ───────────────────────────────────────────────────────────
 JAPAN_KEYWORDS = re.compile(
     r"\bjapan\b|\bjapanese\b|\btokyo\b|\bdiet\b|\bkantei\b|\bldp\b"
@@ -493,6 +509,20 @@ def _collect_pm_tracker() -> list:
     for source, (entries, _) in results.items():
         for entry in entries:
             if not _is_recent(entry, hours=72):
+                continue
+            article = _entry_to_article(entry, source, lang="EN")
+            articles.append(article)
+    return _dedup(articles)
+
+
+def _collect_polls() -> list:
+    """Collect recent cabinet-approval poll coverage (30-day window, per pollster)
+    so the latest monthly poll from each Japanese house is available."""
+    articles = []
+    results = _fetch_feeds_parallel(POLL_FEEDS)
+    for source, (entries, _) in results.items():
+        for entry in entries:
+            if not _is_recent(entry, hours=24 * 30):
                 continue
             article = _entry_to_article(entry, source, lang="EN")
             articles.append(article)
@@ -860,6 +890,10 @@ def collect_all() -> dict:
     pm_articles = _collect_pm_tracker()
     print(f"  ✔ {len(pm_articles)} PM-related articles")
 
+    print("\n🔍 Cabinet-approval polls (30-day window)...")
+    poll_articles = _collect_polls()
+    print(f"  ✔ {len(poll_articles)} poll-related articles")
+
     print("\n💹 Market data...")
     markets = _collect_markets()
     print(f"  ✔ {sum(1 for v in markets.values() if v)} indicators")
@@ -878,6 +912,7 @@ def collect_all() -> dict:
         "tier3": tier3,
         "tier4": tier4,
         "pm_tracker_articles": pm_articles,
+        "poll_articles": poll_articles,
         "market_indicators": markets,
         "messaging_summary": msg_summary,
         "source_health": _source_health,

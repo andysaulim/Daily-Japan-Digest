@@ -182,6 +182,22 @@ Feeds the persistent PM-appearance log ("days since last seen"). Queries are lea
 
 ---
 
+## Cabinet-approval polls (30-day window · 7 feeds)
+
+Japanese cabinet-approval polls publish ~monthly **per pollster**, so a 24–48h news window usually misses them. These per-pollster searches with a 30-day lookback ensure the latest real poll from each house is available for the **Public Sentiment** comparison table; the digest carries each forward labeled with its original survey date. A code sanitizer drops anything that isn't a recognized Japanese pollster with a clean numeric percentage.
+
+| Source | Query |
+|---|---|
+| NHK poll | `NHK Japan cabinet approval rating OR "support rate"` |
+| Nikkei poll | `Nikkei Japan cabinet approval rating OR "support rate"` |
+| Jiji poll | `Jiji Japan cabinet approval rating OR "support rate"` |
+| Yomiuri poll | `Yomiuri Japan cabinet approval rating OR "support rate"` |
+| Kyodo poll | `Kyodo Japan cabinet approval rating OR "support rate"` |
+| Asahi poll | `Asahi Japan cabinet approval rating OR "support rate"` |
+| Mainichi poll | `Mainichi Japan cabinet approval rating OR "support rate"` |
+
+---
+
 ## Market data (live, fetched each run)
 
 | Indicator | Primary source | Fallback |
