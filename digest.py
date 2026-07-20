@@ -377,6 +377,24 @@ Cross-reference these reports with Tier 4 data."""
     except Exception:
         pass
 
+    # Cabinet-approval poll reports (30-day window, per pollster)
+    poll_block = ""
+    poll_articles = payload.get("poll_articles", [])
+    if poll_articles:
+        poll_block = f"""
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CABINET-APPROVAL POLL REPORTS (per pollster, last 30 days)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{tier_json(poll_articles, max_items=25)}
+
+Build public_sentiment.approval_polls from THESE reports: extract each recognized
+Japanese pollster's (NHK / Nikkei / Jiji / Yomiuri / Asahi / Kyodo / Mainichi)
+most recent cabinet approval % and disapproval %, with its survey date. These may
+be days or weeks old — that is EXPECTED (polls are ~monthly); include them and
+label each with its real date. Prefer a fresher number if today's Tier 1 articles
+carry one. Numbers only — no prose in the figure fields."""
+
     # Tier 4 block — gate on actual data
     if _has_tier4_data(payload):
         tier4_block = (
@@ -416,6 +434,7 @@ VERIFIED UPCOMING DATES
 {_VERIFIED_UPCOMING}
 {market_block}
 {pm_block}
+{poll_block}
 {region_block}
 {db_block}
 
@@ -520,7 +539,7 @@ Each: avatar_initials (2 letters), who (name), handle_context (title/role), plat
 - personnel_changes: array of Japan cabinet/ministerial/SDF/ambassador personnel changes from today's news. Each: position, name, action (appointed/resigned/dismissed/nominated/confirmed/reshuffled), detail (1-2 sentences), predecessor (if relevant).
 
 - public_sentiment: Japan cabinet approval & party-support polling block. SAME-POLL-DATE RULE (applies WITHIN each poll object): every figure inside a single poll object must come from ONE survey by ONE pollster for ONE date range — never blend pollsters or dates inside one object. Object with:
-  - approval_polls: array of 1-3 poll objects, at most ONE per pollster, so readers can see how the houses differ. Include the most recent poll from each DIFFERENT recognized Japanese pollster that appears in today's articles (order the most authoritative/most recent first — that first entry is the "primary" poll). HARD RULES:
+  - approval_polls: array of 1-3 poll objects, at most ONE per pollster, so readers can see how the houses differ. SOURCE: build these primarily from the CABINET-APPROVAL POLL REPORTS block above (per-pollster, last 30 days) — that block exists specifically so this table is populated even between the ~monthly poll releases. Include the most recent poll from each DIFFERENT recognized Japanese pollster (order the most authoritative/most recent first — that first entry is the "primary" poll), each labeled with its real survey date even if it's a few weeks old. HARD RULES:
     * pollster MUST be one of these recognized Japanese pollsters ONLY: NHK, Nikkei, Jiji, Yomiuri, Asahi, Kyodo, Mainichi. NEVER use a foreign or state outlet (e.g. CGTN, Global Times, Xinhua, Chosun/Chosunbiz, Yonhap) as a pollster, and NEVER use the label "Multiple", "Various", "aggregate", or a newspaper that is merely re-reporting someone else's poll. If you cannot attribute a number to a specific named Japanese pollster's own survey, OMIT it.
     * cabinet_approval and cabinet_disapproval MUST be a bare percentage string and nothing else — e.g. "41%". NO prose, ranges, parentheticals, or commentary inside these fields (NOT "approximately 40% range (record low...)", NOT "exceeds approval"). If a clean numeric percentage for that pollster isn't in the articles, set the field to null (or omit the whole poll if approval itself isn't a clean number). Put any narrative about the trend in discourse_flag, not in the number fields.
     * poll_date = the survey's date range (e.g. "Jul 12-14"); approval_change vs the prior same-pollster poll (e.g. "-3" or null).
