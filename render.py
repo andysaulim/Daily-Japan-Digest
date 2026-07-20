@@ -28,6 +28,9 @@ RED_ON_NAVY  = "#F2718A"          # Hinomaru red lightened for legibility on nav
 SLATE_LABEL  = "#9DB2CE"          # muted slate-blue label on navy
 TEXT_ON_NAVY = "#E4EAF2"          # near-white body text on navy
 
+# Observing Japan cabinet-approval poll aggregator (Govella review)
+OBSERVING_JAPAN_POLLS = "https://observingjapan.substack.com/p/tracking-the-japanese-governments-423"
+
 
 def _hinomaru(size: int = 16) -> str:
     """Inline Hinomaru (Japanese flag) red-disc mark."""
@@ -194,11 +197,16 @@ def _word_count(d: dict) -> int:
         for f in ("who", "handle_context", "platform_date", "quote_text", "analyst_note"):
             w += _w(s.get(f, ""))
 
-    # Public sentiment (approval polling)
+    # Public sentiment (approval polling — array or legacy single object)
     ps = d.get("public_sentiment") or {}
-    ap = ps.get("approval_polling") or {}
-    for f in ("pollster", "poll_date", "cabinet_approval", "cabinet_disapproval", "source_article"):
-        w += _w(ap.get(f, ""))
+    _polls = ps.get("approval_polls")
+    if not _polls:
+        _legacy = ps.get("approval_polling")
+        _polls = [_legacy] if isinstance(_legacy, dict) else []
+    for ap in _polls:
+        if isinstance(ap, dict):
+            for f in ("pollster", "poll_date", "cabinet_approval", "cabinet_disapproval"):
+                w += _w(ap.get(f, ""))
     for p in (ps.get("party_support") or []):
         w += _w(p.get("party", ""))
     w += _w(ps.get("discourse_flag", ""))
@@ -807,16 +815,46 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 
     # 14. Public Sentiment — cabinet approval & party support
     ps = digest.get("public_sentiment") or {}
-    ap = ps.get("approval_polling") or {}
+    # Support the new multi-poll array and the legacy single object
+    polls = ps.get("approval_polls")
+    if not polls:
+        legacy = ps.get("approval_polling")
+        polls = [legacy] if isinstance(legacy, dict) else []
+    polls = [p for p in polls if isinstance(p, dict) and p.get("cabinet_approval")][:3]
     party = ps.get("party_support") or []
     disc = _esc(ps.get("discourse_flag", ""))
-    if (ap and ap.get("cabinet_approval")) or party or disc:
+    if polls or party or disc:
         poll_body = ""
-        if ap and ap.get("cabinet_approval"):
+        if len(polls) >= 2:
+            # Multi-poll row — one cell per pollster, so the spread is visible
+            n = len(polls)
+            w = 100 // n
+            cells = ""
+            for i, p in enumerate(polls):
+                pollster = _esc(p.get("pollster", ""))
+                pdate = _esc(p.get("poll_date", ""))
+                appr = _esc(str(p.get("cabinet_approval", "")))
+                disappr = _esc(str(p.get("cabinet_disapproval", "") or ""))
+                chg = _esc(str(p.get("approval_change", "") or ""))
+                bl = "border-left:1px solid #E4E7EC;" if i else ""
+                dis_html = (f'<div style="font-size:11px;color:#C0392B;margin-top:3px;">{disappr} disapprove</div>'
+                            if disappr and disappr not in ("—", "None") else "")
+                chg_html = f'<div style="font-size:10px;color:#888;margin-top:2px;">{chg}</div>' if chg else ""
+                cells += (f'<td width="{w}%" align="center" style="padding:12px 6px;{bl}vertical-align:top;">'
+                          f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{NAVY};font-weight:700;">{pollster}</div>'
+                          f'<div style="font-size:9px;color:#999;margin-bottom:5px;">{pdate}</div>'
+                          f'<div style="font-size:24px;font-weight:700;color:{NAVY};font-family:Georgia,serif;">{appr}</div>'
+                          f'<div style="font-size:9px;color:#27AE60;text-transform:uppercase;letter-spacing:0.5px;">approve</div>'
+                          f'{dis_html}{chg_html}</td>')
+            poll_body += (f'<div style="font-size:10px;color:#888;margin-bottom:6px;">Cabinet approval by pollster — figures differ by house</div>'
+                          f'<table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
+                          f'style="margin-bottom:10px;background:#F7F8FA;border-radius:6px;"><tr>{cells}</tr></table>')
+        elif len(polls) == 1:
+            ap = polls[0]
             pollster = _esc(ap.get("pollster", ""))
             pdate = _esc(ap.get("poll_date", ""))
             appr = _esc(str(ap.get("cabinet_approval", "")))
-            disappr = _esc(str(ap.get("cabinet_disapproval", "")))
+            disappr = _esc(str(ap.get("cabinet_disapproval", "") or ""))
             chg = _esc(str(ap.get("approval_change", ""))) if ap.get("approval_change") else ""
             chg_html = f' <span style="font-size:11px;color:#888;">({chg})</span>' if chg else ""
             has_disappr = disappr and disappr not in ("—", "None")
@@ -855,11 +893,19 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <td style="padding:4px 6px 4px 0;font-size:12px;color:#1B2A4A;">{pn}</td>
 <td style="padding:4px 0;font-size:12px;font-weight:700;color:#1B2A4A;text-align:right;">{pp}</td>
 </tr>"""
-            poll_body += f"""<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#2C3E50;margin:6px 0;">Party Support (same poll)</div>
+            _party_note = "primary poll" if len(polls) >= 2 else "same poll"
+            poll_body += f"""<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#2C3E50;margin:6px 0;">Party Support ({_party_note})</div>
 <table width="100%" cellpadding="0" cellspacing="0" border="0">{pr}</table>"""
 
         if disc:
             poll_body += f'<div style="font-size:12px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> {disc}</div>'
+
+        # Aggregator link (Observing Japan poll tracker)
+        poll_body += (f'<div style="margin-top:12px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">'
+                      f'Poll tracker: '
+                      + _link_or_text("Observing Japan approval-rating aggregator &#8594;", OBSERVING_JAPAN_POLLS,
+                                      style="color:" + HINOMARU_RED + ";text-decoration:none;font-weight:600;")
+                      + '</div>')
 
         sections_analysis.append(f'<div {_SEC}>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>')
 
