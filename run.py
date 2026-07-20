@@ -378,6 +378,54 @@ def _dedupe_sections(digest: dict) -> dict:
     return digest
 
 
+# Recognized Japanese pollsters — only these may appear in approval_polls.
+_ALLOWED_POLLSTERS = ("nhk", "nikkei", "jiji", "yomiuri", "asahi", "kyodo",
+                      "mainichi", "ann", "jnn", "fnn")
+# A clean approval value is a bare percentage, e.g. "41%" / "~42%" / "40.5 %".
+_PCT_RE = _re.compile(r"^\s*[~≈]?\s*\d{1,3}(\.\d)?\s*%\s*$")
+
+
+def _clean_pct(v):
+    """Return the value if it is a bare percentage string, else None."""
+    if v is None:
+        return None
+    s = str(v).strip()
+    return s if _PCT_RE.match(s) else None
+
+
+def _sanitise_polls(digest: dict) -> dict:
+    """Drop approval polls that don't cite a recognized Japanese pollster with a
+    clean numeric percentage — prevents prose ('approximately 40% range…') and
+    foreign/aggregate sources ('Multiple CGTN/Chosunbiz') from rendering."""
+    ps = digest.get("public_sentiment")
+    if not isinstance(ps, dict):
+        return digest
+    polls = ps.get("approval_polls")
+    if not polls:
+        legacy = ps.get("approval_polling")
+        polls = [legacy] if isinstance(legacy, dict) else []
+    clean = []
+    for p in polls:
+        if not isinstance(p, dict):
+            continue
+        pollster = str(p.get("pollster", "")).strip()
+        if not any(a in pollster.lower() for a in _ALLOWED_POLLSTERS):
+            continue  # foreign / "Multiple" / non-pollster → drop
+        appr = _clean_pct(p.get("cabinet_approval"))
+        if not appr:
+            continue  # no clean approval % → drop the whole poll
+        p2 = dict(p)
+        p2["cabinet_approval"] = appr
+        p2["cabinet_disapproval"] = _clean_pct(p.get("cabinet_disapproval"))
+        clean.append(p2)
+    ps["approval_polls"] = clean
+    ps.pop("approval_polling", None)  # normalize to the array form
+    dropped = len(polls) - len(clean)
+    if dropped > 0:
+        print(f"   ✓ Polls: kept {len(clean)}/{len(polls)} (dropped non-Japanese-pollster or non-numeric)")
+    return digest
+
+
 def _archive_html(html: str, digest: dict) -> None:
     """Write the dated HTML to public/ for GitHub Pages."""
     PUBLIC_DIR.mkdir(exist_ok=True)
@@ -479,6 +527,8 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── De-duplicate across sections (one article, one section) ─────────
     digest = _dedupe_sections(digest)
+    # ─── Clean approval polls (recognized Japanese pollsters + numeric only)
+    digest = _sanitise_polls(digest)
 
     DIGEST_JSON.write_text(json.dumps(digest, ensure_ascii=False, indent=2),
                           encoding="utf-8")

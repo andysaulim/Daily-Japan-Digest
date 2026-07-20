@@ -825,9 +825,9 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
     disc = _esc(ps.get("discourse_flag", ""))
     if polls or party or disc:
         poll_body = ""
-        if len(polls) >= 2:
-            # Comparison table — Approve AND Disapprove for every pollster, so
-            # the spread and the net picture are both readable at a glance.
+        if polls:
+            # Comparison table — Approve AND Disapprove for every pollster (works
+            # for 1-3 rows), so the spread and net picture are both readable.
             APPR_GREEN = "#1E7E4A"
             DISA_RED = "#C0392B"
             header = (
@@ -857,40 +857,6 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 '<table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
                 'style="margin-bottom:10px;background:#F7F8FA;border-radius:6px;padding:6px 12px;">'
                 f'{header}{rows}</table>')
-        elif len(polls) == 1:
-            ap = polls[0]
-            pollster = _esc(ap.get("pollster", ""))
-            pdate = _esc(ap.get("poll_date", ""))
-            appr = _esc(str(ap.get("cabinet_approval", "")))
-            disappr = _esc(str(ap.get("cabinet_disapproval", "") or ""))
-            chg = _esc(str(ap.get("approval_change", ""))) if ap.get("approval_change") else ""
-            chg_html = f' <span style="font-size:11px;color:#888;">({chg})</span>' if chg else ""
-            has_disappr = disappr and disappr not in ("—", "None")
-            if has_disappr:
-                stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
-<tr>
-<td width="50%" align="center" class="sent-approve" style="padding:10px;background:#EAF5EA;border-radius:4px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Approve</div>
-<div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
-</td>
-<td width="4"></td>
-<td width="50%" align="center" class="sent-disapprove" style="padding:10px;background:#FBECEC;border-radius:4px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#C0392B;font-weight:700;">Disapprove</div>
-<div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{disappr}</div>
-</td>
-</tr>
-</table>"""
-            else:
-                # Disapproval not reported in the same poll — show approval alone, no empty box.
-                stat_row = f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
-<tr>
-<td align="center" class="sent-approve" style="padding:10px;background:#EAF5EA;border-radius:4px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#27AE60;font-weight:700;">Cabinet Approval</div>
-<div style="font-size:26px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;">{appr}{chg_html}</div>
-</td>
-</tr>
-</table>"""
-            poll_body += stat_row + f"""<div style="font-size:10px;color:#888;margin-bottom:10px;">{pollster}{(' · ' + pdate) if pdate else ''}</div>"""
 
         if party:
             pr = ""
