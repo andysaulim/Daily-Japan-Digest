@@ -42,6 +42,20 @@ _DPRK_OVER_JAPAN = [
 ]
 
 
+# Most recent VERIFIED cabinet-approval polls, one per major Japanese pollster.
+# These are each pollster's own published figures — Japanese houses differ widely
+# by design (Nikkei/NHK run high, Jiji/Mainichi lower). This is the authoritative
+# fallback for the Public Sentiment table; the Wikipedia fetcher in collect.py
+# refreshes it automatically when reachable. UPDATE ~monthly as new polls publish.
+RECENT_APPROVAL_POLLS = [
+    {"pollster": "NHK",      "poll_date": "Jul 2026", "cabinet_approval": "58%",   "cabinet_disapproval": None,    "approval_change": None},
+    {"pollster": "Nikkei",   "poll_date": "Jul 2026", "cabinet_approval": "68%",   "cabinet_disapproval": None,    "approval_change": None},
+    {"pollster": "Jiji",     "poll_date": "Jul 2026", "cabinet_approval": "49.0%", "cabinet_disapproval": "25.2%", "approval_change": "-5.3"},
+    {"pollster": "Mainichi", "poll_date": "Jul 2026", "cabinet_approval": "41%",   "cabinet_disapproval": "44%",   "approval_change": None},
+    {"pollster": "JNN",      "poll_date": "Jul 2026", "cabinet_approval": "65.9%", "cabinet_disapproval": None,    "approval_change": None},
+]
+
+
 def build_db_context(max_chars: int = 4000) -> str:
     """Build a textual reference-context block for the digest LLM prompt."""
     blocks = []

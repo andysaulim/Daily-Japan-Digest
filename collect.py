@@ -515,6 +515,63 @@ def _collect_pm_tracker() -> list:
     return _dedup(articles)
 
 
+_WIKI_POLL_PAGE = "Opinion_polling_for_the_next_Japanese_general_election"
+_WIKI_UA = "CSISJapanDigest/1.0 (https://github.com/andysaulim/Daily-Japan-Digest; research use)"
+_WIKI_POLLSTERS = {"nhk": "NHK", "nikkei": "Nikkei", "jiji": "Jiji",
+                   "yomiuri": "Yomiuri", "asahi": "Asahi", "kyodo": "Kyodo",
+                   "mainichi": "Mainichi", "jnn": "JNN", "ann": "ANN", "fnn": "FNN"}
+_WIKI_NUM = re.compile(r"(\d{1,2}(?:\.\d)?)")
+_WIKI_DATE = re.compile(r"(\d{1,2}[–\-]\d{1,2}\s+\w{3,9}\s+\d{4}|\w{3,9}\s+\d{4})")
+
+
+def _fetch_wikipedia_polls(max_polls: int = 6) -> list:
+    """BEST-EFFORT structured fetch of the latest cabinet-approval poll per
+    pollster from the Wikipedia opinion-polling table. Returns [] on ANY failure
+    (the pipeline then uses the verified baseline). Heavily filtered so only
+    recognized pollsters with a plausible approval % survive. NOTE: cannot be
+    tested from the sandbox (Wikipedia is network-blocked here); it is only
+    *trusted* over the baseline when TRUST_WIKI_POLLS is set — otherwise it just
+    runs and logs so its output can be verified on a real run first."""
+    url = (f"https://en.wikipedia.org/w/api.php?action=parse&format=json"
+           f"&prop=wikitext&formatversion=2&page={_WIKI_POLL_PAGE}")
+    try:
+        resp = requests.get(url, timeout=REQUEST_TIMEOUT, headers={"User-Agent": _WIKI_UA})
+        resp.raise_for_status()
+        wikitext = resp.json().get("parse", {}).get("wikitext", "")
+    except Exception as e:
+        print(f"  ⚠ Wikipedia poll fetch failed ({type(e).__name__}) — baseline will be used")
+        return []
+    try:
+        seen, out = set(), []
+        for row in wikitext.split("|-"):
+            low = row.lower()
+            name = next((v for k, v in _WIKI_POLLSTERS.items() if k in low), None)
+            if not name or name in seen:
+                continue
+            nums = [float(n) for n in _WIKI_NUM.findall(row)]
+            appr = next((n for n in nums if 15 <= n <= 85), None)   # plausible approval
+            if appr is None:
+                continue
+            rest = nums[nums.index(appr) + 1:]
+            disp = next((n for n in rest if 10 <= n <= 85), None)
+            dm = _WIKI_DATE.search(row)
+            seen.add(name)
+            out.append({
+                "pollster": name,
+                "poll_date": dm.group(1) if dm else "recent",
+                "cabinet_approval": f"{appr:g}%",
+                "cabinet_disapproval": f"{disp:g}%" if disp is not None else None,
+                "approval_change": None,
+            })
+            if len(out) >= max_polls:
+                break
+        print(f"  ✔ Wikipedia poll table: parsed {len(out)} pollster figure(s)")
+        return out
+    except Exception as e:
+        print(f"  ⚠ Wikipedia poll parse failed ({type(e).__name__}) — baseline will be used")
+        return []
+
+
 def _collect_polls() -> list:
     """Collect recent cabinet-approval poll coverage (30-day window, per pollster)
     so the latest monthly poll from each Japanese house is available."""
@@ -894,6 +951,9 @@ def collect_all() -> dict:
     poll_articles = _collect_polls()
     print(f"  ✔ {len(poll_articles)} poll-related articles")
 
+    print("\n📊 Structured poll table (Wikipedia)...")
+    wiki_polls = _fetch_wikipedia_polls()
+
     print("\n💹 Market data...")
     markets = _collect_markets()
     print(f"  ✔ {sum(1 for v in markets.values() if v)} indicators")
@@ -913,6 +973,7 @@ def collect_all() -> dict:
         "tier4": tier4,
         "pm_tracker_articles": pm_articles,
         "poll_articles": poll_articles,
+        "wiki_polls": wiki_polls,
         "market_indicators": markets,
         "messaging_summary": msg_summary,
         "source_health": _source_health,

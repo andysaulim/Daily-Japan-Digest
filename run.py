@@ -399,6 +399,36 @@ def _clean_pct(v):
     return s if _PCT_RE.match(s) else None
 
 
+def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
+    """Populate the Public Sentiment table from AUTHORITATIVE structured data —
+    the Wikipedia poll fetch if it returned a sane set, else the verified
+    RECENT_APPROVAL_POLLS baseline — overriding the model's unreliable
+    news-scraped numbers (which produced wrong figures like Jiji '51%')."""
+    try:
+        from databases import RECENT_APPROVAL_POLLS
+    except Exception:
+        RECENT_APPROVAL_POLLS = []
+    # The Wikipedia fetch is only TRUSTED over the verified baseline when
+    # TRUST_WIKI_POLLS is set — until its parse is verified on a real run, the
+    # baseline (known-correct numbers) wins so no wrong figure reaches the email.
+    trust_wiki = os.environ.get("TRUST_WIKI_POLLS", "").strip().lower() in ("1", "true", "yes")
+    structured = [p for p in (wiki_polls or []) if isinstance(p, dict)] if trust_wiki else []
+    source = "Wikipedia fetch"
+    if len(structured) < 3:                      # not trusted / thin → verified baseline
+        structured = [dict(p) for p in RECENT_APPROVAL_POLLS]
+        source = "verified baseline"
+    if not structured:
+        return digest
+    ps = digest.get("public_sentiment")
+    if not isinstance(ps, dict):
+        ps = {}
+        digest["public_sentiment"] = ps
+    ps["approval_polls"] = structured
+    ps.pop("approval_polling", None)
+    print(f"   ✓ Polls: {len(structured)} authoritative pollster figures ({source})")
+    return digest
+
+
 def _sanitise_polls(digest: dict) -> dict:
     """Drop approval polls that don't cite a recognized Japanese pollster with a
     clean numeric percentage — prevents prose ('approximately 40% range…') and
@@ -533,6 +563,8 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── De-duplicate across sections (one article, one section) ─────────
     digest = _dedupe_sections(digest)
+    # ─── Polls: authoritative structured figures (Wikipedia fetch → baseline) ─
+    digest = _resolve_polls(digest, payload.get("wiki_polls"))
     # ─── Clean approval polls (recognized Japanese pollsters + numeric only)
     digest = _sanitise_polls(digest)
 

@@ -196,6 +196,8 @@ Japanese cabinet-approval polls publish ~monthly **per pollster**, so a 24–48h
 | Asahi poll | `Asahi Japan cabinet approval rating OR "support rate"` |
 | Mainichi poll | `Mainichi Japan cabinet approval rating OR "support rate"` |
 
+**Authoritative figures.** Because news coverage reports poll numbers unreliably (wrong disapproval figures, vague dates, foreign/aggregate sources), the Public Sentiment **table numbers do not come from the model's reading of these articles.** They come from an authoritative source, in priority order: (1) the **Wikipedia "Approval Polling for the Takaichi Cabinet"** structured table, fetched each run (only trusted over the baseline when `TRUST_WIKI_POLLS` is set, after its parse is verified on a real run); else (2) a **verified baseline** of each pollster's latest published figures in `databases.py` (`RECENT_APPROVAL_POLLS`, updated ~monthly). A code sanitizer still drops anything non-numeric. The news feeds above inform the surrounding narrative (Discourse line), not the table figures.
+
 ---
 
 ## Market data (live, fetched each run)

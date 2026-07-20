@@ -820,7 +820,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
     if not polls:
         legacy = ps.get("approval_polling")
         polls = [legacy] if isinstance(legacy, dict) else []
-    polls = [p for p in polls if isinstance(p, dict) and p.get("cabinet_approval")][:3]
+    polls = [p for p in polls if isinstance(p, dict) and p.get("cabinet_approval")][:6]
     party = ps.get("party_support") or []
     disc = _esc(ps.get("discourse_flag", ""))
     if polls or party or disc:
