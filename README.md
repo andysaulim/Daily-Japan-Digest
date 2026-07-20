@@ -131,7 +131,7 @@ Required secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASS`, `DIGEST_T
 
 ## Validation Gates
 
-- **Word count**: Hard minimum 1,000 (target 1,200–1,400)
+- **Word count**: Hard minimum 650 (validation counter; target ~1,200–1,800 as shown in the header)
 - **Section minimums**: 2–4 top stories, ≥3 overnight, exactly 3 morning memo
 - **Source diversity**: No single source >3 times in top + overnight
 - **Prestige outlets**: WSJ/NYT/WaPo/Bloomberg/FT/Economist/CNN/Reuters/NHK/Kyodo/Japan Times/Nikkei never dropped

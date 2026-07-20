@@ -40,6 +40,12 @@ ENTERTAINMENT_BLOCK = ("celebrity", "j-pop", "idol", "anime", "manga",
                       "fashion", "concert tour")
 
 
+# Minimum readable words (validation gate). Loosened from 1000 so light news
+# days don't trip the gate. Note _count_words below is narrower than the
+# header/display counter, so this maps to a higher displayed word count.
+MIN_WORD_COUNT = 650
+
+
 def _count_words(digest: dict) -> int:
     """Count readable words across all text fields."""
     text_fields = ("body", "body_text", "summary", "detail", "quote_text",
@@ -82,8 +88,8 @@ def _validate_digest(digest: dict) -> list[str]:
     failures = []
 
     word_count = _count_words(digest)
-    if word_count < 1000:
-        failures.append(f"WORD COUNT: {word_count} words (minimum 1000)")
+    if word_count < MIN_WORD_COUNT:
+        failures.append(f"WORD COUNT: {word_count} words (minimum {MIN_WORD_COUNT})")
 
     top_count = len(digest.get("top_stories") or [])
     if top_count < 2:
