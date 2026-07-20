@@ -524,7 +524,7 @@ _WIKI_NUM = re.compile(r"(\d{1,2}(?:\.\d)?)")
 _WIKI_DATE = re.compile(r"(\d{1,2}[–\-]\d{1,2}\s+\w{3,9}\s+\d{4}|\w{3,9}\s+\d{4})")
 
 
-def _fetch_wikipedia_polls(max_polls: int = 6) -> list:
+def _fetch_wikipedia_polls(max_polls: int = 10) -> list:
     """BEST-EFFORT structured fetch of the latest cabinet-approval poll per
     pollster from the Wikipedia opinion-polling table. Returns [] on ANY failure
     (the pipeline then uses the verified baseline). Heavily filtered so only
@@ -953,6 +953,12 @@ def collect_all() -> dict:
 
     print("\n📊 Structured poll table (Wikipedia)...")
     wiki_polls = _fetch_wikipedia_polls()
+    # Echo the parsed rows so the actual figures (not just a count) are visible in
+    # Actions logs — this is how the parse is verified before TRUST_WIKI_POLLS is
+    # enabled. A clean run shows one recognized house per line with both numbers.
+    for _p in wiki_polls:
+        print(f"     • {_p.get('pollster'):<9} {str(_p.get('cabinet_approval')):>6} approve / "
+              f"{str(_p.get('cabinet_disapproval')):>6} disapprove   ({_p.get('poll_date')})")
 
     print("\n💹 Market data...")
     markets = _collect_markets()
