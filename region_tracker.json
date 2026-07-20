@@ -203,7 +203,13 @@
         "dprk_signal": "The US, Japan, and South Korean defense chiefs issued a joint trilateral statement from Washington reaffirming cooperation on North Korean denuclearization; Radio Free Asia separately reported expert assessments that North Korean structures near the DMZ may constitute rocket launch infrastructure."
       },
       "watch_flag": false
+    },
+    "2026-07-20": {
+      "signals": {
+        "china_signal": "China's foreign ministry, via Global Times, warned Japan not to ignore the 'prevailing trend' on nuclear issues amid Japanese local assemblies pushing to uphold non-nuclear principles — a response to Defense Minister Koizumi's call for Japan to debate nuclear weapons. China's heavy rare-earth export"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-17T11:18:55.570297+00:00"
+  "last_updated": "2026-07-20T15:50:20.011363+00:00"
 }
