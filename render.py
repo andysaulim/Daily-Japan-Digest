@@ -826,29 +826,37 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
     if polls or party or disc:
         poll_body = ""
         if len(polls) >= 2:
-            # Multi-poll row — one cell per pollster, so the spread is visible
-            n = len(polls)
-            w = 100 // n
-            cells = ""
-            for i, p in enumerate(polls):
+            # Comparison table — Approve AND Disapprove for every pollster, so
+            # the spread and the net picture are both readable at a glance.
+            APPR_GREEN = "#1E7E4A"
+            DISA_RED = "#C0392B"
+            header = (
+                '<tr>'
+                '<td style="padding:0 8px 6px 0;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#999;">Pollster</td>'
+                f'<td align="center" style="padding:0 6px 6px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:{APPR_GREEN};font-weight:700;">Approve</td>'
+                f'<td align="center" style="padding:0 6px 6px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:{DISA_RED};font-weight:700;">Disapprove</td>'
+                '<td align="center" style="padding:0 0 6px 6px;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#999;">vs prior</td>'
+                '</tr>')
+            rows = ""
+            for p in polls:
                 pollster = _esc(p.get("pollster", ""))
                 pdate = _esc(p.get("poll_date", ""))
-                appr = _esc(str(p.get("cabinet_approval", "")))
-                disappr = _esc(str(p.get("cabinet_disapproval", "") or ""))
-                chg = _esc(str(p.get("approval_change", "") or ""))
-                bl = "border-left:1px solid #E4E7EC;" if i else ""
-                dis_html = (f'<div style="font-size:11px;color:#C0392B;margin-top:3px;">{disappr} disapprove</div>'
-                            if disappr and disappr not in ("—", "None") else "")
-                chg_html = f'<div style="font-size:10px;color:#888;margin-top:2px;">{chg}</div>' if chg else ""
-                cells += (f'<td width="{w}%" align="center" style="padding:12px 6px;{bl}vertical-align:top;">'
-                          f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{NAVY};font-weight:700;">{pollster}</div>'
-                          f'<div style="font-size:9px;color:#999;margin-bottom:5px;">{pdate}</div>'
-                          f'<div style="font-size:24px;font-weight:700;color:{NAVY};font-family:Georgia,serif;">{appr}</div>'
-                          f'<div style="font-size:9px;color:#27AE60;text-transform:uppercase;letter-spacing:0.5px;">approve</div>'
-                          f'{dis_html}{chg_html}</td>')
-            poll_body += (f'<div style="font-size:10px;color:#888;margin-bottom:6px;">Cabinet approval by pollster — figures differ by house</div>'
-                          f'<table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
-                          f'style="margin-bottom:10px;background:#F7F8FA;border-radius:6px;"><tr>{cells}</tr></table>')
+                appr = _esc(str(p.get("cabinet_approval", "") or "—"))
+                disappr = _esc(str(p.get("cabinet_disapproval", "") or "—"))
+                chg = _esc(str(p.get("approval_change", "") or "—"))
+                date_html = f'<span style="display:block;font-size:10px;color:#999;font-weight:400;">{pdate}</span>' if pdate else ""
+                rows += (
+                    '<tr style="border-top:1px solid #E8EAEE;">'
+                    f'<td style="padding:9px 8px 9px 0;font-size:12px;color:{NAVY};font-weight:700;vertical-align:middle;">{pollster}{date_html}</td>'
+                    f'<td align="center" style="padding:9px 6px;font-size:18px;font-weight:700;color:{APPR_GREEN};font-family:Georgia,serif;vertical-align:middle;">{appr}</td>'
+                    f'<td align="center" style="padding:9px 6px;font-size:18px;font-weight:700;color:{DISA_RED};font-family:Georgia,serif;vertical-align:middle;">{disappr}</td>'
+                    f'<td align="center" style="padding:9px 0 9px 6px;font-size:12px;color:#888;vertical-align:middle;">{chg}</td>'
+                    '</tr>')
+            poll_body += (
+                '<div style="font-size:10px;color:#888;margin-bottom:8px;">Cabinet approval &amp; disapproval by pollster — figures differ by house</div>'
+                '<table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
+                'style="margin-bottom:10px;background:#F7F8FA;border-radius:6px;padding:6px 12px;">'
+                f'{header}{rows}</table>')
         elif len(polls) == 1:
             ap = polls[0]
             pollster = _esc(ap.get("pollster", ""))
