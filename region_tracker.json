@@ -210,7 +210,14 @@
         "dprk_signal": "A Eurasia Review analysis on Japan-South Korea security cooperation was the only DPRK-tagged item in today's Tier 4 feed; no new North Korean missile launch, EEZ splashdown, or KCNA statement naming Japan was reported."
       },
       "watch_flag": false
+    },
+    "2026-07-21": {
+      "signals": {
+        "china_signal": "A Chinese destroyer and Russian naval vessels conducted live-fire drills inside Japan's exclusive economic zone near Okinotorishima; Japan protested formally and China's foreign ministry rejected the protest as 'groundless,' simultaneously asserting Okinotorishima is a rock not entitled to an EEZ. C",
+        "russia_signal": "Russian naval vessels participated jointly with China in the live-fire drill inside Japan's EEZ; no separate Russian Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-20T21:29:11.430604+00:00"
+  "last_updated": "2026-07-21T11:46:32.661203+00:00"
 }

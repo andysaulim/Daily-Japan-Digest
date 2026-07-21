@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-21",
+      "activity": "PM Takaichi pledged to guide economic and fiscal policy with due heed to fiscal sustainability, issued alongside Cabinet approval of the new economic blueprint, and separately vowed to boost ties with Britain under new Prime Minister Burnham.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-21T11:46:32.660640+00:00"
+    },
+    {
       "date": "2026-07-17",
       "activity": "PM Takaichi stated publicly that GPIF investing in domestic assets is a key priority and that inter-party tax-cut talks are expected to conclude by early August, per Bloomberg and Nippon.com reporting.",
       "source": "digest",
@@ -162,5 +169,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-17T11:18:55.569781+00:00"
+  "last_updated": "2026-07-21T11:46:32.660677+00:00"
 }
