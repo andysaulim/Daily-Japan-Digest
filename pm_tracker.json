@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-22",
+      "activity": "PM Takaichi vowed to further boost ties with Britain under new Prime Minister Burnham, per Mainichi/Japan Today reporting on July 22.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-22T11:46:59.065057+00:00"
+    },
+    {
       "date": "2026-07-21",
       "activity": "PM Takaichi pledged to guide economic and fiscal policy with due heed to fiscal sustainability, issued alongside Cabinet approval of the new economic blueprint, and separately vowed to boost ties with Britain under new Prime Minister Burnham.",
       "source": "digest",
@@ -169,5 +176,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-21T11:46:32.660677+00:00"
+  "last_updated": "2026-07-22T11:46:59.065100+00:00"
 }

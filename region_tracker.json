@@ -217,7 +217,14 @@
         "russia_signal": "Russian naval vessels participated jointly with China in the live-fire drill inside Japan's EEZ; no separate Russian Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
       },
       "watch_flag": true
+    },
+    "2026-07-22": {
+      "signals": {
+        "china_signal": "A Chinese destroyer conducted live-fire drills inside Japan's claimed EEZ near Okinotorishima alongside Russian naval vessels on July 21-22 — Japan's MOD described it as the first detected instance of its kind. China's foreign ministry rejected Japan's protest as 'groundless,' simultaneously contest",
+        "russia_signal": "Russian military bombers flew over the Sea of Japan on July 22, Jiji Press reported, the day after Russian naval vessels participated jointly with a Chinese destroyer in live-fire drills inside Japan's claimed EEZ near Okinotorishima."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-21T11:46:32.661203+00:00"
+  "last_updated": "2026-07-22T11:46:59.065653+00:00"
 }

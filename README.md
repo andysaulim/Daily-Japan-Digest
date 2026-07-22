@@ -10,13 +10,13 @@ Automated daily intelligence briefing on Japan and the US-Japan alliance for the
 
 | Metric | Value |
 | --- | --- |
-| Last generated | Jul 21, 2026 at 7:46 AM ET |
-| Digest date | Tuesday, July 21, 2026 |
-| Articles collected | 57 |
-| Unique sources | 10 |
+| Last generated | Jul 22, 2026 at 7:46 AM ET |
+| Digest date | Wednesday, July 22, 2026 |
+| Articles collected | 54 |
+| Unique sources | 6 |
 | Top stories | 3 |
 | Overnight items | 4 |
-| Word count | ~1,195 |
+| Word count | ~1,029 |
 | PM appeared | Yes |
 
 ## How It Works
