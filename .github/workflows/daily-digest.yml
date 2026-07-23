@@ -55,6 +55,11 @@ jobs:
           DIGEST_TO: ${{ secrets.DIGEST_TO }}
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           WEB_URL: ${{ vars.WEB_URL }}
+          # Trust the live Wikipedia cabinet-approval fetch over the static baseline.
+          # Safe by construction: run.py only uses it if it returns >=3 houses AND
+          # agrees with the hand-verified baseline on overlapping pollsters, else it
+          # falls back to the baseline. Set repo variable TRUST_WIKI_POLLS=0 to disable.
+          TRUST_WIKI_POLLS: ${{ vars.TRUST_WIKI_POLLS || '1' }}
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
             echo "::notice::DRY RUN — collection only (no API key required). Skips digest/render/send."

@@ -399,22 +399,61 @@ def _clean_pct(v):
     return s if _PCT_RE.match(s) else None
 
 
+def _pct_to_float(v):
+    """Extract the numeric value of a percentage string ('49.0%' → 49.0), else None."""
+    if v is None:
+        return None
+    m = _re.search(r"\d{1,3}(?:\.\d+)?", str(v))
+    return float(m.group(0)) if m else None
+
+
+def _wiki_agrees_with_baseline(wiki: list, baseline: list, tol: float = 5.0) -> bool:
+    """SAFETY CROSS-CHECK for the live Wikipedia fetch, which can't be eyeballed
+    from the dev sandbox. Trust the parsed set only if, for every pollster that
+    appears in BOTH the fetch and the hand-verified baseline, the approval figures
+    agree within `tol` points — and at least one such anchor exists. A subtly
+    broken parse (wrong column, party vote-share, stale row) will miss the anchor
+    and this returns False, so the pipeline falls back to the baseline instead of
+    shipping a wrong number. No anchor overlap → not verifiable → not trusted."""
+    base = {}
+    for p in baseline:
+        f = _pct_to_float(p.get("cabinet_approval"))
+        if f is not None:
+            base[str(p.get("pollster", "")).strip().lower()] = f
+    anchors = 0
+    for p in wiki:
+        key = str(p.get("pollster", "")).strip().lower()
+        if key in base:
+            f = _pct_to_float(p.get("cabinet_approval"))
+            if f is None or abs(f - base[key]) > tol:
+                print(f"   ⚠ Polls: Wikipedia '{p.get('pollster')}' {p.get('cabinet_approval')} "
+                      f"disagrees with verified {base[key]:g}% (>{tol:g} pts) — using baseline")
+                return False
+            anchors += 1
+    return anchors > 0
+
+
 def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
     """Populate the Public Sentiment table from AUTHORITATIVE structured data —
-    the Wikipedia poll fetch if it returned a sane set, else the verified
+    the Wikipedia poll fetch if it returned a sane set that AGREES with the
+    verified baseline on overlapping pollsters, else the verified
     RECENT_APPROVAL_POLLS baseline — overriding the model's unreliable
     news-scraped numbers (which produced wrong figures like Jiji '51%')."""
     try:
         from databases import RECENT_APPROVAL_POLLS
     except Exception:
         RECENT_APPROVAL_POLLS = []
-    # The Wikipedia fetch is only TRUSTED over the verified baseline when
-    # TRUST_WIKI_POLLS is set — until its parse is verified on a real run, the
-    # baseline (known-correct numbers) wins so no wrong figure reaches the email.
+    # The Wikipedia fetch is trusted over the baseline only when (a) TRUST_WIKI_POLLS
+    # is enabled, (b) it returned ≥3 pollster rows, AND (c) it passes the anchor
+    # cross-check against the hand-verified baseline. Any failure → baseline wins,
+    # so no wrong figure can reach the email even though the live page can't be
+    # inspected from the dev sandbox.
     trust_wiki = os.environ.get("TRUST_WIKI_POLLS", "").strip().lower() in ("1", "true", "yes")
-    structured = [p for p in (wiki_polls or []) if isinstance(p, dict)] if trust_wiki else []
-    source = "Wikipedia fetch"
-    if len(structured) < 3:                      # not trusted / thin → verified baseline
+    wiki = [p for p in (wiki_polls or []) if isinstance(p, dict)] if trust_wiki else []
+    if len(wiki) >= 3 and _wiki_agrees_with_baseline(wiki, RECENT_APPROVAL_POLLS):
+        structured = wiki
+        source = "Wikipedia fetch (baseline-verified)"
+    else:                                        # not trusted / thin / failed check → baseline
         structured = [dict(p) for p in RECENT_APPROVAL_POLLS]
         source = "verified baseline"
     if not structured:

@@ -42,17 +42,23 @@ _DPRK_OVER_JAPAN = [
 ]
 
 
-# Most recent VERIFIED cabinet-approval polls, one per major Japanese pollster.
-# These are each pollster's own published figures — Japanese houses differ widely
-# by design (Nikkei/NHK run high, Jiji/Mainichi lower). This is the authoritative
-# fallback for the Public Sentiment table; the Wikipedia fetcher in collect.py
-# refreshes it automatically when reachable. UPDATE ~monthly as new polls publish.
+# Most recent VERIFIED cabinet-approval polls. This is the authoritative FALLBACK
+# for the Public Sentiment table — used only when the Wikipedia fetcher in
+# collect.py can't reach the live aggregator (which returns every house with both
+# numbers). SOURCE-OR-SKIP applies: seed ONLY pollsters where both the approval
+# AND the disapproval figure are independently confirmed from a published report.
+# Never ship an approve-only row or a stale number to fill the table out.
+#
+# July 2026 (both figures confirmed): Jiji (Jul 16, Jiji Press) and Mainichi
+# (Jul 20, Mainichi Shimbun) — both fell below 50% for the first time under
+# Takaichi; Mainichi's disapproval (44%) now overtakes approval (41%).
+# The high houses' July approvals are on record (NHK 58%, Nikkei/TV Tokyo 66%,
+# JNN 65.9%) but their disapproval breakdowns were not confirmable at seed time,
+# so they are intentionally omitted here and left to the live fetcher.
+# UPDATE ~monthly as new polls publish; only add a house once BOTH numbers verify.
 RECENT_APPROVAL_POLLS = [
-    {"pollster": "NHK",      "poll_date": "Jul 2026", "cabinet_approval": "58%",   "cabinet_disapproval": None,    "approval_change": None},
-    {"pollster": "Nikkei",   "poll_date": "Jul 2026", "cabinet_approval": "68%",   "cabinet_disapproval": None,    "approval_change": None},
-    {"pollster": "Jiji",     "poll_date": "Jul 2026", "cabinet_approval": "49.0%", "cabinet_disapproval": "25.2%", "approval_change": "-5.3"},
-    {"pollster": "Mainichi", "poll_date": "Jul 2026", "cabinet_approval": "41%",   "cabinet_disapproval": "44%",   "approval_change": None},
-    {"pollster": "JNN",      "poll_date": "Jul 2026", "cabinet_approval": "65.9%", "cabinet_disapproval": None,    "approval_change": None},
+    {"pollster": "Jiji",     "poll_date": "Jul 16, 2026", "cabinet_approval": "49.0%", "cabinet_disapproval": "25.2%", "approval_change": "-5.3"},
+    {"pollster": "Mainichi", "poll_date": "Jul 20, 2026", "cabinet_approval": "41%",   "cabinet_disapproval": "44%",   "approval_change": "-10"},
 ]
 
 

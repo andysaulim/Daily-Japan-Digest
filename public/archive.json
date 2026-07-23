@@ -1,10 +1,31 @@
 [
   {
+    "date": "2026-07-23",
+    "filename": "2026-07-23.html",
+    "top_stories": 4,
+    "overnight_items": 4,
+    "word_count": 1959
+  },
+  {
+    "date": "2026-07-22",
+    "filename": "2026-07-22.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1924
+  },
+  {
+    "date": "2026-07-21",
+    "filename": "2026-07-21.html",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1721
+  },
+  {
     "date": "2026-07-20",
     "filename": "2026-07-20.html",
     "top_stories": 3,
     "overnight_items": 4,
-    "word_count": 1284
+    "word_count": 1253
   },
   {
     "date": "2026-07-17",

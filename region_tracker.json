@@ -206,11 +206,32 @@
     },
     "2026-07-20": {
       "signals": {
-        "china_signal": "China's foreign ministry warned Japan it 'should not ignore the prevailing trend on nuclear issues,' a direct response to Defense Minister Koizumi's public call for a nuclear weapons debate, continuing Beijing's multi-week pressure campaign against Japan's defense posture. Separately, June trade dat",
-        "dprk_signal": "No new North Korean missile launch, EEZ splashdown, or KCNA statement naming Japan was reported in today's articles; a Eurasia Review analysis on Japan-South Korea security cooperation was the only DPRK-tagged Tier 4 item."
+        "china_signal": "China's foreign ministry warned Japan it 'should not ignore the prevailing trend on nuclear issues,' directly responding to Defense Minister Koizumi's public call for a nuclear weapons debate — a statement framed alongside Japanese local assembly resolutions upholding non-nuclear principles. Separat",
+        "dprk_signal": "A Eurasia Review analysis on Japan-South Korea security cooperation was the only DPRK-tagged item in today's Tier 4 feed; no new North Korean missile launch, EEZ splashdown, or KCNA statement naming Japan was reported."
       },
       "watch_flag": false
+    },
+    "2026-07-21": {
+      "signals": {
+        "china_signal": "A Chinese destroyer and Russian naval vessels conducted live-fire drills inside Japan's exclusive economic zone near Okinotorishima; Japan protested formally and China's foreign ministry rejected the protest as 'groundless,' simultaneously asserting Okinotorishima is a rock not entitled to an EEZ. C",
+        "russia_signal": "Russian naval vessels participated jointly with China in the live-fire drill inside Japan's EEZ; no separate Russian Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
+      },
+      "watch_flag": true
+    },
+    "2026-07-22": {
+      "signals": {
+        "china_signal": "A Chinese destroyer conducted live-fire drills inside Japan's claimed EEZ near Okinotorishima alongside Russian naval vessels on July 21-22 — Japan's MOD described it as the first detected instance of its kind. China's foreign ministry rejected Japan's protest as 'groundless,' simultaneously contest",
+        "russia_signal": "Russian military bombers flew over the Sea of Japan on July 22, Jiji Press reported, the day after Russian naval vessels participated jointly with a Chinese destroyer in live-fire drills inside Japan's claimed EEZ near Okinotorishima."
+      },
+      "watch_flag": true
+    },
+    "2026-07-23": {
+      "signals": {
+        "china_signal": "China's foreign ministry rejected Japan's formal protest over last week's joint Chinese-Russian live-fire drills inside Japan's claimed EEZ near Okinotorishima, defending the exercise as 'consistent with international law' and invoking the formulation 'Japan's neo-militarism has bared its fangs.' Ch",
+        "russia_signal": "Russia deployed a Tu-95 Bear strategic bomber near Japan escorted by a Su-35 fighter, per Zona Militar — a step up from unescorted Tu-95 flights reported on July 22 and following Russian naval vessels' participation in joint live-fire drills with a Chinese destroyer inside Japan's claimed EEZ near O"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-20T20:00:25.314552+00:00"
+  "last_updated": "2026-07-23T11:51:11.707552+00:00"
 }

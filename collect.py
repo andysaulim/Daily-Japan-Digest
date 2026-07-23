@@ -522,9 +522,74 @@ _WIKI_POLLSTERS = {"nhk": "NHK", "nikkei": "Nikkei", "jiji": "Jiji",
                    "mainichi": "Mainichi", "jnn": "JNN", "ann": "ANN", "fnn": "FNN"}
 _WIKI_NUM = re.compile(r"(\d{1,2}(?:\.\d)?)")
 _WIKI_DATE = re.compile(r"(\d{1,2}[–\-]\d{1,2}\s+\w{3,9}\s+\d{4}|\w{3,9}\s+\d{4})")
+# A table cell that is a STANDALONE percentage (e.g. "49.0", "49.0%", "58") —
+# used to pick out the approval/disapproval columns without matching digits that
+# belong to a date ("2026") or a sample size ("1,234"). Row-wide number scanning
+# is unsafe: it grabs "20"/"26" out of "July 2026".
+_WIKI_PCT_CELL = re.compile(r"^(\d{1,2}(?:\.\d)?)\s*%?$")
+_WIKI_MARKUP = re.compile(r"<ref[^>]*>.*?</ref>|<ref[^>]*/>|\{\{[^{}]*\||\}\}|\[\[|\]\]|'''?|nowrap:?", re.DOTALL)
 
 
-def _fetch_wikipedia_polls(max_polls: int = 6) -> list:
+def _wiki_row_cells(row: str) -> list:
+    """Split a wiki-table row chunk into stripped cell strings, handling both the
+    inline ('| a || b || c') and one-cell-per-line ('|a\\n|b') formats and
+    stripping ref tags / nowrap/bold templates that wrap the value."""
+    cells = []
+    for line in row.splitlines():
+        line = line.strip()
+        if not line or line.startswith("!") or line.startswith("|-") or line in ("|", "|}"):
+            continue
+        if line.startswith("|"):
+            line = line[1:]
+        for cell in line.split("||"):
+            cell = _WIKI_MARKUP.sub("", cell)
+            # drop a leading cell-attribute segment like 'style="..." | value'
+            if "|" in cell and "=" in cell.split("|", 1)[0]:
+                cell = cell.split("|", 1)[1]
+            cells.append(cell.strip())
+    return cells
+
+
+def _wiki_pct_cells(cells: list) -> list:
+    """Return the numeric values of cells that are a clean standalone percentage,
+    in order — these are the approval/disapproval/neither columns."""
+    out = []
+    for c in cells:
+        m = _WIKI_PCT_CELL.match(c)
+        if m:
+            out.append(float(m.group(1)))
+    return out
+# Matches a section heading that introduces the CABINET-APPROVAL table (e.g.
+# "== Approval Polling for the Takaichi Cabinet ==", "=== Cabinet approval ===").
+# The same page carries party voting-intention / seat tables that list the SAME
+# pollster names, so the parse must be scoped to this section or it would grab a
+# party's vote share and mislabel it as cabinet approval.
+_WIKI_APPROVAL_HEADING = re.compile(
+    r"^\s*(={2,})\s*[^\n=]*\b(?:cabinet\s+approval|approval\s+(?:polling|rating)"
+    r"|approval\s+polls?)\b[^\n=]*\1\s*$",
+    re.IGNORECASE | re.MULTILINE)
+_WIKI_HEADING = re.compile(r"^\s*={2,}[^\n=].*={2,}\s*$", re.MULTILINE)
+
+
+def _slice_approval_section(wikitext: str) -> str:
+    """Return only the wikitext of the cabinet-approval section — from its heading
+    to the next heading of the same-or-higher level. Returns '' if no such heading
+    is found, so the caller falls back to the verified baseline rather than risk
+    parsing a party voting-intention table on the same page."""
+    m = _WIKI_APPROVAL_HEADING.search(wikitext)
+    if not m:
+        return ""
+    start = m.end()
+    level = len(m.group(1))                       # '==' → 2, '===' → 3, …
+    for h in _WIKI_HEADING.finditer(wikitext, start):
+        heading = h.group(0).strip()
+        hlevel = len(heading) - len(heading.lstrip("="))   # leading '=' count = level
+        if hlevel <= level:
+            return wikitext[start:h.start()]
+    return wikitext[start:]
+
+
+def _fetch_wikipedia_polls(max_polls: int = 10) -> list:
     """BEST-EFFORT structured fetch of the latest cabinet-approval poll per
     pollster from the Wikipedia opinion-polling table. Returns [] on ANY failure
     (the pipeline then uses the verified baseline). Heavily filtered so only
@@ -542,18 +607,23 @@ def _fetch_wikipedia_polls(max_polls: int = 6) -> list:
         print(f"  ⚠ Wikipedia poll fetch failed ({type(e).__name__}) — baseline will be used")
         return []
     try:
+        section = _slice_approval_section(wikitext)
+        if not section:
+            print("  ⚠ Wikipedia: no cabinet-approval section found — baseline will be used")
+            return []
         seen, out = set(), []
-        for row in wikitext.split("|-"):
+        for row in section.split("|-"):
             low = row.lower()
             name = next((v for k, v in _WIKI_POLLSTERS.items() if k in low), None)
             if not name or name in seen:
                 continue
-            nums = [float(n) for n in _WIKI_NUM.findall(row)]
-            appr = next((n for n in nums if 15 <= n <= 85), None)   # plausible approval
+            # Approval / disapproval are the first two clean percentage CELLS —
+            # not just any 2-digit run in the row (which would catch the date).
+            pcts = _wiki_pct_cells(_wiki_row_cells(row))
+            appr = next((n for n in pcts if 15 <= n <= 85), None)   # plausible approval
             if appr is None:
                 continue
-            rest = nums[nums.index(appr) + 1:]
-            disp = next((n for n in rest if 10 <= n <= 85), None)
+            disp = next((n for n in pcts[pcts.index(appr) + 1:] if 10 <= n <= 85), None)
             dm = _WIKI_DATE.search(row)
             seen.add(name)
             out.append({
@@ -953,6 +1023,12 @@ def collect_all() -> dict:
 
     print("\n📊 Structured poll table (Wikipedia)...")
     wiki_polls = _fetch_wikipedia_polls()
+    # Echo the parsed rows so the actual figures (not just a count) are visible in
+    # Actions logs — this is how the parse is verified before TRUST_WIKI_POLLS is
+    # enabled. A clean run shows one recognized house per line with both numbers.
+    for _p in wiki_polls:
+        print(f"     • {_p.get('pollster'):<9} {str(_p.get('cabinet_approval')):>6} approve / "
+              f"{str(_p.get('cabinet_disapproval')):>6} disapprove   ({_p.get('poll_date')})")
 
     print("\n💹 Market data...")
     markets = _collect_markets()
