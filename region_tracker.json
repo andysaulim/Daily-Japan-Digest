@@ -231,7 +231,15 @@
         "russia_signal": "Russia deployed a Tu-95 Bear strategic bomber near Japan escorted by a Su-35 fighter, per Zona Militar — a step up from unescorted Tu-95 flights reported on July 22 and following Russian naval vessels' participation in joint live-fire drills with a Chinese destroyer inside Japan's claimed EEZ near O"
       },
       "watch_flag": true
+    },
+    "2026-07-24": {
+      "signals": {
+        "china_signal": "The Japan-China foreign ministers' phone call on July 24 — the first since ties deteriorated over PM Takaichi's Taiwan-related remarks — breaks a ministerial-level communication blackout. Separately, the US, Japan, and South Korea issued a joint statement expressing concern over China's ICBM test la",
+        "dprk_signal": "No new North Korean missile launch, EEZ splashdown, or overflight reported in today's feed. The US-Japan-ROK joint statement on China's ICBM test is the primary trilateral signal today.",
+        "russia_signal": "Japan announced it will resume youth exchanges with Russia after a seven-year hiatus, per Jiji Press — a limited people-to-people channel opening even as Japan pledged not to change its Russia policy on sanctions. No new Northern Territories or Hokkaido air-sea incursion reported today."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-23T11:51:11.707552+00:00"
+  "last_updated": "2026-07-24T11:35:13.672985+00:00"
 }
