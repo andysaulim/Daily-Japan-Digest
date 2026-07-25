@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-25",
+      "activity": "PM Takaichi held a bilateral summit with Solomon Islands PM Wale in Tokyo and met with prefectural assembly chairpersons at the Prime Minister's Office on July 24.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-25T11:06:42.109068+00:00"
+    },
+    {
       "date": "2026-07-24",
       "activity": "PM Takaichi met with chairpersons of prefectural assemblies at the Prime Minister's Office on July 24.",
       "source": "digest",
@@ -190,5 +197,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-24T11:35:13.672561+00:00"
+  "last_updated": "2026-07-25T11:06:42.109110+00:00"
 }

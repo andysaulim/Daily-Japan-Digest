@@ -239,7 +239,14 @@
         "russia_signal": "Japan announced it will resume youth exchanges with Russia after a seven-year hiatus, per Jiji Press — a limited people-to-people channel opening even as Japan pledged not to change its Russia policy on sanctions. No new Northern Territories or Hokkaido air-sea incursion reported today."
       },
       "watch_flag": false
+    },
+    "2026-07-25": {
+      "signals": {
+        "china_signal": "China's foreign minister called on Russia not to allow Japan to 'rearm,' per NHK, in a statement that publicly aligns Beijing and Moscow against Japan's defense buildup. Separately, Japan identified a large rare-earth deposit in deep-sea mud off a remote island — a potential supply-chain hedge again",
+        "russia_signal": "A Russian warplane violated Japanese airspace over Japan-claimed islands in the Northern Territories, per Jiji Press — the most acute Russian incursion in the current tracker window, escalating from Tu-95 bomber transits and joint Sino-Russian live-fire drills inside Japan's EEZ near Okinotorishima "
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-24T11:35:13.672985+00:00"
+  "last_updated": "2026-07-25T11:06:42.109674+00:00"
 }
