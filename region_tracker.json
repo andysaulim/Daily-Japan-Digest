@@ -246,7 +246,15 @@
         "russia_signal": "A Russian warplane violated Japanese airspace over Japan-claimed islands in the Northern Territories, per Jiji Press — the most acute Russian incursion in the current tracker window, escalating from Tu-95 bomber transits and joint Sino-Russian live-fire drills inside Japan's EEZ near Okinotorishima "
       },
       "watch_flag": true
+    },
+    "2026-07-26": {
+      "signals": {
+        "china_signal": "China Coast Guard ships intercepted a Japanese patrol vessel near a Chinese research ship off eastern Taiwan, per Global Times. China state media simultaneously characterized the ongoing China-Russia joint naval patrol as demonstrating the ability to 'break through the so-called island chain blockad",
+        "dprk_signal": "No new North Korean missile launch, EEZ splashdown, or overflight reported in today's feed. Japan's forthcoming national intelligence bureau launch on July 31 was the primary DPRK-tagged Tier 4 item, though it is an organizational rather than DPRK-provocation story.",
+        "russia_signal": "TASS reported that Japanese lawmakers signaled Japanese companies want to resume business with Russia. No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity is reported in today's articles, following last week's Russian airspace violation over Northern Territories-"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-25T11:06:42.109674+00:00"
+  "last_updated": "2026-07-26T11:16:34.014172+00:00"
 }
