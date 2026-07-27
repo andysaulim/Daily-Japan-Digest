@@ -254,7 +254,15 @@
         "russia_signal": "TASS reported that Japanese lawmakers signaled Japanese companies want to resume business with Russia. No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity is reported in today's articles, following last week's Russian airspace violation over Northern Territories-"
       },
       "watch_flag": false
+    },
+    "2026-07-27": {
+      "signals": {
+        "china_signal": "China and Japan remain at public odds over whether their foreign ministers met at ASEAN in Manila, with Beijing's CGTN reiterating no exchange occurred between Wang Yi and the Japanese foreign minister — a direct contradiction of Tokyo's account. Japan's identification of a large rare-earth deposit ",
+        "dprk_signal": "Japan's government formally condemned North Korea for sending troops to Russia, per Jiji Press and the Chief Cabinet Secretary's morning press conference on July 27 — no new DPRK missile launch, EEZ splashdown, or overflight was reported today.",
+        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-26T11:16:34.014172+00:00"
+  "last_updated": "2026-07-27T12:54:05.597431+00:00"
 }
