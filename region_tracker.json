@@ -262,7 +262,15 @@
         "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25."
       },
       "watch_flag": false
+    },
+    "2026-07-28": {
+      "signals": {
+        "china_signal": "China's MOFA and CGTN reiterated on July 28 that no exchange occurred between Wang Yi and Japan's foreign minister at the ASEAN ministerial in Manila, directly contradicting Tokyo's account. China separately expressed strong dissatisfaction over Japan's delayed handling of an SDF member's illegal kn",
+        "dprk_signal": "Japan's government formally condemned North Korea for sending troops to Russia, per Chief Cabinet Secretary Kihara's morning press conference on July 28; no new DPRK missile launch, EEZ splashdown, or overflight was reported.",
+        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity is reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-27T12:54:05.597431+00:00"
+  "last_updated": "2026-07-28T11:53:45.595530+00:00"
 }
