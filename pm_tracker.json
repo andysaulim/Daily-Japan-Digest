@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-30",
+      "activity": "PM Takaichi formally directed the LDP to finalize a two-year food consumption tax cut plan and vowed early financial aid to Kumamoto earthquake-affected areas, with the National Council on Social Security also convened at the Kantei.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-30T11:50:02.454824+00:00"
+    },
+    {
       "date": "2026-07-29",
       "activity": "PM Takaichi held a press conference on the M7.1 Kumamoto earthquake, confirmed 13 deaths, convened the Emergency Headquarters for the 2026 Kumamoto Earthquake, and directed overnight rescue operations.",
       "source": "digest",
@@ -218,5 +225,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-29T11:57:22.108724+00:00"
+  "last_updated": "2026-07-30T11:50:02.454871+00:00"
 }

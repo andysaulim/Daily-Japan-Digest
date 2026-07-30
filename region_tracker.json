@@ -276,7 +276,15 @@
         "china_signal": "China's foreign ministry denied a second consecutive day that Wang Yi and Japan's foreign minister exchanged any communication at ASEAN in Manila, directly contradicting Tokyo's account. Separately, Beijing registered strong dissatisfaction over Japan's handling of an SDF member's alleged knife intr"
       },
       "watch_flag": false
+    },
+    "2026-07-30": {
+      "signals": {
+        "china_signal": "China's foreign ministry reiterated concerns over Japan's handling of abandoned chemical weapons, characterized Japanese right-wing use of AI to distort WWII history as an 'open provocation,' and expressed condolences for the Kumamoto earthquake while pledging assistance to Chinese nationals. The pu",
+        "dprk_signal": "Japan conducted its first Tomahawk cruise missile launch in the Pacific, placing North Korea, China, and Russia within range — a milestone in Japan's counterstrike capability operationalization, per Korean media reporting.",
+        "russia_signal": "Russia announced plans to rename an island in the Japan-claimed Northern Territories after Soviet spy Richard Sorge, adding a deliberate symbolic provocation following last week's Russian airspace violation over Northern Territories-claimed islands."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-29T11:57:22.109358+00:00"
+  "last_updated": "2026-07-30T11:50:02.455498+00:00"
 }
