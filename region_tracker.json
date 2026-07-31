@@ -284,7 +284,15 @@
         "russia_signal": "Russia announced plans to rename an island in the Japan-claimed Northern Territories after Soviet spy Richard Sorge, adding a deliberate symbolic provocation following last week's Russian airspace violation over Northern Territories-claimed islands."
       },
       "watch_flag": false
+    },
+    "2026-07-31": {
+      "signals": {
+        "china_signal": "China's foreign ministry characterized Japan's National Intelligence Bureau launch as a 'negative security policy shift' and urged Japan to 'act prudently,' warning against remilitarization — the strongest Chinese diplomatic rebuke tied to a single-day Japanese security announcement in the current t",
+        "dprk_signal": "North Korean state media condemned Japan's first ship-based Tomahawk cruise missile test launch from JS Chokai and characterized the expansion of US Forces Japan as raising the risk of a Korean Peninsula clash, per NK News and Asahi Shimbun.",
+        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25 and Russia's announced plan to rename a Northern Territo"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-07-30T11:50:02.455498+00:00"
+  "last_updated": "2026-07-31T11:57:07.440163+00:00"
 }

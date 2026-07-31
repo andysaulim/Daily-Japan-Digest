@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-07-31",
+      "activity": "PM Takaichi formally announced the two-year food consumption tax cut to 1% from April 2027 and is scheduled to visit earthquake-affected Kumamoto on Monday.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-07-31T11:57:07.439522+00:00"
+    },
+    {
       "date": "2026-07-30",
       "activity": "PM Takaichi formally directed the LDP to finalize a two-year food consumption tax cut plan and vowed early financial aid to Kumamoto earthquake-affected areas, with the National Council on Social Security also convened at the Kantei.",
       "source": "digest",
@@ -225,5 +232,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-07-30T11:50:02.454871+00:00"
+  "last_updated": "2026-07-31T11:57:07.439568+00:00"
 }
