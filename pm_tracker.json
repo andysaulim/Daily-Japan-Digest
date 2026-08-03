@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-03",
+      "activity": "PM Takaichi visited earthquake-hit Kumamoto Prefecture on August 3 to meet victims and local leaders and assess the disaster recovery situation.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-03T12:53:47.733366+00:00"
+    },
+    {
       "date": "2026-08-01",
       "activity": "PM Takaichi formally announced the two-year food consumption tax cut to 1% from April 2027 and is scheduled to visit earthquake-affected Kumamoto on Monday, per nippon.com and Reuters reporting dated July 31.",
       "source": "digest",
@@ -239,5 +246,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-01T11:15:47.051979+00:00"
+  "last_updated": "2026-08-03T12:53:47.733412+00:00"
 }

@@ -304,7 +304,13 @@
         "china_signal": "Japan lodged a formal diplomatic protest with China over an alleged new structure in the East China Sea and called for revival of the 2008 bilateral resource development pact. China's Xinhua separately characterized Japan's National Intelligence Bureau as raising concerns over accelerated military e"
       },
       "watch_flag": false
+    },
+    "2026-08-03": {
+      "signals": {
+        "china_signal": "No new acute China Coast Guard intrusion or PLA activity near the Senkakus is reported in today's Tier 1 or Tier 4 articles. The prior baseline of Japan's formal diplomatic protest over a new East China Sea structure (August 2) and China's multi-day rebuke of Japan's National Intelligence Bureau lau"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-02T11:15:24.361427+00:00"
+  "last_updated": "2026-08-03T12:53:47.734056+00:00"
 }
