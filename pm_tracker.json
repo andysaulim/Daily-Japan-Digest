@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-04",
+      "activity": "PM Takaichi visited earthquake-hit Kumamoto Prefecture on August 3, touring disaster sites and pledging relief aid to victims and local leaders amid extreme heat hampering recovery.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-04T11:59:41.378060+00:00"
+    },
+    {
       "date": "2026-08-03",
       "activity": "PM Takaichi visited earthquake-hit Kumamoto Prefecture on August 3 to meet victims and local leaders and assess the disaster recovery situation.",
       "source": "digest",
@@ -246,5 +253,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-03T12:53:47.733412+00:00"
+  "last_updated": "2026-08-04T11:59:41.378106+00:00"
 }

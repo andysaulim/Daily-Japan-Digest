@@ -310,7 +310,14 @@
         "china_signal": "No new acute China Coast Guard intrusion or PLA activity near the Senkakus is reported in today's Tier 1 or Tier 4 articles. The prior baseline of Japan's formal diplomatic protest over a new East China Sea structure (August 2) and China's multi-day rebuke of Japan's National Intelligence Bureau lau"
       },
       "watch_flag": false
+    },
+    "2026-08-04": {
+      "signals": {
+        "china_signal": "Japan's 2026 Defense White Paper explicitly warns of deepening China-Russia-North Korea military ties, drawing continued Chinese diplomatic attention. China previously expressed strong opposition to Japan's Tomahawk test launch from JS Chokai and the July 31 National Intelligence Bureau launch — the",
+        "dprk_signal": "The 19FortyFive report in today's Tier 4 data recaps China's reaction to Japan's first ship-based Tomahawk missile launch from JS Chokai; no new North Korean missile launch, EEZ splashdown, or overflight is reported in today's feed."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-03T12:53:47.734056+00:00"
+  "last_updated": "2026-08-04T11:59:41.378767+00:00"
 }
