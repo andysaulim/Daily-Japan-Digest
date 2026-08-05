@@ -329,6 +329,25 @@ _URL_SECTIONS = (
 )
 
 
+def _attach_orig_titles(digest: dict, collected_by_url: dict) -> dict:
+    """Stamp each item with the ORIGINAL headline of the collected article it links
+    to (matched by URL, before URLs are resolved). This keeps a verbatim, traceable
+    source title behind any synthesized/paraphrased display headline, so the exact
+    original article is always recoverable. Best-effort: no match → no orig_title."""
+    def _stamp(item):
+        if not isinstance(item, dict):
+            return
+        t = collected_by_url.get(item.get("url", ""))
+        if t and str(t).strip():
+            item["orig_title"] = str(t).strip()
+    for section in _URL_SECTIONS:
+        for item in (digest.get(section) or []):
+            _stamp(item)
+    for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
+        _stamp(item)
+    return digest
+
+
 def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
     """Null out hallucinated URLs; resolve Google News redirects for real ones."""
     from urllib.parse import urlparse as _up
@@ -433,12 +452,17 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
         if section == "prc_government":
             continue
         for item in (digest.get(section) or []):
-            if not isinstance(item, dict) or "source" not in item:
+            if not isinstance(item, dict):
                 continue
             u = item.get("url", "")
             if isinstance(u, str) and u.startswith("http") and "news.google.com" not in u:
+                # Authoritative primary source = the publisher the link actually
+                # opens, derived from its domain. Render prefers this over the
+                # model's free-text source line, so a synthesized item's shown
+                # source can't disagree with where the link goes.
+                item["link_source"] = _publisher_label(u)
                 name = _mapped_publisher(u)
-                if name:
+                if name and "source" in item:
                     item["source"] = name
 
     return digest
@@ -711,14 +735,18 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── Sanitise URLs ───────────────────────────────────────────────────
     print("\n🔗 Sanitising URLs...")
-    collected_urls: set = set()
+    collected_by_url: dict = {}
     for tier in ("tier1", "tier2", "tier3", "tier4", "pm_tracker_articles"):
         for art in (payload.get(tier) or []):
             u = art.get("url", "")
             if u:
-                collected_urls.add(u)
-    digest = _sanitise_urls(digest, collected_urls)
-    print(f"   ✓ URL sanitisation complete ({len(collected_urls)} collected URLs as reference)")
+                collected_by_url.setdefault(u, art.get("title", ""))
+    # Attach each item's ORIGINAL collected headline before URLs are resolved
+    # (while item['url'] still matches the collected article) — preserves a
+    # verbatim, traceable source title behind any synthesized display headline.
+    digest = _attach_orig_titles(digest, collected_by_url)
+    digest = _sanitise_urls(digest, set(collected_by_url))
+    print(f"   ✓ URL sanitisation complete ({len(collected_by_url)} collected URLs as reference)")
 
     # ─── De-duplicate across sections (one article, one section) ─────────
     digest = _dedupe_sections(digest)

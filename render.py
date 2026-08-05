@@ -395,8 +395,21 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             b = _esc(b_raw) if b_raw.strip() and b_raw.strip() != s.get("headline", "").strip() else ""
             sw = _esc(s.get("so_what", ""))
             pn = _esc(s.get("pattern_note", ""))
-            sl = _esc(_clean_src(s.get("src_line", s.get("source", ""))))
+            # Primary source = the publisher the link actually opens (link_source,
+            # domain-derived), NOT the model's free-text multi-source line.
+            ls = s.get("link_source", "")
+            sl = _esc(_clean_src(ls or s.get("src_line", s.get("source", ""))))
             url = s.get("url", "")
+            # Verbatim original article title behind the link — shown when the
+            # display headline was synthesized/paraphrased, so the exact source is
+            # always recoverable.
+            orig = str(s.get("orig_title", "")).strip()
+            _key = lambda x: "".join(c for c in str(x).lower() if c.isalnum())
+            ref = ""
+            if orig and _key(orig) != _key(s.get("headline", "")):
+                _lead = _esc(ls) + ": " if ls else ""
+                ref = (f"<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#999;font-style:italic;'>"
+                       f"per {_lead}&ldquo;{_link_or_text(_esc(orig), url, style='color:#999;text-decoration:underline;')}&rdquo;</div>")
             sh += f"""
 <div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
 <div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
@@ -404,6 +417,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 {"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
 {"<p style='margin:0 0 6px 0;font-size:12px;line-height:1.5;color:#555;font-style:italic;'><strong style='color:#1B2A4A;font-style:normal;'>So what:</strong> " + _link_or_text(sw, url, style="color:#555;text-decoration:underline;") + "</p>" if sw else ""}
 {"<p style='margin:0 0 6px 0;font-size:12px;line-height:1.5;color:#777;font-style:italic;'><strong style='color:#555;font-style:normal;'>Pattern:</strong> " + pn + "</p>" if pn else ""}
+{ref}
 <div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
         sections_today.append(f'<div {_SEC}>{_sec_label("Top Stories")}{sh}</div>')
