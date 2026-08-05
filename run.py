@@ -261,6 +261,7 @@ _PUBLISHER_NAMES = {
     "en.yna.co.kr": "Yonhap", "koreaherald.com": "Korea Herald",
     "news.google.com": "Google News",
 }
+_KNOWN_PUBLISHER_NAMES = frozenset(_PUBLISHER_NAMES.values())
 
 
 def _publisher_label(url: str) -> str:
@@ -280,6 +281,14 @@ def _publisher_label(url: str) -> str:
         if h == dom or h.endswith("." + dom):
             return name
     return h   # unknown → the bare host (minus www.), always an honest label
+
+
+def _mapped_publisher(url: str) -> str:
+    """Friendly publisher name ONLY if the URL's domain is a known one, else ''.
+    Used to align a news item's source attribution with its real link WITHOUT
+    downgrading an unmapped outlet to a bare host."""
+    label = _publisher_label(url)
+    return label if label in _KNOWN_PUBLISHER_NAMES else ""
 
 
 def _resolve_payload_urls(payload: dict) -> dict:
@@ -414,6 +423,23 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
             continue
         u = item.get("url", "")
         item["source_label"] = _publisher_label(u) if isinstance(u, str) and u.startswith("http") else ""
+
+    # Across the other news sections, align each item's source attribution with its
+    # real link when that link is a KNOWN publisher — so the shown source can't
+    # disagree with where the link goes. Conservative: only overrides with a mapped
+    # friendly name (never a bare host), only touches items that already carry a
+    # "source", and skips Google News search fallbacks (keeps the model's publisher).
+    for section in _URL_SECTIONS:
+        if section == "prc_government":
+            continue
+        for item in (digest.get(section) or []):
+            if not isinstance(item, dict) or "source" not in item:
+                continue
+            u = item.get("url", "")
+            if isinstance(u, str) and u.startswith("http") and "news.google.com" not in u:
+                name = _mapped_publisher(u)
+                if name:
+                    item["source"] = name
 
     return digest
 
