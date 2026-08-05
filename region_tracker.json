@@ -317,7 +317,14 @@
         "dprk_signal": "The 19FortyFive report in today's Tier 4 data recaps China's reaction to Japan's first ship-based Tomahawk missile launch from JS Chokai; no new North Korean missile launch, EEZ splashdown, or overflight is reported in today's feed."
       },
       "watch_flag": false
+    },
+    "2026-08-05": {
+      "signals": {
+        "china_signal": "China's reaction to Japan's 2026 Defense White Paper and the JS Chokai Tomahawk test — both subjects of prior-day Chinese diplomatic rebukes — continues as the sustained backdrop; no new acute Senkaku CCG intrusion or PLA aerial activity is reported in today's feed, but the 19FortyFive article notes",
+        "dprk_signal": "Kim Yo Jong issued a formal statement via KCNA warning that North Korea will 'never remain passive spectators' over Japan's Tomahawk missile test and signaling new unspecified military options — the most senior and explicit DPRK threat linked to Japan's counterstrike operationalization, carried acro"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-04T11:59:41.378767+00:00"
+  "last_updated": "2026-08-05T11:56:17.880394+00:00"
 }

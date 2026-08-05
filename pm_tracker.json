@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-05",
+      "activity": "PM Takaichi's Cabinet formally adopted the food consumption tax cut plan on the afternoon of August 5; she also appears in reporting on her May request to BOJ Governor Ueda to buy bonds if needed.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-05T11:56:17.879676+00:00"
+    },
+    {
       "date": "2026-08-04",
       "activity": "PM Takaichi visited earthquake-hit Kumamoto Prefecture on August 3, touring disaster sites and pledging relief aid to victims and local leaders amid extreme heat hampering recovery.",
       "source": "digest",
@@ -253,5 +260,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-04T11:59:41.378106+00:00"
+  "last_updated": "2026-08-05T11:56:17.879721+00:00"
 }
