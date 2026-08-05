@@ -231,7 +231,100 @@
         "russia_signal": "Russia deployed a Tu-95 Bear strategic bomber near Japan escorted by a Su-35 fighter, per Zona Militar — a step up from unescorted Tu-95 flights reported on July 22 and following Russian naval vessels' participation in joint live-fire drills with a Chinese destroyer inside Japan's claimed EEZ near O"
       },
       "watch_flag": true
+    },
+    "2026-07-24": {
+      "signals": {
+        "china_signal": "The Japan-China foreign ministers' phone call on July 24 — the first since ties deteriorated over PM Takaichi's Taiwan-related remarks — breaks a ministerial-level communication blackout. Separately, the US, Japan, and South Korea issued a joint statement expressing concern over China's ICBM test la",
+        "dprk_signal": "No new North Korean missile launch, EEZ splashdown, or overflight reported in today's feed. The US-Japan-ROK joint statement on China's ICBM test is the primary trilateral signal today.",
+        "russia_signal": "Japan announced it will resume youth exchanges with Russia after a seven-year hiatus, per Jiji Press — a limited people-to-people channel opening even as Japan pledged not to change its Russia policy on sanctions. No new Northern Territories or Hokkaido air-sea incursion reported today."
+      },
+      "watch_flag": false
+    },
+    "2026-07-25": {
+      "signals": {
+        "china_signal": "China's foreign minister called on Russia not to allow Japan to 'rearm,' per NHK, in a statement that publicly aligns Beijing and Moscow against Japan's defense buildup. Separately, Japan identified a large rare-earth deposit in deep-sea mud off a remote island — a potential supply-chain hedge again",
+        "russia_signal": "A Russian warplane violated Japanese airspace over Japan-claimed islands in the Northern Territories, per Jiji Press — the most acute Russian incursion in the current tracker window, escalating from Tu-95 bomber transits and joint Sino-Russian live-fire drills inside Japan's EEZ near Okinotorishima "
+      },
+      "watch_flag": true
+    },
+    "2026-07-26": {
+      "signals": {
+        "china_signal": "China Coast Guard ships intercepted a Japanese patrol vessel near a Chinese research ship off eastern Taiwan, per Global Times. China state media simultaneously characterized the ongoing China-Russia joint naval patrol as demonstrating the ability to 'break through the so-called island chain blockad",
+        "dprk_signal": "No new North Korean missile launch, EEZ splashdown, or overflight reported in today's feed. Japan's forthcoming national intelligence bureau launch on July 31 was the primary DPRK-tagged Tier 4 item, though it is an organizational rather than DPRK-provocation story.",
+        "russia_signal": "TASS reported that Japanese lawmakers signaled Japanese companies want to resume business with Russia. No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity is reported in today's articles, following last week's Russian airspace violation over Northern Territories-"
+      },
+      "watch_flag": false
+    },
+    "2026-07-27": {
+      "signals": {
+        "china_signal": "China and Japan remain at public odds over whether their foreign ministers met at ASEAN in Manila, with Beijing's CGTN reiterating no exchange occurred between Wang Yi and the Japanese foreign minister — a direct contradiction of Tokyo's account. Japan's identification of a large rare-earth deposit ",
+        "dprk_signal": "Japan's government formally condemned North Korea for sending troops to Russia, per Jiji Press and the Chief Cabinet Secretary's morning press conference on July 27 — no new DPRK missile launch, EEZ splashdown, or overflight was reported today.",
+        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25."
+      },
+      "watch_flag": false
+    },
+    "2026-07-28": {
+      "signals": {
+        "china_signal": "China's MOFA and CGTN reiterated on July 28 that no exchange occurred between Wang Yi and Japan's foreign minister at the ASEAN ministerial in Manila, directly contradicting Tokyo's account. China separately expressed strong dissatisfaction over Japan's delayed handling of an SDF member's illegal kn",
+        "dprk_signal": "Japan's government formally condemned North Korea for sending troops to Russia, per Chief Cabinet Secretary Kihara's morning press conference on July 28; no new DPRK missile launch, EEZ splashdown, or overflight was reported.",
+        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity is reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25."
+      },
+      "watch_flag": false
+    },
+    "2026-07-29": {
+      "signals": {
+        "china_signal": "China's foreign ministry denied a second consecutive day that Wang Yi and Japan's foreign minister exchanged any communication at ASEAN in Manila, directly contradicting Tokyo's account. Separately, Beijing registered strong dissatisfaction over Japan's handling of an SDF member's alleged knife intr"
+      },
+      "watch_flag": false
+    },
+    "2026-07-30": {
+      "signals": {
+        "china_signal": "China's foreign ministry reiterated concerns over Japan's handling of abandoned chemical weapons, characterized Japanese right-wing use of AI to distort WWII history as an 'open provocation,' and expressed condolences for the Kumamoto earthquake while pledging assistance to Chinese nationals. The pu",
+        "dprk_signal": "Japan conducted its first Tomahawk cruise missile launch in the Pacific, placing North Korea, China, and Russia within range — a milestone in Japan's counterstrike capability operationalization, per Korean media reporting.",
+        "russia_signal": "Russia announced plans to rename an island in the Japan-claimed Northern Territories after Soviet spy Richard Sorge, adding a deliberate symbolic provocation following last week's Russian airspace violation over Northern Territories-claimed islands."
+      },
+      "watch_flag": false
+    },
+    "2026-07-31": {
+      "signals": {
+        "china_signal": "China's foreign ministry characterized Japan's National Intelligence Bureau launch as a 'negative security policy shift' and urged Japan to 'act prudently,' warning against remilitarization — the strongest Chinese diplomatic rebuke tied to a single-day Japanese security announcement in the current t",
+        "dprk_signal": "North Korean state media condemned Japan's first ship-based Tomahawk cruise missile test launch from JS Chokai and characterized the expansion of US Forces Japan as raising the risk of a Korean Peninsula clash, per NK News and Asahi Shimbun.",
+        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25 and Russia's announced plan to rename a Northern Territo"
+      },
+      "watch_flag": false
+    },
+    "2026-08-01": {
+      "signals": {
+        "china_signal": "China's foreign ministry issued a multi-channel rebuke of Japan's National Intelligence Bureau launch on July 31, characterizing it as 'another negative move' and warning against remilitarization — with coordinated messaging across CGTN, Global Times, and the foreign ministry spokesperson. Japan's M"
+      },
+      "watch_flag": false
+    },
+    "2026-08-02": {
+      "signals": {
+        "china_signal": "Japan lodged a formal diplomatic protest with China over an alleged new structure in the East China Sea and called for revival of the 2008 bilateral resource development pact. China's Xinhua separately characterized Japan's National Intelligence Bureau as raising concerns over accelerated military e"
+      },
+      "watch_flag": false
+    },
+    "2026-08-03": {
+      "signals": {
+        "china_signal": "No new acute China Coast Guard intrusion or PLA activity near the Senkakus is reported in today's Tier 1 or Tier 4 articles. The prior baseline of Japan's formal diplomatic protest over a new East China Sea structure (August 2) and China's multi-day rebuke of Japan's National Intelligence Bureau lau"
+      },
+      "watch_flag": false
+    },
+    "2026-08-04": {
+      "signals": {
+        "china_signal": "Japan's 2026 Defense White Paper explicitly warns of deepening China-Russia-North Korea military ties, drawing continued Chinese diplomatic attention. China previously expressed strong opposition to Japan's Tomahawk test launch from JS Chokai and the July 31 National Intelligence Bureau launch — the",
+        "dprk_signal": "The 19FortyFive report in today's Tier 4 data recaps China's reaction to Japan's first ship-based Tomahawk missile launch from JS Chokai; no new North Korean missile launch, EEZ splashdown, or overflight is reported in today's feed."
+      },
+      "watch_flag": false
+    },
+    "2026-08-05": {
+      "signals": {
+        "china_signal": "China's reaction to Japan's 2026 Defense White Paper and the JS Chokai Tomahawk test — both subjects of prior-day Chinese diplomatic rebukes — continues as the sustained backdrop; no new acute Senkaku CCG intrusion or PLA aerial activity is reported in today's feed, but the 19FortyFive article notes",
+        "dprk_signal": "Kim Yo Jong issued a formal statement via KCNA warning that North Korea will 'never remain passive spectators' over Japan's Tomahawk missile test and signaling new unspecified military options — the most senior and explicit DPRK threat linked to Japan's counterstrike operationalization, carried acro"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-07-23T11:51:11.707552+00:00"
+  "last_updated": "2026-08-05T11:56:17.880394+00:00"
 }

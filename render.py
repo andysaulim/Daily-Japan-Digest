@@ -537,7 +537,10 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             hdr = ' <span style="color:#ccc;">·</span> '.join(hdr_parts)
             slink = ""
             if url and url != "#" and url.startswith("http"):
-                sl = lbl if lbl else mn.lower()
+                # Link text is the PUBLISHER (source_label), never the acting
+                # ministry — a MOFA protest reported by a news agency must not
+                # render a link that looks like it points to MOFA's own site.
+                sl = lbl if lbl else "Source"
                 slink = f'<div style="margin-top:6px;font-size:11px;color:#888;">→ <a href="{_esc(url)}" style="color:#888;text-decoration:none;">{_esc(sl)} ↗</a></div>'
             elif lbl:
                 slink = f'<div style="margin-top:6px;font-size:11px;color:#888;">→ {_esc(lbl)}</div>'

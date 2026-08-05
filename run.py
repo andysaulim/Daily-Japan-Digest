@@ -176,19 +176,28 @@ def _decode_gnews_url(url: str, timeout: int = 8) -> str | None:
         )
         if not resp.ok:
             return None
-        arr = json.loads(resp.text.split("\n\n")[1])
-        real = json.loads(arr[0][2])[1]
-        return real if isinstance(real, str) and real.startswith("http") else None
+        # Response framing: )]}'\n\n<chunk-length>\n[["wrb.fr","Fbv4je",
+        # "[\"garturlres\",\"https://REAL-PUBLISHER-URL\",...]",...]] . The old
+        # json.loads(split("\n\n")[1]) choked on the chunk-length line and always
+        # raised, so nothing ever decoded. Extract the publisher URL directly.
+        text = resp.text
+        if "garturlres" not in text:
+            return None
+        m = _re.search(r'https?://[^\s"\\]+', text.split("garturlres", 1)[1])
+        real = m.group(0) if m else None
+        return real if real and real.startswith("http") and "news.google.com" not in real else None
     except Exception:
         return None
 
 
-def _resolve_google_url(url: str) -> str:
-    """Resolve a Google News RSS URL to the real article URL.
+def _resolve_google_url(url: str) -> str | None:
+    """Resolve a Google News RSS URL to the real publisher article URL.
 
-    Tries the batchexecute decoder first, then a plain redirect-follow. If both
-    fail, KEEPS the Google News URL — it still resolves to the article in a
-    browser — rather than dropping the link entirely.
+    Tries the batchexecute decoder first, then a plain redirect-follow. Returns
+    None if BOTH fail — the caller then substitutes a durable Google News search
+    link built from the headline. The raw RSS token (news.google.com/rss/articles/
+    CBMi...) must NOT be kept: those tokens are not stable permalinks and 404 when
+    opened later from the email, which is the whole bug this fixes.
     """
     if "news.google.com" not in url:
         return url
@@ -205,7 +214,81 @@ def _resolve_google_url(url: str) -> str:
             return final
     except Exception:
         pass
-    return url  # keep the Google News URL — browser-resolvable, better than blank
+    return None  # unresolved — caller substitutes a durable search link
+
+
+# Fields a digest item may carry its display title under (see _item_identity).
+_TITLE_FIELDS = ("headline", "title", "action", "committee", "statement", "body", "quote", "name")
+
+
+def _item_title(item: dict) -> str:
+    """Best available human title for a digest item, for the search-link fallback."""
+    for f in _TITLE_FIELDS:
+        v = item.get(f)
+        if isinstance(v, str) and v.strip():
+            return v.strip()
+    return ""
+
+
+def _gnews_search_url(title: str) -> str:
+    """A DURABLE Google News link: a search for the headline. Unlike the RSS
+    article token it never 404s, and it lands the reader on the story. Used when
+    a Google News redirect can't be resolved to a publisher URL."""
+    from urllib.parse import quote_plus
+    q = quote_plus((title or "").strip())
+    return f"https://news.google.com/search?q={q}&hl=en-US&gl=US&ceid=US:en" if q else ""
+
+
+# Friendly names for the domains that show up as source links. Anything not listed
+# falls back to its registrable hostname, so the label always names the REAL link
+# target — never a government actor the story merely happens to be about.
+_PUBLISHER_NAMES = {
+    "mofa.go.jp": "MOFA", "mod.go.jp": "MOD", "japan.kantei.go.jp": "Kantei",
+    "kantei.go.jp": "Kantei", "meti.go.jp": "METI", "mof.go.jp": "MOF",
+    "boj.or.jp": "Bank of Japan",
+    "kyodonews.net": "Kyodo News", "japantimes.co.jp": "The Japan Times",
+    "nhk.or.jp": "NHK", "asia.nikkei.com": "Nikkei Asia", "nikkei.com": "Nikkei",
+    "mainichi.jp": "Mainichi", "asahi.com": "Asahi", "yomiuri.co.jp": "Yomiuri",
+    "the-japan-news.com": "The Japan News", "japan-forward.com": "Japan Forward",
+    "thediplomat.com": "The Diplomat", "jiji.com": "Jiji Press",
+    "reuters.com": "Reuters", "apnews.com": "AP", "afp.com": "AFP",
+    "bloomberg.com": "Bloomberg", "wsj.com": "WSJ", "nytimes.com": "NYT",
+    "washingtonpost.com": "Washington Post", "ft.com": "FT", "cnbc.com": "CNBC",
+    "bbc.com": "BBC", "bbc.co.uk": "BBC", "cnn.com": "CNN",
+    "theguardian.com": "The Guardian", "economist.com": "The Economist",
+    "aa.com.tr": "Anadolu Agency", "scmp.com": "SCMP",
+    "globaltimes.cn": "Global Times", "xinhuanet.com": "Xinhua", "tass.com": "TASS",
+    "en.yna.co.kr": "Yonhap", "koreaherald.com": "Korea Herald",
+    "news.google.com": "Google News",
+}
+_KNOWN_PUBLISHER_NAMES = frozenset(_PUBLISHER_NAMES.values())
+
+
+def _publisher_label(url: str) -> str:
+    """Human name for a URL's publisher, derived from its DOMAIN so the label can
+    never misrepresent where the link goes (e.g. a MOFA protest reported by Anadolu
+    labels 'Anadolu Agency', not 'MOFA'). Unknown domains fall back to the host."""
+    from urllib.parse import urlparse
+    try:
+        h = (urlparse(url).hostname or "").lower()
+    except Exception:
+        return ""
+    if h.startswith("www."):
+        h = h[4:]
+    if not h:
+        return ""
+    for dom, name in _PUBLISHER_NAMES.items():
+        if h == dom or h.endswith("." + dom):
+            return name
+    return h   # unknown → the bare host (minus www.), always an honest label
+
+
+def _mapped_publisher(url: str) -> str:
+    """Friendly publisher name ONLY if the URL's domain is a known one, else ''.
+    Used to align a news item's source attribution with its real link WITHOUT
+    downgrading an unmapped outlet to a bare host."""
+    label = _publisher_label(url)
+    return label if label in _KNOWN_PUBLISHER_NAMES else ""
 
 
 def _resolve_payload_urls(payload: dict) -> dict:
@@ -225,15 +308,15 @@ def _resolve_payload_urls(payload: dict) -> dict:
         futures = {pool.submit(_resolve_google_url, u): u for u in all_gnews}
         for future in _as_completed(futures):
             original = futures[future]
-            all_gnews[original] = future.result()
+            all_gnews[original] = future.result()   # real URL or None
 
-    resolved = sum(1 for v in all_gnews.values() if "news.google.com" not in v)
+    resolved = sum(1 for v in all_gnews.values() if v and "news.google.com" not in v)
     print(f"   ✓ {resolved}/{len(all_gnews)} resolved to real article URLs")
 
     for tier in ("tier1", "tier2", "tier3", "tier4"):
         for art in (payload.get(tier) or []):
             u = art.get("url", "")
-            if u in all_gnews:
+            if all_gnews.get(u):                    # keep original if unresolved (None)
                 art["url"] = all_gnews[u]
 
     return payload
@@ -307,19 +390,56 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
             futures = {pool.submit(_resolve_google_url, u): u for u in google_urls}
             for future in _as_completed(futures):
                 original = futures[future]
-                google_urls[original] = future.result()
+                google_urls[original] = future.result()   # real publisher URL or None
 
-        decoded = sum(1 for v in google_urls.values() if "news.google.com" not in v)
-        print(f"   ✓ {decoded}/{len(google_urls)} decoded to real article URLs "
-              f"(rest keep their browser-resolvable Google News link)")
+        decoded = sum(1 for v in google_urls.values() if v and "news.google.com" not in v)
+        print(f"   ✓ {decoded}/{len(google_urls)} decoded to publisher URLs "
+              f"(rest → durable Google News search links, never the raw RSS token)")
+
+        def _apply(item: dict) -> None:
+            u = item.get("url", "")
+            if u not in google_urls:
+                return
+            resolved = google_urls[u]
+            if resolved and "news.google.com" not in resolved:
+                item["url"] = resolved                      # real publisher deep link
+            else:
+                item["url"] = _gnews_search_url(_item_title(item))  # durable fallback
 
         for section in _URL_SECTIONS:
             for item in (digest.get(section) or []):
-                if isinstance(item, dict) and item.get("url") in google_urls:
-                    item["url"] = google_urls[item["url"]]
+                if isinstance(item, dict):
+                    _apply(item)
         for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
-            if isinstance(item, dict) and item.get("url") in google_urls:
-                item["url"] = google_urls[item["url"]]
+            if isinstance(item, dict):
+                _apply(item)
+
+    # Japanese Government items render a source LINK next to the acting ministry.
+    # Derive its label from the (now-resolved) URL's domain so it names the real
+    # publisher — never the ministry the story is about. Runs after resolution so
+    # the label matches where the link actually goes.
+    for item in (digest.get("prc_government") or []):
+        if not isinstance(item, dict):
+            continue
+        u = item.get("url", "")
+        item["source_label"] = _publisher_label(u) if isinstance(u, str) and u.startswith("http") else ""
+
+    # Across the other news sections, align each item's source attribution with its
+    # real link when that link is a KNOWN publisher — so the shown source can't
+    # disagree with where the link goes. Conservative: only overrides with a mapped
+    # friendly name (never a bare host), only touches items that already carry a
+    # "source", and skips Google News search fallbacks (keeps the model's publisher).
+    for section in _URL_SECTIONS:
+        if section == "prc_government":
+            continue
+        for item in (digest.get(section) or []):
+            if not isinstance(item, dict) or "source" not in item:
+                continue
+            u = item.get("url", "")
+            if isinstance(u, str) and u.startswith("http") and "news.google.com" not in u:
+                name = _mapped_publisher(u)
+                if name:
+                    item["source"] = name
 
     return digest
 
