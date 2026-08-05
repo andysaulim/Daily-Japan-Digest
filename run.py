@@ -176,19 +176,28 @@ def _decode_gnews_url(url: str, timeout: int = 8) -> str | None:
         )
         if not resp.ok:
             return None
-        arr = json.loads(resp.text.split("\n\n")[1])
-        real = json.loads(arr[0][2])[1]
-        return real if isinstance(real, str) and real.startswith("http") else None
+        # Response framing: )]}'\n\n<chunk-length>\n[["wrb.fr","Fbv4je",
+        # "[\"garturlres\",\"https://REAL-PUBLISHER-URL\",...]",...]] . The old
+        # json.loads(split("\n\n")[1]) choked on the chunk-length line and always
+        # raised, so nothing ever decoded. Extract the publisher URL directly.
+        text = resp.text
+        if "garturlres" not in text:
+            return None
+        m = _re.search(r'https?://[^\s"\\]+', text.split("garturlres", 1)[1])
+        real = m.group(0) if m else None
+        return real if real and real.startswith("http") and "news.google.com" not in real else None
     except Exception:
         return None
 
 
-def _resolve_google_url(url: str) -> str:
-    """Resolve a Google News RSS URL to the real article URL.
+def _resolve_google_url(url: str) -> str | None:
+    """Resolve a Google News RSS URL to the real publisher article URL.
 
-    Tries the batchexecute decoder first, then a plain redirect-follow. If both
-    fail, KEEPS the Google News URL — it still resolves to the article in a
-    browser — rather than dropping the link entirely.
+    Tries the batchexecute decoder first, then a plain redirect-follow. Returns
+    None if BOTH fail — the caller then substitutes a durable Google News search
+    link built from the headline. The raw RSS token (news.google.com/rss/articles/
+    CBMi...) must NOT be kept: those tokens are not stable permalinks and 404 when
+    opened later from the email, which is the whole bug this fixes.
     """
     if "news.google.com" not in url:
         return url
@@ -205,7 +214,29 @@ def _resolve_google_url(url: str) -> str:
             return final
     except Exception:
         pass
-    return url  # keep the Google News URL — browser-resolvable, better than blank
+    return None  # unresolved — caller substitutes a durable search link
+
+
+# Fields a digest item may carry its display title under (see _item_identity).
+_TITLE_FIELDS = ("headline", "title", "action", "committee", "statement", "body", "quote", "name")
+
+
+def _item_title(item: dict) -> str:
+    """Best available human title for a digest item, for the search-link fallback."""
+    for f in _TITLE_FIELDS:
+        v = item.get(f)
+        if isinstance(v, str) and v.strip():
+            return v.strip()
+    return ""
+
+
+def _gnews_search_url(title: str) -> str:
+    """A DURABLE Google News link: a search for the headline. Unlike the RSS
+    article token it never 404s, and it lands the reader on the story. Used when
+    a Google News redirect can't be resolved to a publisher URL."""
+    from urllib.parse import quote_plus
+    q = quote_plus((title or "").strip())
+    return f"https://news.google.com/search?q={q}&hl=en-US&gl=US&ceid=US:en" if q else ""
 
 
 def _resolve_payload_urls(payload: dict) -> dict:
@@ -225,15 +256,15 @@ def _resolve_payload_urls(payload: dict) -> dict:
         futures = {pool.submit(_resolve_google_url, u): u for u in all_gnews}
         for future in _as_completed(futures):
             original = futures[future]
-            all_gnews[original] = future.result()
+            all_gnews[original] = future.result()   # real URL or None
 
-    resolved = sum(1 for v in all_gnews.values() if "news.google.com" not in v)
+    resolved = sum(1 for v in all_gnews.values() if v and "news.google.com" not in v)
     print(f"   ✓ {resolved}/{len(all_gnews)} resolved to real article URLs")
 
     for tier in ("tier1", "tier2", "tier3", "tier4"):
         for art in (payload.get(tier) or []):
             u = art.get("url", "")
-            if u in all_gnews:
+            if all_gnews.get(u):                    # keep original if unresolved (None)
                 art["url"] = all_gnews[u]
 
     return payload
@@ -307,19 +338,29 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
             futures = {pool.submit(_resolve_google_url, u): u for u in google_urls}
             for future in _as_completed(futures):
                 original = futures[future]
-                google_urls[original] = future.result()
+                google_urls[original] = future.result()   # real publisher URL or None
 
-        decoded = sum(1 for v in google_urls.values() if "news.google.com" not in v)
-        print(f"   ✓ {decoded}/{len(google_urls)} decoded to real article URLs "
-              f"(rest keep their browser-resolvable Google News link)")
+        decoded = sum(1 for v in google_urls.values() if v and "news.google.com" not in v)
+        print(f"   ✓ {decoded}/{len(google_urls)} decoded to publisher URLs "
+              f"(rest → durable Google News search links, never the raw RSS token)")
+
+        def _apply(item: dict) -> None:
+            u = item.get("url", "")
+            if u not in google_urls:
+                return
+            resolved = google_urls[u]
+            if resolved and "news.google.com" not in resolved:
+                item["url"] = resolved                      # real publisher deep link
+            else:
+                item["url"] = _gnews_search_url(_item_title(item))  # durable fallback
 
         for section in _URL_SECTIONS:
             for item in (digest.get(section) or []):
-                if isinstance(item, dict) and item.get("url") in google_urls:
-                    item["url"] = google_urls[item["url"]]
+                if isinstance(item, dict):
+                    _apply(item)
         for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
-            if isinstance(item, dict) and item.get("url") in google_urls:
-                item["url"] = google_urls[item["url"]]
+            if isinstance(item, dict):
+                _apply(item)
 
     return digest
 
