@@ -27,6 +27,22 @@ def _gnews(query: str) -> str:
     return f"https://news.google.com/rss/search?q={query}&hl=en-US&gl=US&ceid=US:en"
 
 
+# Google News search links are perishable redirects (news.google.com/rss/articles/
+# CBMi… tokens that 404 later). Direct publisher RSS feeds carry real permalinks
+# instead. _direct() migrates a source to its own feed while registering the old
+# Google News search as an automatic FALLBACK: if the direct feed returns zero
+# entries at fetch time (wrong/dead URL, error page), the fetcher retries the
+# Google News search — so a bad direct-feed guess degrades to the previous
+# behavior instead of silently dropping the source. Non-breaking by construction.
+_FALLBACK: dict[str, str] = {}
+
+
+def _direct(source: str, direct_url: str, gnews_query: str) -> str:
+    """Register a Google News fallback for `source` and return its direct RSS URL."""
+    _FALLBACK[source] = _gnews(gnews_query)
+    return direct_url
+
+
 # ── TIER 1: NEWS (24h window) ─────────────────────────────────────────────────
 TIER1_FEEDS = {
     # ── Major international — Japan coverage ────────────────────────────────
@@ -42,18 +58,26 @@ TIER1_FEEDS = {
     "CNN Japan":          _gnews("Japan+site:cnn.com"),
     "CNBC Japan":         _gnews("Japan+site:cnbc.com"),
     "Economist Japan":    _gnews("Japan+site:economist.com"),
-    "Guardian Japan":     _gnews("Japan+site:theguardian.com"),
+    # Guardian has a Japan-specific feed with real permalinks (fallback: GN search).
+    "Guardian Japan":     _direct("Guardian Japan", "https://www.theguardian.com/world/japan/rss",
+                                  "Japan+site:theguardian.com"),
 
     # ── Japanese press in English ───────────────────────────────────────────
-    "NHK World":          _gnews("site:www3.nhk.or.jp/nhkworld"),
-    "Kyodo News":         _gnews("site:english.kyodonews.net"),
-    "Japan Times":        _gnews("site:japantimes.co.jp"),
-    "Mainichi":           _gnews("site:mainichi.jp/english"),
-    "Asahi AJW":          _gnews("site:asahi.com/ajw"),
-    "Japan News (Yomiuri)": _gnews("site:the-japan-news.com"),
-    "Nikkei Asia":        _gnews("Japan+site:asia.nikkei.com"),
+    # Japan-focused outlets migrated to their OWN RSS (real permalinks). Each keeps
+    # its Google News search as an auto-fallback if the direct feed comes back empty.
+    "NHK World":          _gnews("site:www3.nhk.or.jp/nhkworld"),   # no stable public RSS → GN
+    "Kyodo News":         _direct("Kyodo News", "https://english.kyodonews.net/rss/all.xml",
+                                  "site:english.kyodonews.net"),
+    "Japan Times":        _direct("Japan Times", "https://www.japantimes.co.jp/feed/",
+                                  "site:japantimes.co.jp"),
+    "Mainichi":           _gnews("site:mainichi.jp/english"),      # no confirmed EN RSS → GN
+    "Asahi AJW":          _gnews("site:asahi.com/ajw"),            # no confirmed EN RSS → GN
+    "Japan News (Yomiuri)": _gnews("site:the-japan-news.com"),     # no confirmed RSS → GN
+    "Nikkei Asia":        _direct("Nikkei Asia", "https://asia.nikkei.com/rss/feed/nar",
+                                  "Japan+site:asia.nikkei.com"),
     "Jiji Press":         _gnews("Japan+site:jiji.com+OR+%22Jiji+Press%22"),
-    "Japan Forward":      _gnews("site:japan-forward.com"),
+    "Japan Forward":      _direct("Japan Forward", "https://japan-forward.com/feed/",
+                                  "site:japan-forward.com"),
 
     # ── US Government — Japan-relevant ──────────────────────────────────────
     "White House Japan":  _gnews("Japan+site:whitehouse.gov"),
@@ -84,7 +108,10 @@ TIER1_FEEDS = {
     "Rappler re Japan":   _gnews("Japan+site:rappler.com"),
 
     # ── Specialist Japan outlets ────────────────────────────────────────────
-    "The Diplomat Japan": _gnews("Japan+site:thediplomat.com"),
+    # The Diplomat's feed is pan-Asia; the tier-1 Japan keyword filter keeps only
+    # Japan items, and links are real permalinks (fallback: GN search).
+    "The Diplomat Japan": _direct("The Diplomat Japan", "https://thediplomat.com/feed/",
+                                  "Japan+site:thediplomat.com"),
     "Tokyo Review":       _gnews("site:tokyoreview.net"),
     "Observing Japan":    _gnews("site:observingjapan.com+OR+%22Observing+Japan%22"),
 }
@@ -400,7 +427,14 @@ def _fetch_feeds_parallel(feed_dict: dict, is_tiered: bool = False) -> dict:
             url = url_or_tuple
             tier_val = None
         entries = _parse_feed(url)
-        return source, entries, tier_val
+        used_fallback = False
+        # Direct RSS feed came back empty (wrong/dead URL, error page) → retry the
+        # registered Google News search so the source is never silently dropped.
+        if not entries and source in _FALLBACK:
+            fb_entries = _parse_feed(_FALLBACK[source])
+            if fb_entries:
+                entries, used_fallback = fb_entries, True
+        return source, entries, tier_val, used_fallback
 
     items = list(feed_dict.items())
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
@@ -408,12 +442,15 @@ def _fetch_feeds_parallel(feed_dict: dict, is_tiered: bool = False) -> dict:
         for future in as_completed(futures):
             src = futures[future]
             try:
-                source, entries, tier_val = future.result()
+                source, entries, tier_val, used_fallback = future.result()
                 results[source] = (entries, tier_val)
+                if used_fallback:
+                    print(f"  ↩ {source}: direct feed empty — used Google News fallback")
                 _source_health[source] = {
                     "articles": len(entries),
                     "success": len(entries) > 0,
                     "error_msg": None,
+                    "via": "gnews-fallback" if used_fallback else "primary",
                 }
             except Exception as e:
                 print(f"  ⚠ Thread error: {e}")
