@@ -239,6 +239,49 @@ def _gnews_search_url(title: str) -> str:
     return f"https://news.google.com/search?q={q}&hl=en-US&gl=US&ceid=US:en" if q else ""
 
 
+# Friendly names for the domains that show up as source links. Anything not listed
+# falls back to its registrable hostname, so the label always names the REAL link
+# target — never a government actor the story merely happens to be about.
+_PUBLISHER_NAMES = {
+    "mofa.go.jp": "MOFA", "mod.go.jp": "MOD", "japan.kantei.go.jp": "Kantei",
+    "kantei.go.jp": "Kantei", "meti.go.jp": "METI", "mof.go.jp": "MOF",
+    "boj.or.jp": "Bank of Japan",
+    "kyodonews.net": "Kyodo News", "japantimes.co.jp": "The Japan Times",
+    "nhk.or.jp": "NHK", "asia.nikkei.com": "Nikkei Asia", "nikkei.com": "Nikkei",
+    "mainichi.jp": "Mainichi", "asahi.com": "Asahi", "yomiuri.co.jp": "Yomiuri",
+    "the-japan-news.com": "The Japan News", "japan-forward.com": "Japan Forward",
+    "thediplomat.com": "The Diplomat", "jiji.com": "Jiji Press",
+    "reuters.com": "Reuters", "apnews.com": "AP", "afp.com": "AFP",
+    "bloomberg.com": "Bloomberg", "wsj.com": "WSJ", "nytimes.com": "NYT",
+    "washingtonpost.com": "Washington Post", "ft.com": "FT", "cnbc.com": "CNBC",
+    "bbc.com": "BBC", "bbc.co.uk": "BBC", "cnn.com": "CNN",
+    "theguardian.com": "The Guardian", "economist.com": "The Economist",
+    "aa.com.tr": "Anadolu Agency", "scmp.com": "SCMP",
+    "globaltimes.cn": "Global Times", "xinhuanet.com": "Xinhua", "tass.com": "TASS",
+    "en.yna.co.kr": "Yonhap", "koreaherald.com": "Korea Herald",
+    "news.google.com": "Google News",
+}
+
+
+def _publisher_label(url: str) -> str:
+    """Human name for a URL's publisher, derived from its DOMAIN so the label can
+    never misrepresent where the link goes (e.g. a MOFA protest reported by Anadolu
+    labels 'Anadolu Agency', not 'MOFA'). Unknown domains fall back to the host."""
+    from urllib.parse import urlparse
+    try:
+        h = (urlparse(url).hostname or "").lower()
+    except Exception:
+        return ""
+    if h.startswith("www."):
+        h = h[4:]
+    if not h:
+        return ""
+    for dom, name in _PUBLISHER_NAMES.items():
+        if h == dom or h.endswith("." + dom):
+            return name
+    return h   # unknown → the bare host (minus www.), always an honest label
+
+
 def _resolve_payload_urls(payload: dict) -> dict:
     """Resolve all Google News RSS redirect URLs in collected payload before Claude sees them."""
     all_gnews: dict = {}
@@ -361,6 +404,16 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
         for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
             if isinstance(item, dict):
                 _apply(item)
+
+    # Japanese Government items render a source LINK next to the acting ministry.
+    # Derive its label from the (now-resolved) URL's domain so it names the real
+    # publisher — never the ministry the story is about. Runs after resolution so
+    # the label matches where the link actually goes.
+    for item in (digest.get("prc_government") or []):
+        if not isinstance(item, dict):
+            continue
+        u = item.get("url", "")
+        item["source_label"] = _publisher_label(u) if isinstance(u, str) and u.startswith("http") else ""
 
     return digest
 
