@@ -324,7 +324,15 @@
         "dprk_signal": "Kim Yo Jong issued a formal statement via KCNA warning that North Korea will 'never remain passive spectators' over Japan's Tomahawk missile test and signaling new unspecified military options — the most senior and explicit DPRK threat linked to Japan's counterstrike operationalization, carried acro"
       },
       "watch_flag": true
+    },
+    "2026-08-06": {
+      "signals": {
+        "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. The sustained backdrop of Chinese diplomatic rebuke over Japan's Tomahawk test, National Intelligence Bureau launch, and 2026 Defense White Paper continues; no new rare-earth or critical-m",
+        "dprk_signal": "North Korea fired a short-range ballistic missile toward the East Sea on August 6, landing outside Japan's EEZ, confirmed by Japan's Defense Ministry, NHK, and South Korea's military. The launch followed Kim Yo Jong's August 5 statement warning of new military options in response to Japan's Tomahawk",
+        "russia_signal": "No new Russian Northern Territories air-sea incursion or Hokkaido-area military activity is reported in today's feed. The prior baseline — Russia's island-renaming provocation and airspace violation over Northern Territories-claimed islands reported July 25 — remains the most recent acute incident. "
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-05T11:56:17.880394+00:00"
+  "last_updated": "2026-08-06T12:00:33.138077+00:00"
 }

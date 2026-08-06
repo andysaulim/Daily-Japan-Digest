@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-06",
+      "activity": "PM Takaichi attended the 81st Hiroshima atomic bombing memorial ceremony as head of government for the first time, delivering an address emphasizing Japan's commitment to non-nuclear principles while declining to explicitly reaffirm all three, amid North Korean missile activity the same day.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-06T12:00:33.137336+00:00"
+    },
+    {
       "date": "2026-08-05",
       "activity": "PM Takaichi's Cabinet formally adopted the food consumption tax cut plan on the afternoon of August 5; she also appears in reporting on her May request to BOJ Governor Ueda to buy bonds if needed.",
       "source": "digest",
@@ -260,5 +267,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-05T11:56:17.879721+00:00"
+  "last_updated": "2026-08-06T12:00:33.137391+00:00"
 }
