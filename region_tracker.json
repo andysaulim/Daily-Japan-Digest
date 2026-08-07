@@ -332,7 +332,14 @@
         "russia_signal": "No new Russian Northern Territories air-sea incursion or Hokkaido-area military activity is reported in today's feed. The prior baseline — Russia's island-renaming provocation and airspace violation over Northern Territories-claimed islands reported July 25 — remains the most recent acute incident. "
       },
       "watch_flag": true
+    },
+    "2026-08-07": {
+      "signals": {
+        "china_signal": "China's foreign ministry lodged 'serious representations' with Japan over the 2026 Defense White Paper, with CGTN and Global Times running coordinated messaging urging Japan to 'reflect on history and stop military expansion.' No new Senkaku CCG intrusion or PLA aerial incursion is reported in today",
+        "dprk_signal": "North Korea fired at least one short-range ballistic missile toward the East Sea on August 7 — the 81st Hiroshima anniversary — its first ballistic launch since April, landing outside Japan's EEZ with no damage confirmed in Japan; North Korea's state media was silent on the launch, and the US stated"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-06T12:00:33.138077+00:00"
+  "last_updated": "2026-08-07T10:46:25.156064+00:00"
 }

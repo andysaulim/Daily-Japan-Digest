@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-07",
+      "activity": "PM Takaichi's remarks at the Hiroshima atomic bombing memorial ceremony on August 6, declining to give an explicit future pledge on the three non-nuclear principles, generated today's dominant domestic political story, with Takaichi also signaling an 'appropriate' decision on Yasukuni by August 15.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-07T10:46:25.155316+00:00"
+    },
+    {
       "date": "2026-08-06",
       "activity": "PM Takaichi attended the 81st Hiroshima atomic bombing memorial ceremony as head of government for the first time, delivering an address emphasizing Japan's commitment to non-nuclear principles while declining to explicitly reaffirm all three, amid North Korean missile activity the same day.",
       "source": "digest",
@@ -267,5 +274,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-06T12:00:33.137391+00:00"
+  "last_updated": "2026-08-07T10:46:25.155362+00:00"
 }
