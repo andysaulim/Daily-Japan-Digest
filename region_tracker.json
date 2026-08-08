@@ -339,7 +339,14 @@
         "dprk_signal": "North Korea fired at least one short-range ballistic missile toward the East Sea on August 7 — the 81st Hiroshima anniversary — its first ballistic launch since April, landing outside Japan's EEZ with no damage confirmed in Japan; North Korea's state media was silent on the launch, and the US stated"
       },
       "watch_flag": true
+    },
+    "2026-08-08": {
+      "signals": {
+        "china_signal": "China's foreign ministry issued a formal statement deploring Japan's 2026 Defence White Paper, maintaining a sustained diplomatic pressure campaign. Separately, Nikkei Asia reports China's rare-earth exports to Japan and the United States plunged after Beijing imposed export restrictions — the most ",
+        "dprk_signal": "North Korea fired at least one short-range ballistic missile from the Wonsan area toward the Sea of Japan on August 7 — its first ballistic launch since April — landing outside Japan's EEZ with no damage in Japan confirmed; DPRK state media remained silent, and the launch came days before scheduled "
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-07T10:46:25.156064+00:00"
+  "last_updated": "2026-08-08T10:23:12.260737+00:00"
 }
