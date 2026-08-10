@@ -353,7 +353,14 @@
         "dprk_signal": "North Korea fired a short-range ballistic missile from Wonsan toward the Sea of Japan on August 7 — its first ballistic launch since April — landing outside Japan's EEZ; Japan lodged a formal protest. North Korean state media escalated daily criticism of Japan and specifically targeted US-Japan-ROK "
       },
       "watch_flag": false
+    },
+    "2026-08-10": {
+      "signals": {
+        "china_signal": "China's foreign ministry sustained its diplomatic pressure on Japan over WWII references, per a New Age BD report sourced to the China MOFA. Separately, Nikkei Asia confirmed Chinese rare-earth exports to Japan and the United States plunged following Beijing's export restrictions — the most direct s",
+        "dprk_signal": "North Korea is escalating daily criticism of Japan and monitoring US-Japan-ROK trilateral cooperation, per Korean media. US-ROK combined exercises are set to begin next week, a development that in prior years has coincided with elevated DPRK provocations; the August 7 DPRK ballistic missile launch i"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-09T10:24:10.135516+00:00"
+  "last_updated": "2026-08-10T10:59:34.356997+00:00"
 }
