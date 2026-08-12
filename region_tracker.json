@@ -367,7 +367,14 @@
         "dprk_signal": "North Korea condemned Japan's 2026 Defense White Paper as a 're-invasion paper' per The Straits Times; separately, Tech Times reports North Korean missile crews are embedded in a Russian military brigade gaining combat ballistic missile launch experience — a capability-transfer signal with direct re"
       },
       "watch_flag": false
+    },
+    "2026-08-12": {
+      "signals": {
+        "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. China's approval of Japan's Chongqing consul general after an eight-month vacancy represents a discrete consular normalization step, running counter to the broader bilateral friction backd",
+        "dprk_signal": "North Korea launched a ballistic missile toward the Sea of Japan on August 12 — its second in six days — reaching approximately 56 miles altitude before falling west of Hokkaido outside Japan's EEZ; Japan lodged a formal protest and South Korea, the US, and Japan jointly called on Pyongyang to halt "
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-11T10:44:42.541624+00:00"
+  "last_updated": "2026-08-12T10:53:58.137570+00:00"
 }
