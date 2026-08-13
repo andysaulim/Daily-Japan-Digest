@@ -374,7 +374,15 @@
         "dprk_signal": "North Korea launched a ballistic missile toward the Sea of Japan on August 12 — its second in six days — reaching approximately 56 miles altitude before falling west of Hokkaido outside Japan's EEZ; Japan lodged a formal protest and South Korea, the US, and Japan jointly called on Pyongyang to halt "
       },
       "watch_flag": true
+    },
+    "2026-08-13": {
+      "signals": {
+        "china_signal": "Japan filled an eight-month consular vacancy in Chongqing — a discrete bilateral normalization step — while the ongoing backdrop of Chinese rare-earth export restrictions bearing on Japan-US supply chains continues; no new acute PLA aerial incursion or China Coast Guard intrusion near the Senkakus i",
+        "dprk_signal": "North Korea launched a ballistic missile on August 12 — its second in less than a week and 11th of 2026 — reaching approximately 56 miles altitude before falling west of Hokkaido outside Japan's EEZ; Japan and South Korea filed formal protests, with the launch timed days before the start of major US",
+        "russia_signal": "Russian President Putin made his first-ever personal visit to Etorofu island in the Japan-claimed Northern Territories, asserting Russian sovereignty; PM Takaichi called the visit 'absolutely unacceptable' and Japan lodged a formal diplomatic protest, with Putin also sampling local fish roe and fram"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-12T10:53:58.137570+00:00"
+  "last_updated": "2026-08-13T10:55:08.256290+00:00"
 }
