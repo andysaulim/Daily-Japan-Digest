@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-14",
+      "activity": "PM Takaichi publicly condemned Putin's visit to Etorofu island as 'absolutely unacceptable' and her office coordinated the summoning of the Russian ambassador by Foreign Minister Motegi; Tokyo also announced consideration of additional Russia sanctions.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-14T10:51:08.227134+00:00"
+    },
+    {
       "date": "2026-08-13",
       "activity": "PM Takaichi issued a formal protest calling Putin's visit to Etorofu island 'absolutely unacceptable' and conducted a phone call with Iranian President Pezeshkian on Strait of Hormuz navigation fees.",
       "source": "digest",
@@ -302,5 +309,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-13T10:55:08.255446+00:00"
+  "last_updated": "2026-08-14T10:51:08.227182+00:00"
 }
