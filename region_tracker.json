@@ -390,7 +390,15 @@
         "russia_signal": "Putin made his first-ever personal visit to Etorofu island (Iturup) in the Japan-claimed Northern Territories on August 13, asserting Russian sovereignty; PM Takaichi called the visit 'absolutely unacceptable,' Foreign Minister Motegi summoned Russian Ambassador Nikolay Nozdrev, and Tokyo opened a r"
       },
       "watch_flag": true
+    },
+    "2026-08-15": {
+      "signals": {
+        "china_signal": "China's MOFA and state media lodged formal protests against both PM Takaichi's Yasukuni offering and Defense Minister Koizumi's shrine visit, with CGTN and Xinhua characterizing the actions as 'negative moves.' China also expressed support for Russia's position on the Kuril Islands. Japan separately",
+        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises and vowed stronger nuclear deterrence, per KCNA-sourced reporting; The Diplomat reports a new 700-km ballistic missile test amid sustained escalatory rhetoric specifically targeting Japan and the trilateral alliance f",
+        "russia_signal": "Putin's first-ever personal visit to Etorofu island in the Japan-claimed Northern Territories continues to dominate the Russia-Japan signal; Russia has formally rejected Japan's protest and sovereignty claims, former Security Council chair Medvedev threatened Japan with 'terrible consequences,' and "
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-14T10:51:08.227906+00:00"
+  "last_updated": "2026-08-15T10:15:28.234618+00:00"
 }
