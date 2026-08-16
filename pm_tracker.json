@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-16",
+      "activity": "PM Takaichi bowed toward Yasukuni Shrine from a distance, sent a ritual offering, and her memorial address at the Nippon Budokan on August 15 omitted the word 'remorse' — her first WWII end-anniversary address as prime minister.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-16T10:15:12.058850+00:00"
+    },
+    {
       "date": "2026-08-15",
       "activity": "PM Takaichi delivered Japan's 81st WWII end-anniversary memorial address, sent a ritual offering to Yasukuni Shrine, and Japan's government publicly confirmed it is 'discussing how to respond' to Putin's Etorofu visit with sanctions and ambassador recall options under review.",
       "source": "digest",
@@ -316,5 +323,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-15T10:15:28.233872+00:00"
+  "last_updated": "2026-08-16T10:15:12.058890+00:00"
 }

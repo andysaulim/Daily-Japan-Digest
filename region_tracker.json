@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-16": {
-      "signals": {
-        "china_signal": "SEED DATA — routine China Coast Guard presence reported in the Senkaku contiguous zone (placeholder; verify against live articles).",
-        "dprk_signal": "SEED DATA — no notable DPRK launch activity reported (placeholder; verify against live articles).",
-        "russia_signal": "SEED DATA — no notable Russian air-sea activity near Japan reported (placeholder; verify against live articles)."
-      },
-      "watch_flag": false
-    },
     "2026-06-18": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and formally rejected Defense Minister Koizumi's challenge to China's military spending d",
@@ -398,7 +390,15 @@
         "russia_signal": "Putin's first-ever personal visit to Etorofu island in the Japan-claimed Northern Territories continues to dominate the Russia-Japan signal; Russia has formally rejected Japan's protest and sovereignty claims, former Security Council chair Medvedev threatened Japan with 'terrible consequences,' and "
       },
       "watch_flag": true
+    },
+    "2026-08-16": {
+      "signals": {
+        "china_signal": "China's Defense Ministry spokesperson, CGTN, Global Times, and the Chinese embassy all issued formal protests against Defense Minister Koizumi's physical Yasukuni visit and Takaichi's ritual offering, with Beijing's embassy calling the moves a 'serious challenge to the postwar international order.' ",
+        "dprk_signal": "North Korea formally warned that US-South Korea combined military exercises push the world 'closer to nuclear war,' and Putin stated via KCNA that Russia and North Korea are coordinating on regional security — a compound signal combining DPRK rhetorical escalation with explicit Russia-DPRK security ",
+        "russia_signal": "Russia formally rejected Japan's diplomatic protest over Putin's Etorofu visit; China publicly sided with Russia; and the US reaffirmed its support for Japan's sovereignty position over the Northern Territories — consolidating a Russia-China axis against Japan's territorial claim while Washington pr"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-15T10:15:28.234618+00:00"
+  "last_updated": "2026-08-16T10:15:12.059646+00:00"
 }
