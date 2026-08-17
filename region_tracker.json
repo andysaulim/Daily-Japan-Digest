@@ -398,7 +398,15 @@
         "russia_signal": "Russia formally rejected Japan's diplomatic protest over Putin's Etorofu visit; China publicly sided with Russia; and the US reaffirmed its support for Japan's sovereignty position over the Northern Territories — consolidating a Russia-China axis against Japan's territorial claim while Washington pr"
       },
       "watch_flag": false
+    },
+    "2026-08-17": {
+      "signals": {
+        "china_signal": "China and South Korea issued formal diplomatic protests over Japanese ministers' Yasukuni visits following the August 15-16 events; China's Foreign Ministry separately expressed 'strong dissatisfaction and opposition' to a US-Japan joint statement, condemning it for 'tarnishing China's reputation.' ",
+        "dprk_signal": "Gulf Times publishes an analysis of North Korea's escalating criticism of Japan; Tempo.co reports North Korean troops are reinforcing Russian forces in Ukraine — DPRK-Russia military integration that compounds the dual-threat vector Japan faces from both actors simultaneously.",
+        "russia_signal": "No new acute Russian territorial or military incident near Japan reported in today's Tier 4 feed; the DPRK-Russia military coordination signal (North Korean troops to Ukraine) is the most current Russia-adjacent item bearing indirectly on Japan's Northern Territories diplomatic posture."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-16T10:15:12.059646+00:00"
+  "last_updated": "2026-08-17T10:23:13.585176+00:00"
 }
