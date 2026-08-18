@@ -11,7 +11,7 @@ import time
 import traceback
 import requests as _requests
 from concurrent.futures import ThreadPoolExecutor as _ThreadPoolExecutor, as_completed as _as_completed
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -25,6 +25,11 @@ COLLECTED_JSON = ROOT / "collected.json"
 DIGEST_JSON = ROOT / "digest.json"
 DIGEST_HTML = ROOT / "digest.html"
 PUBLIC_DIR = ROOT / "public"
+# Rolling record of what has already been published, so a story that ran in a
+# recent edition isn't repeated on a later day. Cached across GitHub Actions runs
+# like pm_tracker.json / region_tracker.json.
+LEDGER_JSON = ROOT / "published_ledger.json"
+_LEDGER_WINDOW_DAYS = 14
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -468,12 +473,32 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
     return digest
 
 
-# Sections walked in placement-priority order (highest first). An article kept
-# in a higher-priority section is removed from any lower one — "each article
-# appears in exactly ONE section."
+# Every content section carrying discrete items, in placement-priority order
+# (highest first). An item kept in a higher-priority section is dropped from every
+# lower one, so each story appears in exactly ONE place across the WHOLE brief.
+# (Previously only eight sections were swept, which let the same story appear in,
+# e.g., the MOFA tracker AND Personnel Changes at once.)
 _DEDUPE_ORDER = (
-    "top_stories", "overnight_items", "prc_government", "congressional_watch",
-    "npc_politburo", "indo_pacific", "business_economy", "also_today",
+    "top_stories", "overnight_items", "prc_government", "personnel_changes",
+    "congressional_watch", "npc_politburo", "indo_pacific", "business_economy",
+    "opeds_today", "academic_today", "social_statements", "also_today",
+)
+
+# Common brief words carrying no story identity — dropped before comparing titles
+# so two items match on their substantive terms, not boilerplate.
+_DEDUP_STOP = {
+    "japan", "japans", "japanese", "tokyo", "the", "and", "for", "with", "over",
+    "from", "into", "amid", "after", "before", "prime", "minister", "ministry",
+    "government", "govt", "new", "first", "say", "says", "said", "report",
+    "reports", "reported", "that", "this", "its", "are", "was", "were", "has",
+    "have", "will", "would", "could", "takaichi", "today", "week", "plan",
+    "plans", "move", "moves", "call", "calls", "amid",
+}
+
+# Fields that may carry an item's identifying text, across all section shapes.
+_IDENTITY_FIELDS = (
+    "headline", "title", "action", "detail", "name", "position", "committee",
+    "who", "quote_text", "central_argument", "body", "summary",
 )
 
 
@@ -481,40 +506,80 @@ def _norm_title(s) -> str:
     return _re.sub(r"[^a-z0-9]+", " ", str(s or "").lower()).strip()
 
 
-def _item_identity(item: dict):
-    """A (kind, value) identity for cross-section dedup: URL first, else title."""
-    if not isinstance(item, dict):
-        return None
-    url = (item.get("url") or "").strip()
-    if url and url.startswith("http"):
-        return ("u", url)
-    for f in ("headline", "title", "action", "committee", "body"):
-        t = _norm_title(item.get(f))
-        if len(t) >= 20:          # only dedupe on a substantive title
-            return ("t", t)
-    return None
+def _primary_title(item: dict) -> str:
+    """The item's normalized primary title (first present identity field)."""
+    for f in _IDENTITY_FIELDS:
+        v = item.get(f)
+        if isinstance(v, str) and v.strip():
+            return _norm_title(v)
+    return ""
+
+
+def _item_text(item: dict) -> str:
+    """All identifying text of an item concatenated (works across section shapes)."""
+    return " ".join(str(item.get(f)) for f in _IDENTITY_FIELDS
+                    if isinstance(item.get(f), str) and item.get(f).strip())
+
+
+def _sig_tokens(text: str) -> frozenset:
+    """Significant title tokens (≥3 chars, minus boilerplate) — the fingerprint
+    used for near-duplicate matching of the same story worded differently."""
+    return frozenset(t for t in _re.findall(r"[a-z0-9]+", str(text).lower())
+                     if len(t) >= 3 and t not in _DEDUP_STOP)
+
+
+def _item_url(item: dict) -> str:
+    u = (item.get("url") or "").strip()
+    return u if u.startswith("http") else ""
+
+
+def _near_dup(toks: frozenset, seen_tok_sets: list) -> bool:
+    """True if `toks` is essentially contained in a previously-seen fingerprint —
+    the same story reworded. Conservative: needs ≥5 shared substantive tokens and
+    ≥80% of the smaller set, so genuinely distinct stories are not merged."""
+    if len(toks) < 5:
+        return False
+    for s in seen_tok_sets:
+        if len(s) < 5:
+            continue
+        inter = len(toks & s)
+        if inter >= 5 and inter / min(len(toks), len(s)) >= 0.8:
+            return True
+    return False
 
 
 def _dedupe_sections(digest: dict) -> dict:
-    """Drop any article that already appeared in a higher-priority section
-    (matched by URL, or by an identical normalized headline)."""
-    seen: set = set()
+    """Drop any item that already appeared in a higher-priority section — matched
+    by URL, identical headline, OR a near-identical reworded title — so one story
+    occupies exactly one section of the edition."""
+    seen_urls: set = set()
+    seen_titles: set = set()
+    seen_tok_sets: list = []
     removed = 0
 
     def _sweep(items):
         nonlocal removed
         kept = []
         for it in (items or []):
-            ident = _item_identity(it)
-            if ident is not None and ident in seen:
+            if not isinstance(it, dict):
+                kept.append(it)
+                continue
+            url = _item_url(it)
+            title = _primary_title(it)
+            toks = _sig_tokens(_item_text(it))
+            if (url and url in seen_urls) or (title and title in seen_titles) \
+                    or _near_dup(toks, seen_tok_sets):
                 removed += 1
                 continue
-            if ident is not None:
-                seen.add(ident)
+            if url:
+                seen_urls.add(url)
+            if title:
+                seen_titles.add(title)
+            if toks:
+                seen_tok_sets.append(toks)
             kept.append(it)
         return kept
 
-    # top_stories and overnight_items first, then trade deals, then the rest
     digest["top_stories"] = _sweep(digest.get("top_stories"))
     digest["overnight_items"] = _sweep(digest.get("overnight_items"))
     trade = digest.get("us_china_trade")
@@ -524,8 +589,105 @@ def _dedupe_sections(digest: dict) -> dict:
         digest[section] = _sweep(digest.get(section))
 
     if removed:
-        print(f"   ✓ Removed {removed} cross-section duplicate item(s)")
+        print(f"   ✓ Removed {removed} within-edition duplicate item(s)")
     return digest
+
+
+# ── Cross-day de-duplication: the "already published" ledger ──────────────────
+
+def _load_ledger() -> list:
+    """Load the rolling published-item ledger (list of {date,url,title}); [] if none."""
+    try:
+        data = json.loads(LEDGER_JSON.read_text(encoding="utf-8"))
+        return data.get("entries", []) if isinstance(data, dict) else []
+    except Exception:
+        return []
+
+
+def _ledger_recent_keys(entries: list, today, window: int = _LEDGER_WINDOW_DAYS):
+    """URLs and titles published within the trailing `window` days."""
+    cutoff = today - timedelta(days=window)
+    urls, titles = set(), set()
+    for e in entries:
+        try:
+            d = datetime.strptime(str(e.get("date", "")), "%Y-%m-%d").date()
+        except Exception:
+            continue
+        if d < cutoff:
+            continue
+        if e.get("url"):
+            urls.add(e["url"])
+        if e.get("title"):
+            titles.add(e["title"])
+    return urls, titles
+
+
+def _dedupe_cross_day(digest: dict, prev_urls: set, prev_titles: set) -> dict:
+    """Drop items already published in a recent edition. Conservative: matches the
+    SAME article URL or an identical headline, so genuine follow-up coverage (a new
+    article advancing the story) still comes through — only literal repeats go."""
+    removed = 0
+
+    def _keep(it) -> bool:
+        nonlocal removed
+        if not isinstance(it, dict):
+            return True
+        u = _item_url(it)
+        t = _primary_title(it)
+        if (u and u in prev_urls) or (t and t in prev_titles):
+            removed += 1
+            return False
+        return True
+
+    for section in _DEDUPE_ORDER:
+        items = digest.get(section)
+        if isinstance(items, list):
+            digest[section] = [it for it in items if _keep(it)]
+    trade = digest.get("us_china_trade")
+    if isinstance(trade, dict) and isinstance(trade.get("deals"), list):
+        trade["deals"] = [it for it in trade["deals"] if _keep(it)]
+
+    if removed:
+        print(f"   ✓ Removed {removed} item(s) already published in the last "
+              f"{_LEDGER_WINDOW_DAYS} days")
+    return digest
+
+
+def _record_ledger(digest: dict, today_iso: str) -> None:
+    """Append this edition's items to the ledger and prune to the rolling window.
+    Called only for real (archived) editions, so test runs don't poison it."""
+    entries = _load_ledger()
+
+    def _add(it):
+        if not isinstance(it, dict):
+            return
+        u, t = _item_url(it), _primary_title(it)
+        if u or t:
+            entries.append({"date": today_iso, "url": u, "title": t})
+
+    for section in _DEDUPE_ORDER:
+        for it in (digest.get(section) or []):
+            _add(it)
+    trade = digest.get("us_china_trade")
+    if isinstance(trade, dict):
+        for it in (trade.get("deals") or []):
+            _add(it)
+
+    try:
+        cutoff = datetime.strptime(today_iso, "%Y-%m-%d").date() - timedelta(days=_LEDGER_WINDOW_DAYS)
+    except Exception:
+        cutoff = None
+    pruned = []
+    for e in entries:
+        try:
+            d = datetime.strptime(str(e.get("date", "")), "%Y-%m-%d").date()
+        except Exception:
+            continue
+        if cutoff is None or d >= cutoff:
+            pruned.append(e)
+    LEDGER_JSON.write_text(json.dumps({"entries": pruned}, ensure_ascii=False, indent=2),
+                           encoding="utf-8")
+    print(f"   ✓ Published-ledger updated ({len(pruned)} entries kept, last {_LEDGER_WINDOW_DAYS}d)")
 
 
 # Recognized Japanese pollsters — only these may appear in approval_polls.
@@ -750,6 +912,10 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── De-duplicate across sections (one article, one section) ─────────
     digest = _dedupe_sections(digest)
+    # ─── De-duplicate across DAYS (drop stories already sent recently) ───
+    today_et = datetime.now(ZoneInfo("America/New_York")).date()
+    _prev_urls, _prev_titles = _ledger_recent_keys(_load_ledger(), today_et)
+    digest = _dedupe_cross_day(digest, _prev_urls, _prev_titles)
     # ─── Polls: authoritative structured figures (Wikipedia fetch → baseline) ─
     digest = _resolve_polls(digest, payload.get("wiki_polls"))
     # ─── Clean approval polls (recognized Japanese pollsters + numeric only)
@@ -793,6 +959,9 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── Archive ─────────────────────────────────────────────────────────
     if not args.no_archive:
         _archive_html(html, digest)
+        # Record what actually went out, so later editions won't repeat it.
+        # Only real (archived) editions update the ledger; test runs don't.
+        _record_ledger(digest, today_et.isoformat())
 
     # ─── Update README ───────────────────────────────────────────────────
     try:

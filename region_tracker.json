@@ -1,20 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-16": {
-      "signals": {
-        "china_signal": "SEED DATA — routine China Coast Guard presence reported in the Senkaku contiguous zone (placeholder; verify against live articles).",
-        "dprk_signal": "SEED DATA — no notable DPRK launch activity reported (placeholder; verify against live articles).",
-        "russia_signal": "SEED DATA — no notable Russian air-sea activity near Japan reported (placeholder; verify against live articles)."
-      },
-      "watch_flag": false
-    },
-    "2026-06-18": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and formally rejected Defense Minister Koizumi's challenge to China's military spending d",
-        "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy; North Korean state media separately touted industrial output exceeding targets."
-      },
-      "watch_flag": false
-    },
     "2026-06-19": {
       "signals": {
         "china_signal": "Chinese Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and China formally rejected Defense Minister Koizumi's challenge to China's officially re",
@@ -324,7 +309,105 @@
         "dprk_signal": "Kim Yo Jong issued a formal statement via KCNA warning that North Korea will 'never remain passive spectators' over Japan's Tomahawk missile test and signaling new unspecified military options — the most senior and explicit DPRK threat linked to Japan's counterstrike operationalization, carried acro"
       },
       "watch_flag": true
+    },
+    "2026-08-06": {
+      "signals": {
+        "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. The sustained backdrop of Chinese diplomatic rebuke over Japan's Tomahawk test, National Intelligence Bureau launch, and 2026 Defense White Paper continues; no new rare-earth or critical-m",
+        "dprk_signal": "North Korea fired a short-range ballistic missile toward the East Sea on August 6, landing outside Japan's EEZ, confirmed by Japan's Defense Ministry, NHK, and South Korea's military. The launch followed Kim Yo Jong's August 5 statement warning of new military options in response to Japan's Tomahawk",
+        "russia_signal": "No new Russian Northern Territories air-sea incursion or Hokkaido-area military activity is reported in today's feed. The prior baseline — Russia's island-renaming provocation and airspace violation over Northern Territories-claimed islands reported July 25 — remains the most recent acute incident. "
+      },
+      "watch_flag": true
+    },
+    "2026-08-07": {
+      "signals": {
+        "china_signal": "China's foreign ministry lodged 'serious representations' with Japan over the 2026 Defense White Paper, with CGTN and Global Times running coordinated messaging urging Japan to 'reflect on history and stop military expansion.' No new Senkaku CCG intrusion or PLA aerial incursion is reported in today",
+        "dprk_signal": "North Korea fired at least one short-range ballistic missile toward the East Sea on August 7 — the 81st Hiroshima anniversary — its first ballistic launch since April, landing outside Japan's EEZ with no damage confirmed in Japan; North Korea's state media was silent on the launch, and the US stated"
+      },
+      "watch_flag": true
+    },
+    "2026-08-08": {
+      "signals": {
+        "china_signal": "China's foreign ministry issued a formal statement deploring Japan's 2026 Defence White Paper, maintaining a sustained diplomatic pressure campaign. Separately, Nikkei Asia reports China's rare-earth exports to Japan and the United States plunged after Beijing imposed export restrictions — the most ",
+        "dprk_signal": "North Korea fired at least one short-range ballistic missile from the Wonsan area toward the Sea of Japan on August 7 — its first ballistic launch since April — landing outside Japan's EEZ with no damage in Japan confirmed; DPRK state media remained silent, and the launch came days before scheduled "
+      },
+      "watch_flag": true
+    },
+    "2026-08-09": {
+      "signals": {
+        "china_signal": "China's foreign ministry sustained its diplomatic pressure campaign against Japan over the 2026 Defense White Paper, per the tracker baseline. Separately, Nikkei Asia reports Chinese rare-earth exports to Japan and the United States plunged following Beijing's export restrictions — the most direct e",
+        "dprk_signal": "North Korea fired a short-range ballistic missile from Wonsan toward the Sea of Japan on August 7 — its first ballistic launch since April — landing outside Japan's EEZ; Japan lodged a formal protest. North Korean state media escalated daily criticism of Japan and specifically targeted US-Japan-ROK "
+      },
+      "watch_flag": false
+    },
+    "2026-08-10": {
+      "signals": {
+        "china_signal": "China's foreign ministry sustained its diplomatic pressure on Japan over WWII references, per a New Age BD report sourced to the China MOFA. Separately, Nikkei Asia confirmed Chinese rare-earth exports to Japan and the United States plunged following Beijing's export restrictions — the most direct s",
+        "dprk_signal": "North Korea is escalating daily criticism of Japan and monitoring US-Japan-ROK trilateral cooperation, per Korean media. US-ROK combined exercises are set to begin next week, a development that in prior years has coincided with elevated DPRK provocations; the August 7 DPRK ballistic missile launch i"
+      },
+      "watch_flag": false
+    },
+    "2026-08-11": {
+      "signals": {
+        "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed; the Tier 4 China MOFA item concerns India-China territorial dispute, not Japan. Nikkei Asia's commentary piece notes Beijing's sustained Japan-bashing is framed as indirectly targeting Was",
+        "dprk_signal": "North Korea condemned Japan's 2026 Defense White Paper as a 're-invasion paper' per The Straits Times; separately, Tech Times reports North Korean missile crews are embedded in a Russian military brigade gaining combat ballistic missile launch experience — a capability-transfer signal with direct re"
+      },
+      "watch_flag": false
+    },
+    "2026-08-12": {
+      "signals": {
+        "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. China's approval of Japan's Chongqing consul general after an eight-month vacancy represents a discrete consular normalization step, running counter to the broader bilateral friction backd",
+        "dprk_signal": "North Korea launched a ballistic missile toward the Sea of Japan on August 12 — its second in six days — reaching approximately 56 miles altitude before falling west of Hokkaido outside Japan's EEZ; Japan lodged a formal protest and South Korea, the US, and Japan jointly called on Pyongyang to halt "
+      },
+      "watch_flag": true
+    },
+    "2026-08-13": {
+      "signals": {
+        "china_signal": "Japan filled an eight-month consular vacancy in Chongqing — a discrete bilateral normalization step — while the ongoing backdrop of Chinese rare-earth export restrictions bearing on Japan-US supply chains continues; no new acute PLA aerial incursion or China Coast Guard intrusion near the Senkakus i",
+        "dprk_signal": "North Korea launched a ballistic missile on August 12 — its second in less than a week and 11th of 2026 — reaching approximately 56 miles altitude before falling west of Hokkaido outside Japan's EEZ; Japan and South Korea filed formal protests, with the launch timed days before the start of major US",
+        "russia_signal": "Russian President Putin made his first-ever personal visit to Etorofu island in the Japan-claimed Northern Territories, asserting Russian sovereignty; PM Takaichi called the visit 'absolutely unacceptable' and Japan lodged a formal diplomatic protest, with Putin also sampling local fish roe and fram"
+      },
+      "watch_flag": true
+    },
+    "2026-08-14": {
+      "signals": {
+        "china_signal": "Japan's Self-Defense Forces intercepted a Chinese spy plane near Okinawa, per The Defence Blog — the most acute China military signal in today's feed. No new China Coast Guard intrusion into Senkaku territorial waters was reported in today's articles.",
+        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises and vowed stronger nuclear deterrence; multiple outlets report North Korea fired ballistic missiles in the lead-up period, with Pyongyang declaring it must possess the capability to make enemy 'survival impossible.' T",
+        "russia_signal": "Putin made his first-ever personal visit to Etorofu island (Iturup) in the Japan-claimed Northern Territories on August 13, asserting Russian sovereignty; PM Takaichi called the visit 'absolutely unacceptable,' Foreign Minister Motegi summoned Russian Ambassador Nikolay Nozdrev, and Tokyo opened a r"
+      },
+      "watch_flag": true
+    },
+    "2026-08-15": {
+      "signals": {
+        "china_signal": "China's MOFA and state media lodged formal protests against both PM Takaichi's Yasukuni offering and Defense Minister Koizumi's shrine visit, with CGTN and Xinhua characterizing the actions as 'negative moves.' China also expressed support for Russia's position on the Kuril Islands. Japan separately",
+        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises and vowed stronger nuclear deterrence, per KCNA-sourced reporting; The Diplomat reports a new 700-km ballistic missile test amid sustained escalatory rhetoric specifically targeting Japan and the trilateral alliance f",
+        "russia_signal": "Putin's first-ever personal visit to Etorofu island in the Japan-claimed Northern Territories continues to dominate the Russia-Japan signal; Russia has formally rejected Japan's protest and sovereignty claims, former Security Council chair Medvedev threatened Japan with 'terrible consequences,' and "
+      },
+      "watch_flag": true
+    },
+    "2026-08-16": {
+      "signals": {
+        "china_signal": "China's Defense Ministry spokesperson, CGTN, Global Times, and the Chinese embassy all issued formal protests against Defense Minister Koizumi's physical Yasukuni visit and Takaichi's ritual offering, with Beijing's embassy calling the moves a 'serious challenge to the postwar international order.' ",
+        "dprk_signal": "North Korea formally warned that US-South Korea combined military exercises push the world 'closer to nuclear war,' and Putin stated via KCNA that Russia and North Korea are coordinating on regional security — a compound signal combining DPRK rhetorical escalation with explicit Russia-DPRK security ",
+        "russia_signal": "Russia formally rejected Japan's diplomatic protest over Putin's Etorofu visit; China publicly sided with Russia; and the US reaffirmed its support for Japan's sovereignty position over the Northern Territories — consolidating a Russia-China axis against Japan's territorial claim while Washington pr"
+      },
+      "watch_flag": false
+    },
+    "2026-08-17": {
+      "signals": {
+        "china_signal": "China and South Korea issued formal diplomatic protests over Japanese ministers' Yasukuni visits following the August 15-16 events; China's Foreign Ministry separately expressed 'strong dissatisfaction and opposition' to a US-Japan joint statement, condemning it for 'tarnishing China's reputation.' ",
+        "dprk_signal": "Gulf Times publishes an analysis of North Korea's escalating criticism of Japan; Tempo.co reports North Korean troops are reinforcing Russian forces in Ukraine — DPRK-Russia military integration that compounds the dual-threat vector Japan faces from both actors simultaneously.",
+        "russia_signal": "No new acute Russian territorial or military incident near Japan reported in today's Tier 4 feed; the DPRK-Russia military coordination signal (North Korean troops to Ukraine) is the most current Russia-adjacent item bearing indirectly on Japan's Northern Territories diplomatic posture."
+      },
+      "watch_flag": false
+    },
+    "2026-08-18": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry condemned PM Takaichi's WWII memorial address as blurring 'Japan's responsibility for its acts of aggression' and called on Japanese politicians to make a 'clean break with militarism'; Beijing separately expressed 'strong dissatisfaction and opposition' to a US-Japan joint ",
+        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises and vowed stronger nuclear deterrence; additional DPRK troops are being dispatched to reinforce Russian forces in Ukraine, deepening a military integration that provides North Korean ballistic missile crews with live-",
+        "russia_signal": "Russia summoned Japan's ambassador in Moscow on August 18 as the diplomatic standoff over Putin's first-ever personal visit to Etorofu island continued to escalate; Moscow rejected Japan's protest and asserted Japan is making unfounded territorial claims, while Tokyo keeps additional sanctions and a"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-05T11:56:17.880394+00:00"
+  "last_updated": "2026-08-18T10:20:29.464744+00:00"
 }

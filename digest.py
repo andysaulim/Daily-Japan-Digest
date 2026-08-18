@@ -129,6 +129,8 @@ DEDUPLICATION — CRITICAL (ZERO TOLERANCE):
 
 - Pick the BEST source for each topic and place it in the HIGHEST appropriate section.
 
+- ACROSS SECTIONS AND TRACKERS: a single event gets ONE placement only. If a government action is itemized in the Japanese Government tracker (prc_government) or Personnel Changes, do NOT also list it as a separate item elsewhere (Top Stories, Overnight, Regional Pressure Watch, Op-Eds) — e.g., a new consular-post appointment belongs in EITHER the MOFA tracker OR Personnel Changes, not both, and should not be re-itemized in the Regional Pressure Watch narrative. The narrative sections may reference an event for context but must not repeat it as a discrete headline entry.
+
 - LIFESTYLE / ENTERTAINMENT — HARD BLOCK: NEVER include J-pop, idol/celebrity, anime-only, fashion, or cultural-only content in any section. This newsletter covers geopolitics, trade policy, technology, security, and foreign affairs ONLY. Cultural content qualifies ONLY if it has a clear policy or security implication.
 
 - CATEGORIES: Valid categories for top_stories are: Alliance, China-Japan, Korea-Japan, DPRK, Economy/BOJ, Politics/Diet, Defense, Technology, Indo-Pacific, Energy.
