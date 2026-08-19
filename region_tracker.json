@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-19": {
-      "signals": {
-        "china_signal": "Chinese Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and China formally rejected Defense Minister Koizumi's challenge to China's officially re",
-        "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy reporting on June 18-19."
-      },
-      "watch_flag": false
-    },
     "2026-06-20": {
       "signals": {
         "china_signal": "China's foreign ministry rebuked US deterrence consultations with South Korea and Japan, calling trilateral coordination destabilizing; Beijing separately maintained criticism of PM Takaichi's G7 Evian rare-earth remarks as 'stoking confrontation.' China's key mineral exports to Japan stayed at low "
@@ -407,7 +400,15 @@
         "russia_signal": "Russia summoned Japan's ambassador in Moscow on August 18 as the diplomatic standoff over Putin's first-ever personal visit to Etorofu island continued to escalate; Moscow rejected Japan's protest and asserted Japan is making unfounded territorial claims, while Tokyo keeps additional sanctions and a"
       },
       "watch_flag": false
+    },
+    "2026-08-19": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson, cited by Global Times, Xinhua, and CGTN, condemned PM Takaichi's WWII memorial address for 'blurring Japan's responsibility for its acts of aggression' and called on the international community to 'jointly resist and stop dangerous moves by Japan's right-wing f",
+        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises via KCNA and vowed stronger nuclear deterrence; Defense Minister Koizumi separately urged vigilance and called US-ROK cooperation 'critical' for Japan's security, while the Japan Times reports Trump's DPRK diplomatic ",
+        "russia_signal": "Russia summoned Japan's ambassador in Moscow over PM Takaichi's 'anti-Russian' remarks and formally rejected US backing for Japan's Northern Territories position; Russian Foreign Ministry spokesperson Zakharova responded directly to the US statement, and Russia lodged a formal protest with Japan's a"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-18T10:20:29.464744+00:00"
+  "last_updated": "2026-08-19T10:21:47.800922+00:00"
 }
