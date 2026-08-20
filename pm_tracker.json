@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-20",
+      "activity": "PM Takaichi called US sanctions on ICC President Tomoko Akane 'very unfortunate' per Kyodo News, and her office coordinated Japan's response to the Russian summons of Japan's ambassador in Moscow.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-20T10:22:14.850419+00:00"
+    },
+    {
       "date": "2026-08-19",
       "activity": "PM Takaichi pledged a government aid package for quake-hit Kumamoto Prefecture, receiving requests from the Kumamoto governor and others at the Prime Minister's Office; she also remained active on social media per Jiji Press.",
       "source": "digest",
@@ -344,5 +351,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-19T10:21:47.800156+00:00"
+  "last_updated": "2026-08-20T10:22:14.850468+00:00"
 }

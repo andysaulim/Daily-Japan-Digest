@@ -1,11 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-20": {
-      "signals": {
-        "china_signal": "China's foreign ministry rebuked US deterrence consultations with South Korea and Japan, calling trilateral coordination destabilizing; Beijing separately maintained criticism of PM Takaichi's G7 Evian rare-earth remarks as 'stoking confrontation.' China's key mineral exports to Japan stayed at low "
-      },
-      "watch_flag": false
-    },
     "2026-06-21": {
       "signals": {
         "china_signal": "China's foreign ministry publicly rebuked US deterrence consultations with South Korea and Japan, characterizing trilateral coordination as destabilizing — a continuation of Beijing's post-G7 Evian criticism of Japan's rare-earth and security messaging.",
@@ -408,7 +402,15 @@
         "russia_signal": "Russia summoned Japan's ambassador in Moscow over PM Takaichi's 'anti-Russian' remarks and formally rejected US backing for Japan's Northern Territories position; Russian Foreign Ministry spokesperson Zakharova responded directly to the US statement, and Russia lodged a formal protest with Japan's a"
       },
       "watch_flag": false
+    },
+    "2026-08-20": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson publicly aligned with Russian Foreign Minister Lavrov's remarks on Japan per Xinhua, and CGTN reported China's call for international 'vigilance against Japan's right-wing forces' — deepening the China-Russia joint posture against Tokyo across both the Northern ",
+        "dprk_signal": "North Korea fired approximately 10 short-range ballistic missiles from the Pyongyang area toward the Sea of Japan on August 20, hours after President Trump announced plans to meet Kim Jong Un later this year; Japan's Defense Ministry confirmed the launches, which landed outside Japan's EEZ, and Defe",
+        "russia_signal": "Russia summoned Japan's ambassador in Moscow, rejected US backing for Japan's Northern Territories position (Russian MFA spokesperson Zakharova responding directly to the US statement), and China publicly aligned with Moscow's position — a continuation of the diplomatic escalation triggered by Putin"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-19T10:21:47.800922+00:00"
+  "last_updated": "2026-08-20T10:22:14.851280+00:00"
 }
