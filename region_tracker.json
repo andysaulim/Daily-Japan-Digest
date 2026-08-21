@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-21": {
-      "signals": {
-        "china_signal": "China's foreign ministry publicly rebuked US deterrence consultations with South Korea and Japan, characterizing trilateral coordination as destabilizing — a continuation of Beijing's post-G7 Evian criticism of Japan's rare-earth and security messaging.",
-        "dprk_signal": "Ukrainian military assessments indicate North Korean ballistic missiles deployed by Russia have shown improved accuracy, per Kyodo News — a technical development relevant to Japan's missile defense planning and DPRK program tracking."
-      },
-      "watch_flag": false
-    },
     "2026-06-22": {
       "signals": {
         "china_signal": "China's foreign ministry, via Xinhua, characterized Japan's defense buildup as a 'retrogression' and 'path of no return' — its sharpest formulation to date — while separately urging Japan to conduct 'soul-searching' over a wartime atrocity report, per Global Times. Both statements coincide with the "
@@ -410,7 +403,15 @@
         "russia_signal": "Russia summoned Japan's ambassador in Moscow, rejected US backing for Japan's Northern Territories position (Russian MFA spokesperson Zakharova responding directly to the US statement), and China publicly aligned with Moscow's position — a continuation of the diplomatic escalation triggered by Putin"
       },
       "watch_flag": true
+    },
+    "2026-08-21": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson publicly aligned with Russian Foreign Minister Lavrov's remarks on Japan, and CGTN continued to call for international 'vigilance against Japan's right-wing forces,' sustaining the China-Russia joint posture against Tokyo. A separate China MOFA message urged Jap",
+        "dprk_signal": "North Korea launched approximately 10-12 short-range ballistic missiles from the Pyongyang area toward the Sea of Japan on August 20, hours after Trump announced plans to meet Kim Jong Un and a day after Washington curtailed US-ROK drills; the launches landed outside Japan's EEZ and Japan filed a fo",
+        "russia_signal": "Russia's Pacific Fleet fired Bastion surface-to-ship missiles from Etorofu on August 21, the first live-fire drill launched from the disputed island itself, hitting all targets approximately 300km away; Foreign Minister Motegi issued a formal protest calling the military buildup unacceptable."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-20T10:22:14.851280+00:00"
+  "last_updated": "2026-08-21T10:22:09.637501+00:00"
 }

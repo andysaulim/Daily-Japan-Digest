@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-21",
+      "activity": "PM Takaichi held an inaugural telephone call with UK Prime Minister Burnham, agreeing to promote bilateral security ties, with her office issuing a formal press conference readout.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-21T10:22:09.636617+00:00"
+    },
+    {
       "date": "2026-08-20",
       "activity": "PM Takaichi called US sanctions on ICC President Tomoko Akane 'very unfortunate' per Kyodo News, and her office coordinated Japan's response to the Russian summons of Japan's ambassador in Moscow.",
       "source": "digest",
@@ -351,5 +358,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-20T10:22:14.850468+00:00"
+  "last_updated": "2026-08-21T10:22:09.636665+00:00"
 }
