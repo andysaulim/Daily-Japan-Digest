@@ -1,11 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-22": {
-      "signals": {
-        "china_signal": "China's foreign ministry, via Xinhua, characterized Japan's defense buildup as a 'retrogression' and 'path of no return' — its sharpest formulation to date — while separately urging Japan to conduct 'soul-searching' over a wartime atrocity report, per Global Times. Both statements coincide with the "
-      },
-      "watch_flag": false
-    },
     "2026-06-23": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 regular press conference called on the international community to remain vigilant against Japan's 'neo-militarism,' criticized expanding Japan-Ukraine military cooperation as destabilizing, and separately urged Japan to conduct 'serious",
@@ -411,7 +405,15 @@
         "russia_signal": "Russia's Pacific Fleet fired Bastion surface-to-ship missiles from Etorofu on August 21, the first live-fire drill launched from the disputed island itself, hitting all targets approximately 300km away; Foreign Minister Motegi issued a formal protest calling the military buildup unacceptable."
       },
       "watch_flag": true
+    },
+    "2026-08-22": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via spokesperson Lin Jian and state media CGTN and Global Times, urged Japan's leaders to heed calls from ruling and opposition lawmakers for improving bilateral ties. No new Senkaku incident or rare-earth measure reported today.",
+        "dprk_signal": "North Korea launched roughly 10 short-range ballistic missiles from the Pyongyang area toward the Sea of Japan a day after Washington curtailed US-ROK drills; the launches landed outside Japan's EEZ, Takaichi's office issued an emergency alert, and Japan filed a formal protest. Pyongyang denounced J",
+        "russia_signal": "Foreign Minister Motegi issued a formal protest calling Russia's military buildup in the Northern Territories unacceptable following Russian missile activity near the Kuril Islands after Japan's protest over Putin's Etorofu visit."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-08-21T10:22:09.637501+00:00"
+  "last_updated": "2026-08-22T10:24:18.796836+00:00"
 }
