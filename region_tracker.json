@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-23": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 regular press conference called on the international community to remain vigilant against Japan's 'neo-militarism,' criticized expanding Japan-Ukraine military cooperation as destabilizing, and separately urged Japan to conduct 'serious",
-        "dprk_signal": "North Korea tested a new multi-purpose missile launch system per KCNA, and Kim Jong Un publicly asserted the country will exercise its position as a nuclear state while warning of nuclear war risk and vowing faster defense buildup. Mainichi separately reported Kim characterized Japan as turning into"
-      },
-      "watch_flag": false
-    },
     "2026-06-24": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 press conference called on the international community to remain vigilant against Japan's 'neo-militarism' and characterized Japan's remilitarization as a 'retrogression' and 'path of no return.' Simultaneously, Beijing detained two Jap",
@@ -413,7 +406,15 @@
         "russia_signal": "Foreign Minister Motegi issued a formal protest calling Russia's military buildup in the Northern Territories unacceptable following Russian missile activity near the Kuril Islands after Japan's protest over Putin's Etorofu visit."
       },
       "watch_flag": true
+    },
+    "2026-08-23": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Lin Jian held a regular press conference on August 21 addressing Japan-related topics; separately, China formalized 'war criminals shrine' as its official state designation for Yasukuni Shrine per The Straits Times, marking a rhetorical escalation sustained from",
+        "dprk_signal": "North Korea formally denounced Japan's $56 billion record defense budget as 'extremely dangerous expansion of war spending' and threatened a counterattack; the US, Japan, and South Korea convened trilateral consultations urging Pyongyang to halt provocations following the August 20 multi-missile lau",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported in today's Tier 4 or Tier 1 feed beyond the sustained diplomatic standoff over Putin's Etorofu visit and Russia's Pacific Fleet Bastion missile drill from the island on August 21."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-22T10:24:18.796836+00:00"
+  "last_updated": "2026-08-23T10:14:54.077766+00:00"
 }
