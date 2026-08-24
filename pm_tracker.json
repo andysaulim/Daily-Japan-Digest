@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-24",
+      "activity": "Chief Cabinet Secretary Kihara held the regular morning press conference on August 24; Japan reiterated support for US-sanctioned ICC President Tomoko Akane.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-24T10:29:52.134496+00:00"
+    },
+    {
       "date": "2026-08-22",
       "activity": "Takaichi held her inaugural telephone call with UK PM Burnham, agreeing to promote bilateral security ties, per a PM's office readout.",
       "source": "digest",
@@ -365,5 +372,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-22T10:24:18.796233+00:00"
+  "last_updated": "2026-08-24T10:29:52.134540+00:00"
 }

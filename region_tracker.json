@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-24": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 press conference called on the international community to remain vigilant against Japan's 'neo-militarism' and characterized Japan's remilitarization as a 'retrogression' and 'path of no return.' Simultaneously, Beijing detained two Jap",
-        "dprk_signal": "Kim Jong Un asserted North Korea will exercise its nuclear state status and warned of nuclear war risk while vowing faster defense buildup; North Korea separately commissioned its largest-ever warship, per Reuters, Türkiye Today, and Egypt Independent."
-      },
-      "watch_flag": false
-    },
     "2026-06-26": {
       "signals": {
         "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — a message framed around the ongoing rare-earth export restrictions and the Fuji Electric worker detentions. China simultaneously defended patrols east of Taiwan and rej",
@@ -414,7 +407,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident reported in today's Tier 4 or Tier 1 feed beyond the sustained diplomatic standoff over Putin's Etorofu visit and Russia's Pacific Fleet Bastion missile drill from the island on August 21."
       },
       "watch_flag": false
+    },
+    "2026-08-24": {
+      "signals": {
+        "china_signal": "China formally adopted 'war criminals shrine' as its official state designation for Yasukuni Shrine, per The Straits Times, sharpening Beijing's rhetorical posture against Japan in a sustained escalation from the August 15-16 ministerial visits. China's Foreign Ministry continued to use the Japan-Be",
+        "dprk_signal": "No new DPRK missile launch or KCNA statement targeting Japan reported in today's Tier 1 or Tier 4 feed; the most recent signal remains the August 20-22 multi-missile launches from the Pyongyang area toward the Sea of Japan, all landing outside Japan's EEZ, with US-Japan-ROK trilateral consultations ",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the island continues as the baseline, with Japan's ambassador summons and Tokyo's sanctions deliberations unre"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-23T10:14:54.077766+00:00"
+  "last_updated": "2026-08-24T10:29:52.135324+00:00"
 }
