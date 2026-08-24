@@ -1,45 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-19": {
-      "signals": {
-        "china_signal": "Chinese Foreign Ministry spokesperson Lin Jian at the June 18 press conference accused PM Takaichi of contradicting herself by calling for dialogue while 'stoking confrontation' through G7 rare earth messaging, and China formally rejected Defense Minister Koizumi's challenge to China's officially re",
-        "dprk_signal": "Kim Yo Jong rejected the G7 Evian Summit's denuclearization call and defended North Korea's nuclear status as non-negotiable, per Modern Diplomacy reporting on June 18-19."
-      },
-      "watch_flag": false
-    },
-    "2026-06-20": {
-      "signals": {
-        "china_signal": "China's foreign ministry rebuked US deterrence consultations with South Korea and Japan, calling trilateral coordination destabilizing; Beijing separately maintained criticism of PM Takaichi's G7 Evian rare-earth remarks as 'stoking confrontation.' China's key mineral exports to Japan stayed at low "
-      },
-      "watch_flag": false
-    },
-    "2026-06-21": {
-      "signals": {
-        "china_signal": "China's foreign ministry publicly rebuked US deterrence consultations with South Korea and Japan, characterizing trilateral coordination as destabilizing — a continuation of Beijing's post-G7 Evian criticism of Japan's rare-earth and security messaging.",
-        "dprk_signal": "Ukrainian military assessments indicate North Korean ballistic missiles deployed by Russia have shown improved accuracy, per Kyodo News — a technical development relevant to Japan's missile defense planning and DPRK program tracking."
-      },
-      "watch_flag": false
-    },
-    "2026-06-22": {
-      "signals": {
-        "china_signal": "China's foreign ministry, via Xinhua, characterized Japan's defense buildup as a 'retrogression' and 'path of no return' — its sharpest formulation to date — while separately urging Japan to conduct 'soul-searching' over a wartime atrocity report, per Global Times. Both statements coincide with the "
-      },
-      "watch_flag": false
-    },
-    "2026-06-23": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 regular press conference called on the international community to remain vigilant against Japan's 'neo-militarism,' criticized expanding Japan-Ukraine military cooperation as destabilizing, and separately urged Japan to conduct 'serious",
-        "dprk_signal": "North Korea tested a new multi-purpose missile launch system per KCNA, and Kim Jong Un publicly asserted the country will exercise its position as a nuclear state while warning of nuclear war risk and vowing faster defense buildup. Mainichi separately reported Kim characterized Japan as turning into"
-      },
-      "watch_flag": false
-    },
-    "2026-06-24": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun at the June 23 press conference called on the international community to remain vigilant against Japan's 'neo-militarism' and characterized Japan's remilitarization as a 'retrogression' and 'path of no return.' Simultaneously, Beijing detained two Jap",
-        "dprk_signal": "Kim Jong Un asserted North Korea will exercise its nuclear state status and warned of nuclear war risk while vowing faster defense buildup; North Korea separately commissioned its largest-ever warship, per Reuters, Türkiye Today, and Egypt Independent."
-      },
-      "watch_flag": false
-    },
     "2026-06-26": {
       "signals": {
         "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — a message framed around the ongoing rare-earth export restrictions and the Fuji Electric worker detentions. China simultaneously defended patrols east of Taiwan and rej",
@@ -407,7 +367,55 @@
         "russia_signal": "Russia summoned Japan's ambassador in Moscow on August 18 as the diplomatic standoff over Putin's first-ever personal visit to Etorofu island continued to escalate; Moscow rejected Japan's protest and asserted Japan is making unfounded territorial claims, while Tokyo keeps additional sanctions and a"
       },
       "watch_flag": false
+    },
+    "2026-08-19": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson, cited by Global Times, Xinhua, and CGTN, condemned PM Takaichi's WWII memorial address for 'blurring Japan's responsibility for its acts of aggression' and called on the international community to 'jointly resist and stop dangerous moves by Japan's right-wing f",
+        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises via KCNA and vowed stronger nuclear deterrence; Defense Minister Koizumi separately urged vigilance and called US-ROK cooperation 'critical' for Japan's security, while the Japan Times reports Trump's DPRK diplomatic ",
+        "russia_signal": "Russia summoned Japan's ambassador in Moscow over PM Takaichi's 'anti-Russian' remarks and formally rejected US backing for Japan's Northern Territories position; Russian Foreign Ministry spokesperson Zakharova responded directly to the US statement, and Russia lodged a formal protest with Japan's a"
+      },
+      "watch_flag": false
+    },
+    "2026-08-20": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson publicly aligned with Russian Foreign Minister Lavrov's remarks on Japan per Xinhua, and CGTN reported China's call for international 'vigilance against Japan's right-wing forces' — deepening the China-Russia joint posture against Tokyo across both the Northern ",
+        "dprk_signal": "North Korea fired approximately 10 short-range ballistic missiles from the Pyongyang area toward the Sea of Japan on August 20, hours after President Trump announced plans to meet Kim Jong Un later this year; Japan's Defense Ministry confirmed the launches, which landed outside Japan's EEZ, and Defe",
+        "russia_signal": "Russia summoned Japan's ambassador in Moscow, rejected US backing for Japan's Northern Territories position (Russian MFA spokesperson Zakharova responding directly to the US statement), and China publicly aligned with Moscow's position — a continuation of the diplomatic escalation triggered by Putin"
+      },
+      "watch_flag": true
+    },
+    "2026-08-21": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson publicly aligned with Russian Foreign Minister Lavrov's remarks on Japan, and CGTN continued to call for international 'vigilance against Japan's right-wing forces,' sustaining the China-Russia joint posture against Tokyo. A separate China MOFA message urged Jap",
+        "dprk_signal": "North Korea launched approximately 10-12 short-range ballistic missiles from the Pyongyang area toward the Sea of Japan on August 20, hours after Trump announced plans to meet Kim Jong Un and a day after Washington curtailed US-ROK drills; the launches landed outside Japan's EEZ and Japan filed a fo",
+        "russia_signal": "Russia's Pacific Fleet fired Bastion surface-to-ship missiles from Etorofu on August 21, the first live-fire drill launched from the disputed island itself, hitting all targets approximately 300km away; Foreign Minister Motegi issued a formal protest calling the military buildup unacceptable."
+      },
+      "watch_flag": true
+    },
+    "2026-08-22": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via spokesperson Lin Jian and state media CGTN and Global Times, urged Japan's leaders to heed calls from ruling and opposition lawmakers for improving bilateral ties. No new Senkaku incident or rare-earth measure reported today.",
+        "dprk_signal": "North Korea launched roughly 10 short-range ballistic missiles from the Pyongyang area toward the Sea of Japan a day after Washington curtailed US-ROK drills; the launches landed outside Japan's EEZ, Takaichi's office issued an emergency alert, and Japan filed a formal protest. Pyongyang denounced J",
+        "russia_signal": "Foreign Minister Motegi issued a formal protest calling Russia's military buildup in the Northern Territories unacceptable following Russian missile activity near the Kuril Islands after Japan's protest over Putin's Etorofu visit."
+      },
+      "watch_flag": true
+    },
+    "2026-08-23": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Lin Jian held a regular press conference on August 21 addressing Japan-related topics; separately, China formalized 'war criminals shrine' as its official state designation for Yasukuni Shrine per The Straits Times, marking a rhetorical escalation sustained from",
+        "dprk_signal": "North Korea formally denounced Japan's $56 billion record defense budget as 'extremely dangerous expansion of war spending' and threatened a counterattack; the US, Japan, and South Korea convened trilateral consultations urging Pyongyang to halt provocations following the August 20 multi-missile lau",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported in today's Tier 4 or Tier 1 feed beyond the sustained diplomatic standoff over Putin's Etorofu visit and Russia's Pacific Fleet Bastion missile drill from the island on August 21."
+      },
+      "watch_flag": false
+    },
+    "2026-08-24": {
+      "signals": {
+        "china_signal": "China formally adopted 'war criminals shrine' as its official state designation for Yasukuni Shrine, per The Straits Times, sharpening Beijing's rhetorical posture against Japan in a sustained escalation from the August 15-16 ministerial visits. China's Foreign Ministry continued to use the Japan-Be",
+        "dprk_signal": "No new DPRK missile launch or KCNA statement targeting Japan reported in today's Tier 1 or Tier 4 feed; the most recent signal remains the August 20-22 multi-missile launches from the Pyongyang area toward the Sea of Japan, all landing outside Japan's EEZ, with US-Japan-ROK trilateral consultations ",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the island continues as the baseline, with Japan's ambassador summons and Tokyo's sanctions deliberations unre"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-18T10:20:29.464744+00:00"
+  "last_updated": "2026-08-24T10:29:52.135324+00:00"
 }
