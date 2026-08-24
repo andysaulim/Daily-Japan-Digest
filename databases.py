@@ -62,6 +62,33 @@ RECENT_APPROVAL_POLLS = [
 ]
 
 
+# AUTHORITATIVE "US Tariffs on Japan" reference figures. run.py forces the digest's
+# tariff_tracker to these values, OVERRIDING the model — which repeatedly carried
+# stale tariff facts forward (an expired Section 122 surcharge showed for a month).
+# These are the ONLY source of truth for the tariff box; the model can still add
+# day-specific `deals`, `last_change`, and `next_trigger`. UPDATE this block when
+# US tariff policy toward Japan changes — that is the single place to edit.
+#
+# Current as of 2026-08 (verify each ~quarterly):
+#   • Autos: 15% incl. MFN under the 2025 US-Japan agreement.
+#   • Section 232 steel & aluminum: 50%.
+#   • Section 122 surcharge: EXPIRED July 24, 2026 (150-day statutory limit) → None.
+#   • Section 301 forced-labor tariff: 12.5% IN FORCE since July 24, 2026 (net of MFN).
+#   • Section 301 excess-capacity investigation: ONGOING (no final determination).
+#   • $550B strategic investment framework (2025 agreement).
+TARIFF_FACTS = {
+    "headline_auto_rate": "15% (incl. MFN, 2025 agreement)",
+    "section_232_rates": {"steel": "50%", "aluminum": "50%"},
+    "section_122_surcharge": None,   # expired Jul 24, 2026 — do not display
+    "section_301": "12.5% forced-labor tariff in force since Jul 24, 2026 (net of MFN); "
+                   "excess-capacity investigation ongoing",
+    "investment_framework": "$550B strategic investment framework (2025 agreement)",
+    "trade_deal_status": "2025 US-Japan agreement in force",
+    "next_trigger": None,   # clear stale triggers (e.g. the expired Section 122 date)
+}
+TARIFF_FACTS_ASOF = "2026-08"
+
+
 def build_db_context(max_chars: int = 4000) -> str:
     """Build a textual reference-context block for the digest LLM prompt."""
     blocks = []
