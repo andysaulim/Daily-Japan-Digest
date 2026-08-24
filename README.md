@@ -72,7 +72,7 @@ collect.py          digest.py           render.py          send_email.py
 | 10 | Public Sentiment | Cabinet approval & party support (NHK/Jiji/Yomiuri/Asahi/Kyodo, same-poll rule) |
 | 11 | Social Statements | Quotes from the PM, ministers, BOJ Governor, US/allied officials |
 | 12 | Japanese Government | Kantei, Cabinet Sec, MOFA, MOD/Joint Staff, METI, MOF, BOJ + Personnel + Diet Sessions/LDP + Calendar |
-| 13 | US–Japan Alliance & Trade | Section 232 autos/steel, Section 122, trade-deal status, alliance dashboard (Article 5, defense spending, HNS, USFJ) |
+| 13 | US–Japan Alliance & Trade | Section 232 autos/steel, Section 301 (forced-labor tariff in force, excess-capacity probe), $550B investment framework, trade-deal status, new deals |
 | 14 | Diet Watch | House of Representatives / House of Councillors, key bills, budget |
 | 15 | Business & Economy | Major corporates, semiconductors (Rapidus, JASM), macro indicators |
 | 16 | Indo-Pacific | China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan |

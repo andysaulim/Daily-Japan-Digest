@@ -655,7 +655,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             deal = _esc(str(tt.get("trade_deal_status", "")))
             lc = _esc(str(tt.get("last_change", "")))
             nt = _esc(str(tt.get("next_trigger", "")))
-            s301 = _esc(str(tt.get("section_301_watch", "") or ""))
+            s301 = _esc(str(tt.get("section_301", tt.get("section_301_watch", "")) or ""))
             invf = _esc(str(tt.get("investment_framework", "") or ""))
             s232 = tt.get("section_232_rates", {})
             # Headline numbers → clean navy metric strip (readable, one accent)
@@ -682,8 +682,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             il = (f'<div style="margin-top:6px;font-size:12px;line-height:1.5;color:#333;">'
                   f'<strong style="color:{NAVY};">Investment framework:</strong> {invf}</div>') if invf else ""
             s3l = (f'<div style="margin-top:6px;font-size:12px;line-height:1.5;color:#333;">'
-                   f'<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:0.5px;color:#fff;background:{HINOMARU_RED};margin-right:6px;">PROPOSED</span>'
-                   f'<strong style="color:{NAVY};">Section 301 watch:</strong> {s301}</div>') if s301 else ""
+                   f'<strong style="color:{NAVY};">Section 301:</strong> {s301}</div>') if s301 else ""
             meta_parts = [x for x in ((("Deal: " + deal) if deal else ""),
                                       (("Next: " + nt) if nt else ""), lc) if x]
             meta_line = (f'<div style="margin-top:10px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">'
@@ -697,26 +696,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 {meta_line}
 </div>"""
 
-        al = trade.get("alliance_tracker") or {}
-        if al:
-            ds_goal = _esc(str(al.get("defense_spending_goal", "")))
-            art5 = _esc(str(al.get("article5_senkaku", "")))
-            hns = _esc(str(al.get("host_nation_support", "")))
-            usfj = _esc(str(al.get("usfj_realignment", "")))
-            rows = ""
-            for label, val in (("Defense spending goal", ds_goal),
-                               ("Article 5 / Senkakus", art5),
-                               ("Host-nation support", hns),
-                               ("USFJ realignment", usfj)):
-                if val:
-                    rows += (f'<tr style="border-bottom:1px solid #EEE;">'
-                             f'<td style="padding:6px 10px 6px 0;font-size:12px;font-weight:600;color:{NAVY};white-space:nowrap;vertical-align:top;">{label}</td>'
-                             f'<td style="padding:6px 0;font-size:12px;line-height:1.5;color:#333;">{val}</td></tr>')
-            if rows:
-                body += f"""<div class="alliance-box" style="margin-bottom:16px;padding:14px;background:#FBFBFD;border-radius:6px;border:1px solid #E6E6EC;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:8px;">Alliance Dashboard</div>
-<table width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table>
-</div>"""
+        # Alliance Dashboard removed per Japan Chair feedback (Aug 2026): its fields
+        # rarely change, and any real development is captured elsewhere in the brief.
 
         deals = trade.get("deals") or []
         if deals:
