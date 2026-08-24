@@ -739,6 +739,31 @@ def _wiki_agrees_with_baseline(wiki: list, baseline: list, tol: float = 5.0) -> 
     return anchors > 0
 
 
+def _resolve_tariffs(digest: dict) -> dict:
+    """Force the US-tariffs-on-Japan reference figures to databases.TARIFF_FACTS,
+    OVERRIDING the model — which repeatedly carried stale tariff facts forward (an
+    expired Section 122 surcharge displayed for a month). Day-specific fields
+    (last_change, next_trigger, deals) are left to the model. Update the figures in
+    databases.TARIFF_FACTS, the single source of truth for the tariff box."""
+    try:
+        from databases import TARIFF_FACTS
+    except Exception as e:
+        print(f"   ⚠ Tariff facts unavailable ({e}) — leaving model values")
+        return digest
+    trade = digest.get("us_china_trade")
+    if not isinstance(trade, dict):
+        trade = {}
+        digest["us_china_trade"] = trade
+    tt = trade.get("tariff_tracker")
+    if not isinstance(tt, dict):
+        tt = {}
+        trade["tariff_tracker"] = tt
+    tt.update(TARIFF_FACTS)                 # authoritative reference figures win
+    tt.pop("section_301_watch", None)       # drop the stale legacy key/label
+    print("   ✓ Tariff facts set from authoritative baseline (databases.TARIFF_FACTS)")
+    return digest
+
+
 def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
     """Populate the Public Sentiment table from AUTHORITATIVE structured data —
     the Wikipedia poll fetch if it returned a sane set that AGREES with the
@@ -920,6 +945,8 @@ def run_pipeline(args: argparse.Namespace) -> int:
     digest = _resolve_polls(digest, payload.get("wiki_polls"))
     # ─── Clean approval polls (recognized Japanese pollsters + numeric only)
     digest = _sanitise_polls(digest)
+    # ─── Tariffs: authoritative US-on-Japan figures (override the model) ──
+    digest = _resolve_tariffs(digest)
 
     DIGEST_JSON.write_text(json.dumps(digest, ensure_ascii=False, indent=2),
                           encoding="utf-8")
