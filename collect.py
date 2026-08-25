@@ -558,7 +558,15 @@ _WIKI_POLLSTERS = {"nhk": "NHK", "nikkei": "Nikkei", "jiji": "Jiji",
                    "yomiuri": "Yomiuri", "asahi": "Asahi", "kyodo": "Kyodo",
                    "mainichi": "Mainichi", "jnn": "JNN", "ann": "ANN", "fnn": "FNN"}
 _WIKI_NUM = re.compile(r"(\d{1,2}(?:\.\d)?)")
-_WIKI_DATE = re.compile(r"(\d{1,2}[–\-]\d{1,2}\s+\w{3,9}\s+\d{4}|\w{3,9}\s+\d{4})")
+# A fieldwork date MUST contain a real month name — otherwise the old pattern
+# (\w{3,9}\s+\d{4}) matched any "word year" and grabbed outlet-name fragments like
+# "News 2026" (Kyodo News), "Press 2026" (Jiji Press), "Sankei 2026" (FNN/Sankei).
+_WIKI_MONTH = (r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)"
+               r"(?:uary|ruary|ch|il|e|y|ust|tember|ober|ember)?\.?")
+_WIKI_DATE = re.compile(
+    r"(\d{1,2}(?:\s*[–\-]\s*\d{1,2})?\s+" + _WIKI_MONTH + r"\s+\d{4}"   # 15–17 Aug 2026 / 16 August 2026
+    r"|" + _WIKI_MONTH + r"\s+\d{4})",                                  # Aug 2026
+    re.IGNORECASE)
 # A table cell that is a STANDALONE percentage (e.g. "49.0", "49.0%", "58") —
 # used to pick out the approval/disapproval columns without matching digits that
 # belong to a date ("2026") or a sample size ("1,234"). Row-wide number scanning
@@ -596,6 +604,17 @@ def _wiki_pct_cells(cells: list) -> list:
         if m:
             out.append(float(m.group(1)))
     return out
+
+
+def _wiki_row_date(cells: list) -> str | None:
+    """The fieldwork date from the first cell that contains a real month+year
+    date (e.g. '15–17 Aug 2026'). Requiring a month name avoids grabbing an
+    outlet-name fragment ('News 2026') as the date. None if no dated cell."""
+    for c in cells:
+        m = _WIKI_DATE.search(c)
+        if m:
+            return re.sub(r"\s+", " ", m.group(1)).strip()
+    return None
 # Matches a section heading that introduces the CABINET-APPROVAL table (e.g.
 # "== Approval Polling for the Takaichi Cabinet ==", "=== Cabinet approval ===").
 # The same page carries party voting-intention / seat tables that list the SAME
@@ -656,16 +675,16 @@ def _fetch_wikipedia_polls(max_polls: int = 10) -> list:
                 continue
             # Approval / disapproval are the first two clean percentage CELLS —
             # not just any 2-digit run in the row (which would catch the date).
-            pcts = _wiki_pct_cells(_wiki_row_cells(row))
+            cells = _wiki_row_cells(row)
+            pcts = _wiki_pct_cells(cells)
             appr = next((n for n in pcts if 15 <= n <= 85), None)   # plausible approval
             if appr is None:
                 continue
             disp = next((n for n in pcts[pcts.index(appr) + 1:] if 10 <= n <= 85), None)
-            dm = _WIKI_DATE.search(row)
             seen.add(name)
             out.append({
                 "pollster": name,
-                "poll_date": dm.group(1) if dm else "recent",
+                "poll_date": _wiki_row_date(cells) or "recent",
                 "cabinet_approval": f"{appr:g}%",
                 "cabinet_disapproval": f"{disp:g}%" if disp is not None else None,
                 "approval_change": None,

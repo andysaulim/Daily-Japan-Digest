@@ -415,7 +415,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the island continues as the baseline, with Japan's ambassador summons and Tokyo's sanctions deliberations unre"
       },
       "watch_flag": false
+    },
+    "2026-08-25": {
+      "signals": {
+        "china_signal": "China formally adopted 'war criminals shrine' as its official state designation for Yasukuni Shrine, per Asia News Network, extending the rhetorical escalation that began around August 15. Cross-party Japanese lawmakers arrived in Beijing to seek diplomatic repair, with the bilateral relationship de",
+        "dprk_signal": "South China Morning Post reported on China's muted response to North Korea's most recent ballistic missile launches, with US-Japan-ROK trilateral consultations ongoing following the August 20 launches into the Sea of Japan that landed outside Japan's EEZ.",
+        "russia_signal": "PM Takaichi pledged to continue Russia sanctions at the Coalition of the Willing virtual summit, maintaining Tokyo's posture against Moscow amid the unresolved diplomatic standoff over Putin's Etorofu visit and the August 21 Bastion missile drill from the disputed island."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-24T10:29:52.135324+00:00"
+  "last_updated": "2026-08-25T10:23:56.539428+00:00"
 }
