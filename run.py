@@ -843,6 +843,18 @@ def _archive_html(html: str, digest: dict) -> None:
     latest_file = PUBLIC_DIR / "index.html"
     latest_file.write_text(html, encoding="utf-8")
 
+    # Full-color print PDF (best-effort; needs Playwright + Chromium). Writes
+    # index.pdf (latest) and {date}.pdf (dated). Non-fatal if unavailable.
+    try:
+        import shutil
+        from make_pdf import html_from_input, html_to_pdf
+        pdf_html = html_from_input(latest_file)
+        html_to_pdf(pdf_html, PUBLIC_DIR / "index.pdf")
+        shutil.copy(PUBLIC_DIR / "index.pdf", PUBLIC_DIR / f"{date_str}.pdf")
+        print(f"   🖨  PDF written: public/index.pdf + public/{date_str}.pdf")
+    except Exception as e:
+        print(f"   ⚠ PDF generation skipped (non-fatal): {e}")
+
     archive_index = PUBLIC_DIR / "archive.json"
     archive = []
     if archive_index.exists():
@@ -978,6 +990,12 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── Render ──────────────────────────────────────────────────────────
     print("\n🎨 Rendering HTML email...")
+    # Web-archive URL (enables the "Read online" + "Download PDF" links). Defaults
+    # to the GitHub Pages site for this repo; override with the WEB_URL env/var.
+    _web_base = (os.environ.get("WEB_URL", "").strip()
+                 or "https://andysaulim.github.io/Daily-Japan-Digest").rstrip("/")
+    if _web_base:
+        digest["web_url"] = _web_base + "/index.html"
     from render import render_html
     html = render_html(digest)
     DIGEST_HTML.write_text(html, encoding="utf-8")
