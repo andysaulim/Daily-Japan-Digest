@@ -241,11 +241,14 @@ def render_html(digest: dict) -> str:
     sections_wire = []      # Business, Indo-Pacific, Also Today, On This Day
     sections_post = []      # Footer
 
-    # 0. View in browser
+    # 0. View in browser (+ full-color print PDF link)
     if web_url:
+        pdf_url = web_url[:-len("index.html")] + "index.pdf" if web_url.endswith("index.html") else ""
+        pdf_link = (f' &nbsp;&middot;&nbsp; <a href="{_esc(pdf_url)}" style="color:{HINOMARU_RED};text-decoration:none;">Download PDF &#8595;</a>'
+                    if pdf_url else "")
         sections_pre.append(f"""
 <div style="background:#F0F0F0;padding:6px 32px;text-align:center;font-size:11px;color:#888;" class="sec">
-Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-decoration:none;">Read online &#8594;</a>
+Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-decoration:none;">Read online &#8594;</a>{pdf_link}
 </div>""")
 
     # 1. Header

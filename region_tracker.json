@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-26": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — a message framed around the ongoing rare-earth export restrictions and the Fuji Electric worker detentions. China simultaneously defended patrols east of Taiwan and rej",
-        "dprk_signal": "Kim Jong Un oversaw ballistic missile tests and KCNA reported a successful test of tactical nuclear strike capability against South Korean power stations; North Korea also commissioned its first-in-class guided-missile destroyer, Choe Hyon, and announced plans for a cruiser, a step-change in DPRK su"
-      },
-      "watch_flag": false
-    },
     "2026-06-27": {
       "signals": {
         "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — framing pressure around rare-earth export restrictions and Fuji Electric worker detentions in China. Japan separately filed a formal protest over Chinese gas drilling i",
@@ -423,7 +416,15 @@
         "russia_signal": "PM Takaichi pledged to continue Russia sanctions at the Coalition of the Willing virtual summit, maintaining Tokyo's posture against Moscow amid the unresolved diplomatic standoff over Putin's Etorofu visit and the August 21 Bastion missile drill from the disputed island."
       },
       "watch_flag": false
+    },
+    "2026-08-26": {
+      "signals": {
+        "china_signal": "No new Senkaku intrusion or CCG incident reported in today's feed. Japan's rare-earth diversification drive — including government funding for overseas rare-earth mining and a separate initiative to salvage rare earths using nuclear reprocessing technology — continues as Tokyo's structural hedge aga",
+        "dprk_signal": "North Korea confirmed it will send approximately 100 athletes to the Asian Games in Japan, per Japan Times, signaling a selective diplomatic opening; separately, DW.com reported a North Korean missile test ahead of US-South Korea drills, continuing the pattern of launches that followed the August 20",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island continues as the baseline, with PM Takaichi having pledged continuation of Russia sanction"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-25T10:23:56.539428+00:00"
+  "last_updated": "2026-08-26T10:26:25.193674+00:00"
 }
