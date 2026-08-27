@@ -34,6 +34,7 @@ jobs:
     timeout-minutes: 30
     outputs:
       should_run: ${{ steps.guard.outputs.should_run }}
+      pages_ready: ${{ steps.configure_pages.outcome == 'success' }}
 
     steps:
       - name: Checkout repo
@@ -116,26 +117,51 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add pm_tracker.json region_tracker.json published_ledger.json public/ README.md 2>/dev/null || true
-          git diff --staged --quiet || git commit -m "Daily Japan Digest run $(date -u +%Y-%m-%d)"
-          git push || echo "Nothing to push"
+          if git diff --staged --quiet; then
+            echo "Nothing to commit"; exit 0
+          fi
+          git commit -m "Daily Japan Digest run $(date -u +%Y-%m-%d)"
+          # The branch can move between checkout and here (a merge, another run).
+          # A bare push then fails with "fetch first" and the archive is dropped.
+          # Rebase our single archive commit onto the remote tip and retry.
+          BRANCH="${GITHUB_REF_NAME}"
+          for attempt in 1 2 3 4; do
+            if git push origin "HEAD:${BRANCH}"; then
+              echo "Pushed archive on attempt ${attempt}"; exit 0
+            fi
+            echo "Push rejected — rebasing on origin/${BRANCH} (attempt ${attempt})"
+            git fetch origin "${BRANCH}" || true
+            git rebase "origin/${BRANCH}" || { git rebase --abort || true; }
+            sleep $((attempt * 2))
+          done
+          echo "::warning::Could not push archive commit after 4 attempts"
 
       # Publish the public/ archive (HTML + PDF) to GitHub Pages. configure-pages
-      # with enablement:true turns Pages on automatically the first time this runs.
+      # with enablement:true tries to turn Pages on automatically, but the default
+      # GITHUB_TOKEN can't create a Pages site ("Resource not accessible by
+      # integration"), so we hand it the PAT. If Pages still isn't enabled, these
+      # steps are marked continue-on-error so they never fail an otherwise
+      # successful send — enable Pages once by hand (Settings → Pages → Source:
+      # GitHub Actions) and every run deploys thereafter.
       - name: Configure Pages
+        id: configure_pages
         if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && steps.guard.outputs.should_run == 'true' }}
+        continue-on-error: true
         uses: actions/configure-pages@v5
         with:
           enablement: true
+          token: ${{ secrets.GH_PAT || github.token }}
 
       - name: Upload Pages artifact
-        if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && steps.guard.outputs.should_run == 'true' }}
+        if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && steps.guard.outputs.should_run == 'true' && steps.configure_pages.outcome == 'success' }}
+        continue-on-error: true
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
   deploy-pages:
     needs: build-and-send
-    if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && needs.build-and-send.outputs.should_run == 'true' }}
+    if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && needs.build-and-send.outputs.should_run == 'true' && needs.build-and-send.outputs.pages_ready == 'true' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
