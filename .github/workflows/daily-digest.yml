@@ -2,8 +2,12 @@ name: Daily Japan Digest
 
 on:
   schedule:
-    # 10:00 UTC = 6:00 AM ET (DST, Mar–Nov) / 5:00 AM ET (standard, Nov–Mar)
-    - cron: '0 10 * * *'
+    # Primary send — 10:17 UTC ≈ 6:17 AM ET (DST) / 5:17 AM ET (standard). Off the
+    # congested :00 minute, which GitHub is most likely to delay or drop.
+    - cron: '17 10 * * *'
+    # Catch-up — 14:27 UTC ≈ 10:27 AM ET. Re-runs ONLY if the primary was dropped
+    # and today's edition hasn't been produced yet (idempotent; see the guard step).
+    - cron: '27 14 * * *'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -28,6 +32,8 @@ jobs:
   build-and-send:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      should_run: ${{ steps.guard.outputs.should_run }}
 
     steps:
       - name: Checkout repo
@@ -50,7 +56,25 @@ jobs:
       - name: Install Chromium (for print PDF)
         run: python -m playwright install --with-deps chromium
 
+      # Idempotency guard: on a scheduled run, skip if today's edition (ET) was
+      # already produced — so the catch-up cron is a no-op when the primary ran,
+      # and does the full send only when the primary was dropped. Manual dispatch
+      # always runs.
+      - name: Skip guard (avoid double-send on catch-up)
+        id: guard
+        run: |
+          TODAY=$(TZ=America/New_York date +%Y-%m-%d)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          elif [ -f "public/$TODAY.html" ]; then
+            echo "::notice::Today's edition ($TODAY) already produced — skipping (catch-up no-op)."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Run pipeline
+        if: ${{ steps.guard.outputs.should_run == 'true' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
@@ -87,7 +111,7 @@ jobs:
           retention-days: 14
 
       - name: Commit tracker state + archive
-        if: ${{ github.event_name == 'schedule' || inputs.live_send == true }}
+        if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && steps.guard.outputs.should_run == 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -98,20 +122,20 @@ jobs:
       # Publish the public/ archive (HTML + PDF) to GitHub Pages. configure-pages
       # with enablement:true turns Pages on automatically the first time this runs.
       - name: Configure Pages
-        if: ${{ github.event_name == 'schedule' || inputs.live_send == true }}
+        if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && steps.guard.outputs.should_run == 'true' }}
         uses: actions/configure-pages@v5
         with:
           enablement: true
 
       - name: Upload Pages artifact
-        if: ${{ github.event_name == 'schedule' || inputs.live_send == true }}
+        if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && steps.guard.outputs.should_run == 'true' }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
   deploy-pages:
     needs: build-and-send
-    if: ${{ github.event_name == 'schedule' || inputs.live_send == true }}
+    if: ${{ (github.event_name == 'schedule' || inputs.live_send == true) && needs.build-and-send.outputs.should_run == 'true' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
