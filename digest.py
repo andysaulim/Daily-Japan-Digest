@@ -115,6 +115,8 @@ JAPANESE GOVERNMENT MONITORING: Track activity from these institutions and repor
 
 Include only substantive actions (not routine admin). Each entry: ministry, action (1-line headline), detail (1-2 sentences), source URL.
 
+NEVER report that a routine press conference or briefing merely took place when you do not have its substance. An entry whose detail amounts to "X held the morning/afternoon press briefing; specific topics were not detailed in available articles" is a NON-STORY — omit it entirely (SOURCE-OR-SKIP). Report a Chief Cabinet Secretary / MOFA / ministry presser ONLY when you can state a concrete thing that was said or announced (a policy position, a protest, a figure, a decision). The fact that the daily briefing occurred is not itself news.
+
 FORMATTING: Do NOT use emojis anywhere in the output. Plain text only.
 
 DEDUPLICATION — CRITICAL (ZERO TOLERANCE):

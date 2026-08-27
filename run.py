@@ -548,6 +548,68 @@ def _near_dup(toks: frozenset, seen_tok_sets: list) -> bool:
     return False
 
 
+# ── Drop hollow "an event occurred, no substance" filler items ────────────────
+# SOURCE-OR-SKIP: an item whose entire content is that a routine press briefing /
+# appearance was held — with the substance explicitly noted as unavailable —
+# earns no slot. The model periodically emits these, especially for the Chief
+# Cabinet Secretary's daily presser ("holds morning press conference … specific
+# topics were not detailed in available article text"). Remove them here so a
+# non-story never occupies a line in the edition.
+_HOLLOW_ROUTINE_RE = _re.compile(
+    r"press\s+(conference|briefing)"
+    r"|(morning|afternoon|daily)\s+(press\s+)?brief",
+    _re.I,
+)
+_HOLLOW_EMPTY_RE = _re.compile(
+    r"not\s+(detailed|available|disclosed|specified|provided|elaborated|released)"
+    r"|no\s+(specific|substantive|further|additional)\b",
+    _re.I,
+)
+_HOLLOW_SCAN_FIELDS = (
+    "headline", "title", "action", "detail", "body", "body_text",
+    "summary", "note", "context", "quote_text",
+)
+
+
+def _is_hollow(item: dict) -> bool:
+    """True when the item's whole substance is 'a routine briefing/appearance was
+    held' and the content is explicitly flagged as unavailable — i.e. no news.
+    Requires BOTH signals, so a substantive item that merely notes one missing
+    figure (e.g. an M&A deal whose value 'was not specified') is not dropped."""
+    text = " ".join(
+        str(item.get(f)) for f in _HOLLOW_SCAN_FIELDS
+        if isinstance(item.get(f), str) and item.get(f).strip()
+    )
+    if not text:
+        return False
+    return bool(_HOLLOW_ROUTINE_RE.search(text) and _HOLLOW_EMPTY_RE.search(text))
+
+
+def _drop_hollow_items(digest: dict) -> dict:
+    """Remove content-free filler (SOURCE-OR-SKIP) across all list sections."""
+    dropped = 0
+
+    def _filter(items):
+        nonlocal dropped
+        kept = []
+        for it in (items or []):
+            if isinstance(it, dict) and _is_hollow(it):
+                dropped += 1
+                continue
+            kept.append(it)
+        return kept
+
+    for section in _DEDUPE_ORDER:
+        if isinstance(digest.get(section), list):
+            digest[section] = _filter(digest[section])
+    trade = digest.get("us_china_trade")
+    if isinstance(trade, dict) and isinstance(trade.get("deals"), list):
+        trade["deals"] = _filter(trade["deals"])
+    if dropped:
+        print(f"   ✓ Dropped {dropped} hollow (no-substance) filler item(s)")
+    return digest
+
+
 def _dedupe_sections(digest: dict) -> dict:
     """Drop any item that already appeared in a higher-priority section — matched
     by URL, identical headline, OR a near-identical reworded title — so one story
@@ -581,6 +643,27 @@ def _dedupe_sections(digest: dict) -> dict:
         return kept
 
     digest["top_stories"] = _sweep(digest.get("top_stories"))
+
+    # Seed the fingerprint of the "Stat of the Day" highlight card (key_stat) —
+    # a differently-shaped dict rendered separately — so its story isn't ALSO
+    # repeated as a wire list item. Seeded AFTER top_stories so the lede (which
+    # the stat is often drawn from) is never suppressed; only lower sections are.
+    ks = digest.get("key_stat")
+    if isinstance(ks, dict):
+        ks_text = " ".join(
+            str(ks.get(f)) for f in ("label", "context", "headline", "source", "number")
+            if isinstance(ks.get(f), str) and str(ks.get(f)).strip()
+        )
+        ks_toks = _sig_tokens(ks_text)
+        if ks_toks:
+            seen_tok_sets.append(ks_toks)
+        ks_title = _norm_title(ks.get("label") or ks.get("headline") or "")
+        if ks_title:
+            seen_titles.add(ks_title)
+        ks_url = _item_url(ks)
+        if ks_url:
+            seen_urls.add(ks_url)
+
     digest["overnight_items"] = _sweep(digest.get("overnight_items"))
     trade = digest.get("us_china_trade")
     if isinstance(trade, dict) and trade.get("deals"):
@@ -764,6 +847,74 @@ def _resolve_tariffs(digest: dict) -> dict:
     return digest
 
 
+_MONTHS_IDX = {m: i + 1 for i, m in enumerate(
+    ["jan", "feb", "mar", "apr", "may", "jun",
+     "jul", "aug", "sep", "oct", "nov", "dec"])}
+# How old the freshest poll may be before the table is flagged as dated.
+_POLL_STALE_DAYS = 21
+
+
+def _parse_poll_date(s):
+    """Best-effort parse of a poll_date string → date (the LATEST day of a range,
+    so age is measured from the most recent fieldwork day). None if unparseable.
+    Handles 'Jul 16, 2026', '15–17 Aug 2026', '16 Aug 2026', and 'Aug 2026'."""
+    if not s:
+        return None
+    t = str(s).strip()
+    # 'Mon DD, YYYY'
+    m = _re.search(r"([A-Za-z]{3,9})\.?\s+(\d{1,2}),?\s+(\d{4})", t)
+    if m and m.group(1)[:3].lower() in _MONTHS_IDX:
+        try:
+            return datetime(int(m.group(3)), _MONTHS_IDX[m.group(1)[:3].lower()],
+                            int(m.group(2))).date()
+        except ValueError:
+            pass
+    # 'D[–D] Mon YYYY' (use the last day of the range)
+    m = _re.search(r"(\d{1,2})(?:\s*[–\-]\s*(\d{1,2}))?\s+([A-Za-z]{3,9})\.?\s+(\d{4})", t)
+    if m and m.group(3)[:3].lower() in _MONTHS_IDX:
+        try:
+            return datetime(int(m.group(4)), _MONTHS_IDX[m.group(3)[:3].lower()],
+                            int(m.group(2) or m.group(1))).date()
+        except ValueError:
+            pass
+    # 'Mon YYYY' (month only → mid-month)
+    m = _re.search(r"([A-Za-z]{3,9})\.?\s+(\d{4})", t)
+    if m and m.group(1)[:3].lower() in _MONTHS_IDX:
+        try:
+            return datetime(int(m.group(2)), _MONTHS_IDX[m.group(1)[:3].lower()], 15).date()
+        except ValueError:
+            pass
+    return None
+
+
+def _annotate_poll_dates(structured: list, baseline: list) -> None:
+    """Backfill any missing/undated poll date from the verified baseline (matched
+    by pollster) so every row shows a real fieldwork date, and stamp each poll's
+    `days_old` age. Warns when even the freshest poll is older than the staleness
+    threshold — the cue to refresh databases.RECENT_APPROVAL_POLLS."""
+    base_dates = {}
+    for p in baseline:
+        d = str(p.get("poll_date", "")).strip()
+        if d:
+            base_dates.setdefault(str(p.get("pollster", "")).strip().lower(), d)
+    today = datetime.now(ZoneInfo("America/New_York")).date()
+    freshest = None
+    for p in structured:
+        pd = str(p.get("poll_date", "")).strip()
+        if not pd or pd.lower() == "recent":
+            pd = base_dates.get(str(p.get("pollster", "")).strip().lower(), "")
+            p["poll_date"] = pd
+        d = _parse_poll_date(pd)
+        if d:
+            age = (today - d).days
+            p["days_old"] = age
+            if freshest is None or age < freshest:
+                freshest = age
+    if freshest is not None and freshest > _POLL_STALE_DAYS:
+        print(f"   ⚠ Polls: freshest poll is {freshest}d old (> {_POLL_STALE_DAYS}d) — "
+              f"refresh databases.RECENT_APPROVAL_POLLS")
+
+
 def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
     """Populate the Public Sentiment table from AUTHORITATIVE structured data —
     the Wikipedia poll fetch if it returned a sane set that AGREES with the
@@ -789,6 +940,9 @@ def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
         source = "verified baseline"
     if not structured:
         return digest
+    # Ensure every row has a real fieldwork date (backfilled from baseline) and an
+    # age stamp, and warn if the whole set is dated.
+    _annotate_poll_dates(structured, RECENT_APPROVAL_POLLS)
     ps = digest.get("public_sentiment")
     if not isinstance(ps, dict):
         ps = {}
@@ -947,6 +1101,8 @@ def run_pipeline(args: argparse.Namespace) -> int:
     digest = _sanitise_urls(digest, set(collected_by_url))
     print(f"   ✓ URL sanitisation complete ({len(collected_by_url)} collected URLs as reference)")
 
+    # ─── Drop hollow "no-substance" filler (SOURCE-OR-SKIP) ──────────────
+    digest = _drop_hollow_items(digest)
     # ─── De-duplicate across sections (one article, one section) ─────────
     digest = _dedupe_sections(digest)
     # ─── De-duplicate across DAYS (drop stories already sent recently) ───

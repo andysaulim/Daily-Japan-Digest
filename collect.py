@@ -606,14 +606,48 @@ def _wiki_pct_cells(cells: list) -> list:
     return out
 
 
-def _wiki_row_date(cells: list) -> str | None:
-    """The fieldwork date from the first cell that contains a real month+year
-    date (e.g. '15–17 Aug 2026'). Requiring a month name avoids grabbing an
-    outlet-name fragment ('News 2026') as the date. None if no dated cell."""
+# A month-name date whose YEAR may be missing (fieldwork rows on the polling page
+# are frequently written '16–18 Aug' with the year only in a section heading). We
+# still REQUIRE a real month name so an outlet fragment ('News 2026') can't match.
+_WIKI_DATE_NOYEAR = re.compile(
+    r"(\d{1,2}(?:\s*[–\-]\s*\d{1,2})?)\s+(" + _WIKI_MONTH + r")(?:\s+(\d{4}))?",
+    re.IGNORECASE)
+# ISO fieldwork date, e.g. from a {{dts|2026|8|16}} template stripped to 2026|8|16
+# or a bare 2026-08-16. Month index → short name for a uniform display.
+_WIKI_ISO = re.compile(r"\b(\d{4})[-|/](\d{1,2})[-|/](\d{1,2})\b")
+_WIKI_MONTH_ABBR = ("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+
+def _wiki_row_date(cells: list, default_year: int | None = None) -> str | None:
+    """The fieldwork date from the first cell that carries one, normalized to a
+    readable 'D–D Mon YYYY'. Handles month-name dates (with or without a year —
+    a missing year is filled from `default_year`, the page's current fieldwork
+    year), ISO / {{dts}} numeric dates, and 'Mon YYYY'. Requiring a real month
+    name (or an ISO date) avoids grabbing an outlet fragment ('News 2026').
+    None if no cell carries a locatable date."""
+    if default_year is None:
+        default_year = datetime.now().year
     for c in cells:
+        # 1. Full 'D Mon YYYY' / 'Mon YYYY' (has an explicit year already).
         m = _WIKI_DATE.search(c)
         if m:
             return re.sub(r"\s+", " ", m.group(1)).strip()
+    for c in cells:
+        # 2. ISO / numeric-template date (2026-08-16 or 2026|8|16).
+        mi = _WIKI_ISO.search(c)
+        if mi:
+            y, mo, d = int(mi.group(1)), int(mi.group(2)), int(mi.group(3))
+            if 1 <= mo <= 12 and 1 <= d <= 31 and 2000 <= y <= 2100:
+                return f"{d} {_WIKI_MONTH_ABBR[mo - 1]} {y}"
+    for c in cells:
+        # 3. Month-name date with NO year — fill the current fieldwork year.
+        mn = _WIKI_DATE_NOYEAR.search(c)
+        if mn:
+            day = re.sub(r"\s+", " ", mn.group(1)).strip()
+            mon = mn.group(2)[:3].title()
+            year = mn.group(3) or str(default_year)
+            return f"{day} {mon} {year}".strip()
     return None
 # Matches a section heading that introduces the CABINET-APPROVAL table (e.g.
 # "== Approval Polling for the Takaichi Cabinet ==", "=== Cabinet approval ===").
@@ -684,7 +718,10 @@ def _fetch_wikipedia_polls(max_polls: int = 10) -> list:
             seen.add(name)
             out.append({
                 "pollster": name,
-                "poll_date": _wiki_row_date(cells) or "recent",
+                # Leave EMPTY (not "recent") when undated — the resolver backfills
+                # a real date from the verified baseline, and the renderer simply
+                # omits an empty date rather than printing a meaningless "recent".
+                "poll_date": _wiki_row_date(cells) or "",
                 "cabinet_approval": f"{appr:g}%",
                 "cabinet_disapproval": f"{disp:g}%" if disp is not None else None,
                 "approval_change": None,

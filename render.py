@@ -219,7 +219,7 @@ def _chapter(label: str) -> str:
     return f"""
 <div style="padding:12px 32px;background:#1B2A4A;text-align:center;" class="sec">
 <div style="height:1px;background:rgba(188,0,45,0.5);margin-bottom:10px;"></div>
-<span style="font-size:9px;font-family:Arial,sans-serif;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:5px;font-weight:700;">{label}</span>
+<span style="font-size:10px;font-family:Arial,sans-serif;color:#FFFFFF;text-transform:uppercase;letter-spacing:5px;font-weight:700;">{label}</span>
 <div style="height:1px;background:rgba(188,0,45,0.5);margin-top:10px;"></div>
 </div>"""
 
@@ -840,8 +840,16 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 appr = _esc(str(p.get("cabinet_approval", "") or "—"))
                 disappr = _esc(str(p.get("cabinet_disapproval", "") or "—"))
                 chg = _esc(str(p.get("approval_change", "") or "—"))
+                # Flag a dated poll: an amber age note when fieldwork is >21 days old,
+                # so a reader can see at a glance the numbers aren't fresh.
+                days_old = p.get("days_old")
+                stale = ""
+                if isinstance(days_old, int) and days_old > 21:
+                    stale = (f' <span style="color:#B7791F;font-weight:600;">'
+                             f'&middot; {days_old}d ago</span>')
                 name = (f'<strong style="color:{NAVY};">{pollster}</strong>'
-                        + (f' <span style="color:#9AA0A8;">&middot; {pdate}</span>' if pdate else ''))
+                        + (f' <span style="color:#9AA0A8;">&middot; {pdate}</span>' if pdate else '')
+                        + stale)
                 rows += (
                     '<tr style="border-top:1px solid #EAEBEE;">'
                     f'<td style="padding:12px;font-size:13px;color:{NAVY};">{name}</td>'
