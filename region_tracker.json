@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-27": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry, via Global Times, told Japanese political leaders to 'listen to voices from Japan's business community' — framing pressure around rare-earth export restrictions and Fuji Electric worker detentions in China. Japan separately filed a formal protest over Chinese gas drilling i",
-        "dprk_signal": "Kim Jong Un oversaw tests of ballistic missiles, a modernized multiple-launch rocket system, and a tactical nuclear-strike system targeting South Korean power stations, per KCNA; North Korea simultaneously commissioned the Choe Hyon, its first-in-class 5,000-ton guided-missile destroyer, and announc"
-      },
-      "watch_flag": true
-    },
     "2026-06-28": {
       "signals": {
         "china_signal": "Chinese and Russian bombers and fighter jets conducted a joint air patrol over the Sea of Japan and surrounding waters, per Japan Times and NHK World. Xinhua separately published a commentary characterizing PM Takaichi's political funds investigation as evidence of 'political-business collusion behi",
@@ -424,7 +417,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island continues as the baseline, with PM Takaichi having pledged continuation of Russia sanction"
       },
       "watch_flag": false
+    },
+    "2026-08-27": {
+      "signals": {
+        "china_signal": "A Japanese cross-party lawmaker delegation — the first visit to Beijing since bilateral ties deteriorated following PM Takaichi's November Taiwan remarks — ended without breakthrough; China's Foreign Ministry stated only that 'relevant authorities' would release information on the meeting 'in due co",
+        "dprk_signal": "North Korea formally condemned a planned US arms sale to South Korea and vowed a 'powerful response,' per NHK and the Straits Times, continuing Pyongyang's pattern of statements targeting US-ROK military cooperation; no new missile launch or KCNA statement specifically naming Japan was reported toda",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and the August 21 Bastion missile live-fire from the disputed island remain the baseline, with Japan's sanctions posture unchanged."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-26T10:26:25.193674+00:00"
+  "last_updated": "2026-08-27T23:54:34.532076+00:00"
 }
