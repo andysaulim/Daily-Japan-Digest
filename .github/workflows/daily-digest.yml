@@ -2,12 +2,20 @@ name: Daily Japan Digest
 
 on:
   schedule:
-    # Primary send — 10:17 UTC ≈ 6:17 AM ET (DST) / 5:17 AM ET (standard). Off the
-    # congested :00 minute, which GitHub is most likely to delay or drop.
-    - cron: '17 10 * * *'
-    # Catch-up — 14:27 UTC ≈ 10:27 AM ET. Re-runs ONLY if the primary was dropped
-    # and today's edition hasn't been produced yet (idempotent; see the guard step).
-    - cron: '27 14 * * *'
+    # GitHub's scheduled crons are best-effort — it routinely delays or DROPS a
+    # given slot (this repo has had whole mornings skipped). So instead of one
+    # send time we fire SEVERAL staggered attempts across the delivery window.
+    # This is safe because the once-a-day guard (last_sent.txt, set only after a
+    # successful send) makes every attempt after the first a no-op, and the
+    # concurrency group serializes any overlap — so recipients still get exactly
+    # ONE email, on the earliest slot GitHub actually honors. All times are UTC;
+    # ET shown for DST (subtract 1h in standard time). Off the congested :00/:30.
+    - cron: '17 10 * * *'   # 6:17 AM ET — primary
+    - cron: '47 10 * * *'   # 6:47 AM ET — catch-up 1
+    - cron: '27 11 * * *'   # 7:27 AM ET — catch-up 2
+    - cron: '27 12 * * *'   # 8:27 AM ET — catch-up 3
+    - cron: '27 13 * * *'   # 9:27 AM ET — catch-up 4
+    - cron: '27 14 * * *'   # 10:27 AM ET — final backstop
   workflow_dispatch:
     inputs:
       dry_run:
