@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-08-28",
+      "activity": "PM Takaichi chaired a meeting of the Emergency Headquarters for the 2026 Kumamoto Earthquake and a Meeting of Relevant Ministers on Heavy Rain in Chiba, per the Prime Minister's Office, while the Kuwait Foreign Minister paid a courtesy call on her at the Kantei.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-08-28T15:36:34.480782+00:00"
+    },
+    {
       "date": "2026-08-27",
       "activity": "PM Takaichi began consultations with LDP executives ahead of an expected Cabinet reshuffle and chaired the GX Implementation Council, while the LDP's Disaster Response Headquarters submitted Kumamoto earthquake restoration proposals to her.",
       "source": "digest",
@@ -393,5 +400,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-27T23:54:34.531220+00:00"
+  "last_updated": "2026-08-28T15:36:34.480888+00:00"
 }
