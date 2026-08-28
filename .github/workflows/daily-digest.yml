@@ -57,18 +57,22 @@ jobs:
       - name: Install Chromium (for print PDF)
         run: python -m playwright install --with-deps chromium
 
-      # Idempotency guard: on a scheduled run, skip if today's edition (ET) was
-      # already produced — so the catch-up cron is a no-op when the primary ran,
-      # and does the full send only when the primary was dropped. Manual dispatch
-      # always runs.
+      # Idempotency guard: on a scheduled run, skip only if today's email (ET) was
+      # already SENT — tracked by last_sent.txt, which the pipeline writes ONLY
+      # after a successful send. Keying on the send (not the archive, which is
+      # written before the email goes out) makes the daily send exactly-once:
+      # the catch-up cron no-ops when the primary sent, and does the full send
+      # when the primary was dropped OR sent-but-failed. Manual dispatch always
+      # runs.
       - name: Skip guard (avoid double-send on catch-up)
         id: guard
         run: |
           TODAY=$(TZ=America/New_York date +%Y-%m-%d)
+          LAST_SENT=$(tr -d '[:space:]' < last_sent.txt 2>/dev/null || true)
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
-          elif [ -f "public/$TODAY.html" ]; then
-            echo "::notice::Today's edition ($TODAY) already produced — skipping (catch-up no-op)."
+          elif [ "$LAST_SENT" = "$TODAY" ]; then
+            echo "::notice::Today's edition ($TODAY) already sent — skipping (catch-up no-op)."
             echo "should_run=false" >> "$GITHUB_OUTPUT"
           else
             echo "should_run=true" >> "$GITHUB_OUTPUT"
@@ -116,7 +120,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pm_tracker.json region_tracker.json published_ledger.json public/ README.md 2>/dev/null || true
+          git add pm_tracker.json region_tracker.json published_ledger.json last_sent.txt public/ README.md 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Nothing to commit"; exit 0
           fi

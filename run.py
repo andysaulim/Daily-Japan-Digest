@@ -31,6 +31,12 @@ PUBLIC_DIR = ROOT / "public"
 LEDGER_JSON = ROOT / "published_ledger.json"
 _LEDGER_WINDOW_DAYS = 14
 
+# Once-a-day send marker: the ET date of the last SUCCESSFUL email send. Written
+# only after send_digest() succeeds and committed/pushed across Actions runs, it
+# is the guard's authoritative "already sent today" signal — set by the send, not
+# by the archive (which is written before the email even goes out).
+LAST_SENT_TXT = ROOT / "last_sent.txt"
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # VALIDATION GATE
@@ -1160,9 +1166,6 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── Archive ─────────────────────────────────────────────────────────
     if not args.no_archive:
         _archive_html(html, digest)
-        # Record what actually went out, so later editions won't repeat it.
-        # Only real (archived) editions update the ledger; test runs don't.
-        _record_ledger(digest, today_et.isoformat())
 
     # ─── Update README ───────────────────────────────────────────────────
     try:
@@ -1172,14 +1175,29 @@ def run_pipeline(args: argparse.Namespace) -> int:
         print(f"⚠ README update failed (non-fatal): {e}")
 
     # ─── Send ────────────────────────────────────────────────────────────
+    sent_ok = False
     if args.no_send:
         print("\n📭 --no-send: skipping email send.")
     else:
         print("\n📧 Sending email...")
         from send_email import send_digest
-        sent = send_digest(html)
-        if not sent:
+        sent_ok = bool(send_digest(html))
+        if not sent_ok:
             print("   ⚠ Send failed or skipped")
+
+    # Record the edition AND stamp the once-a-day marker ONLY after the email
+    # actually went out. This makes the send exactly-once-per-day robust:
+    #   • a failed send never marks the day done → the next cron retries it;
+    #   • a successful send is recorded → the next cron sees it and no-ops.
+    # The marker (last_sent.txt), not the archive HTML, is the guard's signal —
+    # so a build that archived but failed to email is never mistaken for a send.
+    if sent_ok and not args.no_archive:
+        _record_ledger(digest, today_et.isoformat())
+        try:
+            LAST_SENT_TXT.write_text(today_et.isoformat() + "\n", encoding="utf-8")
+            print(f"   ✓ Marked sent for {today_et.isoformat()} (once-a-day guard)")
+        except Exception as e:
+            print(f"   ⚠ Could not write send marker (non-fatal): {e}")
 
     elapsed = time.time() - pipeline_start
     print(f"\n{'=' * 64}")
