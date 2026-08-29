@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-29": {
-      "signals": {
-        "china_signal": "China added 20 more Japanese entities to its dual-use export control blacklist on June 29, bringing cumulative blacklistings to at least 40 organizations, while Chinese Coast Guard ships repeatedly entered Japan's EEZ and China's Foreign Ministry dismissed Tokyo's objections to CCG activities east o",
-        "dprk_signal": "North Korea issued formal warnings against US-Japan joint military drills, per multiple outlets including Anadolu Agency and Türkiye Today, while South Korea and Japan separately reaffirmed denuclearization goals and agreed to advance defense equipment cooperation talks.",
-        "russia_signal": "Russia participated alongside China in a joint bomber and fighter jet patrol near Japan in the Sea of Japan region; Japan conveyed concerns to Moscow through diplomatic channels, per Jiji Press. No separate Northern Territories or Hokkaido-specific Russian activity was reported in today's articles."
-      },
-      "watch_flag": false
-    },
     "2026-06-30": {
       "signals": {
         "china_signal": "China added 20 more Japanese entities to its dual-use export control blacklist on June 29-30, bringing cumulative blacklistings to at least 40 organizations; China's Foreign Ministry dismissed Tokyo's objections to CCG activities east of Taiwan as illegitimate while characterizing those operations a",
@@ -425,7 +417,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline, with Foreign Minister Motegi departing Saturday for a four-country to"
       },
       "watch_flag": false
+    },
+    "2026-08-29": {
+      "signals": {
+        "china_signal": "A CCP official stated China's policy toward Japan 'remains unchanged' following last week's cross-party Japanese lawmaker delegation to Beijing — the first visit since bilateral ties deteriorated after PM Takaichi's November Taiwan remarks — providing no signal of diplomatic breakthrough. China sepa",
+        "dprk_signal": "The US, Japan, and South Korea confirmed Freedom Edge 2026 trilateral exercises will begin September 7 near Jeju Island, explicitly focused on North Korea nuclear and missile threat scenarios; North Korea is expected to react strongly, continuing the pattern of launches and condemnations that follow",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline, with Foreign Minister Motegi's four-country tour ongoing."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-28T15:36:34.481569+00:00"
+  "last_updated": "2026-08-29T15:12:21.807383+00:00"
 }
