@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-06-30": {
-      "signals": {
-        "china_signal": "China added 20 more Japanese entities to its dual-use export control blacklist on June 29-30, bringing cumulative blacklistings to at least 40 organizations; China's Foreign Ministry dismissed Tokyo's objections to CCG activities east of Taiwan as illegitimate while characterizing those operations a",
-        "dprk_signal": "North Korea issued formal denunciations of ongoing US-Japan joint military drills, warning both Washington and Tokyo against continuing such exercises. South Korea confirmed close coordination with the US following the belated disclosure of North Korea's latest missile launch."
-      },
-      "watch_flag": false
-    },
     "2026-07-01": {
       "signals": {
         "china_signal": "China arrested two Japanese nationals in Dalian and its Foreign Ministry told Tokyo to 'educate' nationals on Chinese law. Beijing also protested Japan's joint maritime activities with the Philippines, formally characterizing them as an infringement of China's maritime rights, while demanding Japan "
@@ -425,7 +418,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline, with Foreign Minister Motegi's four-country tour ongoing."
       },
       "watch_flag": false
+    },
+    "2026-08-30": {
+      "signals": {
+        "china_signal": "No new Senkaku intrusion or CCG incident reported in today's Tier 1 or Tier 4 feed. The sustained diplomatic standoff following PM Takaichi's November Taiwan remarks and China's formal adoption of 'war criminals shrine' as its official designation for Yasukuni Shrine remain the baseline; the cross-p",
+        "dprk_signal": "Kim Jong Un dismissed defense minister No Kwang Chol in a military shake-up immediately before Freedom Edge 2026 US-Japan-ROK trilateral exercises are scheduled to begin September 7; a North Korean provocation in the exercise window is a recognized pattern from prior trilateral drill cycles.",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-29T15:12:21.807383+00:00"
+  "last_updated": "2026-08-30T14:57:15.145600+00:00"
 }
