@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-01",
+      "activity": "PM Takaichi participated in Japan's annual Disaster Prevention Day simulated earthquake drill, which this year modeled an 8.3-magnitude offshore Tokachi quake, per the Japan Times.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-01T11:05:52.875640+00:00"
+    },
+    {
       "date": "2026-08-28",
       "activity": "PM Takaichi chaired a meeting of the Emergency Headquarters for the 2026 Kumamoto Earthquake and a Meeting of Relevant Ministers on Heavy Rain in Chiba, per the Prime Minister's Office, while the Kuwait Foreign Minister paid a courtesy call on her at the Kantei.",
       "source": "digest",
@@ -400,5 +407,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-08-28T15:36:34.480888+00:00"
+  "last_updated": "2026-09-01T11:05:52.875686+00:00"
 }

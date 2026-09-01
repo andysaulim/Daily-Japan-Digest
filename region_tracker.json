@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-02": {
-      "signals": {
-        "china_signal": "China's Coast Guard ordered a second Japanese survey vessel to halt operations in Japan's EEZ in the East China Sea, prompting a formal MOFA protest; Beijing's Foreign Ministry simultaneously rejected Japan's updated FOIP framework, told Tokyo to 'educate' nationals detained in Dalian, and character",
-        "russia_signal": "Russia and China conducted another joint bomber mission near Japan and South Korea, per USNI News, continuing a pattern of coordinated air patrols documented in the regional tracker since at least June 28-29."
-      },
-      "watch_flag": false
-    },
     "2026-07-03": {
       "signals": {
         "china_signal": "China's Foreign Ministry issued at least five coordinated statements rejecting Japan's updated Free and Open Indo-Pacific framework, characterizing it as sowing 'division and rivalry,' and separately warned that India-Japan critical minerals cooperation 'should not target or harm the interests of an"
@@ -428,7 +421,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline."
       },
       "watch_flag": false
+    },
+    "2026-09-01": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson demanded Japan 'severely punish' the SDF officer who intruded into the Chinese embassy compound following his dismissal, with both Global Times and Xinhua amplifying the demand — extending Beijing's public pressure posture toward Tokyo and keeping the embassy in",
+        "dprk_signal": "North Korea conducted a missile test ahead of the scheduled start of US-South Korea exercises, per DW, and KCNA labeled Freedom Edge 2026 — set to begin September 7 near Jeju Island — a 'threat'; South Korea confirmed the trilateral US-Japan-ROK drills will proceed unchanged; North Korea separately ",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-08-31T14:11:54.849589+00:00"
+  "last_updated": "2026-09-01T11:05:52.876576+00:00"
 }
