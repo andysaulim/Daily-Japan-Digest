@@ -1,11 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-03": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry issued at least five coordinated statements rejecting Japan's updated Free and Open Indo-Pacific framework, characterizing it as sowing 'division and rivalry,' and separately warned that India-Japan critical minerals cooperation 'should not target or harm the interests of an"
-      },
-      "watch_flag": false
-    },
     "2026-07-05": {
       "signals": {
         "china_signal": "China's Foreign Ministry warned that India-Japan bilateral ties 'should not target third parties,' directly responding to the defense co-development pact and critical minerals agreements signed at the Takaichi-Modi summit. Beijing also announced forthcoming Chinese-Russian joint naval drills off Chi",
@@ -429,7 +423,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline."
       },
       "watch_flag": false
+    },
+    "2026-09-02": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson, per Xinhua, again urged Japan to bring the SDF officer who intruded into the Chinese embassy compound 'to account,' extending Beijing's sustained public pressure posture toward Tokyo; the demand follows the officer's dismissal and continues the pattern of daily",
+        "dprk_signal": "South Korea confirmed no changes to trilateral US-Japan-ROK Freedom Edge 2026 exercises set to begin September 7 near Jeju Island, per Yonhap and Korea Herald, despite North Korea's 'threat' labeling of the drills and a missile test conducted in the run-up to the exercise window.",
+        "russia_signal": "Russian President Putin publicly stated, via TASS, that Japan bears responsibility for the deterioration in bilateral ties; Tokyo rejected the framing and attributed the breakdown to Russia's Ukraine invasion — the exchange extends the sustained diplomatic standoff following Putin's Etorofu visit an"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-01T11:05:52.876576+00:00"
+  "last_updated": "2026-09-02T11:04:48.968874+00:00"
 }

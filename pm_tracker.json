@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-02",
+      "activity": "PM Takaichi held a telephone summit with Nepal's prime minister seeking cooperation in the search for five missing Japanese nationals, and the Prime Minister's Office confirmed FY2026 comprehensive disaster management drills were conducted.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-02T11:04:48.967921+00:00"
+    },
+    {
       "date": "2026-09-01",
       "activity": "PM Takaichi participated in Japan's annual Disaster Prevention Day simulated earthquake drill, which this year modeled an 8.3-magnitude offshore Tokachi quake, per the Japan Times.",
       "source": "digest",
@@ -407,5 +414,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-09-01T11:05:52.875686+00:00"
+  "last_updated": "2026-09-02T11:04:48.967973+00:00"
 }
