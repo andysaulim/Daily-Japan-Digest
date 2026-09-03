@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-03",
+      "activity": "PM Takaichi held a telephone summit with Nepal's prime minister seeking cooperation in the search for five Japanese nationals missing in Nepalese floods, per the Prime Minister's Office.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-03T11:05:48.863968+00:00"
+    },
+    {
       "date": "2026-09-02",
       "activity": "PM Takaichi held a telephone summit with Nepal's prime minister seeking cooperation in the search for five missing Japanese nationals, and the Prime Minister's Office confirmed FY2026 comprehensive disaster management drills were conducted.",
       "source": "digest",
@@ -414,5 +421,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-09-02T11:04:48.967973+00:00"
+  "last_updated": "2026-09-03T11:05:48.864002+00:00"
 }

@@ -431,7 +431,15 @@
         "russia_signal": "Russian President Putin publicly stated, via TASS, that Japan bears responsibility for the deterioration in bilateral ties; Tokyo rejected the framing and attributed the breakdown to Russia's Ukraine invasion — the exchange extends the sustained diplomatic standoff following Putin's Etorofu visit an"
       },
       "watch_flag": false
+    },
+    "2026-09-03": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, per Global Times, framed Japan's defense buildup as 'neo-militarism under the guise of national normalization' and stated China and 'peace-loving countries' would curb it — the latest in a sustained public pressure campaign running through August and September 2026. WSJ sep",
+        "dprk_signal": "South Korea, the US, and Japan confirmed Freedom Edge 2026 trilateral exercises will proceed despite North Korea's 'threat' labeling; the Korea Herald reports no changes to the drill schedule ahead of the September 7 start near Jeju Island.",
+        "russia_signal": "Russian President Putin stated publicly that Japan bears responsibility for the deterioration in bilateral ties; Tokyo rejected the framing, attributing the breakdown to Russia's Ukraine invasion — extending the diplomatic standoff following Putin's Etorofu visit and the August 21 Bastion missile li"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-02T11:04:48.968874+00:00"
+  "last_updated": "2026-09-03T11:05:48.864548+00:00"
 }
