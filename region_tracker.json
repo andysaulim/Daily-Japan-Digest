@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-05": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry warned that India-Japan bilateral ties 'should not target third parties,' directly responding to the defense co-development pact and critical minerals agreements signed at the Takaichi-Modi summit. Beijing also announced forthcoming Chinese-Russian joint naval drills off Chi",
-        "dprk_signal": "Kim Jong Un personally observed cruise missile launches and weapons tests conducted from aboard the naval destroyer Kang Kon, per KCNA-sourced reporting carried by Reuters and the Japan Times. The tests follow North Korea's June commissioning of the Choe Hyon guided-missile destroyer and Kim's late ",
-        "russia_signal": "No new Russia-specific Northern Territories, Hokkaido, or bilateral Japan-Russia activity is reported in today's articles. The announced Chinese-Russian joint naval drills off China's coast (Nikkei Asia) continues the pattern of Sino-Russian military coordination documented in the regional tracker."
-      },
-      "watch_flag": false
-    },
     "2026-07-06": {
       "signals": {
         "china_signal": "China test-fired a submarine-launched ballistic missile into the South Pacific nuclear-free zone, with Japan informed by Chinese authorities, per Kyodo and Nikkei Asia; the test follows China's recent SLBM and naval expansion activity and occurred within waters covered by the Treaty of Rarotonga. Ch",
@@ -439,7 +431,15 @@
         "russia_signal": "Russian President Putin stated publicly that Japan bears responsibility for the deterioration in bilateral ties; Tokyo rejected the framing, attributing the breakdown to Russia's Ukraine invasion — extending the diplomatic standoff following Putin's Etorofu visit and the August 21 Bastion missile li"
       },
       "watch_flag": false
+    },
+    "2026-09-04": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, amplified by Global Times, stated that China and 'peace-loving countries' will act to curb Japan's defense expansion, framing it as 'neo-militarism under the guise of national normalization' — the latest iteration of a sustained public pressure campaign running through Augu",
+        "dprk_signal": "No new North Korean missile launch or KCNA statement specifically targeting Japan was reported in today's articles; Freedom Edge 2026 trilateral exercises remain scheduled to begin September 7 near Jeju Island despite DPRK's prior 'threat' labeling.",
+        "russia_signal": "Russian President Putin publicly lauded tax break programs in the Russian-administered islands claimed by Japan as the Northern Territories, deepening Moscow's administrative integration posture and extending the diplomatic standoff with Tokyo following Putin's Etorofu visit and the August 21 Bastio"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-03T11:05:48.864548+00:00"
+  "last_updated": "2026-09-04T11:05:04.761804+00:00"
 }
