@@ -156,6 +156,39 @@ def _validate_digest(digest: dict) -> list[str]:
 # ARCHIVE TO GITHUB PAGES
 # ─────────────────────────────────────────────────────────────────────────────
 
+def _decode_gnews_offline(url: str) -> str | None:
+    """Recover the publisher URL from a Google News token WITHOUT any network call.
+    Most `CBMi…` article tokens are base64url that embeds the real URL directly;
+    decoding the token and pulling out the http(s) substring resolves them offline
+    — far more reliable than the batchexecute round-trip, which depends on scraping
+    a live signature off Google and fails intermittently. Returns None when the
+    token is the newer opaque form (no embedded URL) so the caller falls back."""
+    import base64
+    from urllib.parse import urlparse as _up, unquote as _unq
+    try:
+        seg = _up(url).path.split("/")[-1]
+        if not seg or not seg.startswith("CBM"):
+            return None
+        s = seg.replace("-", "+").replace("_", "/")
+        s += "=" * (-len(s) % 4)
+        raw = base64.b64decode(s)
+        blob = raw.decode("latin-1", "ignore")
+        # The URL sits in a length-delimited protobuf field; it runs until the next
+        # control/high byte, which cleanly bounds it.
+        m = _re.search(r'https?://[^\x00-\x20"\\\x7f-\xff]+', blob)
+        if not m:
+            return None
+        real = _unq(m.group(0)).strip()
+        host = _up(real).netloc
+        # Sanity: a real external article URL — has a dotted host, not Google.
+        if (real.startswith("http") and "." in host
+                and "google.com" not in host and "gstatic.com" not in host):
+            return real
+        return None
+    except Exception:
+        return None
+
+
 def _decode_gnews_url(url: str, timeout: int = 8) -> str | None:
     """Decode a Google News RSS article URL to the real publisher URL via Google's
     batchexecute endpoint. Returns the real URL, or None on any failure.
@@ -218,6 +251,11 @@ def _resolve_google_url(url: str) -> str | None:
     """
     if "news.google.com" not in url:
         return url
+    # 1) Offline base64 decode (no network — handles the common embedded-URL form).
+    decoded = _decode_gnews_offline(url)
+    if decoded:
+        return decoded
+    # 2) Live batchexecute decode (for the newer opaque tokens).
     decoded = _decode_gnews_url(url)
     if decoded:
         return decoded

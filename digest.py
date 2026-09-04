@@ -119,6 +119,8 @@ NEVER report that a routine press conference or briefing merely took place when 
 
 FORMATTING: Do NOT use emojis anywhere in the output. Plain text only.
 
+NAMES — always give a person's FULL name (given + family name) with their correct title on FIRST mention, e.g. "Okinawa Governor Denny Tamaki," "BOJ Governor Kazuo Ueda," not "Governor Denny" or "Governor Ueda." NEVER refer to someone by their given name alone ("Governor Denny," "Mayor Genta") or drop the family name. After the first full mention you may use the family name only ("Tamaki said…"). If the source text gives only a partial name, use exactly what the source provides and do not invent the rest — but do not truncate a full name that the source supplies.
+
 DEDUPLICATION — CRITICAL (ZERO TOLERANCE):
 
 - ONE TOPIC = ONE ENTRY across the ENTIRE digest. Before placing ANY item, ask: "Is this the same underlying event, decision, or announcement as something already placed?" If yes, DO NOT include it — regardless of source, angle, or section.
