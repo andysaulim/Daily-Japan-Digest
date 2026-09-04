@@ -37,6 +37,12 @@ _LEDGER_WINDOW_DAYS = 14
 # by the archive (which is written before the email even goes out).
 LAST_SENT_TXT = ROOT / "last_sent.txt"
 
+# Per-pollster approval history (cached across Actions runs like the other
+# trackers). Powers the poll table's "vs prior" delta (change since the last
+# reading we saw for that pollster) and a fallback fieldwork date (when the
+# reading first appeared) for pollsters whose survey date we can't otherwise get.
+POLL_HISTORY_JSON = ROOT / "poll_history.json"
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # VALIDATION GATE
@@ -867,6 +873,13 @@ def _parse_poll_date(s):
     if not s:
         return None
     t = str(s).strip()
+    # ISO 'YYYY-MM-DD' (our history's first-seen fallback stores this shape)
+    m = _re.match(r"(\d{4})-(\d{2})-(\d{2})$", t)
+    if m:
+        try:
+            return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3))).date()
+        except ValueError:
+            pass
     # 'Mon DD, YYYY'
     m = _re.search(r"([A-Za-z]{3,9})\.?\s+(\d{1,2}),?\s+(\d{4})", t)
     if m and m.group(1)[:3].lower() in _MONTHS_IDX:
@@ -893,29 +906,110 @@ def _parse_poll_date(s):
     return None
 
 
+def _iso_to_display(iso: str) -> str:
+    """'2026-09-04' -> 'Sep 4, 2026' for a consistent date column. Pass through
+    anything that isn't a bare ISO date."""
+    try:
+        return datetime.strptime(iso, "%Y-%m-%d").strftime("%b %-d, %Y")
+    except (ValueError, TypeError):
+        return iso
+
+
+def _fmt_delta(delta: float) -> str:
+    """Format an approval delta as a signed string, e.g. 2.0 -> '+2.0', -1.5 -> '-1.5'."""
+    r = round(delta, 1)
+    if r == 0:
+        return "0.0"
+    return f"{'+' if r > 0 else ''}{r:g}"
+
+
 def _annotate_poll_dates(structured: list, baseline: list) -> None:
-    """Backfill any missing/undated poll date from the verified baseline (matched
-    by pollster) so every row shows a real fieldwork date, and stamp each poll's
-    `days_old` age. Warns when even the freshest poll is older than the staleness
-    threshold — the cue to refresh databases.RECENT_APPROVAL_POLLS."""
-    base_dates = {}
+    """Give every poll row a real date, a 'vs prior' delta, and a `days_old` age,
+    using three sources in priority order plus a persistent per-pollster history:
+
+      poll_date  — the row's own survey date if present (parseable), else the
+                   verified-baseline survey date for that pollster, else the date
+                   this reading first appeared in our history (fallback).
+      vs prior   — the row's own approval_change if the source gave one, else the
+                   delta vs the last DIFFERENT approval we recorded for that
+                   pollster (a true edition-over-edition change).
+
+    The history (POLL_HISTORY_JSON) is updated in place and persisted across runs
+    like the PM/region trackers."""
+    base_dates, base_changes = {}, {}
     for p in baseline:
-        d = str(p.get("poll_date", "")).strip()
-        if d:
-            base_dates.setdefault(str(p.get("pollster", "")).strip().lower(), d)
+        key = str(p.get("pollster", "")).strip().lower()
+        if str(p.get("poll_date", "")).strip():
+            base_dates.setdefault(key, str(p.get("poll_date")).strip())
+        if str(p.get("approval_change", "")).strip():
+            base_changes.setdefault(key, str(p.get("approval_change")).strip())
+
     today = datetime.now(ZoneInfo("America/New_York")).date()
+    today_iso = today.isoformat()
+    try:
+        history = json.loads(POLL_HISTORY_JSON.read_text(encoding="utf-8"))
+        if not isinstance(history, dict):
+            history = {}
+    except Exception:
+        history = {}
+
     freshest = None
     for p in structured:
+        key = str(p.get("pollster", "")).strip().lower()
+        hist = history.get(key) if isinstance(history.get(key), dict) else {}
+        cur = _pct_to_float(p.get("cabinet_approval"))
+
+        # ── Date: own survey date → baseline survey date → history first-seen ──
         pd = str(p.get("poll_date", "")).strip()
         if not pd or pd.lower() == "recent":
-            pd = base_dates.get(str(p.get("pollster", "")).strip().lower(), "")
-            p["poll_date"] = pd
+            pd = base_dates.get(key, "")
+        # If the reading is unchanged from what we last saw, keep the date we
+        # first recorded it; if it changed (or is new), it's effectively today's.
+        hist_appr = hist.get("approval")
+        if cur is not None and hist_appr is not None and abs(cur - hist_appr) < 0.05:
+            first_seen = hist.get("as_of", today_iso)
+        else:
+            first_seen = today_iso
+        if not pd:
+            pd = _iso_to_display(first_seen)
+        p["poll_date"] = pd
         d = _parse_poll_date(pd)
         if d:
             age = (today - d).days
             p["days_old"] = age
             if freshest is None or age < freshest:
                 freshest = age
+
+        # ── vs prior: own change → baseline change → history delta ──
+        chg = str(p.get("approval_change", "")).strip()
+        if not chg:
+            chg = base_changes.get(key, "")
+        if not chg and cur is not None and hist_appr is not None and abs(cur - hist_appr) >= 0.05:
+            chg = _fmt_delta(cur - hist_appr)
+        elif not chg and cur is not None and hist_appr is not None:
+            # Unchanged reading — carry the last delta we computed, if any.
+            chg = str(hist.get("change", "")).strip()
+        if chg:
+            p["approval_change"] = chg
+
+        # ── Update history for this pollster ──
+        if cur is not None:
+            changed = hist_appr is None or abs(cur - hist_appr) >= 0.05
+            history[key] = {
+                "pollster": p.get("pollster", ""),
+                "approval": cur,
+                "disapproval": _pct_to_float(p.get("cabinet_disapproval")),
+                "as_of": today_iso if changed else hist.get("as_of", today_iso),
+                "change": chg,
+                "poll_date": pd,
+            }
+
+    try:
+        POLL_HISTORY_JSON.write_text(json.dumps(history, ensure_ascii=False, indent=2),
+                                     encoding="utf-8")
+    except Exception as e:
+        print(f"   ⚠ Could not write poll history (non-fatal): {e}")
+
     if freshest is not None and freshest > _POLL_STALE_DAYS:
         print(f"   ⚠ Polls: freshest poll is {freshest}d old (> {_POLL_STALE_DAYS}d) — "
               f"refresh databases.RECENT_APPROVAL_POLLS")

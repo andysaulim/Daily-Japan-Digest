@@ -241,6 +241,12 @@ def render_html(digest: dict) -> str:
     sections_wire = []      # Business, Indo-Pacific, Also Today, On This Day
     sections_post = []      # Footer
 
+    # 0a. Internal-use banner — the very first thing in the email.
+    sections_pre.append(
+        '<div style="background:#BC002D;color:#fff;padding:6px 32px;text-align:center;'
+        'font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;'
+        'font-family:Arial,sans-serif;" class="sec">For Internal Use Only</div>')
+
     # 0. View in browser (+ full-color print PDF link)
     if web_url:
         pdf_url = web_url[:-len("index.html")] + "index.pdf" if web_url.endswith("index.html") else ""
@@ -812,7 +818,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 <div style="font-size:12px;line-height:1.5;color:#555;">{sm}</div>
 </div>"""
-        sections_analysis.append(f'<div {_SEC}>{_sec_label("Expert Analysts")}{body}</div>')
+        sections_analysis.append(f'<div {_SEC}>{_sec_label("Op-Eds, Commentaries &amp; Events")}{body}</div>')
 
     # 14. Public Sentiment — cabinet approval & party support
     ps = digest.get("public_sentiment") or {}
@@ -952,6 +958,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
     # Footer
     sections_post.append(f"""
 <div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec footer">
+<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FF6B6B;font-family:Arial,sans-serif;margin-bottom:10px;">For Internal Use Only</div>
 <div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
 CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
 </div>
