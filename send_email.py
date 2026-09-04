@@ -48,7 +48,10 @@ def send_digest(html: str, subject: str | None = None,
     msg = EmailMessage()
     msg["Subject"] = subject
     msg["From"] = f"Japan Daily Brief <{gmail_user}>"
-    msg["To"] = ", ".join(recipients)
+    # BCC delivery: the visible To is the brief itself, and the real recipients
+    # are passed only in the SMTP envelope (to_addrs below) — so no recipient
+    # sees the distribution list or any other recipient.
+    msg["To"] = f"Japan Daily Brief <{gmail_user}>"
     msg["Reply-To"] = gmail_user
     # Plain-text fallback (most clients prefer HTML when available)
     msg.set_content("This email requires an HTML-capable client to render properly.")
@@ -60,7 +63,9 @@ def send_digest(html: str, subject: str | None = None,
         try:
             with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context, timeout=30) as smtp:
                 smtp.login(gmail_user, gmail_pass)
-                smtp.send_message(msg)
+                # Envelope recipients = the real list, delivered as BCC (not in
+                # any visible header).
+                smtp.send_message(msg, from_addr=gmail_user, to_addrs=recipients)
             print(f"✅ Sent to {len(recipients)} recipient(s)")
             return True
         except (smtplib.SMTPException, ConnectionError, OSError) as e:

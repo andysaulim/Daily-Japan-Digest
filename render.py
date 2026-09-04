@@ -955,6 +955,9 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
 CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
 </div>
+<div style="max-width:520px;margin:10px auto 12px;font-size:11px;line-height:1.6;color:rgba(255,255,255,0.62);font-family:Arial,sans-serif;">
+From the CSIS Japan Chair. This newsletter is automatically generated, so it may contain errors &mdash; please verify all information and sources before citing. To report errors or other issues, contact Deirdre Martin at <a href="mailto:dmartin@csis.org" style="color:rgba(255,255,255,0.85);text-decoration:underline;">dmartin@csis.org</a>.
+</div>
 <a href="#top" style="font-size:10px;color:rgba(255,255,255,0.4);text-decoration:none;letter-spacing:1px;">&#8593; Back to top</a>
 </div>""")
 
