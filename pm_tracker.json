@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-05",
+      "activity": "PM Takaichi praised the transparency of Japan's record FY2027 budget requests and the government confirmed it is considering forgoing a second FY2026 supplementary budget, per Japan Times and Jiji Press.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-05T11:04:44.093021+00:00"
+    },
+    {
       "date": "2026-09-04",
       "activity": "PM Takaichi presided over the Self-Defense Forces Senior Commanders' Conference in Tokyo and pledged to accelerate AI and unmanned defense asset introduction into SDF operations.",
       "source": "digest",
@@ -428,5 +435,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-09-04T11:05:04.760878+00:00"
+  "last_updated": "2026-09-05T11:04:44.093072+00:00"
 }

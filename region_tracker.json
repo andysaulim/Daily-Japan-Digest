@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-06": {
-      "signals": {
-        "china_signal": "China test-fired a submarine-launched ballistic missile into the South Pacific nuclear-free zone, with Japan informed by Chinese authorities, per Kyodo and Nikkei Asia; the test follows China's recent SLBM and naval expansion activity and occurred within waters covered by the Treaty of Rarotonga. Ch",
-        "dprk_signal": "Kim Jong Un personally oversaw cruise missile launches and multiple weapons tests from the guided-missile destroyer Kang Kon, North Korea's recently repaired surface combatant, per KCNA-sourced reporting confirmed by Reuters, Yonhap, Japan Times, and Straits Times; separately, North Korea tested new"
-      },
-      "watch_flag": true
-    },
     "2026-07-07": {
       "signals": {
         "china_signal": "Two China Coast Guard ships entered Japanese territorial waters off the Senkaku Islands on July 7, while China's state media simultaneously rebuked Tokyo for what Beijing characterized as interference with Chinese scientific research operations near the Diaoyu Dao. China's SLBM test into the South P",
@@ -439,7 +432,15 @@
         "russia_signal": "Russian President Putin publicly lauded tax break programs in the Russian-administered islands claimed by Japan as the Northern Territories, deepening Moscow's administrative integration posture and extending the diplomatic standoff with Tokyo following Putin's Etorofu visit and the August 21 Bastio"
       },
       "watch_flag": false
+    },
+    "2026-09-05": {
+      "signals": {
+        "china_signal": "The sustained Chinese Foreign Ministry pressure campaign framing Japan's defense buildup as 'neo-militarism under the guise of national normalization' continues from prior days; RBC-Ukraine reporting on Japan's special weapons development references the China threat vector. No new Senkaku CCG intrus",
+        "dprk_signal": "Freedom Edge 2026 US-Japan-ROK trilateral exercises are set to begin September 7 near Jeju Island, with North Korea having labeled them a 'threat'; no new missile launch or KCNA statement specifically targeting Japan appears in today's articles.",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident appears in today's articles; the baseline diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territories islands continues."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-04T11:05:04.761804+00:00"
+  "last_updated": "2026-09-05T11:04:44.093989+00:00"
 }
