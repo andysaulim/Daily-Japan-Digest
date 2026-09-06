@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-07": {
-      "signals": {
-        "china_signal": "Two China Coast Guard ships entered Japanese territorial waters off the Senkaku Islands on July 7, while China's state media simultaneously rebuked Tokyo for what Beijing characterized as interference with Chinese scientific research operations near the Diaoyu Dao. China's SLBM test into the South P",
-        "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' continuing a messaging campaign that directly targets Japan's counterstrike capability program; Kim Jong Un oversaw cruise missile launches from the Kang Kon destroyer and "
-      },
-      "watch_flag": true
-    },
     "2026-07-08": {
       "signals": {
         "china_signal": "China and Japan issued contradictory official accounts of a confrontation near the Senkaku / Diaoyu Islands, while China's Global Times rebuked Tokyo for alleged interference with Chinese scientific research operations near the Diaoyu Dao. China's Foreign Ministry dismissed regional concerns over it",
@@ -440,7 +433,15 @@
         "russia_signal": "No new acute Russia-Japan territorial or military incident appears in today's articles; the baseline diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territories islands continues."
       },
       "watch_flag": false
+    },
+    "2026-09-06": {
+      "signals": {
+        "china_signal": "No new Senkaku CCG intrusion or acute China-Japan incident appears in today's articles. The sustained China Foreign Ministry pressure campaign framing Japan's defense buildup as 'neo-militarism' continues as the standing baseline from prior days; no new escalatory statement specifically targeting Ja",
+        "dprk_signal": "Freedom Edge 2026 US-Japan-ROK trilateral exercises are set to begin September 7 near Jeju Island; no new DPRK missile launch or KCNA statement specifically targeting Japan appears in today's articles, though North Korea's prior 'threat' labeling of the exercises remains the active baseline.",
+        "russia_signal": "Jiji Press reports a statue depicting destruction of a Japanese symbol has been displayed in Russia, extending the pattern of Russian symbolic-provocation activity; the baseline standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territorie"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-05T11:04:44.093989+00:00"
+  "last_updated": "2026-09-06T11:04:16.805112+00:00"
 }
