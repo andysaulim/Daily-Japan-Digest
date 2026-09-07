@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-07",
+      "activity": "PM Takaichi stepped up cabinet reshuffle planning with an explicit focus on US-savvy ministers and lauded the transparency of Japan's record FY2027 budget requests, per Nikkei Asia and Japan Times reporting on her public statements.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-07T11:05:12.517955+00:00"
+    },
+    {
       "date": "2026-09-06",
       "activity": "PM Takaichi confirmed to address the UN General Assembly on September 22; separately reported rejecting criticism over the revised Imperial House Law and lauding transparency of record FY2027 budget requests.",
       "source": "digest",
@@ -442,5 +449,5 @@
       "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-09-06T11:04:16.804241+00:00"
+  "last_updated": "2026-09-07T11:05:12.518005+00:00"
 }

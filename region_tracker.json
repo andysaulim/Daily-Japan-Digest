@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-08": {
-      "signals": {
-        "china_signal": "China and Japan issued contradictory official accounts of a confrontation near the Senkaku / Diaoyu Islands, while China's Global Times rebuked Tokyo for alleged interference with Chinese scientific research operations near the Diaoyu Dao. China's Foreign Ministry dismissed regional concerns over it",
-        "dprk_signal": "North Korean state media characterized Japan's military buildup as 'overseas aggression that is a reality, not a hypothetical,' directly targeting Japan's counterstrike capability program; separately, North Korea is reported to be flexing naval capabilities ahead of anticipated China-Russia joint dr"
-      },
-      "watch_flag": true
-    },
     "2026-07-09": {
       "signals": {
         "china_signal": "China's Foreign Ministry told countries not to 'overread' Beijing's SLBM test into the South Pacific, in direct response to the US-Japan-South Korea trilateral joint statement of concern. China's detention of two Japanese nationals in Dalian, first reported in early July, received renewed coverage v",
@@ -441,7 +434,15 @@
         "russia_signal": "Jiji Press reports a statue depicting destruction of a Japanese symbol has been displayed in Russia, extending the pattern of Russian symbolic-provocation activity; the baseline standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territorie"
       },
       "watch_flag": false
+    },
+    "2026-09-07": {
+      "signals": {
+        "china_signal": "Chinese Foreign Ministry Spokesperson Mao Ning held the regular September 7 press conference; no new acute Senkaku CCG intrusion or escalatory China-Japan incident appears in today's articles. The sustained Chinese Foreign Ministry framing of Japan's defense buildup as 'neo-militarism under the guis",
+        "dprk_signal": "North Korea commissioned its second nuclear-capable destroyer — the vessel that capsized on initial launch — as Freedom Edge 2026 began today near Jeju Island; Kim Jong Un declared the destroyer part of Pyongyang's nuclear response system and pledged to build a nuclear-armed navy, per multiple repor",
+        "russia_signal": "No new acute Russia-Japan territorial or military incident appears in today's articles; the sustained diplomatic standoff over Putin's Etorofu visit, Russia's August 21 Bastion missile live-fire from the disputed Northern Territories, and the disputed war-victory statue controversy continues as the "
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-09-06T11:04:16.805112+00:00"
+  "last_updated": "2026-09-07T11:05:12.518875+00:00"
 }
