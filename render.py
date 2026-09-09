@@ -127,7 +127,7 @@ def _esc(text) -> str:
 
 
 def _social_badge(badge_class: str) -> str:
-    return {"sb-p": "#1B2A4A", "sb-r": "#C0392B", "sb-s": "#1B2A4A"}.get(badge_class, "#1B2A4A")
+    return {"sb-p": "#1B2A4A", "sb-r": "#E8697A", "sb-s": "#1B2A4A"}.get(badge_class, "#1B2A4A")
 
 
 def _arrow(val) -> str:
@@ -138,7 +138,7 @@ def _arrow(val) -> str:
     if val > 0:
         return f'<span style="color:#27AE60;">&#9650; +{val:.2f}%</span>'
     if val < 0:
-        return f'<span style="color:#C0392B;">&#9660; {val:.2f}%</span>'
+        return f'<span style="color:#E8697A;">&#9660; {val:.2f}%</span>'
     return '<span style="color:#7F8C8D;">— flat</span>'
 
 
@@ -148,7 +148,7 @@ def _cds_arrow(val) -> str:
     except (TypeError, ValueError):
         return '<span style="color:#7F8C8D;">—</span>'
     if val > 0:
-        return f'<span style="color:#C0392B;">&#9650; +{val:.1f} bps</span>'
+        return f'<span style="color:#E8697A;">&#9650; +{val:.1f} bps</span>'
     if val < 0:
         return f'<span style="color:#27AE60;">&#9660; {val:.1f} bps</span>'
     return '<span style="color:#7F8C8D;">— flat</span>'
@@ -162,7 +162,7 @@ def _link_or_text(text: str, url: str,
 
 
 _SEC = 'style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"'
-_SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #C0392B;border-bottom:1px solid #EBEBEB;" class="sec"'
+_SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #E8697A;border-bottom:1px solid #EBEBEB;" class="sec"'
 
 INK  = "#1A222E"
 MUTE = "#6B7280"
@@ -391,16 +391,16 @@ def render_html(digest: dict) -> str:
               'background:#FFFFFF;'
               'border-radius:14px;'
               'text-decoration:none;white-space:nowrap;')
-        _links = [f'<a href="{_esc(web_url)}" style="{_a}">Read online</a>']
+        _links = [f'<a class="pill" href="{_esc(web_url)}" style="{_a}">Read online</a>']
         # Only when the run actually published one. This edition has no PDF
         # exporter, and the link used to fall back to a guessed latest.pdf, so
         # the button shipped every day pointing at a file that has never
         # existed. A reader can still print the page: see @media print below.
         _pdf = digest.get("pdf_url") or ""
         if _pdf:
-            _links.append(f'<a href="{_esc(_pdf)}" style="{_a}">Download PDF</a>')
+            _links.append(f'<a class="pill" href="{_esc(_pdf)}" style="{_a}">Download PDF</a>')
         if _base:
-            _links.append(f'<a href="{_esc(_base + "archive.html")}" style="{_a}">Past issues</a>')
+            _links.append(f'<a class="pill" href="{_esc(_base + "archive.html")}" style="{_a}">Past issues</a>')
         sections_pre.append(f"""
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#2E3644;" class="util-row">
           <tr>
@@ -434,7 +434,7 @@ def render_html(digest: dict) -> str:
           <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;color:rgba(255,255,255,0.72);white-space:nowrap;">{wc:,} words &middot; {read_min} min read</div>
         </td>
       </tr></table>
-      {{"<div style='margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.28);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;line-height:1.55;'><strong style='color:#FFFFFF;font-size:11px;letter-spacing:1.5px;font-family:Arial,sans-serif;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}}
+      {"<div style='margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.28);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;line-height:1.55;'><strong style='color:#FFFFFF;font-size:11px;letter-spacing:1.5px;font-family:Arial,sans-serif;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
     </div>
     """)
 
@@ -504,7 +504,9 @@ def render_html(digest: dict) -> str:
     if memo:
         memo_html = ""
         for idx, mi in enumerate(memo[:3], 1):
-            t = _esc(mi) if isinstance(mi, str) else _esc(mi.get("text", "") if isinstance(mi, dict) else str(mi or ""))
+            # The memo is the first thing read and the place the prompt most
+            # wants a name bolded, so it converts emphasis like any body copy.
+            t = _emphasis(_esc(mi) if isinstance(mi, str) else _esc(mi.get("text", "") if isinstance(mi, dict) else str(mi or "")))
             memo_html += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
 <tr>
 <td width="28" style="vertical-align:top;padding-top:1px;">
@@ -522,8 +524,8 @@ def render_html(digest: dict) -> str:
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
 <a name="memo" id="memo"></a>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="glance-panel" style="background:#FBEEF1;border-left:3px solid {HINOMARU_RED};">
-  <tr><td style="padding:16px 20px 8px;">
-    {_sec_label("Today at a Glance")}
+  <tr><td style="padding:0;">{_sec_label("Today at a Glance")}</td></tr>
+            <tr><td style="padding:0 20px 8px;">
     {memo_html}
   </td></tr>
 </table>
@@ -537,7 +539,7 @@ def render_html(digest: dict) -> str:
             cat = _esc(_str(s.get("category_tag", s.get("category", ""))))
             h = _esc(s.get("headline", ""))
             b_raw = s.get("body", "") or ""
-            b = _esc(b_raw) if b_raw.strip() and b_raw.strip() != s.get("headline", "").strip() else ""
+            b = _emphasis(_esc(b_raw)) if b_raw.strip() and b_raw.strip() != s.get("headline", "").strip() else ""
             # Primary source = the publisher the link actually opens (link_source,
             # domain-derived), NOT the model's free-text multi-source line.
             ls = s.get("link_source", "")
@@ -551,15 +553,15 @@ def render_html(digest: dict) -> str:
             ref = ""
             if orig and _key(orig) != _key(s.get("headline", "")):
                 _lead = _esc(ls) + ": " if ls else ""
-                ref = (f"<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#999;font-style:italic;'>"
-                       f"per {_lead}&ldquo;{_link_or_text(_esc(orig), url, style='color:#999;text-decoration:underline;')}&rdquo;</div>")
+                ref = (f"<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#6B7280;font-style:italic;'>"
+                       f"per {_lead}&ldquo;{_link_or_text(_esc(orig), url, style='color:#6B7280;text-decoration:underline;')}&rdquo;</div>")
             sh += f"""
 <div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;font-weight:700;margin-bottom:6px;">{cat}</div>
 <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;">{_link_or_text(h, url, style="color:#1B2A4A;text-decoration:none;")}</h3>
 {"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
 {ref}
-<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
+<div style="font-size:10px;color:#6B7280;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
         sections_today.append(f'<div {_SEC}><a name="top-stories" id="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>')
 
@@ -578,7 +580,7 @@ def render_html(digest: dict) -> str:
         for it in overnight:
             cat = _esc(_str(it.get("category", "")))
             h = _esc(it.get("headline", ""))
-            b = _esc(it.get("body_text", ""))
+            b = _emphasis(_esc(it.get("body_text", "")))
             src = _esc(_clean_src(it.get("source", "")))
             url = it.get("url", "")
             tail = (f'<span style="color:{MUTE};"> &mdash; {b}</span>' if b else "")
@@ -675,7 +677,7 @@ def render_html(digest: dict) -> str:
         vol = _esc(xd.get("output_volume", ""))
         watch = xd.get("watch_flag")
         watch_badge = ('<span style="display:inline-block;padding:2px 8px;border-radius:3px;'
-                       'font-size:10px;font-weight:700;color:#fff;background:#C0392B;'
+                       'font-size:10px;font-weight:700;color:#fff;background:#E8697A;'
                        'letter-spacing:0.5px;margin-left:8px;">WATCH</span>') if watch else ""
 
         sections_analysis.append(f"""
@@ -717,9 +719,9 @@ def render_html(digest: dict) -> str:
             if mjp:
                 hdr_parts.append(f'<span style="font-size:11px;color:#666;">{mjp}</span>')
             if mn:
-                hdr_parts.append(f'<span style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.6px;">{mn}</span>')
+                hdr_parts.append(f'<span style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.6px;">{mn}</span>')
             if off:
-                hdr_parts.append(f'<span style="font-size:11px;color:#999;font-style:italic;">{off}</span>')
+                hdr_parts.append(f'<span style="font-size:11px;color:#6B7280;font-style:italic;">{off}</span>')
             hdr = ' <span style="color:#ccc;">·</span> '.join(hdr_parts)
             slink = ""
             if url and url != "#" and url.startswith("http"):
@@ -727,9 +729,9 @@ def render_html(digest: dict) -> str:
                 # ministry — a MOFA protest reported by a news agency must not
                 # render a link that looks like it points to MOFA's own site.
                 sl = lbl if lbl else "Source"
-                slink = f'<div style="margin-top:6px;font-size:11px;color:#888;">→ <a href="{_esc(url)}" style="color:#888;text-decoration:none;">{_esc(sl)} ↗</a></div>'
+                slink = f'<div style="margin-top:6px;font-size:11px;color:#6B7280;">→ <a href="{_esc(url)}" style="color:#6B7280;text-decoration:none;">{_esc(sl)} ↗</a></div>'
             elif lbl:
-                slink = f'<div style="margin-top:6px;font-size:11px;color:#888;">→ {_esc(lbl)}</div>'
+                slink = f'<div style="margin-top:6px;font-size:11px;color:#6B7280;">→ {_esc(lbl)}</div>'
             gov_rows_html += f"""
 <div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
 <div style="margin-bottom:6px;">{hdr}</div>
@@ -751,7 +753,7 @@ def render_html(digest: dict) -> str:
                 pred = _esc(p.get("predecessor", "")) if p.get("predecessor") else ""
                 ac_c = ac.get(a, "#1B2A4A")
                 bg = f'<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;color:#fff;background:{ac_c};text-transform:uppercase;margin-left:6px;">{_esc(a)}</span>'
-                pl = f'<div style="font-size:11px;color:#888;margin-top:2px;">Succeeds: {pred}</div>' if pred else ""
+                pl = f'<div style="font-size:11px;color:#6B7280;margin-top:2px;">Succeeds: {pred}</div>' if pred else ""
                 pi += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {ac_c};">
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{nm}{bg}</div>
 <div style="font-size:13px;color:#555;">{pos}</div>
@@ -767,7 +769,7 @@ def render_html(digest: dict) -> str:
         if npc:
             ni = ""
             for n in npc:
-                body = _esc(n.get("body", ""))
+                body = _emphasis(_esc(n.get("body", "")))
                 act = _esc(n.get("action", ""))
                 det = _esc(n.get("detail", ""))
                 url = n.get("url", "")
@@ -818,7 +820,7 @@ def render_html(digest: dict) -> str:
         sections_trackers.append(f"""
 <div {_SEC}>
 <a name="tokyo" id="tokyo"></a>{_sec_label("Japanese Government")}
-<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ{(" · " + ds) if ds else ""}</div>
+<div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ{(" · " + ds) if ds else ""}</div>
 {gov_grid}{pers_html}{npc_html}
 </div>""")
 
@@ -855,7 +857,7 @@ def render_html(digest: dict) -> str:
                 sr += (f'<tr style="border-bottom:1px solid #EEE;">'
                        f'<td style="padding:5px 6px 5px 0;font-size:13px;font-weight:600;color:{NAVY};">{_esc(str(sec).title())}</td>'
                        f'<td style="padding:5px 6px;font-size:14px;font-weight:700;color:{HINOMARU_RED};text-align:center;">{_esc(str(rate))}</td>'
-                       f'<td style="padding:5px 6px;font-size:10px;color:#999;text-transform:uppercase;">Section 232</td></tr>')
+                       f'<td style="padding:5px 6px;font-size:10px;color:#6B7280;text-transform:uppercase;">Section 232</td></tr>')
             s232_html = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">{sr}</table>') if sr else ""
             il = (f'<div style="margin-top:6px;font-size:13px;line-height:1.5;color:#333;">'
                   f'<strong style="color:{NAVY};">Investment framework:</strong> {invf}</div>') if invf else ""
@@ -863,7 +865,7 @@ def render_html(digest: dict) -> str:
                    f'<strong style="color:{NAVY};">Section 301:</strong> {s301}</div>') if s301 else ""
             meta_parts = [x for x in ((("Deal: " + deal) if deal else ""),
                                       (("Next: " + nt) if nt else ""), lc) if x]
-            meta_line = (f'<div style="margin-top:10px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">'
+            meta_line = (f'<div style="margin-top:10px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#6B7280;">'
                          + " &middot; ".join(meta_parts) + "</div>") if meta_parts else ""
             body += f"""<div class="tariff-box" style="margin-bottom:16px;padding:14px;background:#FBFBFD;border-radius:6px;border:1px solid #E6E6EC;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:10px;">US Tariffs on Japan</div>
@@ -887,7 +889,7 @@ def render_html(digest: dict) -> str:
                 det = _esc(d.get("detail", ""))
                 url = d.get("url", "")
                 dr += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid {HINOMARU_RED};">
-<div style="font-size:13px;font-weight:600;color:{NAVY};line-height:1.4;">{_link_or_text(hd, url)}{(' <span style="color:#888;font-weight:400;font-size:11px;">· ' + val + '</span>') if val else ''}</div>
+<div style="font-size:13px;font-weight:600;color:{NAVY};line-height:1.4;">{_link_or_text(hd, url)}{(' <span style="color:#6B7280;font-weight:400;font-size:11px;">· ' + val + '</span>') if val else ''}</div>
 <div style="font-size:13px;line-height:1.5;color:#444;">{parties}{(' — ' + det) if det else ''}</div>
 </div>"""
             body += f"""<div style="margin-bottom:16px;">
@@ -904,14 +906,14 @@ def render_html(digest: dict) -> str:
         bh = ""
         for b in biz[:6]:
             h = _esc(b.get("headline", ""))
-            bt = _esc(b.get("body_text", ""))
+            bt = _emphasis(_esc(b.get("body_text", "")))
             url = b.get("url", "")
             src = _esc(b.get("source", ""))
             sec = _esc(b.get("sector", ""))
             comps = b.get("companies", [])
             cs = ", ".join(_esc(c) for c in comps) if comps else ""
             bh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
-<div style="font-size:11px;color:#888;text-transform:uppercase;">{sec} · {src}{(' · ' + cs) if cs else ''}</div>
+<div style="font-size:11px;color:#6B7280;text-transform:uppercase;">{sec} · {src}{(' · ' + cs) if cs else ''}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
@@ -925,7 +927,7 @@ def render_html(digest: dict) -> str:
             r = it.get("region_tag", "Indo-Pacific")
             bar = NAVY
             h = _esc(it.get("headline", ""))
-            bt = _esc(it.get("body_text", ""))
+            bt = _emphasis(_esc(it.get("body_text", "")))
             url = it.get("url", "")
             src = _esc(_clean_src(it.get("source", "")))
             ih += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
@@ -963,10 +965,10 @@ def render_html(digest: dict) -> str:
                 src = _esc(o.get("source", ""))
                 auth = _esc(o.get("authors", ""))
                 ca = _esc(o.get("central_argument", ""))
-                sm = _esc(o.get("summary", ""))
+                sm = _emphasis(_esc(o.get("summary", "")))
                 url = o.get("url", "")
                 body += f"""<div style="margin-bottom:14px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-<div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src}{(' · ' + auth) if auth else ''}</div>
+<div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src}{(' · ' + auth) if auth else ''}</div>
 <div style="font-size:14px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:6px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 {"<div style='font-size:13px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>" + ca + "</div>" if ca else ""}
 {"<div style='font-family:Georgia,serif;font-size:13px;line-height:1.5;color:#4A5260;'>" + sm + "</div>" if sm else ""}
@@ -978,7 +980,7 @@ def render_html(digest: dict) -> str:
                 src = _esc(a.get("source", ""))
                 tier = _esc(a.get("journal_tier", ""))
                 auth = _esc(a.get("authors", ""))
-                sm = _esc(a.get("summary", ""))
+                sm = _emphasis(_esc(a.get("summary", "")))
                 url = a.get("url", "")
                 body += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
 <div style="font-size:10px;color:#1B2A4A;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src} · {tier}{(' · ' + auth) if auth else ''}</div>
@@ -1050,7 +1052,7 @@ def render_html(digest: dict) -> str:
             poll_body += f'<div style="font-size:13px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> {disc}</div>'
 
         # Aggregator link (Observing Japan poll tracker)
-        poll_body += (f'<div style="margin-top:12px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">'
+        poll_body += (f'<div style="margin-top:12px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#6B7280;">'
                       f'Poll tracker: '
                       + _link_or_text("Observing Japan approval-rating aggregator &#8594;", OBSERVING_JAPAN_POLLS,
                                       style="color:" + HINOMARU_RED + ";text-decoration:none;font-weight:600;")
@@ -1079,7 +1081,7 @@ def render_html(digest: dict) -> str:
 </td>
 <td style="padding-left:10px;vertical-align:middle;">
 <div style="font-size:13px;font-weight:700;color:{NAVY};">{who}</div>
-<div style="font-size:11px;color:#888;">{meta}</div>
+<div style="font-size:11px;color:#6B7280;">{meta}</div>
 </td>
 </tr></table>
 <p style="margin:0;font-size:13px;line-height:1.6;color:#2C3E50;font-style:italic;">&ldquo;{q}&rdquo;</p>
@@ -1107,7 +1109,7 @@ def render_html(digest: dict) -> str:
                              headline=_esc(i.get("headline", "")),
                              url=i.get("url", ""),
                              src=_esc(_clean_src(i.get("source", ""))),
-                             body=_esc(i.get("body_text", "")))
+                             body=_emphasis(_esc(i.get("body_text", ""))))
                 for i in _items)
             ah += ((_subhead(_esc(_cat)) if _multi else "")
                    + rows)
@@ -1225,7 +1227,7 @@ def render_html(digest: dict) -> str:
   /* Reset */
   body, table, td, div, p {{ margin:0; padding:0; }}
   img {{ border:0; display:block; }}
-  /* Data typography — monospace for machine-measured numbers */
+  /* Data typography - monospace for machine-measured numbers */
   .mkt-table div[style*="font-weight:700"], .key-stat-num {{ font-family:'Courier New',Courier,monospace !important; }}
   /* Mobile responsive */
   @media only screen and (max-width: 620px) {{
@@ -1250,7 +1252,7 @@ def render_html(digest: dict) -> str:
     .sec, .footer {{ padding:16px 16px !important; }}
     h1 {{ font-size:22px !important; }}
     .key-stat-num {{ font-size:26px !important; }}
-    /* Market strip stays multi-across on phones — smaller mono, tighter pad */
+    /* Market strip stays multi-across on phones - smaller mono, tighter pad */
     .mkt-table td {{ padding:8px 4px 10px !important; }}
     .mkt-table div[style*="font-size:22px"] {{ font-size:16px !important; }}
     .mkt-table div[style*="font-size:14px"] {{ font-size:13px !important; }}
@@ -1275,7 +1277,7 @@ def render_html(digest: dict) -> str:
     h1 {{ font-size:22px !important; }}
     .mkt-table td {{ padding:10px 10px 12px !important; }}
   }}
-  /* Dark mode — scoped, non-destructive. The masthead, market strip,
+  /* Dark mode - scoped, non-destructive. The masthead, market strip,
      Regional Pressure Watch panel, key stat, and footer are already dark
      surfaces and need no inversion. */
   /* Print. Without this a Print-to-PDF is a long screenshot: chrome on every
@@ -1305,6 +1307,9 @@ def render_html(digest: dict) -> str:
     /* The terminal strip is white by design in light mode; left unmapped it
        stays white in dark mode, a bright band across the bottom. */
     .wrapper .footer-end {{ background:#1a1a1a !important; }}
+      /* Keep the filled buttons filled. The generic white-background
+         rule darkens them while their type stays dark, which measured
+         1.23:1 - a button you cannot read. */
     .wrapper .footer-end td {{ color:#9AA3AE !important; }}
     .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
     /* Trade dashboard light boxes → neutral dark equivalents */
@@ -1330,7 +1335,7 @@ def render_html(digest: dict) -> str:
     .wrapper [style*="color:#b7791f"] {{ color:#9AA3AE !important; }}
     .wrapper [style*="color:#BC002D"] {{ color:#E8E6E1 !important; }}
     .wrapper [style*="color:#bc002d"] {{ color:#E8E6E1 !important; }}
-    .wrapper [style*="color:#C0392B"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#E8697A"] {{ color:#C4C8CE !important; }}
     .wrapper [style*="color:#c0392b"] {{ color:#C4C8CE !important; }}
     .wrapper [style*="color:#FFFFFF"] {{ color:#9AA3AE !important; }}
     .wrapper [style*="color:#ff6b6b"] {{ color:#9AA3AE !important; }}
@@ -1375,15 +1380,19 @@ def render_html(digest: dict) -> str:
 <!--[if mso]>
 <style type="text/css">
   table {{ border-collapse:collapse; }}
-  .wrapper {{ width:680px; }}
+  .wrapper {{ width:      /* Last in the block: equal specificity, so order decides. The pill is
+         dark type on a white fill, and the generic white-background rule
+         above darkens the fill while the type stays dark - 1.23:1. */
+      .wrapper .pill {{ background:#E8E6E1 !important; color:#14181F !important; }}
+680px; }}
 </style>
 <![endif]-->
 </head>
-<body style="margin:0;padding:0;background:#F2F3F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+<body style="margin:0;padding:0;background:#F2F3F5;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 <a name="top" id="top"></a>
 <!-- Fixed-width frame as a centered TABLE. The width is an HTML attribute
      (width="680"), so it survives when a client strips the <style> block on
-     forward/reply — keeping the layout's shape. class="wrapper" is retained so
+     forward/reply - keeping the layout's shape. class="wrapper" is retained so
      the mobile media query can still flex it to 100% while the <style> is present. -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background:#F2F3F5;">
 <tr>
