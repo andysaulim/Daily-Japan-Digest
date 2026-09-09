@@ -1270,7 +1270,7 @@ def render_html(digest: dict) -> str:
   }}
   /* Tablet breakpoint */
   @media only screen and (min-width: 621px) and (max-width: 768px) {{
-    .wrapper {{ width:100% !important; }}
+    .wrapper {{ width:100% !important; max-width:680px !important; }}
     .sec, .footer {{ padding:16px 22px !important; }}
     h1 {{ font-size:22px !important; }}
     .mkt-table td {{ padding:10px 10px 12px !important; }}
@@ -1389,7 +1389,7 @@ def render_html(digest: dict) -> str:
 <tr>
 <td align="center" valign="top" style="padding:0;">
 <!--[if mso]><table width="680" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td><![endif]-->
-<table role="presentation" class="wrapper" width="680" cellpadding="0" cellspacing="0" border="0" align="center" style="width:680px;max-width:680px;margin:0 auto;background:#FFFFFF;box-shadow:0 2px 20px rgba(0,0,0,0.08);">
+<table role="presentation" class="wrapper" width="680" cellpadding="0" cellspacing="0" border="0" align="center" style="width:680px;max-width:100%;margin:0 auto;background:#FFFFFF;box-shadow:0 2px 20px rgba(0,0,0,0.08);">
 <tr>
 <td style="padding:0;">
 {body_html}
