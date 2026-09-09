@@ -363,9 +363,14 @@ def render_html(digest: dict) -> str:
               'border:1px solid rgba(255,255,255,0.22);border-radius:3px;'
               'text-decoration:none;white-space:nowrap;')
         _links = [f'<a href="{_esc(web_url)}" style="{_a}">Read online</a>']
-        if _base:
-            _pdf = digest.get("pdf_url") or (_base + "latest.pdf")
+        # Only when the run actually published one. This edition has no PDF
+        # exporter, and the link used to fall back to a guessed latest.pdf, so
+        # the button shipped every day pointing at a file that has never
+        # existed. A reader can still print the page: see @media print below.
+        _pdf = digest.get("pdf_url") or ""
+        if _pdf:
             _links.append(f'<a href="{_esc(_pdf)}" style="{_a}">Download PDF</a>')
+        if _base:
             _links.append(f'<a href="{_esc(_base + "archive.html")}" style="{_a}">Past issues</a>')
         sections_pre.append(f"""
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#2E3644;" class="util-row">
@@ -1220,6 +1225,19 @@ def render_html(digest: dict) -> str:
   /* Dark mode — scoped, non-destructive. The masthead, market strip,
      Regional Pressure Watch panel, key stat, and footer are already dark
      surfaces and need no inversion. */
+  /* Print. Without this a Print-to-PDF is a long screenshot: chrome on every
+     page, cards split across breaks, and the frame stuck at its email width. */
+  @media print {{
+    .no-print, .util-row, .nav-row {{ display:none !important; }}
+    .wrapper {{ max-width:100% !important; width:100% !important;
+                box-shadow:none !important; }}
+    /* Let content flow across page breaks. Avoiding breaks pushes anything
+       that does not fit to the next page and leaves large empty gaps, which
+       is the lesson Korea's print block records. */
+    * {{ page-break-inside:auto !important; }}
+    a {{ text-decoration:none !important; color:#000 !important; }}
+  }}
+
   @media (prefers-color-scheme: dark) {{
     body {{ background:#121212 !important; }}
     .wrapper {{ background:#1a1a1a !important; }}
