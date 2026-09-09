@@ -52,7 +52,9 @@ def send_digest(html: str, subject: str | None = None,
 
     msg = EmailMessage()
     msg["Subject"] = subject
-    msg["From"] = f"Japan Daily Brief <{gmail_user}>"
+    # The chair, not the brief title: the four sort together in an inbox and
+    # the sender is the desk that publishes it.
+    msg["From"] = f"CSIS Japan Chair <{gmail_user}>"
     # BCC delivery: the visible To is the brief itself, and the real recipients
     # are passed only in the SMTP envelope (to_addrs below) — so no recipient
     # sees the distribution list or any other recipient.

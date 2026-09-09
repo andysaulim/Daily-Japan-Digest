@@ -347,15 +347,9 @@ def _word_count(d: dict) -> int:
     return w
 
 
-def _chapter(label: str) -> str:
-    """Chapter divider — dark navy band with Hinomaru-red rule, white letterspaced label."""
-    return f"""
-<div style="padding:12px 32px;background:#1B2A4A;text-align:center;" class="sec">
-<div style="height:1px;background:rgba(188,0,45,0.5);margin-bottom:10px;"></div>
-<span style="font-size:10px;font-family:Arial,sans-serif;color:#FFFFFF;text-transform:uppercase;letter-spacing:5px;font-weight:700;">{label}</span>
-<div style="height:1px;background:rgba(188,0,45,0.5);margin-top:10px;"></div>
-</div>"""
-
+# The TRACKERS and WIRE chapter dividers are gone. Full-width bands
+# announcing a chapter are chrome no other edition carries, and the
+# section bars already say where the reader is.
 
 def render_html(digest: dict) -> str:
     from zoneinfo import ZoneInfo
@@ -392,9 +386,9 @@ def render_html(digest: dict) -> str:
         _base = _site_root(web_url)
         _a = ('display:inline-block;padding:6px 14px;margin:0 3px;'
               'font-family:Arial,sans-serif;font-size:11px;font-weight:700;'
-              'letter-spacing:0.5px;color:rgba(255,255,255,0.92);'
-              'background:rgba(255,255,255,0.10);'
-              'border:1px solid rgba(255,255,255,0.22);border-radius:3px;'
+              'letter-spacing:0.5px;color:#14181F;'
+              'background:#FFFFFF;'
+              'border-radius:14px;'
               'text-decoration:none;white-space:nowrap;')
         _links = [f'<a href="{_esc(web_url)}" style="{_a}">Read online</a>']
         # Only when the run actually published one. This edition has no PDF
@@ -415,23 +409,33 @@ def render_html(digest: dict) -> str:
         </table>
         """)
 
-    # 1. Header
+    # ── 1. Header ────────────────────────────────────────────────────────
+    # The house masthead, identical in all four briefs. Only the band colour,
+    # the chair name and the title differ. Left column: chair, title, date.
+    # Right column, bottom-aligned: the issue meta. Then a rule and the RE
+    # line across the full width.
+    #
+    # It is written out rather than shared because these are four repositories
+    # with no common package — so it is copied verbatim, and any change has to
+    # be made in all four.
     sections_pre.append(f"""
-<!-- One red field. The identity colour carries the nameplate; the data
-     strip below stays navy and the body stays white. -->
-<div style="background:#BC002D;color:#fff;padding:0;" class="sec mast-band">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mast-split"><tr>
-<td width="58%" class="mast-red" style="vertical-align:middle;background:#BC002D;padding:20px 20px 20px 32px;">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.85);font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">Japan Daily Brief</h1>
-{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.35);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;'><strong style='color:#FFFFFF;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;'>RE:</strong>&nbsp; " + _esc(re_line) + "</div>" if re_line else ""}
-</td>
-<td width="42%" class="mast-white" style="vertical-align:middle;text-align:right;background:#BC002D;padding:20px 32px 20px 20px;">
-<div style="font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,0.92);margin-bottom:5px;">{_esc(date_str)}</div>
-<div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;color:rgba(255,255,255,0.72);">{wc:,} words &middot; {read_min} min read</div>
-</td>
-</tr></table>
-</div>""")
+    <a name="top" id="top"></a>
+    <div bgcolor="{HINOMARU_RED}" style="background-color:{HINOMARU_RED};color:#fff;padding:16px 32px 16px;border-bottom:1px solid rgba(255,255,255,0.18);" class="sec mast-band">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="mast-main" style="vertical-align:top;">
+          <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.78);margin-bottom:7px;">CSIS Japan Chair</div>
+          <h1 style="margin:0 0 4px 0;font-size:26px;font-weight:700;font-family:Georgia,'Times New Roman',serif;color:#fff;letter-spacing:0.5px;">
+            Japan Daily Brief
+          </h1>
+          <div style="margin-top:2px;font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
+        </td>
+        <td class="mast-meta" style="vertical-align:bottom;text-align:right;">
+          <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;color:rgba(255,255,255,0.72);white-space:nowrap;">{wc:,} words &middot; {read_min} min read</div>
+        </td>
+      </tr></table>
+      {{"<div style='margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.28);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;line-height:1.55;'><strong style='color:#FFFFFF;font-size:11px;letter-spacing:1.5px;font-family:Arial,sans-serif;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}}
+    </div>
+    """)
 
     # 2. Market strip — one row of four, the house shape.
     #
@@ -1000,14 +1004,13 @@ def render_html(digest: dict) -> str:
             def _th(label):
                 return (f'<td style="padding:8px 12px;font-size:10px;text-transform:uppercase;'
                         f'letter-spacing:0.8px;color:#8A8F98;font-weight:600;">{label}</td>')
-            header = f'<tr style="background:#F2F3F5;">{_th("Pollster")}{_th("Approve")}{_th("Disapprove")}{_th("vs prior")}</tr>'
+            header = f'<tr style="background:#F2F3F5;">{_th("Pollster")}{_th("Approve")}{_th("Disapprove")}</tr>'
             rows = ""
             for p in polls:
                 pollster = _esc(p.get("pollster", ""))
                 pdate = _esc(p.get("poll_date", ""))
                 appr = _esc(str(p.get("cabinet_approval", "") or "—"))
                 disappr = _esc(str(p.get("cabinet_disapproval", "") or "—"))
-                chg = _esc(str(p.get("approval_change", "") or "—"))
                 # Flag a dated poll: an amber age note when fieldwork is >21 days old,
                 # so a reader can see at a glance the numbers aren't fresh.
                 days_old = p.get("days_old")
@@ -1023,7 +1026,6 @@ def render_html(digest: dict) -> str:
                     f'<td style="padding:12px;font-size:13px;color:{NAVY};">{name}</td>'
                     f'<td style="padding:12px;font-size:14px;color:{NAVY};font-weight:600;">{appr}</td>'
                     f'<td style="padding:12px;font-size:14px;color:{NAVY};font-weight:600;">{disappr}</td>'
-                    f'<td style="padding:12px;font-size:13px;color:#8A8F98;">{chg}</td>'
                     '</tr>')
             poll_body += (
                 '<table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
@@ -1179,8 +1181,8 @@ def render_html(digest: dict) -> str:
         sections_pre +
         sections_today +
         sections_analysis +
-        ([_chapter("TRACKERS")] if sections_trackers else []) + sections_trackers +
-        ([_chapter("WIRE")] if sections_wire else []) + sections_wire +
+        sections_trackers +
+        sections_wire +
         sections_post
     )
 
@@ -1238,9 +1240,11 @@ def render_html(digest: dict) -> str:
     /* No width:100% here. A table cell set to display:block already fills
        its row, and 100% plus horizontal padding is measured content-box,
        which pushed the masthead 24px past a 390px screen. */
-    .mast-split td {{ display:block !important; width:auto !important; }}
-    .mast-white {{ text-align:left !important; padding:14px 20px 16px !important; }}
-    .mast-red {{ padding:16px 20px 12px !important; }}
+    /* The house masthead stacks the same way in all four briefs: the meta
+       cell drops under the nameplate and left-aligns. The old split-field
+       classes are gone with the split masthead they styled. */
+    .mast-main, .mast-meta {{ display:block !important; width:100% !important; }}
+    .mast-meta {{ text-align:left !important; padding-top:10px !important; }}
 
     .wrapper {{ width:100% !important; }}
     .sec, .footer {{ padding:16px 16px !important; }}
