@@ -110,6 +110,49 @@ def _link_or_text(text: str, url: str,
 _SEC = 'style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"'
 _SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #C0392B;border-bottom:1px solid #EBEBEB;" class="sec"'
 
+INK  = "#1A222E"
+MUTE = "#6B7280"
+
+
+def _subhead(text: str) -> str:
+    """A group label inside a section.
+
+    The Wire ran every category together, so it read as one undifferentiated
+    stream. One heading per subject beats a category badge repeated on every
+    row.
+    """
+    return (f'<div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;'
+            f'text-transform:uppercase;letter-spacing:1.5px;color:#55607A;'
+            f'margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">'
+            f'{text}</div>')
+
+
+def _compact_row(cat: str, headline: str, url: str, src: str, body: str = "") -> str:
+    """One scannable line: category, headline, source.
+
+    Used where a section carries breadth rather than depth. The headline sits
+    on its own line with the note and source under it — run together with an
+    em-dash they wrapped into a single grey paragraph and the eye could not
+    find where the headline stopped.
+    """
+    under = " &middot; ".join(x for x in (body, src) if x)
+    line = (f'<td style="padding:8px 0;vertical-align:top;border-bottom:1px solid #EEF0F3;">'
+            f'<div style="font-family:Georgia,serif;font-size:14px;font-weight:600;'
+            f'line-height:1.4;color:{INK};">{_link_or_text(headline, url)}</div>'
+            + (f'<div style="font-family:Arial,sans-serif;font-size:11px;line-height:1.5;'
+               f'color:{MUTE};margin-top:2px;">{under}</div>' if under else "")
+            + '</td>')
+    if not cat:
+        # Under a group heading the category is already stated, so the column
+        # would be an empty indent on every row.
+        return f'<tr>{line}</tr>'
+    return (f'<tr>'
+            f'<td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;'
+            f'font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;'
+            f'text-transform:uppercase;color:{HINOMARU_RED};border-bottom:1px solid #EEF0F3;">{cat}</td>'
+            f'{line}</tr>')
+
+
 def _sec_label(label: str, color: str = NAVY, rule: str = HINOMARU_RED) -> str:
     """Section label — navy small-caps over a Hinomaru-red rule, no pill."""
     return (f'<div style="font-size:10px;font-weight:700;text-transform:uppercase;'
@@ -291,6 +334,10 @@ def render_html(digest: dict) -> str:
 </tr></table>
 </div>""")
 
+    # Placeholder for the jump row, resolved at the end of render() once every
+    # section is known and its anchors can be checked.
+    sections_pre.append("%%NAV%%")
+
     # 2. Market strip (3 rows)
     m = digest.get("market_indicators") or {}
     if m:
@@ -442,39 +489,61 @@ def render_html(digest: dict) -> str:
 {ref}
 <div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
-        sections_today.append(f'<div {_SEC}>{_sec_label("Top Stories")}{sh}</div>')
+        sections_today.append(f'<div {_SEC}><a name="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>')
 
     # 4b. Overnight Flash
     overnight = digest.get("overnight_items") or []
     if overnight:
-        cat_colors = {}  # single navy accent for all overnight bars
+        # A scan list, not a second Top Stories. One rule down the left, one
+        # line per item, so the eye runs vertically instead of stopping at a
+        # card border every three lines. The cards above carry the weight;
+        # this section carries the breadth.
+        #
+        # It is also no longer dressed as an alarm. Every issue has an
+        # overnight section, so a red top rule and a lightning bolt on all of
+        # them said nothing about any of them.
         fh = ""
         for it in overnight:
-            cat_raw = _str(it.get("category", ""))
-            cat = _esc(cat_raw)
+            cat = _esc(_str(it.get("category", "")))
             h = _esc(it.get("headline", ""))
             b = _esc(it.get("body_text", ""))
             src = _esc(_clean_src(it.get("source", "")))
             url = it.get("url", "")
-            bar = cat_colors.get(cat_raw, "#1B2A4A")
-            fh += f"""
-<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
-<div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;">{cat} &middot; {src}</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">{b}</div>
-</div>"""
-        sections_today.append(f'<div {_SEC_ALERT}>{_sec_label("&#9889; Overnight Flash", color="#C0392B", rule="#C0392B")}{fh}</div>')
+            tail = (f'<span style="color:{MUTE};"> &mdash; {b}</span>' if b else "")
+            fh += (f'<tr>'
+                   f'<td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;'
+                   f'font-family:Arial,sans-serif;font-size:10px;font-weight:700;'
+                   f'letter-spacing:0.5px;text-transform:uppercase;color:{HINOMARU_RED};'
+                   f'border-bottom:1px solid #EEF0F3;">{cat}</td>'
+                   f'<td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;'
+                   f'font-size:13px;line-height:1.45;color:{INK};'
+                   f'border-bottom:1px solid #EEF0F3;">'
+                   f'{_link_or_text(h, url)}{tail}'
+                   f'<span style="font-family:Arial,sans-serif;font-size:11px;color:{MUTE};">'
+                   f' &middot; {src}</span></td>'
+                   f'</tr>')
+        fh = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" '
+              f'class="flash-table" style="border-top:2px solid {HINOMARU_RED};">{fh}</table>')
+        sections_today.append(
+            f'<div {_SEC}><a name="overnight"></a>{_sec_label("Overnight")}{fh}</div>')
 
     # 5. Key Stat
     stat = digest.get("key_stat") or {}
     if stat and stat.get("number"):
+        # A light panel, not a full-width navy band. The band interrupted the
+        # brief with the loudest ground on the page for a single number, and
+        # centred it away from the column every other section reads down.
         sections_today.append(f"""
-<div style="padding:12px 32px;background:#1B2A4A;color:#fff;border-bottom:1px solid #E0E0E0;text-align:center;" class="sec">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;opacity:0.6;margin-bottom:2px;">Stat of the Day</div>
-<div class="key-stat-num" style="font-size:26px;font-weight:700;font-family:Georgia,serif;">{_esc(str(stat.get("number", "")))}</div>
-<div style="font-size:13px;opacity:0.85;margin-top:2px;">{_esc(stat.get("label", ""))}</div>
-<div style="font-size:11px;opacity:0.65;margin-top:4px;font-style:italic;">{_esc(stat.get("context", ""))}</div>
-{"<div style='font-size:10px;opacity:0.45;margin-top:4px;'>Source: " + _esc(stat.get("source", "")) + "</div>" if stat.get("source") else ""}
+<div {_SEC}>
+  <a name="key-stat"></a>{_sec_label("Stat of the Day")}
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F3F4;border-left:3px solid {HINOMARU_RED};border-radius:3px;">
+    <tr><td style="padding:14px 16px;">
+      <div class="key-stat-num" style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:{HINOMARU_RED};line-height:1;">{_esc(str(stat.get("number", "")))}</div>
+      <div style="font-family:Georgia,serif;font-size:14px;color:{INK};margin-top:5px;line-height:1.4;">{_esc(stat.get("label", ""))}</div>
+      {"<div style='font-family:Georgia,serif;font-size:13px;color:#4A5260;margin-top:4px;line-height:1.5;'>" + _esc(stat.get("context", "")) + "</div>" if stat.get("context") else ""}
+      {"<div style='font-family:Arial,sans-serif;font-size:11px;color:#55607A;margin-top:7px;'>" + _esc(stat.get("source", "")) + "</div>" if stat.get("source") else ""}
+    </td></tr>
+  </table>
 </div>""")
 
     # 6. Regional Pressure Watch — DARK SECTION (key: xinhua_delta)
@@ -661,7 +730,7 @@ def render_html(digest: dict) -> str:
         ds = _esc(str(digest.get("digest_date", "")))
         sections_trackers.append(f"""
 <div {_SEC}>
-{_sec_label("Japanese Government")}
+<a name="tokyo"></a>{_sec_label("Japanese Government")}
 <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ{(" · " + ds) if ds else ""}</div>
 {gov_grid}{pers_html}{npc_html}{cal_html}
 </div>""")
@@ -740,7 +809,7 @@ def render_html(digest: dict) -> str:
 </div>"""
 
         if body:
-            sections_trackers.append(f'<div {_SEC}>{_sec_label("US&ndash;Japan Alliance &amp; Trade")}{body}</div>')
+            sections_trackers.append(f'<div {_SEC}><a name="alliance"></a>{_sec_label("US&ndash;Japan Alliance &amp; Trade")}{body}</div>')
 
     # 10. Business & Economy
     biz = digest.get("business_economy") or []
@@ -759,7 +828,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
-        sections_wire.append(f'<div {_SEC}>{_sec_label("Business &amp; Economy")}{bh}</div>')
+        sections_wire.append(f'<div {_SEC}><a name="business"></a>{_sec_label("Business &amp; Economy")}{bh}</div>')
 
     # 11. Indo-Pacific
     ip = digest.get("indo_pacific") or []
@@ -777,7 +846,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
-        sections_wire.append(f'<div {_SEC}>{_sec_label("Indo-Pacific")}{ih}</div>')
+        sections_wire.append(f'<div {_SEC}><a name="indo-pacific"></a>{_sec_label("Indo-Pacific")}{ih}</div>')
 
     # 12. Diet Watch (key: congressional_watch)
     cw = digest.get("congressional_watch") or []
@@ -793,7 +862,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{det}</div>
 </div>"""
-        sections_trackers.append(f'<div {_SEC}>{_sec_label("Diet Watch")}{ch}</div>')
+        sections_trackers.append(f'<div {_SEC}><a name="diet"></a>{_sec_label("Diet Watch")}{ch}</div>')
 
     # 13. Expert Analysts
     opeds = digest.get("opeds_today") or []
@@ -831,7 +900,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 <div style="font-size:13px;line-height:1.5;color:#555;">{sm}</div>
 </div>"""
-        sections_analysis.append(f'<div {_SEC}>{_sec_label("Op-Eds, Commentaries &amp; Events")}{body}</div>')
+        sections_analysis.append(f'<div {_SEC}><a name="analysis"></a>{_sec_label("Op-Eds, Commentaries &amp; Events")}{body}</div>')
 
     # 14. Public Sentiment — cabinet approval & party support
     ps = digest.get("public_sentiment") or {}
@@ -904,7 +973,7 @@ def render_html(digest: dict) -> str:
                                       style="color:" + HINOMARU_RED + ";text-decoration:none;font-weight:600;")
                       + '</div>')
 
-        sections_analysis.append(f'<div {_SEC}>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>')
+        sections_analysis.append(f'<div {_SEC}><a name="polling"></a>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>')
 
     # 15. Social Statements
     stmts = digest.get("social_statements") or []
@@ -939,22 +1008,29 @@ def render_html(digest: dict) -> str:
     # 16. Also Today
     also = digest.get("also_today") or []
     if also:
-        wc_ = {}  # single navy accent for all wire bars
-        ah = ""
+        # Grouped by subject. Ungrouped, the section was a run of identical
+        # bars whose only distinguishing mark was a category repeated in grey
+        # on every row; a reader looking for the trade item had to read all of
+        # them.
+        _groups = {}
         for a in also[:6]:
-            cr_ = _str(a.get("category", ""))
-            c = _esc(cr_)
-            h = _esc(a.get("headline", ""))
-            b = _esc(a.get("body_text", ""))
-            url = a.get("url", "")
-            src = _esc(_clean_src(a.get("source", "")))
-            bar = wc_.get(cr_, "#7F8C8D")
-            ah += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
-<div style="font-size:10px;color:#888;text-transform:uppercase;">{c} &middot; {src}</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">{b}</div>
-</div>"""
-        sections_wire.append(f'<div {_SEC}>{_sec_label("Also Today / The Wire")}{ah}</div>')
+            key = _str(a.get("category", "")).strip() or "Other"
+            _groups.setdefault(key.title(), []).append(a)
+        ah = ""
+        _multi = len(_groups) > 1
+        for _cat, _items in _groups.items():
+            rows = "".join(
+                _compact_row(cat="" if _multi else _esc(_cat),
+                             headline=_esc(i.get("headline", "")),
+                             url=i.get("url", ""),
+                             src=_esc(_clean_src(i.get("source", ""))),
+                             body=_esc(i.get("body_text", "")))
+                for i in _items)
+            ah += ((_subhead(_esc(_cat)) if _multi else "")
+                   + f'<table width="100%" cellpadding="0" cellspacing="0" '
+                     f'border="0" class="flash-table">{rows}</table>')
+        sections_wire.append(
+            f'<div {_SEC}><a name="wire"></a>{_sec_label("The Wire")}{ah}</div>')
 
     # 17. On This Day
     otd = digest.get("on_this_day") or []
@@ -969,6 +1045,21 @@ def render_html(digest: dict) -> str:
         sections_wire.append(f'<div {_SEC}>{_sec_label("On This Day")}{oh}</div>')
 
     # Footer
+    # Both footer links point into the published archive, so neither exists
+    # until a run has published one. `archive_url` was referenced here without
+    # ever being computed, which raised NameError on every render.
+    _foot_links = ""
+    if web_url:
+        _fa = 'color:rgba(255,255,255,0.95);text-decoration:none;'
+        _fbase = web_url[:-len("latest.html")] if web_url.endswith("latest.html") else ""
+        _parts = [f'<a href="{_esc(web_url)}" style="{_fa}">Read online</a>']
+        if _fbase:
+            _parts.append(f'<a href="{_esc(_fbase + "archive.html")}" style="{_fa}">Past issues</a>')
+        _foot_links = ('<div style="margin-top:11px;font-family:Arial,sans-serif;'
+                       'font-size:11px;letter-spacing:0.5px;">'
+                       + '<span style="color:rgba(255,255,255,0.45);">&nbsp;&middot;&nbsp;</span>'.join(_parts)
+                       + '</div>')
+
     sections_post.append(f"""
 <!-- The house footer. Korea carries a CSIS lockup built in HTML; the other
      editions have no wordmark to reproduce, so this leads with the chair
@@ -980,10 +1071,7 @@ def render_html(digest: dict) -> str:
     <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#FFFFFF;letter-spacing:0.5px;line-height:1.2;">CSIS Japan Chair</div>
     <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.72);margin-top:6px;">Japan Daily Brief</div>
     <div style="font-family:Georgia,serif;font-size:13px;color:rgba(255,255,255,0.72);margin-top:12px;">Washington, D.C.</div>
-    <div style="margin-top:11px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;">
-      <a href="{_esc(web_url)}" style="color:rgba(255,255,255,0.95);text-decoration:none;">Read online</a> &nbsp;&middot;&nbsp;
-      <a href="{_esc(archive_url)}" style="color:rgba(255,255,255,0.95);text-decoration:none;">Past issues</a>
-    </div>
+    {_foot_links}
   </td></tr>
   <tr><td style="padding:14px 32px 10px;text-align:center;">
     <div style="border-top:1px solid rgba(255,255,255,0.14);padding-top:12px;font-family:Georgia,serif;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.82);max-width:560px;margin:0 auto;">
@@ -1006,7 +1094,33 @@ def render_html(digest: dict) -> str:
         sections_post
     )
 
+    # ── Jump row ──────────────────────────────────────────────────────────
+    # The brief is too long to scan end to end and the only link in it was
+    # "back to top". Label and anchor are paired here and each pair is kept
+    # only when the section actually emitted its anchor, so a quiet day that
+    # drops sections simply gets fewer links rather than dead ones.
+    _NAV = [("Top Stories", "top-stories"), ("Overnight", "overnight"),
+            ("Tokyo", "tokyo"), ("Alliance", "alliance"),
+            ("Markets", "business"), ("Indo-Pacific", "indo-pacific"),
+            ("Diet", "diet"), ("Polling", "polling"),
+            ("Analysis", "analysis"), ("The Wire", "wire")]
     body_html = "\n".join(s for s in sections if s)
+    _links = [f'<a href="#{_a}" style="color:{HINOMARU_RED};text-decoration:underline;'
+              f'text-underline-offset:2px;white-space:nowrap;">{_l}</a>'
+              for _l, _a in _NAV if f'a name="{_a}"' in body_html]
+    _nav_html = ""
+    if len(_links) >= 4:
+        # Named and underlined. Unlabelled and unadorned it reads as a
+        # subtitle rather than a menu, and goes unused.
+        _nav_html = ('<div class="nav-row sec" style="background:#F7F8FA;'
+                     'border-bottom:1px solid #E4E7EB;padding:9px 32px;'
+                     'text-align:center;font-family:Arial,sans-serif;'
+                     'font-size:11px;line-height:1.9;color:#6B7280;">'
+                     '<span style="font-size:10px;font-weight:700;'
+                     'text-transform:uppercase;letter-spacing:1.5px;'
+                     'color:#6B7280;">In this issue &nbsp;</span>'
+                     + ' &nbsp;&middot;&nbsp; '.join(_links) + '</div>')
+    body_html = body_html.replace("%%NAV%%", _nav_html)
     return f"""<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
