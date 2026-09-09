@@ -1204,6 +1204,51 @@ def _sanitise_polls(digest: dict) -> dict:
     return digest
 
 
+def _build_archive_index(archive: list) -> str:
+    """public/archive.html: every issue, newest first, with its PDF.
+
+    Every brief links "Past issues" at archive.html and nothing wrote the
+    file, so the pill 404'd in every issue ever sent. Built from archive.json
+    rather than the directory listing, so it carries the headline line and
+    the word count the reader is choosing between.
+    """
+    from html import escape
+    rows = []
+    for a in archive:
+        d = str(a.get("date") or "")
+        try:
+            label = datetime.strptime(d, "%Y-%m-%d").strftime("%A, %B %-d, %Y")
+        except ValueError:
+            label = d
+        re_line = escape(str(a.get("re_line") or ""))
+        wc = a.get("word_count") or ""
+        rows.append(
+            f'<tr><td style="padding:10px 8px;border-bottom:1px solid #EBEBEB;'
+            f'white-space:nowrap;font-family:Arial,sans-serif;font-size:13px;'
+            f'color:#14181F;font-weight:700;">'
+            f'<a href="{escape(d)}.html" style="color:#14181F;text-decoration:none;">{label}</a>'
+            f' &middot; <a href="{escape(d)}.pdf" style="color:#C1123C;text-decoration:none;">PDF</a></td>'
+            f'<td style="padding:10px 8px;border-bottom:1px solid #EBEBEB;'
+            f'font-family:Georgia,serif;font-size:13px;color:#444;">{re_line}</td>'
+            f'<td style="padding:10px 8px;border-bottom:1px solid #EBEBEB;'
+            f'font-family:Arial,sans-serif;font-size:11px;color:#767676;'
+            f'text-align:right;white-space:nowrap;">{wc} words</td></tr>')
+    body = "\n".join(rows) or '<tr><td style="padding:12px;">No issues archived yet.</td></tr>'
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Japan Daily Brief &middot; Archive</title></head>
+<body style="margin:0;background:#F4F4F1;">
+<div style="max-width:760px;margin:0 auto;background:#fff;">
+<div style="background:#14181F;color:#fff;padding:18px 32px 14px;">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FF144C;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
+<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;">Japan Daily Brief</h1>
+<div style="font-size:14px;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">Archive &middot; {len(archive)} issues &middot; <a href="index.html" style="color:#FF144C;text-decoration:none;">Latest issue &#8594;</a></div>
+</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding:8px 24px 24px;">{body}</table>
+<div style="padding:16px 32px;font-size:10px;color:#767676;font-family:Arial,sans-serif;text-align:center;">Generated automatically; every item links to its source. Prepared by Andy Lim, CSIS Japan Chair.</div>
+</div></body></html>"""
+
+
 def _archive_html(html: str, digest: dict) -> None:
     """Write the dated HTML to public/ for GitHub Pages."""
     PUBLIC_DIR.mkdir(exist_ok=True)
@@ -1238,15 +1283,19 @@ def _archive_html(html: str, digest: dict) -> None:
     entry = {
         "date": date_str,
         "filename": f"{date_str}.html",
+        "re_line": digest.get("re_line", ""),
         "top_stories": len(digest.get("top_stories") or []),
         "overnight_items": len(digest.get("overnight_items") or []),
         "word_count": _count_words(digest),
     }
     archive = [a for a in archive if a.get("date") != date_str]
     archive.insert(0, entry)
-    archive_index.write_text(json.dumps(archive[:120], indent=2))
+    archive = archive[:120]
+    archive_index.write_text(json.dumps(archive, indent=2))
+    (PUBLIC_DIR / "archive.html").write_text(
+        _build_archive_index(archive), encoding="utf-8")
 
-    print(f"📁 Archived to {dated_file.name}")
+    print(f"📁 Archived to {dated_file.name} (+ archive.html, {len(archive)} issues)")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1398,6 +1447,13 @@ def run_pipeline(args: argparse.Namespace) -> int:
                  or "https://andysaulim.github.io/Daily-Japan-Digest").rstrip("/")
     if _web_base:
         digest["web_url"] = _web_base + "/index.html"
+        # render_html only draws the Download PDF pill when pdf_url is set, and
+        # nothing ever set it, so the pill was absent from every brief while the
+        # PDF itself was being generated and published all along. Point at the
+        # DATED file, not index.pdf: index.pdf is overwritten each morning, so
+        # an archived email linking it would hand the reader the wrong day.
+        _pdf_slug = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+        digest["pdf_url"] = f"{_web_base}/{_pdf_slug}.pdf"
     from render import render_html
     html = render_html(digest)
     for _line in check_email_size(html):
