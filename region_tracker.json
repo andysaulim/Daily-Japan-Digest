@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-10": {
-      "signals": {
-        "china_signal": "The US-Japan-South Korea trilateral is conducting a joint investigation into China's July 6 SLBM test into the South Pacific nuclear-free zone, per VOI.id; the July 7-8 CCG Senkaku intrusion pattern from the regional tracker has not been superseded by new territorial-waters reporting in today's feed",
-        "dprk_signal": "North Korea publicly vowed to accelerate its nuclear buildup and military intelligence capabilities, while the Kang Kon guided-missile destroyer — which capsized at its commissioning ceremony — advanced toward operational service, per 19FortyFive and The Standard.",
-        "russia_signal": "Russia's Education Minister visited one of the four islands Japan claims as its Northern Territories, per Jiji Press; no new naval or air incursion near Hokkaido was reported in today's feed."
-      },
-      "watch_flag": false
-    },
     "2026-07-11": {
       "signals": {
         "china_signal": "China's Foreign Ministry directed a message to NATO to 'abandon Cold War mentality,' a formulation Beijing has applied to Japan's engagement with NATO and Western security forums. Nikkei Asia reports China has stepped up its simultaneous maritime push against both the Philippines and Japan, framing ",
@@ -442,7 +434,15 @@
         "dprk_signal": "North Korea commissioned its second nuclear-capable Choe Hyon-class destroyer — the vessel that capsized on its May 2025 launch — with Kim Jong Un calling it part of Pyongyang's nuclear response system and vowing a nuclear-armed navy; the DPRK defense minister condemned the US-Japan-ROK Freedom Edge"
       },
       "watch_flag": false
+    },
+    "2026-09-09": {
+      "signals": {
+        "china_signal": "China imposed provisional anti-dumping measures on Japanese dichlorosilane — requiring cash deposits up to 99.2% — targeting a key semiconductor precursor chemical; Japan's Chief Cabinet Secretary urged withdrawal and pledged supply-chain impact assessment. The JASDF separately scrambled fighters fo",
+        "dprk_signal": "North Korea commissioned its second Choe Hyon-class guided-missile destroyer — the vessel that capsized at its May 2025 launch — with Kim Jong Un declaring it part of Pyongyang's nuclear response system and pledging to build a nuclear-armed navy, timed to coincide with the opening of Freedom Edge 20",
+        "russia_signal": "The Kremlin formally rejected Tokyo's request to dismantle the WWII memorial statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker, extending the bilateral symbolic-provocation standoff following Putin's Etorofu visit and the August 21 Bastion missile live-fire"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-08T11:08:46.645124+00:00"
+  "last_updated": "2026-09-09T03:09:19.573488+00:00"
 }
