@@ -138,7 +138,7 @@ def _word_count(d: dict) -> int:
 
     # Top stories
     for s in (d.get("top_stories") or []):
-        for f in ("headline", "body", "so_what", "pattern_note", "src_line"):
+        for f in ("headline", "body", "src_line"):
             w += _w(s.get(f, ""))
 
     # Lists with headline + body_text
@@ -247,36 +247,46 @@ def render_html(digest: dict) -> str:
         'font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;'
         'font-family:Arial,sans-serif;" class="sec">For Internal Use Only</div>')
 
-    # 0. View in browser (+ full-color print PDF link)
+    # ── 0. Utility row: internal-use notice left, links right ─────────────
+    # The house treatment, matching the other editions. "Email not rendering?"
+    # asked the reader to diagnose their own client; the links are buttons and
+    # say what they do. Notice and links share one row rather than taking a
+    # band each, which is ~90px of chrome above the nameplate.
     if web_url:
-        pdf_url = web_url[:-len("index.html")] + "index.pdf" if web_url.endswith("index.html") else ""
-        pdf_link = (f' &nbsp;&middot;&nbsp; <a href="{_esc(pdf_url)}" style="color:{HINOMARU_RED};text-decoration:none;">Download PDF &#8595;</a>'
-                    if pdf_url else "")
+        _base = web_url[:-len("latest.html")] if web_url.endswith("latest.html") else ""
+        _a = ('display:inline-block;padding:4px 12px;margin:0 2px;'
+              'font-family:Arial,sans-serif;font-size:11px;font-weight:700;'
+              'letter-spacing:0.5px;color:rgba(255,255,255,0.92);'
+              'background:rgba(255,255,255,0.10);'
+              'border:1px solid rgba(255,255,255,0.22);border-radius:3px;'
+              'text-decoration:none;white-space:nowrap;')
+        _links = [f'<a href="{_esc(web_url)}" style="{_a}">Read online</a>']
+        if _base:
+            _links.append(f'<a href="{_esc(_base + "latest.pdf")}" style="{_a}">Download PDF</a>')
+            _links.append(f'<a href="{_esc(_base + "archive.html")}" style="{_a}">Past issues</a>')
         sections_pre.append(f"""
-<div style="background:#F0F0F0;padding:6px 32px;text-align:center;font-size:11px;color:#888;" class="sec">
-Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-decoration:none;">Read online &#8594;</a>{pdf_link}
-</div>""")
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#2E3644;" class="util-row">
+          <tr>
+            <td class="util-cell" style="padding:7px 32px;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.72);white-space:nowrap;">For Internal Use Only</td>
+            <td class="util-cell" align="right" style="padding:5px 32px 5px 0;text-align:right;">{''.join(_links)}</td>
+          </tr>
+        </table>
+        """)
 
     # 1. Header
     sections_pre.append(f"""
-<!-- The flag, as a masthead: red field carrying the nameplate, white field
-     carrying the date and the run meta. Two table cells rather than a
-     background image, because every client renders a cell and Outlook
-     renders no image by default. Both cells sit in one row with no padding
-     on the container, so each colour reaches the full height of the band
-     rather than floating as a panel inside it. The halves stack on a phone,
-     where 58% of a 320px screen wraps the nameplate to four lines. Type is
-     white on the red at 6.6:1, navy on the white at 12:1. -->
+<!-- One red field. The identity colour carries the nameplate; the data
+     strip below stays navy and the body stays white. -->
 <div style="background:#BC002D;color:#fff;padding:0;" class="sec mast-band">
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="mast-split"><tr>
 <td width="58%" class="mast-red" style="vertical-align:middle;background:#BC002D;padding:20px 20px 20px 32px;">
 <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.85);font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
 <h1 style="margin:0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
-{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.35);font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#BC002D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
+{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.35);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;'><strong style='color:#FFFFFF;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;'>RE:</strong>&nbsp; " + _esc(re_line) + "</div>" if re_line else ""}
 </td>
-<td width="42%" class="mast-white" style="vertical-align:middle;text-align:right;background:#FFFFFF;padding:20px 32px 20px 20px;">
-<div style="font-family:Georgia,serif;font-size:16px;color:#1B2A4A;margin-bottom:5px;">{_esc(date_str)}</div>
-<div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:#5A6472;">{gen_time} &middot; {wc:,} words &middot; {read_min} min read</div>
+<td width="42%" class="mast-white" style="vertical-align:middle;text-align:right;background:#BC002D;padding:20px 32px 20px 20px;">
+<div style="font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,0.92);margin-bottom:5px;">{_esc(date_str)}</div>
+<div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:rgba(255,255,255,0.72);">{gen_time} &middot; {wc:,} words &middot; {read_min} min read</div>
 </td>
 </tr></table>
 </div>""")
@@ -409,8 +419,6 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             h = _esc(s.get("headline", ""))
             b_raw = s.get("body", "") or ""
             b = _esc(b_raw) if b_raw.strip() and b_raw.strip() != s.get("headline", "").strip() else ""
-            sw = _esc(s.get("so_what", ""))
-            pn = _esc(s.get("pattern_note", ""))
             # Primary source = the publisher the link actually opens (link_source,
             # domain-derived), NOT the model's free-text multi-source line.
             ls = s.get("link_source", "")
@@ -431,8 +439,6 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
 <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;">{_link_or_text(h, url, style="color:#1B2A4A;text-decoration:none;")}</h3>
 {"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
-{"<p style='margin:0 0 6px 0;font-size:13px;line-height:1.5;color:#555;font-style:italic;'><strong style='color:#1B2A4A;font-style:normal;'>So what:</strong> " + _link_or_text(sw, url, style="color:#555;text-decoration:underline;") + "</p>" if sw else ""}
-{"<p style='margin:0 0 6px 0;font-size:13px;line-height:1.5;color:#777;font-style:italic;'><strong style='color:#555;font-style:normal;'>Pattern:</strong> " + pn + "</p>" if pn else ""}
 {ref}
 <div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
@@ -965,7 +971,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
     # Footer
     sections_post.append(f"""
 <div style="padding:20px 32px;background:#BC002D;text-align:center;" class="sec footer">
-<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FF6B6B;font-family:Arial,sans-serif;margin-bottom:10px;">For Internal Use Only</div>
+<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;font-family:Arial,sans-serif;margin-bottom:10px;">For Internal Use Only</div>
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
 CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
 </div>
@@ -1000,6 +1006,11 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
   .mkt-table div[style*="font-weight:700"], .key-stat-num {{ font-family:'Courier New',Courier,monospace !important; }}
   /* Mobile responsive */
   @media only screen and (max-width: 620px) {{
+      .util-row .util-cell {{ display:block !important; text-align:center !important;
+        padding:5px 8px !important; white-space:normal !important; }}
+      .util-row .util-cell a {{ padding:4px 7px !important; margin:1px !important;
+        font-size:11px !important; letter-spacing:0.3px !important; }}
+
     /* Side by side, the nameplate gets 58% of a 320px screen and wraps to
        four lines. Stacked, each half spans the width and the flag still
        reads as red above white. */
@@ -1078,7 +1089,7 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
     .wrapper [style*="color:#bc002d"] {{ color:#E8E6E1 !important; }}
     .wrapper [style*="color:#C0392B"] {{ color:#C4C8CE !important; }}
     .wrapper [style*="color:#c0392b"] {{ color:#C4C8CE !important; }}
-    .wrapper [style*="color:#FF6B6B"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#FFFFFF"] {{ color:#9AA3AE !important; }}
     .wrapper [style*="color:#ff6b6b"] {{ color:#9AA3AE !important; }}
     .wrapper [style*="background:#F0F0F0"] {{ background-color:#262A30 !important; }}
     .wrapper [style*="background:#f0f0f0"] {{ background-color:#262A30 !important; }}

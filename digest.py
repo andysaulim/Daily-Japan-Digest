@@ -40,7 +40,7 @@ SOURCE-OR-SKIP PRINCIPLE: For EVERY factual claim you write, you must be able to
 
 - Cross-check: before writing any person's name + title, verify that BOTH the name AND the title appear together in at least one source article in this batch. If not, do not assert the pairing.
 
-- HISTORICAL CLAIMS: Do NOT cite specific historical dates or precedents from memory. pattern_note and analyst_note fields should ONLY reference precedents that are mentioned in today's source articles or the reference baselines provided in this prompt. If no relevant precedent appears in the provided data, set the field to null rather than inventing one. A wrong date is worse than no date.
+- HISTORICAL CLAIMS: Do NOT cite specific historical dates or precedents from memory. analyst_note fields should ONLY reference precedents that are mentioned in today's source articles or the reference baselines provided in this prompt. If no relevant precedent appears in the provided data, set the field to null rather than inventing one. A wrong date is worse than no date.
 
 - OMISSIONS & STREAKS: Do NOT claim "X absent for N days" or "no mention of Y for N days" unless the tracker data provided in this prompt supports the specific count. If no tracker history is available, do not fabricate streak counts.
 
@@ -392,7 +392,7 @@ JAPAN REFERENCE CONTEXT (verified timelines)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {db_context}
 
-Use this for on_this_day, calendar_watch, and pattern_note fields."""
+Use this for on_this_day and calendar_watch fields."""
 
     # PM appearance tracker
     pm_block = ""
@@ -570,7 +570,7 @@ Return a digest object with:
 
 - overnight_items: 4 items MAX. Source diversity MANDATORY (max 3 from any single source). Topic diversity MANDATORY. Each: url (verbatim from input), source, category, headline (under 100 chars), body_text (2 sentences, ~35-45 words).
 
-- top_stories: 2-4 biggest HARD NEWS stories — aim for 3 typical, 2 slow days, 4 when multiple major stories. From wires/correspondents/Japanese press/government — NOT op-eds or think tank commentary. TOPIC DIVERSITY MANDATORY. Each: url (verbatim from input), source, category_tag (Alliance/China-Japan/Korea-Japan/DPRK/Economy-BOJ/Politics-Diet/Defense/Technology/Indo-Pacific/Energy), headline, body (MAX 2 sentences — facts: who/what/when/specifics), so_what (1 sentence — specific decision/meeting/timeline this affects, only if it appears in today's articles or calendar_watch), pattern_note (1 sentence with historical precedent ONLY if it appears in today's articles or reference data; else null), src_line.
+- top_stories: 2-4 biggest HARD NEWS stories — aim for 3 typical, 2 slow days, 4 when multiple major stories. From wires/correspondents/Japanese press/government — NOT op-eds or think tank commentary. TOPIC DIVERSITY MANDATORY. Each: url (verbatim from input), source, category_tag (Alliance/China-Japan/Korea-Japan/DPRK/Economy-BOJ/Politics-Diet/Defense/Technology/Indo-Pacific/Energy), headline, body (MAX 2 sentences — facts: who/what/when/specifics), src_line.
 
 - also_today: up to 4 remaining articles score >= 4. Each: url (verbatim from input), source, category, headline, body_text (1 sentence), color_bar_class (cb-navy=Alliance, cb-red=Defense, cb-lt=Trade/Economy, cb-mid=Diplomacy, cb-tech=Technology, cb-biz=Politics).
 
@@ -621,7 +621,7 @@ Return ONLY valid JSON. No markdown fences, no preamble."""
 # ─────────────────────────────────────────────────────────────────────────────
 
 _TEXT_FIELDS = ("body", "body_text", "summary", "detail", "quote_text",
-               "so_what", "pattern_note", "central_argument", "analyst_note")
+               "central_argument", "analyst_note")
 
 
 def _count_digest_words(digest: dict) -> int:
