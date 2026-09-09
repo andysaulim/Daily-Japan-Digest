@@ -134,6 +134,52 @@ def _count_words(digest: dict) -> int:
     return words
 
 
+
+# The validator rejects a brief where one outlet appears more than three times
+# across top stories and overnight. Nothing enforced that, so an
+# over-represented source was a dead end: the gate blocked the send and no code
+# path could clear it. Korea caps and drops the excess before validating; this
+# is that, ported.
+_SOURCE_CAP = 3
+
+
+def _enforce_source_diversity(digest: dict) -> list[str]:
+    """Cap any single source to _SOURCE_CAP appearances per section.
+
+    Skips top_stories: that section is two to four curated items where the
+    importance of the story outweighs source diversity, and dropping one to
+    satisfy a count would cost the brief its lead. Excess items are dropped
+    from the sections that carry breadth, and never below the section's floor.
+    """
+    _SECTION_MINIMUMS = {"overnight_items": 3}
+    log = []
+    for section_key in ("overnight_items", "also_today"):
+        items = digest.get(section_key)
+        if not items or not isinstance(items, list):
+            continue
+        floor = _SECTION_MINIMUMS.get(section_key, 0)
+        counts, kept, dropped = {}, [], []
+        for item in items:
+            src = str(item.get("source", "Unknown")).lower().strip()
+            counts[src] = counts.get(src, 0) + 1
+            if counts[src] <= _SOURCE_CAP:
+                kept.append(item)
+            else:
+                dropped.append((item, src, str(item.get("headline", ""))[:60]))
+        # Never breach the floor to satisfy the cap: put back the least
+        # egregious duplicates rather than ship a section under strength.
+        if len(kept) < floor and dropped:
+            need = floor - len(kept)
+            for item, _s, _h in dropped[-need:]:
+                kept.append(item)
+            dropped = dropped[:-need]
+        if dropped:
+            digest[section_key] = kept
+            for _item, src, headline in dropped:
+                log.append(f"Removed excess {src} from {section_key}: '{headline}'")
+    return log
+
+
 def _validate_digest(digest: dict) -> list[str]:
     """Run pre-send quality checks. Returns list of failures (empty = pass)."""
     failures = []
@@ -1316,6 +1362,8 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── Validate ────────────────────────────────────────────────────────
     print("\n🔍 Validating digest...")
+    for _line in _enforce_source_diversity(digest):
+        print(f"   • {_line}")
     failures = _validate_digest(digest)
     validation_passed = not failures
     if failures:

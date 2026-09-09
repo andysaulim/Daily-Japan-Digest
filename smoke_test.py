@@ -188,6 +188,38 @@ def test_length():
     check("top stories are never trimmed", len(over["top_stories"]) == 2)
 
 
+# ── 4b. Source diversity ─────────────────────────────────────────────────
+def test_source_diversity():
+    """The rule the validator enforces must have something that satisfies it.
+
+    The validator rejects a brief where one outlet appears more than three
+    times across top stories and overnight, and nothing used to cap it, so an
+    over-represented source blocked the send with no way to recover. Whole-
+    outlet RSS feeds return far more items per source than the site: searches
+    they replaced, which makes that input likely rather than exotic.
+    """
+    section("source diversity")
+    d = {"overnight_items": [{"source": "Reuters", "headline": f"r{i}"} for i in range(6)]
+                            + [{"source": "Kyodo", "headline": "k"}],
+         "also_today": [{"source": "Nikkei", "headline": f"n{i}"} for i in range(5)]}
+    log = run_mod._enforce_source_diversity(d)
+    check("excess items are dropped", len(log) == 5, str(len(log)))
+    check("the cap holds", sum(1 for i in d["overnight_items"]
+                               if i["source"] == "Reuters") <= run_mod._SOURCE_CAP)
+    check("the section floor is respected", len(d["overnight_items"]) >= 3)
+    # And the gate it feeds must then pass.
+    full = dict(d, top_stories=[{"source": "A", "headline": "x"},
+                                {"source": "B", "headline": "y"}],
+                morning_memo=["a", "b", "c"])
+    check("the validator no longer objects",
+          not [f for f in run_mod._validate_digest(full) if "DIVERSITY" in f])
+    # Top stories are deliberately exempt: two to four curated items where the
+    # story outweighs the count.
+    top = {"top_stories": [{"source": "Reuters", "headline": f"t{i}"} for i in range(4)]}
+    run_mod._enforce_source_diversity(top)
+    check("top stories are untouched", len(top["top_stories"]) == 4)
+
+
 # ── 5. Validation gate ───────────────────────────────────────────────────
 def test_validation_gate():
     section("validation gate")
@@ -281,7 +313,7 @@ def test_email():
 
 
 def main() -> int:
-    for t in (test_render, test_dark_mode, test_print_and_mobile, test_length,
+    for t in (test_render, test_source_diversity, test_dark_mode, test_print_and_mobile, test_length,
               test_validation_gate, test_feeds, test_calendar, test_email):
         try:
             t()
