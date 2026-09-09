@@ -542,7 +542,7 @@ TIER 4: JAPANESE GOVERNMENT PRIMARY + ADVERSARY SIGNAL (last 48h)
 DIGEST SYNTHESIS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-TARGET LENGTH — 1,000-1,300 words (a tight 5-minute read). HARD MINIMUM 1,000 words; do NOT exceed ~1,400 words. Be concise: prefer fewer, higher-signal items over completeness, and cut any sentence that doesn't add a fact.
+TARGET LENGTH — 1,900-2,200 WORDS, HARD CEILING 2,400 (an 8-minute read). This is a band, not a floor: reach it by covering MORE stories, not by inflating individual items. HARD MINIMUM 1,600 words. Anything over the ceiling is trimmed from the tail of the weaker sections after you return, so a draft that runs long loses items you chose rather than words you wrote.
 
 Return a digest object with:
 

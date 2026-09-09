@@ -62,6 +62,13 @@ ENTERTAINMENT_BLOCK = ("celebrity", "j-pop", "idol", "anime", "manga",
 # header/display counter, so this maps to a higher displayed word count.
 MIN_WORD_COUNT = 650
 
+# The band the prompt asks for is 1,900-2,200, shared with Korea. This is the
+# ceiling, enforced after the model has written rather than requested of it:
+# a target competes with every other instruction in the prompt and loses on a
+# heavy news day. length_budget drops whole items from the tail of the weaker
+# sections until the brief fits; nothing is rewritten.
+WORD_CEILING = 2400
+
 
 def _count_words(digest: dict) -> int:
     """Count readable words across all text fields."""
@@ -1273,14 +1280,23 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── Validate ────────────────────────────────────────────────────────
     print("\n🔍 Validating digest...")
     failures = _validate_digest(digest)
+    validation_passed = not failures
     if failures:
         print("⚠ Validation failures:")
         for f in failures:
             print(f"   • {f}")
-        if not args.force_send:
-            print("\n   Use --force-send to override validation gate.")
+        if args.force_send:
+            print("\n   --force-send: sending anyway.")
+        else:
+            print("\n   The brief will NOT be sent. HTML is still rendered for "
+                  "review; use --force-send to override.")
     else:
         print("   ✓ All validation checks passed")
+
+    # ─── Length ceiling ──────────────────────────────────────────────────
+    import length_budget
+    for _line in length_budget.apply(digest, _count_words, WORD_CEILING):
+        print(f"   {_line}")
 
     # ─── Render ──────────────────────────────────────────────────────────
     print("\n🎨 Rendering HTML email...")
@@ -1308,7 +1324,13 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── Send ────────────────────────────────────────────────────────────
     sent_ok = False
-    if args.no_send:
+    if not validation_passed and not args.force_send:
+        # Fail closed. This printed "Use --force-send to override validation
+        # gate" and then sent the brief regardless, so every failure it ever
+        # reported went out to the list anyway and the message was untrue.
+        print("\n📭 Validation failed: not sending. Re-run once the findings "
+              "above are addressed, or pass --force-send.")
+    elif args.no_send:
         print("\n📭 --no-send: skipping email send.")
     else:
         print("\n📧 Sending email...")
