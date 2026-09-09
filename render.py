@@ -259,10 +259,14 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 
     # 1. Header
     sections_pre.append(f"""
-<div style="background:#1B2A4A;color:#fff;padding:18px 32px 14px;" class="sec">
+<!-- The masthead carries the edition's identity colour, the data strip
+     below it stays navy, and the body stays white: colour for identity,
+     navy for data, white for reading. The footer takes the same colour
+     so the brief opens and closes on the same note. -->
+<div style="background:#BC002D;color:#fff;padding:18px 32px 14px;" class="sec">
 <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="vertical-align:top;">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.82);font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
 <h1 style="margin:0 0 4px 0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
 <div style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
 </td>
@@ -957,7 +961,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 
     # Footer
     sections_post.append(f"""
-<div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec footer">
+<div style="padding:20px 32px;background:#BC002D;text-align:center;" class="sec footer">
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FF6B6B;font-family:Arial,sans-serif;margin-bottom:10px;">For Internal Use Only</div>
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
 CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
@@ -1032,7 +1036,7 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
     .wrapper h1, .wrapper h2, .wrapper h3 {{ color:#E8E6E1 !important; }}
     .wrapper .sec p {{ color:#C4C8CE !important; }}
     .wrapper a {{ color:#6FA8E8 !important; }}
-    .wrapper .footer {{ background:#0F1B30 !important; }}
+    .wrapper .footer {{ background:#6E0019 !important; }}
     .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
     /* Trade dashboard light boxes → neutral dark equivalents */
     .wrapper .tariff-box, .wrapper .alliance-box {{ background:#22262C !important; border-color:#33373D !important; }}
