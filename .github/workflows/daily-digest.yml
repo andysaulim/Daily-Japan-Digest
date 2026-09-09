@@ -16,8 +16,19 @@ on:
     - cron: '27 12 * * *'   # 8:27 AM ET — catch-up 3
     - cron: '27 13 * * *'   # 9:27 AM ET — catch-up 4
     - cron: '27 14 * * *'   # 10:27 AM ET — final backstop
+  # A push to this branch runs a dry collection — no model call, no email —
+  # unless the commit message carries [live-send] or [test-send]. That is the
+  # same guard the China brief uses, and it exists because workflow_dispatch
+  # needs the Actions UI: without it there is no way to start a run from a
+  # terminal or an API client that lacks actions:write.
+  push:
+    branches: [claude/cool-gauss-d6swm9]
   workflow_dispatch:
     inputs:
+      force_send:
+        description: 'Send even if validation fails. Use only when you have read the findings and accept them.'
+        type: boolean
+        default: false
       dry_run:
         description: 'Collection only — no API key needed. Scrapes all feeds + market data, uploads collected.json. Skips digest/render/send.'
         type: boolean
@@ -86,11 +97,24 @@ jobs:
       # when the primary was dropped OR sent-but-failed. Manual dispatch always
       # runs.
       - name: Skip guard (avoid double-send on catch-up)
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         id: guard
         run: |
           TODAY=$(TZ=America/New_York date +%Y-%m-%d)
           LAST_SENT=$(tr -d '[:space:]' < last_sent.txt 2>/dev/null || true)
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "push" ]; then
+            if printf '%s' "$COMMIT_MSG" | grep -q '\[live-send\]'; then
+              echo "::notice::Push tagged [live-send]: full pipeline, live send."
+              echo "should_run=true" >> "$GITHUB_OUTPUT"
+            elif printf '%s' "$COMMIT_MSG" | grep -q '\[test-send\]'; then
+              echo "::notice::Push tagged [test-send]: full pipeline, test address only."
+              echo "should_run=test" >> "$GITHUB_OUTPUT"
+            else
+              echo "::notice::Push without a send tag: dry collection only."
+              echo "should_run=dry" >> "$GITHUB_OUTPUT"
+            fi
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           elif [ "$LAST_SENT" = "$TODAY" ]; then
             echo "::notice::Today's edition ($TODAY) already sent — skipping (catch-up no-op)."
@@ -100,7 +124,7 @@ jobs:
           fi
 
       - name: Run pipeline
-        if: ${{ steps.guard.outputs.should_run == 'true' }}
+        if: ${{ steps.guard.outputs.should_run != 'false' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
@@ -113,8 +137,21 @@ jobs:
           # agrees with the hand-verified baseline on overlapping pollsters, else it
           # falls back to the baseline. Set repo variable TRUST_WIKI_POLLS=0 to disable.
           TRUST_WIKI_POLLS: ${{ vars.TRUST_WIKI_POLLS || '1' }}
+          TEST_SEND_TO: ${{ vars.TEST_SEND_TO || 'alim@csis.org' }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
+          if [ "${{ steps.guard.outputs.should_run }}" = "dry" ]; then
+            echo "::notice::Push without a send tag — collection only."
+            python run.py --dry-run
+          elif [ "${{ steps.guard.outputs.should_run }}" = "test" ]; then
+            echo "::notice::Push tagged [test-send] — full pipeline to the test address only."
+            python run.py --send-to "${TEST_SEND_TO:-alim@csis.org}" --no-archive
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            echo "::notice::Push tagged [live-send] — full pipeline, live send."
+            # Not --force-send. The gate blocks a brief that failed validation
+            # and that is the point of it; forcing belongs behind the dispatch
+            # input, where a person has read the findings and accepted them.
+            python run.py
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "true" ]; then
             echo "::notice::DRY RUN — collection only (no API key required). Skips digest/render/send."
             python run.py --dry-run
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.send_to }}" ]; then

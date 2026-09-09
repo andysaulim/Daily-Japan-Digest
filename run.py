@@ -1322,6 +1322,13 @@ def run_pipeline(args: argparse.Namespace) -> int:
         print("⚠ Validation failures:")
         for f in failures:
             print(f"   • {f}")
+        # As GitHub annotations too. Job logs are not always reachable — they
+        # redirect to blob storage that some networks refuse — but annotations
+        # come back through the check-runs API, so the reason a brief was held
+        # is legible without opening the log.
+        if os.environ.get("GITHUB_ACTIONS"):
+            for f in failures:
+                print(f"::error title=Validation::{f}")
         if args.force_send:
             print("\n   --force-send: sending anyway.")
         else:
