@@ -959,14 +959,12 @@ def render_html(digest: dict) -> str:
                 auth = _esc(o.get("authors", ""))
                 ca = _esc(o.get("central_argument", ""))
                 sm = _esc(o.get("summary", ""))
-                ps = _esc(o.get("policy_so_what", ""))
                 url = o.get("url", "")
                 body += f"""<div style="margin-bottom:14px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
 <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src}{(' · ' + auth) if auth else ''}</div>
 <div style="font-size:14px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:6px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 {"<div style='font-size:13px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>" + ca + "</div>" if ca else ""}
-{"<div style='font-size:11px;line-height:1.5;color:#666;'>" + sm + "</div>" if sm else ""}
-{"<div style='font-size:11px;color:#1B2A4A;margin-top:4px;font-weight:600;'>" + ps + "</div>" if ps else ""}
+{"<div style='font-family:Georgia,serif;font-size:13px;line-height:1.5;color:#4A5260;'>" + sm + "</div>" if sm else ""}
 </div>"""
         if academics:
             body += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;margin:14px 0 8px 0;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Academic Journals</div>'
