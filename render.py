@@ -654,7 +654,16 @@ def render_html(digest: dict) -> str:
     prc_gov = digest.get("prc_government") or []
     personnel = digest.get("personnel_changes") or []
     npc = digest.get("npc_politburo") or []
-    calendar = digest.get("calendar_watch") or []
+    # Fixed observances are arithmetic, not recall, so they are computed and
+    # merged with whatever dated events the model found today. Upcoming has
+    # shipped empty and past-dated in other editions for exactly the reason
+    # this removes: a list of dates written into the prompt goes stale, and a
+    # model told to fill the section from an exhausted list invents entries.
+    try:
+        import japan_calendar
+        calendar = japan_calendar.merge(digest.get("calendar_watch"))
+    except Exception:
+        calendar = digest.get("calendar_watch") or []
     if prc_gov or personnel or npc or calendar:
         gov_rows_html = ""
         for it in prc_gov:
