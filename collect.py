@@ -46,18 +46,26 @@ def _direct(source: str, direct_url: str, gnews_query: str) -> str:
 # ── TIER 1: NEWS (24h window) ─────────────────────────────────────────────────
 TIER1_FEEDS = {
     # ── Major international — Japan coverage ────────────────────────────────
-    "WSJ Japan":          _gnews("Japan+site:wsj.com"),
-    "NYT Japan":          _gnews("Japan+site:nytimes.com"),
-    "WaPo Japan":         _gnews("Japan+site:washingtonpost.com"),
-    "FT Japan":           _gnews("Japan+site:ft.com"),
+    "WSJ Japan":          _direct("WSJ Japan", "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
+                              "Japan+site:wsj.com"),
+    "NYT Japan":          _direct("NYT Japan", "https://rss.nytimes.com/services/xml/rss/nyt/AsiaPacific.xml",
+                              "Japan+site:nytimes.com"),
+    "WaPo Japan":         _direct("WaPo Japan", "https://feeds.washingtonpost.com/rss/world",
+                              "Japan+site:washingtonpost.com"),
+    "FT Japan":           _direct("FT Japan", "https://www.ft.com/world?format=rss",
+                              "Japan+site:ft.com"),
     "Reuters Japan":      _gnews("Japan+site:reuters.com"),
-    "AP Japan":           _gnews("Japan+site:apnews.com"),
+    "AP Japan":           _direct("AP Japan", "https://feedx.net/rss/ap.xml",
+                              "Japan+site:apnews.com"),
     "AFP Japan":          _gnews("Japan+site:afp.com"),
     "Bloomberg Japan":    _gnews("Japan+site:bloomberg.com"),
-    "BBC Japan":          _gnews("Japan+site:bbc.com"),
+    "BBC Japan":          _direct("BBC Japan", "https://feeds.bbci.co.uk/news/world/asia/rss.xml",
+                              "Japan+site:bbc.com"),
     "CNN Japan":          _gnews("Japan+site:cnn.com"),
-    "CNBC Japan":         _gnews("Japan+site:cnbc.com"),
-    "Economist Japan":    _gnews("Japan+site:economist.com"),
+    "CNBC Japan":         _direct("CNBC Japan", "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
+                              "Japan+site:cnbc.com"),
+    "Economist Japan":    _direct("Economist Japan", "https://www.economist.com/asia/rss.xml",
+                              "Japan+site:economist.com"),
     # Guardian has a Japan-specific feed with real permalinks (fallback: GN search).
     "Guardian Japan":     _direct("Guardian Japan", "https://www.theguardian.com/world/japan/rss",
                                   "Japan+site:theguardian.com"),
@@ -75,7 +83,8 @@ TIER1_FEEDS = {
                                   "site:mainichi.jp/english"),
     "Asahi AJW":          _direct("Asahi AJW", "https://www.asahi.com/rss/asahi/newsheadlines.rdf",
                                   "site:asahi.com/ajw"),
-    "Japan News (Yomiuri)": _gnews("site:the-japan-news.com"),     # no confirmed RSS → GN
+    "Japan News (Yomiuri)": _direct("Japan News (Yomiuri)", "https://japannews.yomiuri.co.jp/feed/",
+                              "site:the-japan-news.com"),     # no confirmed RSS → GN
     "Nikkei Asia":        _direct("Nikkei Asia", "https://asia.nikkei.com/rss/feed/nar",
                                   "Japan+site:asia.nikkei.com"),
     "Jiji Press":         _direct("Jiji Press", "https://www.jiji.com/rss/ranking.rdf",
@@ -98,10 +107,14 @@ TIER1_FEEDS = {
                                   "site:japan.kantei.go.jp"),
     "MOFA Japan":         _direct("MOFA Japan", "https://www.mofa.go.jp/rss/whatsnew.xml",
                                   "site:mofa.go.jp"),
-    "MOD Japan":          _gnews("site:mod.go.jp"),
-    "METI Japan":         _gnews("site:meti.go.jp"),
-    "MOF Japan":          _gnews("site:mof.go.jp"),
-    "Bank of Japan":      _gnews("site:boj.or.jp"),
+    "MOD Japan":          _direct("MOD Japan", "https://www.mod.go.jp/j/rss/news.xml",
+                              "site:mod.go.jp"),
+    "METI Japan":         _direct("METI Japan", "https://www.meti.go.jp/english/rss/index.xml",
+                              "site:meti.go.jp"),
+    "MOF Japan":          _direct("MOF Japan", "https://www.mof.go.jp/rss/en_newsrelease.xml",
+                              "site:mof.go.jp"),
+    "Bank of Japan":      _direct("Bank of Japan", "https://www.boj.or.jp/en/rss/whatsnew.xml",
+                              "site:boj.or.jp"),
 
     # ── Regional reaction layer ─────────────────────────────────────────────
     "Yonhap re Japan":    _gnews("Japan+site:en.yna.co.kr"),
@@ -119,7 +132,8 @@ TIER1_FEEDS = {
     "The Diplomat Japan": _direct("The Diplomat Japan", "https://thediplomat.com/feed/",
                                   "Japan+site:thediplomat.com"),
     "Tokyo Review":       _gnews("site:tokyoreview.net"),
-    "Observing Japan":    _gnews("site:observingjapan.com+OR+%22Observing+Japan%22"),
+    "Observing Japan":    _direct("Observing Japan", "https://observingjapan.substack.com/feed",
+                              "site:observingjapan.com+OR+%22Observing+Japan%22"),
 }
 
 
@@ -201,11 +215,14 @@ TIER3_FEEDS = {
 TIER4_FEEDS = {
     # Japanese government primary
     "Kantei / PM":         _gnews("%22Prime+Minister%22+Japan+statement+OR+%22press+conference%22+site:japan.kantei.go.jp"),
-    "Chief Cabinet Sec":   _gnews("%22Chief+Cabinet+Secretary%22+Japan+press+conference"),
+    "Chief Cabinet Sec":   _direct("Chief Cabinet Sec", "https://japan.kantei.go.jp/rss/index.rdf",
+                              "%22Chief+Cabinet+Secretary%22+Japan+press+conference"),
     "MOFA presser":        _gnews("Japan+%22Foreign+Ministry%22+OR+%22MOFA%22+press+conference+OR+statement"),
-    "MOD / Joint Staff":   _gnews("Japan+%22Joint+Staff%22+OR+%22Defense+Ministry%22+scramble+OR+incursion+OR+statement"),
+    "MOD / Joint Staff":   _direct("MOD / Joint Staff", "https://www.mod.go.jp/js/rss/press.xml",
+                              "Japan+%22Joint+Staff%22+OR+%22Defense+Ministry%22+scramble+OR+incursion+OR+statement"),
     "METI statements":     _gnews("Japan+%22METI%22+OR+%22Ministry+of+Economy%22+statement+OR+policy"),
-    "BOJ statements":      _gnews("%22Bank+of+Japan%22+statement+OR+%22policy+meeting%22+OR+Ueda"),
+    "BOJ statements":      _direct("BOJ statements", "https://www.boj.or.jp/en/rss/release.xml",
+                              "%22Bank+of+Japan%22+statement+OR+%22policy+meeting%22+OR+Ueda"),
 
     # Adversary signal toward Japan
     "China MOFA re Japan": _gnews("China+%22Foreign+Ministry%22+Japan+OR+Senkaku+statement+OR+spokesperson"),
@@ -252,6 +269,11 @@ POLL_FEEDS = {
 JAPAN_NATIVE_FEEDS = {
     "Kantei / PMO", "MOFA Japan", "MOD Japan", "METI Japan", "MOF Japan",
     "Bank of Japan", "Kantei / PM", "MOFA presser",
+    # Added with their native feeds. Same reasoning: "Press Conference by the
+    # Chief Cabinet Secretary" and a Joint Staff scramble notice carry none of
+    # the tokens the filter looks for.
+    "MOD / Joint Staff", "BOJ statements", "Chief Cabinet Sec",
+    "METI statements", "Asahi AJW", "NHK World",
 }
 
 
