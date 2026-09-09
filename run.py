@@ -1313,7 +1313,10 @@ def run_pipeline(args: argparse.Namespace) -> int:
     else:
         print("\n📧 Sending email...")
         from send_email import send_digest
-        sent_ok = bool(send_digest(html))
+        _test_to = [a.strip() for a in (args.send_to or "").split(",") if a.strip()]
+        if _test_to:
+            print(f"\n   TEST SEND to {', '.join(_test_to)} — no archive or tracker writes")
+        sent_ok = bool(send_digest(html, recipients=_test_to or None))
         if not sent_ok:
             print("   ⚠ Send failed or skipped")
 
@@ -1343,6 +1346,13 @@ def main():
     parser = argparse.ArgumentParser(
         description="Japan Daily Brief — orchestration entry point"
     )
+    # Without this there is no way to try the brief on one address: the only
+    # choices were not sending at all, or sending to the whole distribution
+    # list. China's edition has had it; this brings Japan into line.
+    parser.add_argument("--send-to", metavar="EMAIL", default="",
+                        help="Send this run to these addresses only, comma-separated. "
+                             "Skips the archive and tracker writes, so a test leaves "
+                             "no trace in the published history.")
     parser.add_argument("--dry-run", action="store_true",
                        help="Collect only; skip digest/render/send")
     parser.add_argument("--from-cache", action="store_true",
