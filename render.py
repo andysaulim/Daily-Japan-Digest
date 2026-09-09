@@ -153,8 +153,29 @@ def _compact_row(cat: str, headline: str, url: str, src: str, body: str = "") ->
             f'{line}</tr>')
 
 
-def _sec_label(label: str, color: str = NAVY, rule: str = HINOMARU_RED) -> str:
-    """Section label — navy small-caps over a Hinomaru-red rule, no pill."""
+def _site_root(web_url: str) -> str:
+    """The published site root, with a trailing slash, from any page URL.
+
+    Every archive link is built from this. Deriving it by stripping one exact
+    filename meant a URL that ended any other way yielded nothing, and the
+    links were dropped rather than pointing somewhere wrong — which looks
+    identical to not having them.
+    """
+    if not web_url:
+        return ""
+    base = web_url.split("?")[0].split("#")[0]
+    if not base.endswith("/"):
+        base = base.rsplit("/", 1)[0] + "/" if "/" in base.split("//", 1)[-1] else base + "/"
+    return base
+
+
+def _sec_label(label: str, color: str = HINOMARU_RED, rule: str = HINOMARU_RED) -> str:
+    """Section label — red small-caps over a red rule, no pill.
+
+    The label was navy over a red rule, so Today at a Glance (which set its
+    own red) was the only heading in the brief that matched the nameplate and
+    every other one read as a different system.
+    """
     return (f'<div style="font-size:10px;font-weight:700;text-transform:uppercase;'
             f'letter-spacing:2px;color:{color};font-family:Arial,sans-serif;'
             f'margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid {rule};">'
@@ -296,7 +317,10 @@ def render_html(digest: dict) -> str:
     # say what they do. Notice and links share one row rather than taking a
     # band each, which is ~90px of chrome above the nameplate.
     if web_url:
-        _base = web_url[:-len("latest.html")] if web_url.endswith("latest.html") else ""
+        # The site root, however the run spelled the URL. This used to insist
+        # on a "latest.html" suffix and produced "" for anything else, so
+        # Download PDF and Past issues silently vanished from the row.
+        _base = _site_root(web_url)
         _a = ('display:inline-block;padding:4px 12px;margin:0 2px;'
               'font-family:Arial,sans-serif;font-size:11px;font-weight:700;'
               'letter-spacing:0.5px;color:rgba(255,255,255,0.92);'
@@ -305,7 +329,8 @@ def render_html(digest: dict) -> str:
               'text-decoration:none;white-space:nowrap;')
         _links = [f'<a href="{_esc(web_url)}" style="{_a}">Read online</a>']
         if _base:
-            _links.append(f'<a href="{_esc(_base + "latest.pdf")}" style="{_a}">Download PDF</a>')
+            _pdf = digest.get("pdf_url") or (_base + "latest.pdf")
+            _links.append(f'<a href="{_esc(_pdf)}" style="{_a}">Download PDF</a>')
             _links.append(f'<a href="{_esc(_base + "archive.html")}" style="{_a}">Past issues</a>')
         sections_pre.append(f"""
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#2E3644;" class="util-row">
@@ -324,7 +349,7 @@ def render_html(digest: dict) -> str:
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="mast-split"><tr>
 <td width="58%" class="mast-red" style="vertical-align:middle;background:#BC002D;padding:20px 20px 20px 32px;">
 <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.85);font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
+<h1 style="margin:0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">Japan Daily Brief</h1>
 {"<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.35);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;'><strong style='color:#FFFFFF;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;'>RE:</strong>&nbsp; " + _esc(re_line) + "</div>" if re_line else ""}
 </td>
 <td width="42%" class="mast-white" style="vertical-align:middle;text-align:right;background:#BC002D;padding:20px 32px 20px 20px;">
@@ -334,89 +359,43 @@ def render_html(digest: dict) -> str:
 </tr></table>
 </div>""")
 
-    # Placeholder for the jump row, resolved at the end of render() once every
-    # section is known and its anchors can be checked.
-    sections_pre.append("%%NAV%%")
-
-    # 2. Market strip (3 rows)
+    # 2. Market strip — one row of four, the house shape.
+    #
+    # It was three stacked rows of nine indicators: TOPIX, EUR/JPY, 10Y JGB,
+    # Japan 5Y CDS and GDP alongside the four that matter, in three shades of
+    # navy. Nine figures is a terminal, not a brief; the reader wants the
+    # index, the currency, the oil price and the policy rate.
     m = digest.get("market_indicators") or {}
     if m:
         nikkei = m.get("nikkei") or {}
-        topix = m.get("topix") or {}
         usd_jpy = m.get("usd_jpy") or {}
-        eur_jpy = m.get("eur_jpy") or {}
         brent = m.get("brent") or {}
-        jgb = m.get("jgb_10y") or {}
-        cds = m.get("japan_cds") or {}
         boj = m.get("boj_rate") or {}
-        gdp = m.get("gdp_yoy") or {}
-        _topix_val = str(topix.get("value", "—"))
-        _has_topix = _topix_val not in ("—", "", "None")
-        _asof = now.strftime("%b %-d")
-        _nikkei_cell = f"""<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">Nikkei 225</div>
-<div style="font-size:22px;font-weight:700;margin:2px 0;">{_esc(str(nikkei.get("value", "—")))}</div>
-<div style="font-size:11px;">{_arrow(nikkei.get("change_pct", 0))}</div>
-<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
-        _usdjpy_cell = f"""<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">USD/JPY</div>
-<div style="font-size:22px;font-weight:700;margin:2px 0;">{_esc(str(usd_jpy.get("value", "—")))}</div>
-<div style="font-size:11px;">{_arrow(usd_jpy.get("change_pct", 0))}</div>
-<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
-        if _has_topix:
-            _topix_cell = f"""<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">TOPIX</div>
-<div style="font-size:22px;font-weight:700;margin:2px 0;">{_esc(_topix_val)}</div>
-<div style="font-size:11px;">{_arrow(topix.get("change_pct", 0))}</div>
-<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
-            _top_row = (f'<td width="33%" align="center" style="padding:12px 8px 10px;">{_nikkei_cell}</td>'
-                        f'<td width="34%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);border-right:1px solid rgba(255,255,255,0.12);">{_topix_cell}</td>'
-                        f'<td width="33%" align="center" style="padding:12px 8px 10px;">{_usdjpy_cell}</td>')
-        else:
-            # TOPIX unavailable from data sources — show Nikkei | USD/JPY two-across, no broken cell.
-            _top_row = (f'<td width="50%" align="center" style="padding:12px 8px 10px;">{_nikkei_cell}</td>'
-                        f'<td width="50%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);">{_usdjpy_cell}</td>')
-        sections_pre.append(f"""
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
-<tr>
-{_top_row}
-</tr>
-</table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
-<tr>
-<td width="25%" align="center" style="padding:8px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">EUR/JPY</div>
-<div style="font-size:14px;font-weight:700;">{_esc(str(eur_jpy.get("value", "—")))}</div>
-<div style="font-size:10px;">{_arrow(eur_jpy.get("change_pct", 0))}</div>
-</td>
-<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Brent</div>
-<div style="font-size:14px;font-weight:700;">${_esc(str(brent.get("value", "—")))}</div>
-<div style="font-size:10px;">{_arrow(brent.get("change_pct", 0))}</div>
-</td>
-<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">10Y JGB</div>
-<div style="font-size:14px;font-weight:700;">{_esc(str(jgb.get("value", "—")))}</div>
-<div style="font-size:10px;opacity:0.5;">yield</div>
-</td>
-<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Japan 5Y CDS</div>
-<div style="font-size:14px;font-weight:700;">{_esc(str(cds.get("value", "—")))} bps</div>
-<div style="font-size:10px;">{_cds_arrow(cds.get("change_bps", 0))}</div>
-</td>
-</tr>
-</table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#0F1B30;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
-<tr>
-<td width="50%" align="center" style="padding:8px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">BOJ Policy Rate</div>
-<div style="font-size:14px;font-weight:700;">{_esc(str(boj.get("value", "—")))}</div>
-<div style="font-size:10px;opacity:0.6;">{_esc(str(boj.get("last_change", "")))}</div>
-</td>
-<td width="50%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">GDP (annualized)</div>
-<div style="font-size:14px;font-weight:700;">{_esc(str(gdp.get("value", "—")))}</div>
-<div style="font-size:10px;opacity:0.6;">{_esc(str(gdp.get("source", "Cabinet Office")))}{" · " + _esc(str(gdp.get("period", ""))) if gdp.get("period") else ""}</div>
-</td>
-</tr>
-</table>""")
+        _MONO = "'Courier New',Courier,monospace"
+
+        def _tile(label: str, value: str, under: str, first: bool = False) -> str:
+            edge = "" if first else "border-left:1px solid rgba(255,255,255,0.10);"
+            return (f'<td width="25%" align="center" style="padding:11px 6px 13px;{edge}">'
+                    f'<div style="font-size:10px;text-transform:uppercase;'
+                    f'letter-spacing:1px;color:#9DB2CE;">{label}</div>'
+                    f'<div style="font-family:{_MONO};font-size:16px;font-weight:700;'
+                    f'margin-top:3px;">{value}</div>'
+                    f'<div style="font-size:11px;margin-top:2px;">{under}</div></td>')
+
+        _last = _esc(str(boj.get("last_change", "")))
+        sections_pre.append(
+            '<table class="mkt-table" width="100%" cellpadding="0" cellspacing="0" '
+            'border="0" style="background:#1B2A4A;color:#fff;'
+            'border-bottom:1px solid rgba(255,255,255,0.10);"><tr>'
+            + _tile("Nikkei 225", _esc(str(nikkei.get("value", "\u2014"))),
+                    _arrow(nikkei.get("change_pct", 0)), first=True)
+            + _tile("USD/JPY", _esc(str(usd_jpy.get("value", "\u2014"))),
+                    _arrow(usd_jpy.get("change_pct", 0)))
+            + _tile("Brent", "$" + _esc(str(brent.get("value", "\u2014"))),
+                    _arrow(brent.get("change_pct", 0)))
+            + _tile("BOJ Rate", _esc(str(boj.get("value", "\u2014"))),
+                    f'<span style="color:#9DB2CE;">{_last}</span>')
+            + '</tr></table>')
 
     # 2c. Δ Since Yesterday Bar
     delta = digest.get("delta_since_yesterday") or {}
@@ -435,6 +414,12 @@ def render_html(digest: dict) -> str:
 {chip_html}
 </div>""")
 
+    # Placeholder for the jump row, resolved at the end of render() once every
+    # section is known and its anchors can be checked. It sits under the data
+    # strip, where Korea puts it: the nameplate and the day's figures first,
+    # then the way into the brief.
+    sections_pre.append("%%NAV%%")
+
     # 3. Morning Memo
     memo = digest.get("morning_memo") or []
     if memo:
@@ -451,10 +436,18 @@ def render_html(digest: dict) -> str:
 </td>
 </tr>
 </table>"""
+        # The memo sits on a tinted panel with a rule down the left, as in
+        # Korea. Flat on white it read as the first of the news sections
+        # rather than as the summary of all of them.
         sections_today.append(f"""
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Today at a Glance</div>
-{memo_html}
+<a name="memo"></a>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="glance-panel" style="background:#FBEEF1;border-left:3px solid {HINOMARU_RED};">
+  <tr><td style="padding:16px 20px 8px;">
+    {_sec_label("Today at a Glance")}
+    {memo_html}
+  </td></tr>
+</table>
 </div>""")
 
     # 4. Top Stories
@@ -700,6 +693,11 @@ def render_html(digest: dict) -> str:
 {ni}
 </div>"""
 
+        # Upcoming is promoted out of the ministry round-up into a section of
+        # its own, as in Korea: the forward look is what a reader acts on and
+        # should not be the tail of a government roundup. The date is a solid
+        # block in the identity colour rather than grey text, so the column
+        # scans as a calendar.
         cal_html = ""
         if calendar:
             ci = ""
@@ -710,29 +708,30 @@ def render_html(digest: dict) -> str:
                 cdet = _esc(c.get("detail", ""))
                 ci += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
 <tr>
-<td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
-<div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">{cm}</div>
-<div style="font-size:16px;font-weight:300;color:#1B2A4A;line-height:1.2;">{cd}</div>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:{HINOMARU_RED};">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">{cm}</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">{cd}</div>
+</td></tr>
+</table>
 </td>
-<td style="padding:10px 0;vertical-align:top;">
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">{ch}</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">{cdet}</div>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:{NAVY};">{ch}</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">{cdet}</div>
 </td>
 </tr>
 </table>"""
-            cal_html = f"""<div style="margin-top:20px;">
-<div style="padding:8px 0;border-bottom:1px solid #1B2A4A;margin-bottom:4px;">
-<span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;">Upcoming</span>
-</div>
-{ci}
-</div>"""
+            sections_trackers.append(
+                f'<div {_SEC}><a name="upcoming"></a>'
+                f'{_sec_label("Upcoming")}{ci}</div>')
 
         ds = _esc(str(digest.get("digest_date", "")))
         sections_trackers.append(f"""
 <div {_SEC}>
 <a name="tokyo"></a>{_sec_label("Japanese Government")}
 <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ{(" · " + ds) if ds else ""}</div>
-{gov_grid}{pers_html}{npc_html}{cal_html}
+{gov_grid}{pers_html}{npc_html}
 </div>""")
 
     # 9. US–Japan Alliance & Trade
@@ -1051,7 +1050,7 @@ def render_html(digest: dict) -> str:
     _foot_links = ""
     if web_url:
         _fa = 'color:rgba(255,255,255,0.95);text-decoration:none;'
-        _fbase = web_url[:-len("latest.html")] if web_url.endswith("latest.html") else ""
+        _fbase = _site_root(web_url)
         _parts = [f'<a href="{_esc(web_url)}" style="{_fa}">Read online</a>']
         if _fbase:
             _parts.append(f'<a href="{_esc(_fbase + "archive.html")}" style="{_fa}">Past issues</a>')
@@ -1066,7 +1065,7 @@ def render_html(digest: dict) -> str:
      name instead. Everything else matches: centred, the city and domain on
      their own line, the links as links rather than a run-on sentence, and
      the disclaimer set in the reading face rather than the label face. -->
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec footer" style="background:#1B2A4A;border-top:4px solid #BC002D;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec footer" style="background:{HINOMARU_RED};border-top:4px solid rgba(255,255,255,0.30);">
   <tr><td style="padding:20px 32px 6px;text-align:center;">
     <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#FFFFFF;letter-spacing:0.5px;line-height:1.2;">CSIS Japan Chair</div>
     <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.72);margin-top:6px;">Japan Daily Brief</div>
@@ -1103,7 +1102,8 @@ def render_html(digest: dict) -> str:
             ("Tokyo", "tokyo"), ("Alliance", "alliance"),
             ("Markets", "business"), ("Indo-Pacific", "indo-pacific"),
             ("Diet", "diet"), ("Polling", "polling"),
-            ("Analysis", "analysis"), ("The Wire", "wire")]
+            ("Upcoming", "upcoming"), ("Analysis", "analysis"),
+            ("The Wire", "wire"), ("Stat", "key-stat")]
     body_html = "\n".join(s for s in sections if s)
     _links = [f'<a href="#{_a}" style="color:{HINOMARU_RED};text-decoration:underline;'
               f'text-underline-offset:2px;white-space:nowrap;">{_l}</a>'
@@ -1192,7 +1192,7 @@ def render_html(digest: dict) -> str:
     .wrapper h1, .wrapper h2, .wrapper h3 {{ color:#E8E6E1 !important; }}
     .wrapper .sec p {{ color:#C4C8CE !important; }}
     .wrapper a {{ color:#6FA8E8 !important; }}
-    .wrapper .footer {{ background:#0F1B30 !important; }}
+    .wrapper .footer {{ background:#6E0019 !important; }}
     .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
     /* Trade dashboard light boxes → neutral dark equivalents */
     .wrapper .tariff-box, .wrapper .alliance-box {{ background:#22262C !important; border-color:#33373D !important; }}
