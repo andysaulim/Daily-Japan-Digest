@@ -481,7 +481,7 @@ def render_html(digest: dict) -> str:
         # rather than as the summary of all of them.
         sections_today.append(f"""
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-<a name="memo"></a>
+<a name="memo" id="memo"></a>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="glance-panel" style="background:#FBEEF1;border-left:3px solid {HINOMARU_RED};">
   <tr><td style="padding:16px 20px 8px;">
     {_sec_label("Today at a Glance")}
@@ -522,7 +522,7 @@ def render_html(digest: dict) -> str:
 {ref}
 <div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
-        sections_today.append(f'<div {_SEC}><a name="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>')
+        sections_today.append(f'<div {_SEC}><a name="top-stories" id="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>')
 
     # 4b. Overnight Flash
     overnight = digest.get("overnight_items") or []
@@ -558,7 +558,7 @@ def render_html(digest: dict) -> str:
         fh = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" '
               f'class="flash-table" style="border-top:2px solid {HINOMARU_RED};">{fh}</table>')
         sections_today.append(
-            f'<div {_SEC}><a name="overnight"></a>{_sec_label("Overnight")}{fh}</div>')
+            f'<div {_SEC}><a name="overnight" id="overnight"></a>{_sec_label("Overnight")}{fh}</div>')
 
     # 5. Key Stat
     stat = digest.get("key_stat") or {}
@@ -568,7 +568,7 @@ def render_html(digest: dict) -> str:
         # centred it away from the column every other section reads down.
         sections_today.append(f"""
 <div {_SEC}>
-  <a name="key-stat"></a>{_sec_label("Stat of the Day")}
+  <a name="key-stat" id="key-stat"></a>{_sec_label("Stat of the Day")}
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F3F4;border-left:3px solid {HINOMARU_RED};border-radius:3px;">
     <tr><td style="padding:14px 16px;">
       <div class="key-stat-num" style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:{HINOMARU_RED};line-height:1;">{_esc(str(stat.get("number", "")))}</div>
@@ -763,13 +763,13 @@ def render_html(digest: dict) -> str:
 </tr>
 </table>"""
             sections_trackers.append(
-                f'<div {_SEC}><a name="upcoming"></a>'
+                f'<div {_SEC}><a name="upcoming" id="upcoming"></a>'
                 f'{_sec_label("Upcoming")}{ci}</div>')
 
         ds = _esc(str(digest.get("digest_date", "")))
         sections_trackers.append(f"""
 <div {_SEC}>
-<a name="tokyo"></a>{_sec_label("Japanese Government")}
+<a name="tokyo" id="tokyo"></a>{_sec_label("Japanese Government")}
 <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ{(" · " + ds) if ds else ""}</div>
 {gov_grid}{pers_html}{npc_html}
 </div>""")
@@ -848,7 +848,7 @@ def render_html(digest: dict) -> str:
 </div>"""
 
         if body:
-            sections_trackers.append(f'<div {_SEC}><a name="alliance"></a>{_sec_label("US&ndash;Japan Alliance &amp; Trade")}{body}</div>')
+            sections_trackers.append(f'<div {_SEC}><a name="alliance" id="alliance"></a>{_sec_label("US&ndash;Japan Alliance &amp; Trade")}{body}</div>')
 
     # 10. Business & Economy
     biz = digest.get("business_economy") or []
@@ -867,7 +867,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
-        sections_wire.append(f'<div {_SEC}><a name="business"></a>{_sec_label("Business &amp; Economy")}{bh}</div>')
+        sections_wire.append(f'<div {_SEC}><a name="business" id="business"></a>{_sec_label("Business &amp; Economy")}{bh}</div>')
 
     # 11. Indo-Pacific
     ip = digest.get("indo_pacific") or []
@@ -885,7 +885,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
-        sections_wire.append(f'<div {_SEC}><a name="indo-pacific"></a>{_sec_label("Indo-Pacific")}{ih}</div>')
+        sections_wire.append(f'<div {_SEC}><a name="indo-pacific" id="indo-pacific"></a>{_sec_label("Indo-Pacific")}{ih}</div>')
 
     # 12. Diet Watch (key: congressional_watch)
     cw = digest.get("congressional_watch") or []
@@ -901,7 +901,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{det}</div>
 </div>"""
-        sections_trackers.append(f'<div {_SEC}><a name="diet"></a>{_sec_label("Diet Watch")}{ch}</div>')
+        sections_trackers.append(f'<div {_SEC}><a name="diet" id="diet"></a>{_sec_label("Diet Watch")}{ch}</div>')
 
     # 13. Expert Analysts
     opeds = digest.get("opeds_today") or []
@@ -939,7 +939,7 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 <div style="font-size:13px;line-height:1.5;color:#555;">{sm}</div>
 </div>"""
-        sections_analysis.append(f'<div {_SEC}><a name="analysis"></a>{_sec_label("Op-Eds, Commentaries &amp; Events")}{body}</div>')
+        sections_analysis.append(f'<div {_SEC}><a name="analysis" id="analysis"></a>{_sec_label("Op-Eds, Commentaries &amp; Events")}{body}</div>')
 
     # 14. Public Sentiment — cabinet approval & party support
     ps = digest.get("public_sentiment") or {}
@@ -1012,7 +1012,7 @@ def render_html(digest: dict) -> str:
                                       style="color:" + HINOMARU_RED + ";text-decoration:none;font-weight:600;")
                       + '</div>')
 
-        sections_analysis.append(f'<div {_SEC}><a name="polling"></a>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>')
+        sections_analysis.append(f'<div {_SEC}><a name="polling" id="polling"></a>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>')
 
     # 15. Social Statements
     stmts = digest.get("social_statements") or []
@@ -1069,7 +1069,7 @@ def render_html(digest: dict) -> str:
                    + f'<table width="100%" cellpadding="0" cellspacing="0" '
                      f'border="0" class="flash-table">{rows}</table>')
         sections_wire.append(
-            f'<div {_SEC}><a name="wire"></a>{_sec_label("The Wire")}{ah}</div>')
+            f'<div {_SEC}><a name="wire" id="wire"></a>{_sec_label("The Wire")}{ah}</div>')
 
     # 17. On This Day
     otd = digest.get("on_this_day") or []
@@ -1320,7 +1320,7 @@ def render_html(digest: dict) -> str:
 <![endif]-->
 </head>
 <body style="margin:0;padding:0;background:#F2F3F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
-<a name="top"></a>
+<a name="top" id="top"></a>
 <!-- Fixed-width frame as a centered TABLE. The width is an HTML attribute
      (width="680"), so it survives when a client strips the <style> block on
      forward/reply — keeping the layout's shape. class="wrapper" is retained so
