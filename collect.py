@@ -65,17 +65,21 @@ TIER1_FEEDS = {
     # ── Japanese press in English ───────────────────────────────────────────
     # Japan-focused outlets migrated to their OWN RSS (real permalinks). Each keeps
     # its Google News search as an auto-fallback if the direct feed comes back empty.
-    "NHK World":          _gnews("site:www3.nhk.or.jp/nhkworld"),   # no stable public RSS → GN
+    "NHK World":          _direct("NHK World", "https://www3.nhk.or.jp/nhkworld/en/news/feeds/",
+                                  "site:www3.nhk.or.jp/nhkworld"),
     "Kyodo News":         _direct("Kyodo News", "https://english.kyodonews.net/rss/all.xml",
                                   "site:english.kyodonews.net"),
     "Japan Times":        _direct("Japan Times", "https://www.japantimes.co.jp/feed/",
                                   "site:japantimes.co.jp"),
-    "Mainichi":           _gnews("site:mainichi.jp/english"),      # no confirmed EN RSS → GN
-    "Asahi AJW":          _gnews("site:asahi.com/ajw"),            # no confirmed EN RSS → GN
+    "Mainichi":           _direct("Mainichi", "https://mainichi.jp/rss/etc/english_latest.rss",
+                                  "site:mainichi.jp/english"),
+    "Asahi AJW":          _direct("Asahi AJW", "https://www.asahi.com/rss/asahi/newsheadlines.rdf",
+                                  "site:asahi.com/ajw"),
     "Japan News (Yomiuri)": _gnews("site:the-japan-news.com"),     # no confirmed RSS → GN
     "Nikkei Asia":        _direct("Nikkei Asia", "https://asia.nikkei.com/rss/feed/nar",
                                   "Japan+site:asia.nikkei.com"),
-    "Jiji Press":         _gnews("Japan+site:jiji.com+OR+%22Jiji+Press%22"),
+    "Jiji Press":         _direct("Jiji Press", "https://www.jiji.com/rss/ranking.rdf",
+                                  "Japan+site:jiji.com+OR+%22Jiji+Press%22"),
     "Japan Forward":      _direct("Japan Forward", "https://japan-forward.com/feed/",
                                   "site:japan-forward.com"),
 
@@ -90,8 +94,10 @@ TIER1_FEEDS = {
     "USFJ":               _gnews("%22U.S.+Forces+Japan%22+OR+site:usfj.mil"),
 
     # ── Japanese Government (English) ───────────────────────────────────────
-    "Kantei / PMO":       _gnews("site:japan.kantei.go.jp"),
-    "MOFA Japan":         _gnews("site:mofa.go.jp"),
+    "Kantei / PMO":       _direct("Kantei / PMO", "https://japan.kantei.go.jp/rss/index.rdf",
+                                  "site:japan.kantei.go.jp"),
+    "MOFA Japan":         _direct("MOFA Japan", "https://www.mofa.go.jp/rss/whatsnew.xml",
+                                  "site:mofa.go.jp"),
     "MOD Japan":          _gnews("site:mod.go.jp"),
     "METI Japan":         _gnews("site:meti.go.jp"),
     "MOF Japan":          _gnews("site:mof.go.jp"),
@@ -1150,11 +1156,29 @@ def collect_all() -> dict:
     elapsed = time.time() - t0
     print(f"\n⏱ Collection completed in {elapsed:.1f}s")
 
+    # Per-feed delivery counts, so a feed that has gone quiet can be told
+    # apart from a quiet day. Almost every feed here is a Google News site:
+    # search, and when one stops matching it returns nothing for weeks with
+    # nothing to flag it — which is how Mainichi and Jiji went 51 days
+    # without delivering an article and no one noticed.
+    _counts = {}
+    for _art in tier1 + tier2 + tier3 + tier4:
+        _s = (_art.get("source") or "").strip()
+        if _s:
+            _counts[_s] = _counts.get(_s, 0) + 1
+    # Shaped the way feed_health.record expects: a feed that delivered
+    # nothing is not an absent key, it is an explicit failure for this run.
+    _per_source = {}
+    for _name in list(TIER1_FEEDS) + list(TIER2_FEEDS) + list(TIER3_FEEDS) + list(TIER4_FEEDS):
+        _n = _counts.get(_name, 0)
+        _per_source[_name] = {"success": _n > 0, "count": _n}
+
     payload = {
         "tier1": tier1,
         "tier2": tier2,
         "tier3": tier3,
         "tier4": tier4,
+        "per_source": _per_source,
         "pm_tracker_articles": pm_articles,
         "poll_articles": poll_articles,
         "wiki_polls": wiki_polls,

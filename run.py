@@ -1277,6 +1277,16 @@ def run_pipeline(args: argparse.Namespace) -> int:
     except Exception as e:
         print(f"⚠ Region tracker update failed (non-fatal): {e}")
 
+    # ─── Feed health ─────────────────────────────────────────────────────
+    # Silence across runs is what separates a dead feed from a quiet one.
+    try:
+        import feed_health
+        for _line in feed_health.update_and_report(
+                (payload or {}).get("per_source") or {}):
+            print(f"   {_line}")
+    except Exception as _e:                                    # noqa: BLE001
+        print(f"   (feed health unavailable: {_e})")
+
     # ─── Validate ────────────────────────────────────────────────────────
     print("\n🔍 Validating digest...")
     failures = _validate_digest(digest)
