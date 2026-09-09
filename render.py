@@ -259,23 +259,26 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 
     # 1. Header
     sections_pre.append(f"""
-<!-- The masthead carries the edition's identity colour, the data strip
-     below it stays navy, and the body stays white: colour for identity,
-     navy for data, white for reading. The footer takes the same colour
-     so the brief opens and closes on the same note. -->
-<div style="background:#BC002D;color:#fff;padding:18px 32px 14px;" class="sec">
-<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-<td style="vertical-align:top;">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.82);font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0 0 4px 0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
-<div style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
+<!-- The flag, as a masthead: red field carrying the nameplate, white field
+     carrying the date and the run meta. Two table cells rather than a
+     background image, because every client renders a cell and Outlook
+     renders no image by default. Both cells sit in one row with no padding
+     on the container, so each colour reaches the full height of the band
+     rather than floating as a panel inside it. The halves stack on a phone,
+     where 58% of a 320px screen wraps the nameplate to four lines. Type is
+     white on the red at 6.6:1, navy on the white at 12:1. -->
+<div style="background:#BC002D;color:#fff;padding:0;" class="sec mast-band">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mast-split"><tr>
+<td width="58%" class="mast-red" style="vertical-align:middle;background:#BC002D;padding:20px 20px 20px 32px;">
+<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.85);font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
+<h1 style="margin:0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
+{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.35);font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#BC002D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
 </td>
-<td style="vertical-align:top;text-align:right;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.55);margin-bottom:3px;font-family:'Courier New',Courier,monospace;">{gen_time}</div>
-<div style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'Courier New',Courier,monospace;">{wc:,} words &middot; {read_min} min read</div>
+<td width="42%" class="mast-white" style="vertical-align:middle;text-align:right;background:#FFFFFF;padding:20px 32px 20px 20px;">
+<div style="font-family:Georgia,serif;font-size:16px;color:#1B2A4A;margin-bottom:5px;">{_esc(date_str)}</div>
+<div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:#5A6472;">{gen_time} &middot; {wc:,} words &middot; {read_min} min read</div>
 </td>
 </tr></table>
-{"<div style='margin-top:12px;padding-top:12px;border-top:1px solid #BC002D;font-size:13px;color:rgba(255,255,255,0.9);font-family:Georgia,serif;'><strong style='color:#BC002D;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1px;'>RE:</strong>&nbsp; " + re_line + "</div>" if re_line else ""}
 </div>""")
 
     # 2. Market strip (3 rows)
@@ -997,8 +1000,19 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
   .mkt-table div[style*="font-weight:700"], .key-stat-num {{ font-family:'Courier New',Courier,monospace !important; }}
   /* Mobile responsive */
   @media only screen and (max-width: 620px) {{
+    /* Side by side, the nameplate gets 58% of a 320px screen and wraps to
+       four lines. Stacked, each half spans the width and the flag still
+       reads as red above white. */
+    /* No width:100% here. A table cell set to display:block already fills
+       its row, and 100% plus horizontal padding is measured content-box,
+       which pushed the masthead 24px past a 390px screen. */
+    .mast-split td {{ display:block !important; width:auto !important; }}
+    .mast-white {{ text-align:left !important; padding:14px 20px 16px !important; }}
+    .mast-red {{ padding:16px 20px 12px !important; }}
+
     .wrapper {{ width:100% !important; }}
     .sec, .footer {{ padding:16px 16px !important; }}
+    .mast-band {{ padding:0 !important; }}
     h1 {{ font-size:22px !important; }}
     .key-stat-num {{ font-size:26px !important; }}
     /* Market strip stays multi-across on phones — smaller mono, tighter pad */
@@ -1023,6 +1037,7 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
   @media only screen and (min-width: 621px) and (max-width: 768px) {{
     .wrapper {{ width:100% !important; }}
     .sec, .footer {{ padding:16px 22px !important; }}
+    .mast-band {{ padding:0 !important; }}
     h1 {{ font-size:22px !important; }}
     .mkt-table td {{ padding:10px 10px 12px !important; }}
   }}
