@@ -1248,7 +1248,6 @@ def render_html(digest: dict) -> str:
 
     .wrapper {{ width:100% !important; }}
     .sec, .footer {{ padding:16px 16px !important; }}
-    .mast-band {{ padding:0 !important; }}
     h1 {{ font-size:22px !important; }}
     .key-stat-num {{ font-size:26px !important; }}
     /* Market strip stays multi-across on phones — smaller mono, tighter pad */
@@ -1273,7 +1272,6 @@ def render_html(digest: dict) -> str:
   @media only screen and (min-width: 621px) and (max-width: 768px) {{
     .wrapper {{ width:100% !important; }}
     .sec, .footer {{ padding:16px 22px !important; }}
-    .mast-band {{ padding:0 !important; }}
     h1 {{ font-size:22px !important; }}
     .mkt-table td {{ padding:10px 10px 12px !important; }}
   }}
