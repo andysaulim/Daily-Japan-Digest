@@ -299,9 +299,59 @@ def _build_messaging_summary_block(payload: dict) -> str:
     return "\n".join(lines)
 
 
+try:
+    from collect import JAPAN_NATIVE_FEEDS as JAPAN_NATIVE_FEEDS_NAMES
+except Exception:      # collect may not import in isolation
+    JAPAN_NATIVE_FEEDS_NAMES = set()
+
+
+# Outlets a mandatory-inclusion rule names, so that the rule can bind.
+_PROMPT_PRESTIGE = {
+    "wsj", "wall street journal", "washington post", "wapo", "new york times",
+    "nyt", "bloomberg", "financial times", "ft", "economist", "cnn", "reuters",
+    "cnbc", "ap ", "nhk", "kyodo", "japan times", "nikkei",
+}
+
+
+def _prompt_band(article: dict) -> int:
+    """Lower is seen first. Bands rather than a score, so the ordering can be
+    explained to an editor."""
+    source = str(article.get("source", "")).lower()
+    if source in {n.lower() for n in JAPAN_NATIVE_FEEDS_NAMES}:
+        return 0                      # primary documents
+    if any(p in source for p in _PROMPT_PRESTIGE):
+        return 1                      # outlets a rule declares mandatory
+    if article.get("prestige"):
+        return 1
+    if str(article.get("lang", "")).upper() == "JA":
+        return 2
+    return 3
+
+
+def rank_for_prompt(articles: list) -> list:
+    """Order articles so the truncation that follows is editorial, not random.
+
+    The cut used to be `articles[:60]` against a list ordered by nothing: the
+    parallel fetcher fills its results in completion order, so tier 1 arrived
+    sorted by which feed answered fastest. The outlets the prompt calls
+    mandatory were frequently not in the prompt at all, which made the rule
+    unenforceable. Within a band, one article per source is taken before any
+    source gets a second, so a prolific wire cannot crowd out the rest.
+    """
+    seen: dict = {}
+    keyed = []
+    for i, a in enumerate(articles):
+        src = str(a.get("source", ""))
+        nth = seen.get(src, 0)
+        seen[src] = nth + 1
+        keyed.append(((_prompt_band(a), nth, i), a))
+    keyed.sort(key=lambda kv: kv[0])
+    return [a for _, a in keyed]
+
+
 def build_user_prompt(payload: dict, date_str: str, db_context: str = "") -> str:
-    def tier_json(articles: list, max_items: int = 60) -> str:
-        trimmed = articles[:max_items]
+    def tier_json(articles: list, max_items: int = 140) -> str:
+        trimmed = rank_for_prompt(articles)[:max_items]
         result = []
         for a in trimmed:
             item = {
