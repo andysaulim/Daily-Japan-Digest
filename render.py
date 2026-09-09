@@ -243,7 +243,7 @@ def render_html(digest: dict) -> str:
 
     # 0a. Internal-use banner — the very first thing in the email.
     sections_pre.append(
-        '<div style="background:#BC002D;color:#fff;padding:6px 32px;text-align:center;'
+        '<div style="background:#2E3644;color:#fff;padding:6px 32px;text-align:center;'
         'font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;'
         'font-family:Arial,sans-serif;" class="sec">For Internal Use Only</div>')
 
@@ -964,7 +964,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 
     # Footer
     sections_post.append(f"""
-<div style="padding:20px 32px;background:#BC002D;text-align:center;" class="sec footer">
+<div style="padding:20px 32px;background:#1B2A4A;border-top:4px solid #BC002D;text-align:center;" class="sec footer">
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FF6B6B;font-family:Arial,sans-serif;margin-bottom:10px;">For Internal Use Only</div>
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
 CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
@@ -1051,7 +1051,7 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
     .wrapper h1, .wrapper h2, .wrapper h3 {{ color:#E8E6E1 !important; }}
     .wrapper .sec p {{ color:#C4C8CE !important; }}
     .wrapper a {{ color:#6FA8E8 !important; }}
-    .wrapper .footer {{ background:#6E0019 !important; }}
+    .wrapper .footer {{ background:#0F1B30 !important; }}
     .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
     /* Trade dashboard light boxes → neutral dark equivalents */
     .wrapper .tariff-box, .wrapper .alliance-box {{ background:#22262C !important; border-color:#33373D !important; }}
