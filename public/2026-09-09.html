@@ -62,6 +62,19 @@
   /* Dark mode — scoped, non-destructive. The masthead, market strip,
      Regional Pressure Watch panel, key stat, and footer are already dark
      surfaces and need no inversion. */
+  /* Print. Without this a Print-to-PDF is a long screenshot: chrome on every
+     page, cards split across breaks, and the frame stuck at its email width. */
+  @media print {
+    .no-print, .util-row, .nav-row { display:none !important; }
+    .wrapper { max-width:100% !important; width:100% !important;
+                box-shadow:none !important; }
+    /* Let content flow across page breaks. Avoiding breaks pushes anything
+       that does not fit to the next page and leaves large empty gaps, which
+       is the lesson Korea's print block records. */
+    * { page-break-inside:auto !important; }
+    a { text-decoration:none !important; color:#000 !important; }
+  }
+
   @media (prefers-color-scheme: dark) {
     body { background:#121212 !important; }
     .wrapper { background:#1a1a1a !important; }
@@ -69,7 +82,7 @@
     .wrapper h1, .wrapper h2, .wrapper h3 { color:#E8E6E1 !important; }
     .wrapper .sec p { color:#C4C8CE !important; }
     .wrapper a { color:#6FA8E8 !important; }
-    .wrapper .footer { background:#0F1B30 !important; }
+    .wrapper .footer { background:#6E0019 !important; }
     .wrapper .story-card { background:#262A30 !important; border-color:#33373D !important; }
     /* Trade dashboard light boxes → neutral dark equivalents */
     .wrapper .tariff-box, .wrapper .alliance-box { background:#22262C !important; border-color:#33373D !important; }
@@ -110,6 +123,30 @@
     .wrapper [style*="background:#fbfbfd"] { background-color:#262A30 !important; }
     .wrapper [style*="background:#FFFFFF"] { background-color:#262A30 !important; }
     .wrapper [style*="background:#ffffff"] { background-color:#262A30 !important; }
+    /* Filled from a measured audit of the rendered brief: these
+       colours reached the output with no dark rule, so they kept
+       their light values and rendered near-black on near-black. */
+    .wrapper [style*="color:#1a222e"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#1A222E"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#222"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#444"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#4a5260"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#4A5260"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#555"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#55607a"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#55607A"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#666"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#6b7280"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#6B7280"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#888"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#aaa"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#AAA"] { color:#9AA3AE !important; }
+    .wrapper [style*="background:#f7f3f4"] { background-color:#2A1D20 !important; }
+    .wrapper [style*="background:#F7F3F4"] { background-color:#2A1D20 !important; }
+    .wrapper [style*="background:#fbeef1"] { background-color:#2A1518 !important; }
+    .wrapper [style*="background:#FBEEF1"] { background-color:#2A1518 !important; }
+    .wrapper [style*="background:#fff"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#FFF"] { background-color:#262A30 !important; }
   }
 </style>
 <!--[if mso]>
@@ -120,7 +157,7 @@
 <![endif]-->
 </head>
 <body style="margin:0;padding:0;background:#F2F3F5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
-<a name="top"></a>
+<a name="top" id="top"></a>
 <!-- Fixed-width frame as a centered TABLE. The width is an HTML attribute
      (width="680"), so it survives when a client strips the <style> block on
      forward/reply — keeping the layout's shape. class="wrapper" is retained so
@@ -136,7 +173,7 @@
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#2E3644;" class="util-row">
           <tr>
             <td class="util-cell" style="padding:7px 32px;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.72);white-space:nowrap;">For Internal Use Only</td>
-            <td class="util-cell" align="right" style="padding:5px 32px 5px 0;text-align:right;"><a href="https://andysaulim.github.io/Daily-Japan-Digest/index.html" style="display:inline-block;padding:4px 12px;margin:0 2px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:rgba(255,255,255,0.92);background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);border-radius:3px;text-decoration:none;white-space:nowrap;">Read online</a></td>
+            <td class="util-cell" align="right" style="padding:5px 32px 5px 0;text-align:right;"><a href="https://andysaulim.github.io/Daily-Japan-Digest/index.html" style="display:inline-block;padding:6px 14px;margin:0 3px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:rgba(255,255,255,0.92);background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);border-radius:3px;text-decoration:none;white-space:nowrap;">Read online</a><a href="https://andysaulim.github.io/Daily-Japan-Digest/archive.html" style="display:inline-block;padding:6px 14px;margin:0 3px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:rgba(255,255,255,0.92);background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.22);border-radius:3px;text-decoration:none;white-space:nowrap;">Past issues</a></td>
           </tr>
         </table>
         
@@ -147,76 +184,30 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="mast-split"><tr>
 <td width="58%" class="mast-red" style="vertical-align:middle;background:#BC002D;padding:20px 20px 20px 32px;">
 <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.85);font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#BC002D;vertical-align:middle;margin-right:9px;"></span>Japan Daily Brief</h1>
-<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.35);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;'><strong style='color:#FFFFFF;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;'>RE:</strong>&nbsp; China dichlorosilane anti-dumping hits chip supply chain · BOJ Sept hike priced in · DPRK second destroyer · Yen surge · Cabinet reshuffle Sept 16</div>
+<h1 style="margin:0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">Japan Daily Brief</h1>
+<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.35);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;'><strong style='color:#FFFFFF;font-family:Arial,sans-serif;font-size:11px;letter-spacing:1.5px;'>RE:</strong>&nbsp; Yen rallies to 152 · Bessent warns traders · BOJ rate hike expected · Opposition splits · DPRK deploys nuclear destroyer · JASDF scrambles 5th straight day</div>
 </td>
 <td width="42%" class="mast-white" style="vertical-align:middle;text-align:right;background:#BC002D;padding:20px 32px 20px 20px;">
 <div style="font-family:Georgia,serif;font-size:16px;color:rgba(255,255,255,0.92);margin-bottom:5px;">Wednesday, September 9, 2026</div>
-<div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:rgba(255,255,255,0.72);">12:07 AM ET &middot; 1,984 words &middot; 8 min read</div>
+<div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;color:rgba(255,255,255,0.72);">1,650 words &middot; 7 min read</div>
 </td>
 </tr></table>
 </div>
-<div class="nav-row sec" style="background:#F7F8FA;border-bottom:1px solid #E4E7EB;padding:9px 32px;text-align:center;font-family:Arial,sans-serif;font-size:11px;line-height:1.9;color:#6B7280;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;">In this issue &nbsp;</span><a href="#top-stories" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Top Stories</a> &nbsp;&middot;&nbsp; <a href="#overnight" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Overnight</a> &nbsp;&middot;&nbsp; <a href="#tokyo" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Tokyo</a> &nbsp;&middot;&nbsp; <a href="#alliance" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Alliance</a> &nbsp;&middot;&nbsp; <a href="#business" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Markets</a> &nbsp;&middot;&nbsp; <a href="#indo-pacific" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Indo-Pacific</a> &nbsp;&middot;&nbsp; <a href="#diet" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Diet</a> &nbsp;&middot;&nbsp; <a href="#polling" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Polling</a> &nbsp;&middot;&nbsp; <a href="#analysis" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Analysis</a> &nbsp;&middot;&nbsp; <a href="#wire" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">The Wire</a></div>
-
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.1);">
-<tr>
-<td width="50%" align="center" style="padding:12px 8px 10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">Nikkei 225</div>
-<div style="font-size:22px;font-weight:700;margin:2px 0;">65,279.21</div>
-<div style="font-size:11px;"><span style="color:#27AE60;">&#9650; +1.66%</span></div>
-<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of Sep 9</div></td><td width="50%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">USD/JPY</div>
-<div style="font-size:22px;font-weight:700;margin:2px 0;">153.44</div>
-<div style="font-size:11px;"><span style="color:#C0392B;">&#9660; -3.45%</span></div>
-<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of Sep 9</div></td>
-</tr>
-</table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#162340;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
-<tr>
-<td width="25%" align="center" style="padding:8px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">EUR/JPY</div>
-<div style="font-size:14px;font-weight:700;">178.45</div>
-<div style="font-size:10px;"><span style="color:#C0392B;">&#9660; -3.07%</span></div>
-</td>
-<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Brent</div>
-<div style="font-size:14px;font-weight:700;">$99.30</div>
-<div style="font-size:10px;"><span style="color:#27AE60;">&#9650; +3.96%</span></div>
-</td>
-<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">10Y JGB</div>
-<div style="font-size:14px;font-weight:700;">1.50%</div>
-<div style="font-size:10px;opacity:0.5;">yield</div>
-</td>
-<td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Japan 5Y CDS</div>
-<div style="font-size:14px;font-weight:700;">20 bps</div>
-<div style="font-size:10px;"><span style="color:#7F8C8D;">— flat</span></div>
-</td>
-</tr>
-</table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="mkt-table" style="background:#0F1B30;color:#fff;border-bottom:1px solid rgba(255,255,255,0.08);">
-<tr>
-<td width="50%" align="center" style="padding:8px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">BOJ Policy Rate</div>
-<div style="font-size:14px;font-weight:700;">1.00%</div>
-<div style="font-size:10px;opacity:0.6;"></div>
-</td>
-<td width="50%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">GDP (annualized)</div>
-<div style="font-size:14px;font-weight:700;">1.1%</div>
-<div style="font-size:10px;opacity:0.6;">Cabinet Office · latest Q (annualized)</div>
-</td>
-</tr>
-</table>
+<table class="mkt-table" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.10);"><tr><td width="25%" align="center" style="padding:11px 6px 13px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">Nikkei 225</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">65,142.78</div><div style="font-size:11px;margin-top:2px;"><span style="color:#27AE60;">&#9650; +1.45%</span></div></td><td width="25%" align="center" style="padding:11px 6px 13px;border-left:1px solid rgba(255,255,255,0.10);"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">USD/JPY</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">153.56</div><div style="font-size:11px;margin-top:2px;"><span style="color:#C0392B;">&#9660; -3.37%</span></div></td><td width="25%" align="center" style="padding:11px 6px 13px;border-left:1px solid rgba(255,255,255,0.10);"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">Brent</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">$100.40</div><div style="font-size:11px;margin-top:2px;"><span style="color:#27AE60;">&#9650; +5.11%</span></div></td><td width="25%" align="center" style="padding:11px 6px 13px;border-left:1px solid rgba(255,255,255,0.10);"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">BOJ Rate</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">1.25%</div><div style="font-size:11px;margin-top:2px;"><span style="color:#9DB2CE;"></span></div></td></tr></table>
+<div class="nav-row sec" style="background:#F7F8FA;border-bottom:1px solid #E4E7EB;padding:9px 32px;text-align:center;font-family:Arial,sans-serif;font-size:11px;line-height:1.9;color:#6B7280;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;">In this issue &nbsp;</span><a href="#top-stories" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Top Stories</a> &nbsp;&middot;&nbsp; <a href="#overnight" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Overnight</a> &nbsp;&middot;&nbsp; <a href="#tokyo" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Tokyo</a> &nbsp;&middot;&nbsp; <a href="#alliance" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Alliance</a> &nbsp;&middot;&nbsp; <a href="#business" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Markets</a> &nbsp;&middot;&nbsp; <a href="#indo-pacific" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Indo-Pacific</a> &nbsp;&middot;&nbsp; <a href="#diet" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Diet</a> &nbsp;&middot;&nbsp; <a href="#polling" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Polling</a> &nbsp;&middot;&nbsp; <a href="#upcoming" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Upcoming</a> &nbsp;&middot;&nbsp; <a href="#wire" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">The Wire</a> &nbsp;&middot;&nbsp; <a href="#key-stat" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Stat</a></div>
 
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Today at a Glance</div>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+<a name="memo" id="memo"></a>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="glance-panel" style="background:#FBEEF1;border-left:3px solid #BC002D;">
+  <tr><td style="padding:16px 20px 8px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Today at a Glance</span></td></tr></table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
 <tr>
 <td width="28" style="vertical-align:top;padding-top:1px;">
 <div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">1</div>
 </td>
 <td style="vertical-align:top;padding-left:8px;">
-<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">China imposed provisional anti-dumping measures requiring cash deposits up to 99.2% on Japanese dichlorosilane imports, a key semiconductor precursor, prompting Japan's Chief Cabinet Secretary to urge withdrawal and pledge a supply-chain impact assessment.</div>
+<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">US Treasury Secretary Scott Bessent warned currency traders not to bet against the yen — 'I am the house now' — after the dollar-yen touched 152, marking a 3.4% single-day yen rally.</div>
 </td>
 </tr>
 </table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
@@ -225,7 +216,7 @@
 <div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">2</div>
 </td>
 <td style="vertical-align:top;padding-left:8px;">
-<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">Multiple sources report the BOJ is set to raise its key rate by 25 basis points to 1.25% at next week's meeting — the highest level in 31 years — as July nominal wages surged 4.7% and real wages rose 2.4%, their biggest gain since 2021.</div>
+<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">North Korea commissioned the Kang Kon, its second Choe Hyon-class guided-missile destroyer in 75 days, declaring it part of Pyongyang's nuclear response system as Freedom Edge 2026 trilateral exercises commenced.</div>
 </td>
 </tr>
 </table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
@@ -234,189 +225,188 @@
 <div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">3</div>
 </td>
 <td style="vertical-align:top;padding-left:8px;">
-<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">North Korea commissioned its second Choe Hyon-class guided-missile destroyer, the vessel that capsized on its May 2025 launch, as US-Japan-ROK Freedom Edge 2026 exercises continued; Kim Jong Un declared it part of Pyongyang's nuclear response system.</div>
+<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">Japan's main opposition Centrist Reform Alliance formally voted to dissolve, with former CDP members forming a new party and ex-Komeito members returning to their original party.</div>
 </td>
 </tr>
 </table>
+  </td></tr>
+</table>
 </div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="top-stories"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Top Stories</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="top-stories" id="top-stories"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Top Stories</span></td></tr></table>
 <div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">China-Japan</div>
-<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://news.google.com/search?q=China+imposes+provisional+anti-dumping+measures+on+Japanese+dichlorosilane%3B+deposits+up+to+99.2%25&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:none;">China imposes provisional anti-dumping measures on Japanese dichlorosilane; deposits up to 99.2%</a></h3>
-<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>China's Commerce Ministry imposed provisional anti-dumping measures on Japanese dichlorosilane imports — a key precursor chemical for semiconductor manufacturing — requiring cash deposits of up to 99.2%, effective this week. Japan's Chief Cabinet Secretary Minoru Kihara urged China to withdraw the measures and announced a government assessment of the impact on chip supply chains.</p>
-
-<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">AP News; Washington Post; Asahi; Jiji Press</div>
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">Economy-BOJ</div>
+<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://www.ft.com/content/38d718f6-110b-4822-9403-f7d12a48cfa8?syn-25a6b1a6=1" style="color:#1B2A4A;text-decoration:none;">Bessent dares traders: 'I am the house now' as yen touches 152</a></h3>
+<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>US Treasury Secretary Scott Bessent explicitly warned currency traders not to bet against the yen, declaring 'I am the house now' and citing inside-information-level market knowledge following July's rare joint US-Japan intervention to support the yen. The dollar-yen rate touched 152 on September 9, a 3.37% move, as BOJ wage data and GDP revisions reinforced expectations of an imminent rate hike.</p>
+<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#999;font-style:italic;'>per FT: &ldquo;<a href="https://www.ft.com/content/38d718f6-110b-4822-9403-f7d12a48cfa8?syn-25a6b1a6=1" style="color:#999;text-decoration:underline;">‘I am the house now’: Bessent warns currency traders not to bet against yen</a>&rdquo;</div>
+<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">FT</div>
 </div>
 <div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">DPRK</div>
-<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://news.google.com/search?q=North+Korea+commissions+second+nuclear-capable+Choe+Hyon-class+destroyer+as+Freedom+Edge+2026+begins&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:none;">North Korea commissions second nuclear-capable Choe Hyon-class destroyer as Freedom Edge 2026 begins</a></h3>
-<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>North Korea commissioned its second Choe Hyon-class guided-missile destroyer — the 5,000-tonne vessel that capsized during its May 2025 launch — with Kim Jong Un declaring it part of Pyongyang's nuclear response system and pledging to build a nuclear-armed navy. The commissioning was timed to coincide with the opening of the five-day US-Japan-ROK Freedom Edge 2026 exercise near Jeju Island, which North Korea's defense minister condemned.</p>
-
-<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">CNN; stripes.com; navalnews.com; Jiji Press; Yonhap; nippon.com</div>
+<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://www.stripes.com/theaters/asia_pacific/2026-09-07/freedom-edge-japan-south-korea-drills-22783709.html" style="color:#1B2A4A;text-decoration:none;">North Korea commissions second Choe Hyon-class nuclear destroyer as Freedom Edge 2026 opens</a></h3>
+<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>North Korea commissioned the Kang Kon, its second Choe Hyon-class guided-missile destroyer — the same vessel that capsized at its May 2025 launch — within 75 days of the first commissioning, with Kim Jong Un declaring it part of Pyongyang's nuclear response system and pledging a nuclear-armed navy. The commissioning coincided with the launch of Freedom Edge 2026 trilateral exercises involving the US, Japan, and South Korea near Jeju Island, drawing condemnation from North Korea's defense minister.</p>
+<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#999;font-style:italic;'>per stripes.com: &ldquo;<a href="https://www.stripes.com/theaters/asia_pacific/2026-09-07/freedom-edge-japan-south-korea-drills-22783709.html" style="color:#999;text-decoration:underline;">US, Japan and South Korea launch drills as North Korea unveils nuclear-capable warship - stripes.com</a>&rdquo;</div>
+<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">stripes.com</div>
 </div>
 <div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">Economy-BOJ</div>
-<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://news.google.com/search?q=WSJ%3A+Bessent%27s+yen+bet+paying+off+as+dollar+slides+toward+152+zone&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:none;">WSJ: Bessent's yen bet paying off as dollar slides toward 152 zone</a></h3>
-<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>The Wall Street Journal reports that US Treasury Secretary Scott Bessent's strategic positioning on yen appreciation is producing results, with the yen near a seven-month high and the dollar falling into the 152 yen zone on BOJ rate-hike expectations. Japanese carmakers are bracing for a profit hit as the yen's sudden surge disrupts carry-trade strategies.</p>
-
-<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">WSJ; Bloomberg; Reuters; CNBC</div>
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">Politics-Diet</div>
+<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://mainichi.jp/english/articles/20260909/p2g/00m/0na/033000c" style="color:#1B2A4A;text-decoration:none;">Japan's Centrist Reform Alliance formalizes dissolution; opposition landscape reshapes ahead of reshuffle</a></h3>
+<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>Japan's main opposition Centrist Reform Alliance formalized its dissolution plan on Wednesday, with former CDP members set to form a new party and ex-Komeito members returning to their original party; Bloomberg separately reported the collapse cements PM Takaichi's political dominance. The development arrives one week ahead of Takaichi's planned September 16 cabinet reshuffle, with the Japan Innovation Party expected to receive its first cabinet post.</p>
+<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#999;font-style:italic;'>per Mainichi: &ldquo;<a href="https://mainichi.jp/english/articles/20260909/p2g/00m/0na/033000c" style="color:#999;text-decoration:underline;">Japan opposition alliance formalizes split plan after merger talks fail</a>&rdquo;</div>
+<div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">Mainichi</div>
 </div></div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="overnight"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Overnight</div><table width="100%" cellpadding="0" cellspacing="0" border="0" class="flash-table" style="border-top:2px solid #BC002D;"><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Diplomacy</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><a href="https://news.google.com/search?q=Kremlin+rejects+Tokyo%27s+request+to+dismantle+WWII+memorial+statue+in+Khabarovsk&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">Kremlin rejects Tokyo's request to dismantle WWII memorial statue in Khabarovsk</a><span style="color:#6B7280;"> &mdash; Russia formally refused Japan's demand to remove a statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker. The Kremlin's rejection extends the bilateral symbolic-provocation standoff following Putin's Etorofu visit and the August 21 Bastion missile live-fire from the disputed Northern Territories.</span><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; Reuters</span></td></tr><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Defense</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><a href="https://news.google.com/search?q=JASDF+scrambles+jets+for+Chinese+reconnaissance+flights+five+consecutive+days&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">JASDF scrambles jets for Chinese reconnaissance flights five consecutive days</a><span style="color:#6B7280;"> &mdash; Japan's Air Self-Defense Force scrambled fighter aircraft in response to Chinese spy flights for the fifth straight day, extending an unbroken intercept sequence near Japanese airspace. The sustained scramble tempo follows a broader pattern of increased Chinese military air activity in the region.</span><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; aerotime.aero / MOD</span></td></tr><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Korea-Japan</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><a href="https://www.japantimes.co.jp/news/2026/09/09/japan/politics/ishiba-need-japan-south-korea-ties/" style="color:#1B2A4A;text-decoration:underline;">Ex-PM Ishiba in Seoul, calls for deeper Japan-South Korea ties</a><span style="color:#6B7280;"> &mdash; Former Prime Minister Shigeru Ishiba traveled to Seoul and called for closer Japan-South Korea relations, with South Korean counterparts viewing him as taking a sincere approach to historical issues. Ishiba's Seoul visit runs parallel to current PM Takaichi's diplomacy and the ongoing Freedom Edge trilateral exercise.</span><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; The Japan Times</span></td></tr></table></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="overnight" id="overnight"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Overnight</span></td></tr></table><table width="100%" cellpadding="0" cellspacing="0" border="0" class="flash-table" style="border-top:2px solid #BC002D;"><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Alliance</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><a href="https://mainichi.jp/english/articles/20260909/p2g/00m/0na/016000c" style="color:#1B2A4A;text-decoration:underline;">Japan concealed US assessment on PFAS contamination near Okinawa bases</a><span style="color:#6B7280;"> &mdash; A source revealed that the United States, in past communications with the Japanese government about US military bases in Okinawa, conveyed its view that high PFAS levels were attributable to base activities — a position Japan failed to publicly disclose. The finding extends a persistent Okinawa basing controversy bearing on alliance management.</span><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; Mainichi</span></td></tr></table></div>
 
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-  <a name="key-stat"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Stat of the Day</div>
+  <a name="key-stat" id="key-stat"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Stat of the Day</span></td></tr></table>
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F3F4;border-left:3px solid #BC002D;border-radius:3px;">
     <tr><td style="padding:14px 16px;">
-      <div class="key-stat-num" style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#BC002D;line-height:1;">99.2%</div>
-      <div style="font-family:Georgia,serif;font-size:14px;color:#1A222E;margin-top:5px;line-height:1.4;">Max cash deposit rate on Japanese dichlorosilane under China's provisional anti-dumping measures</div>
-      <div style='font-family:Georgia,serif;font-size:13px;color:#4A5260;margin-top:4px;line-height:1.5;'>China's Commerce Ministry imposed the measures effective this week, targeting a key precursor chemical for semiconductor manufacturing and drawing an immediate Japanese government protest.</div>
-      <div style='font-family:Arial,sans-serif;font-size:11px;color:#55607A;margin-top:7px;'>Japan protests as China slaps new measures against its exports of a key chipmaking material — AP News / Washington Post</div>
+      <div class="key-stat-num" style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#BC002D;line-height:1;">4.7%</div>
+      <div style="font-family:Georgia,serif;font-size:14px;color:#1A222E;margin-top:5px;line-height:1.4;">Japan July nominal wage growth — fastest in nearly 30 years</div>
+      <div style='font-family:Georgia,serif;font-size:13px;color:#4A5260;margin-top:4px;line-height:1.5;'>July nominal wages rose 4.7%, the fastest pace in nearly three decades, while real wages rose 2.4%, the largest gain since 2021, reinforcing market expectations of a BOJ rate hike.</div>
+      <div style='font-family:Arial,sans-serif;font-size:11px;color:#55607A;margin-top:7px;'>Japan's July Nominal Wages Surge 4.7%, Fastest in Nearly 30 Years, Fueling September Rate Hike Expectations — finance.biggo.com</div>
     </td></tr>
   </table>
 </div>
 
 <div style="padding:20px 32px;background:#0E1C33;color:#E4EAF2;border-top:3px solid #BC002D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec watch-dark">
-<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#F2718A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(242,113,138,0.55);">Regional Pressure Watch</div>
-<div style='font-size:11px;color:#9DB2CE;margin-top:-8px;margin-bottom:12px;'>High — 36 items (16 Japanese government, 20 adversary signal)</div>
-<div style="margin-bottom:10px;font-size:13px;color:#E4EAF2;"><strong style="color:#F2718A;">PM Watch:</strong> PM appeared today · 0 day(s) since last confirmed appearance — PM Takaichi's government confirmed the September 16 cabinet reshuffle plan and the Chief Cabinet Secretary announced Japan's protest and impact-assessment response to China's dichlorosilane anti-dumping measures.</div>
-<div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">China</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">China imposed provisional anti-dumping measures on Japanese dichlorosilane — a key semiconductor precursor chemical — requiring cash deposits of up to 99.2%, drawing an immediate Japanese protest and impact-assessment pledge. Separately, the JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance flights, and Beijing's Foreign Ministry continued its framing of Japan's defense buildup as incompatible with 'peaceful development.'</div></div><div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">North Korea</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">North Korea commissioned its second Choe Hyon-class guided-missile destroyer — the vessel that capsized at its May 2025 launch — timed to the opening of Freedom Edge 2026; Kim Jong Un declared it part of DPRK's nuclear response system and pledged a nuclear-armed navy. North Korea's defense minister condemned the US-Japan-ROK exercise and KCNA accused Japan of building a war capability, warning of 'enormous misfortune.'</div></div><div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">Russia</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">The Kremlin formally rejected Tokyo's request to dismantle the WWII memorial statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker, extending the bilateral symbolic-provocation standoff that follows Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territories.</div></div>
-<div style="margin:6px 0 12px;padding:9px 13px;background:rgba(255,255,255,0.07);border-radius:4px;font-size:13px;line-height:1.55;color:#E4EAF2;"><strong style="color:#F2718A;">Senkaku / ECS:</strong> JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance flights; no new confirmed China Coast Guard intrusion into Senkaku territorial waters appears in today's articles, but the sustained scramble tempo indicates continued elevated Chinese air activity near Japanese airspace.</div>
-<blockquote style="margin:8px 0;padding:9px 13px;background:rgba(255,255,255,0.07);border-left:3px solid #F2718A;font-style:italic;font-size:13px;line-height:1.55;color:#E4EAF2;">&ldquo;capable of annihilating retaliatory strikes&rdquo;<div style="font-style:normal;font-size:11px;color:#9DB2CE;margin-top:4px;">Kim Jong Un, Supreme Leader, DPRK (describing the newly commissioned destroyer) &middot; Nuclear-capable warship that capsized when launched finally joins North Korea's fleet — CNN</div></blockquote>
-<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);font-size:14px;line-height:1.55;color:#FFFFFF;'><strong style='color:#F2718A;'>Bottom line:</strong> China's dichlorosilane anti-dumping measures represent the first direct Chinese export-control-style action targeting a Japanese semiconductor precursor, arriving as DPRK naval build-up accelerates alongside the trilateral Freedom Edge exercise; the September 16 cabinet reshuffle and late-September Takaichi-Trump meeting will shape Japan's near-term responses across all three pressure vectors.</div>
+<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#F2718A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(242,113,138,0.55);">Regional Pressure Watch<span style="display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;color:#fff;background:#C0392B;letter-spacing:0.5px;margin-left:8px;">WATCH</span></div>
+<div style='font-size:11px;color:#9DB2CE;margin-top:-8px;margin-bottom:12px;'>Normal — 27 items (Japanese government: 13, adversary signal: 14)</div>
+<div style="margin-bottom:10px;font-size:13px;color:#E4EAF2;"><strong style="color:#F2718A;">PM Watch:</strong> PM appeared today · 0 day(s) since last confirmed appearance — PM Takaichi's government confirmed the September 16 cabinet reshuffle plan, and Chief Cabinet Secretary Kihara held the September 8 afternoon press conference announcing Japan's protest and impact-assessment response to China's dichlorosilane anti-dumping measures.</div>
+<div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">China</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">The JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance aircraft flights. China's Foreign Ministry Spokesperson Mao Ning's September 8 press conference reiterated Beijing's position that 'correctly addressing history is a benchmark for testing Japan's commitment to peaceful development,' extending the sustained historical-framing pressure campaign against Tokyo.</div></div><div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">North Korea</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">North Korea commissioned the Kang Kon, its second Choe Hyon-class 5,000-tonne guided-missile destroyer in 75 days — the same vessel that capsized at its May 2025 launch — with Kim Jong Un declaring it integrated into Pyongyang's nuclear response system and pledging a nuclear-armed navy; North Korea's defense minister simultaneously condemned Freedom Edge 2026 and warned of consequences.</div></div><div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">Russia</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">The Kremlin formally rejected Tokyo's request to dismantle the WWII memorial statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker, extending the symbolic-provocation standoff that follows President Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territories.</div></div>
+<div style="margin:6px 0 12px;padding:9px 13px;background:rgba(255,255,255,0.07);border-radius:4px;font-size:13px;line-height:1.55;color:#E4EAF2;"><strong style="color:#F2718A;">Senkaku / ECS:</strong> JASDF scrambled fighters for a fifth consecutive day in response to Chinese flights in the region; no new China Coast Guard territorial-water intrusion at the Senkakus is reported in today's articles beyond the sustained patrol baseline.</div>
+<blockquote style="margin:8px 0;padding:9px 13px;background:rgba(255,255,255,0.07);border-left:3px solid #F2718A;font-style:italic;font-size:13px;line-height:1.55;color:#E4EAF2;">&ldquo;Correctly addressing history is a benchmark for testing Japan's commitment to peaceful development&rdquo;<div style="font-style:normal;font-size:11px;color:#9DB2CE;margin-top:4px;">Chinese Foreign Ministry Spokesperson Mao Ning &middot; Correctly addressing history is a benchmark for testing Japan's commitment to peaceful development: FM spokesperson - Global Times</div></blockquote>
+<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);font-size:14px;line-height:1.55;color:#FFFFFF;'><strong style='color:#F2718A;'>Bottom line:</strong> North Korea's second nuclear destroyer commissioning in 75 days — concurrent with Freedom Edge 2026's launch — marks a structural acceleration of DPRK naval nuclearization that directly affects Japan's sea-lane security calculus; watch for JASDF and JMSDF response posture adjustments and any MOD public statement.</div>
 </div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="analysis"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Op-Eds, Commentaries &amp; Events</div><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;margin:14px 0 8px 0;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Academic Journals</div><div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-<div style="font-size:10px;color:#1B2A4A;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">Asia-Pacific Journal: Japan Focus · B</div>
-<div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;"><a href="https://apjjf.org/2026/9/mitchell" style="color:#1B2A4A;text-decoration:none;">After the Second Earthquake: Foreign Resident Networks and Disaster Resilience in Kumamoto</a></div>
-<div style="font-size:13px;line-height:1.5;color:#555;">The article examines how networks among foreign residents contributed to disaster resilience in Kumamoto following the 2016 earthquakes, analyzing the role of community organizations in bridging information gaps between Japanese authorities and non-Japanese-speaking populations. The research documents how pre-existing social ties among foreign nationals functioned as informal emergency infrastructure, compensating for gaps in official multilingual disaster communication. The findings are directly relevant to Japan's ongoing disaster-preparedness debates as the 2026 Kumamoto earthquake recovery and the central Japan flooding this week renew attention to emergency management.</div>
-</div></div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="polling"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Public Sentiment &amp; Approval Polling</div><table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;"><tr style="background:#F2F3F5;"><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">Pollster</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">Approve</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">Disapprove</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">vs prior</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">JNN</strong> <span style="color:#9AA0A8;">&middot; Sep 7, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62.5%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">34.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Nikkei</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Asahi</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">53%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">ANN</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">55.4%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">29.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Kyodo</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">50.2%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Mainichi</strong> <span style="color:#9AA0A8;">&middot; Jul 20, 2026</span> <span style="color:#B7791F;font-weight:600;">&middot; 51d ago</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">41%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">44%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Yomiuri</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">56%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">FNN</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62.5%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">NHK</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">52.8%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33.2%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Jiji</strong> <span style="color:#9AA0A8;">&middot; Jul 16, 2026</span> <span style="color:#B7791F;font-weight:600;">&middot; 55d ago</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">48.4%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">26.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr></table><div style="font-size:13px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> Cabinet approval fragmented across pollsters — Mainichi at 41% (record low), Kyodo at 50.2% (record low for that poll), NHK at 53% (lowest since cabinet's start) — driven by fiscal concerns over PM Takaichi's income tax cut plan, while the upcoming September 16 reshuffle is framed as shoring up her position ahead of an LDP presidential vote.</div><div style="margin-top:12px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">Poll tracker: <a href="https://observingjapan.substack.com/p/tracking-the-japanese-governments-423" style="color:#BC002D;text-decoration:none;font-weight:600;">Observing Japan approval-rating aggregator &#8594;</a></div></div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Social Statements</div><div style="margin-bottom:12px;padding:12px 14px;background:#F7F8FA;border-radius:6px;border-left:3px solid #BC002D;">
-<table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:8px;"><tr>
-<td width="38" style="vertical-align:middle;">
-<div style="width:38px;height:38px;border-radius:50%;background:#BC002D;color:#fff;text-align:center;line-height:38px;font-size:14px;font-weight:700;font-family:Arial,sans-serif;">KJ</div>
-</td>
-<td style="padding-left:10px;vertical-align:middle;">
-<div style="font-size:13px;font-weight:700;color:#1B2A4A;">Kim Jong Un</div>
-<div style="font-size:11px;color:#888;">Supreme Leader, Democratic People's Republic of Korea &middot; CNN / Al Jazeera · September 9, 2026</div>
-</td>
-</tr></table>
-<p style="margin:0;font-size:13px;line-height:1.6;color:#2C3E50;font-style:italic;">&ldquo;capable of annihilating retaliatory strikes&rdquo;</p>
-<p style='margin:6px 0 0 0;font-size:11px;color:#555;'><strong style='color:#BC002D;font-style:normal;'>Analyst:</strong> Kim Jong Un used this phrase to describe the newly commissioned second Choe Hyon-class guided-missile destroyer, timed to coincide with the opening of Freedom Edge 2026 US-Japan-ROK exercises.</p>
-
-</div></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="polling" id="polling"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Public Sentiment &amp; Approval Polling</span></td></tr></table><table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;"><tr style="background:#F2F3F5;"><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">Pollster</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">Approve</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">Disapprove</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#8A8F98;font-weight:600;">vs prior</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">JNN</strong> <span style="color:#9AA0A8;">&middot; Sep 7, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62.5%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">34.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Nikkei</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Asahi</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">53%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">ANN</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">55.4%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">29.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Kyodo</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">50.2%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Mainichi</strong> <span style="color:#9AA0A8;">&middot; Jul 20, 2026</span> <span style="color:#B7791F;font-weight:600;">&middot; 51d ago</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">41%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">44%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Yomiuri</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">56%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">FNN</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62.5%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">NHK</strong> <span style="color:#9AA0A8;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">52.8%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33.2%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Jiji</strong> <span style="color:#9AA0A8;">&middot; Jul 16, 2026</span> <span style="color:#B7791F;font-weight:600;">&middot; 55d ago</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">48.4%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">26.9%</td><td style="padding:12px;font-size:13px;color:#8A8F98;"></td></tr></table><div style="font-size:13px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> The Centrist Reform Alliance's formal dissolution on September 9 cements PM Takaichi's parliamentary dominance heading into the September 16 cabinet reshuffle, while divergent poll readings — Nikkei at 62% versus Mainichi at 41% — reflect sharp house-effects on the Takaichi Cabinet's standing.</div><div style="margin-top:12px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">Poll tracker: <a href="https://observingjapan.substack.com/p/tracking-the-japanese-governments-423" style="color:#BC002D;text-decoration:none;font-weight:600;">Observing Japan approval-rating aggregator &#8594;</a></div></div>
 
 <div style="padding:12px 32px;background:#1B2A4A;text-align:center;" class="sec">
 <div style="height:1px;background:rgba(188,0,45,0.5);margin-bottom:10px;"></div>
 <span style="font-size:10px;font-family:Arial,sans-serif;color:#FFFFFF;text-transform:uppercase;letter-spacing:5px;font-weight:700;">TRACKERS</span>
 <div style="height:1px;background:rgba(188,0,45,0.5);margin-top:10px;"></div>
 </div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="upcoming" id="upcoming"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Upcoming</span></td></tr></table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Sep</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">16</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">Takaichi Cabinet reshuffle</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">Prime Minister Takaichi's government confirmed a small-scale cabinet reshuffle planned for around September 16; the Japan Innovation Party is expected to receive its first cabinet post.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Sep</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">22</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">PM Takaichi to address UN General Assembly</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">Prime Minister Takaichi is confirmed to address the UN General Assembly on September 22 in New York; Japan is also seeking a bilateral Takaichi-Trump meeting in late September on the sidelines.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Sep</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">30</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">Takaichi-Trump bilateral talks (sought, late September)</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">Japan is seeking PM Takaichi-President Trump talks in late September, with Tokyo also monitoring a potential US-China summit; no confirmed date reported as of today.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Oct</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">21</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">One-year anniversary of Takaichi Cabinet (Oct 21, 2025)</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">The Takaichi Cabinet marks its first year in office around October 21; multiple outlets noted the approaching anniversary as reshuffle and coalition dynamics intensify.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Mar</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">31</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">Host-Nation Support Special Measures Agreement expiry (FY2026 end)</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">The current US-Japan Host-Nation Support Special Measures Agreement runs through March 31, 2027 at approximately ¥211 billion/year; this calendar-watch item tracks the negotiation horizon.</div>
+</td>
+</tr>
+</table></div>
 
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-<a name="tokyo"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Japanese Government</div>
+<a name="tokyo" id="tokyo"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Japanese Government</span></td></tr></table>
 <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ · Wednesday, September 9, 2026</div>
 
 <div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
-<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">外務省</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.6px;">Ministry of Foreign Affairs</span></div>
-<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">Japan urges Iran to restrain civilian vessel attacks in the Middle East</div>
-<div style="font-size:13px;line-height:1.55;color:#555;">Japan's Foreign Ministry conveyed to Iran a call to restrain attacks on civilian vessels, reflecting Tokyo's ongoing maritime-security diplomacy in the Middle East relevant to Japan's energy supply routes.</div>
-<div style="margin-top:6px;font-size:11px;color:#888;">→ <a href="https://news.google.com/search?q=Japan+urges+Iran+to+restrain+civilian+vessel+attacks+in+the+Middle+East&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#888;text-decoration:none;">Google News ↗</a></div>
+<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">外務省</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.6px;">Ministry of Foreign Affairs</span> <span style="color:#ccc;">·</span> <span style="font-size:11px;color:#999;font-style:italic;">Foreign Minister Toshimitsu Motegi</span></div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">Motegi urges Iran to exercise 'restraint' in vessel attacks during telephone talks</div>
+<div style="font-size:13px;line-height:1.55;color:#555;">Foreign Minister Toshimitsu Motegi held telephone talks with his Iranian counterpart and urged Tehran to exercise restraint in its attacks on vessels amid tensions in the Strait of Hormuz area.</div>
+<div style="margin-top:6px;font-size:11px;color:#888;">→ <a href="https://mainichi.jp/english/articles/20260909/p2g/00m/0na/014000c" style="color:#888;text-decoration:none;">Mainichi ↗</a></div>
 </div>
 <div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
-<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">外務省</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.6px;">Ministry of Foreign Affairs</span></div>
-<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">Japan names new ambassadors to the EU, Iran, and five other countries</div>
-<div style="font-size:13px;line-height:1.55;color:#555;">Japan announced new envoys to the European Union, Iran, and five additional countries, representing a round of diplomatic personnel rotations ahead of the September 16 cabinet reshuffle.</div>
-<div style="margin-top:6px;font-size:11px;color:#888;">→ <a href="https://news.google.com/search?q=Japan+names+new+ambassadors+to+the+EU%2C+Iran%2C+and+five+other+countries&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#888;text-decoration:none;">Google News ↗</a></div>
+<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">防衛省</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.6px;">Ministry of Defense</span> <span style="color:#ccc;">·</span> <span style="font-size:11px;color:#999;font-style:italic;">Defense Minister Shinjiro Koizumi</span></div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">Defense Minister Koizumi cancels planned visit to Indonesia</div>
+<div style="font-size:13px;line-height:1.55;color:#555;">Defense Minister Shinjiro Koizumi has decided to forgo a planned visit to Indonesia arranged for around Thursday, according to a source; no reason for the cancellation was provided in available reporting.</div>
+<div style="margin-top:6px;font-size:11px;color:#888;">→ <a href="https://mainichi.jp/english/articles/20260909/p2g/00m/0na/035000c" style="color:#888;text-decoration:none;">Mainichi ↗</a></div>
+</div>
+<div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">防衛省</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.6px;">Ministry of Defense (MOD)</span> <span style="color:#ccc;">·</span> <span style="font-size:11px;color:#999;font-style:italic;">Vice Defense Minister Nakano</span></div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">Senior MOD official participates in multilateral conference on Ukraine support</div>
+<div style="font-size:13px;line-height:1.55;color:#555;">Defense Vice Minister Nakano participated in a multilateral conference on Ukraine support, per MOD Japan announcement.</div>
+
 </div><div style="margin-top:16px;">
 <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#7F8C8D;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Diet Sessions / LDP</div>
 <div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #7F8C8D;">
-<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">LDP</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://news.google.com/search?q=PM+Takaichi+confirms+September+16+cabinet+reshuffle%2C+prioritizing+continuity+and+retaining+three+internal+rivals&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">PM Takaichi confirms September 16 cabinet reshuffle, prioritizing continuity and retaining three internal rivals</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">Prime Minister Sanae Takaichi confirmed plans for a small-scale cabinet reshuffle on September 16, with Bloomberg reporting she will prioritize continuity. The Japan News reported she is retaining three internal rivals in their current posts to help secure her reelection as LDP president.</div>
+<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">Centrist Reform Alliance (opposition)</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://www.japantimes.co.jp/news/2026/09/09/japan/politics/centrist-reform-alliance-disband/" style="color:#1B2A4A;text-decoration:underline;">CRA formalizes dissolution; ex-CDP members form new party, ex-Komeito members return to Komeito</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Japan's main opposition Centrist Reform Alliance formally voted to dissolve on Wednesday after merger talks failed; members who came from the Constitutional Democratic Party are set to form a new party, while former Komeito members will return to their original party.</div>
 </div><div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #7F8C8D;">
-<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">LDP</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://news.google.com/search?q=Japan+seeking+Takaichi-Trump+talks+in+late+September+ahead+of+anticipated+Xi-Trump+summit&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">Japan seeking Takaichi-Trump talks in late September ahead of anticipated Xi-Trump summit</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">Japan is arranging for Prime Minister Takaichi to meet President Trump in the United States in late September, timed to precede or coincide with a prospective US-China summit, per Kyodo News and Japan Times reporting.</div>
-</div>
-</div><div style="margin-top:20px;">
-<div style="padding:8px 0;border-bottom:1px solid #1B2A4A;margin-bottom:4px;">
-<span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;">Upcoming</span>
-</div>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
-<tr>
-<td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
-<div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">Sep</div>
-<div style="font-size:16px;font-weight:300;color:#1B2A4A;line-height:1.2;">16</div>
-</td>
-<td style="padding:10px 0;vertical-align:top;">
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">Japan cabinet reshuffle</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">PM Takaichi confirmed plans to reshuffle the cabinet and LDP executive posts on September 16, prioritizing continuity and retaining three internal rivals.</div>
-</td>
-</tr>
-</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
-<tr>
-<td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
-<div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">Sep</div>
-<div style="font-size:16px;font-weight:300;color:#1B2A4A;line-height:1.2;">22</div>
-</td>
-<td style="padding:10px 0;vertical-align:top;">
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">PM Takaichi addresses UN General Assembly</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">PM Takaichi is confirmed to address the UN General Assembly on September 22, per earlier reporting.</div>
-</td>
-</tr>
-</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
-<tr>
-<td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
-<div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">Sep</div>
-<div style="font-size:16px;font-weight:300;color:#1B2A4A;line-height:1.2;">30</div>
-</td>
-<td style="padding:10px 0;vertical-align:top;">
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">Takaichi-Trump bilateral (late September, date TBC)</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">Japan is arranging for PM Takaichi to meet President Trump in the United States in late September, aimed at preceding a prospective Xi-Trump summit; exact date not confirmed.</div>
-</td>
-</tr>
-</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
-<tr>
-<td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
-<div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">Sep</div>
-<div style="font-size:16px;font-weight:300;color:#1B2A4A;line-height:1.2;">19</div>
-</td>
-<td style="padding:10px 0;vertical-align:top;">
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">BOJ Monetary Policy Meeting (estimated)</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">The BOJ is widely expected to raise its key rate by 25bp to 1.25% at next week's meeting — multiple sources and a reflationist Takaichi aide project the hike — which would mark the highest BOJ rate in 31 years.</div>
-</td>
-</tr>
-</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
-<tr>
-<td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
-<div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">Sep</div>
-<div style="font-size:16px;font-weight:300;color:#1B2A4A;line-height:1.2;">11</div>
-</td>
-<td style="padding:10px 0;vertical-align:top;">
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">Freedom Edge 2026 US-Japan-ROK exercise concludes (est.)</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">The five-day Freedom Edge 2026 trilateral exercise began September 7 near Jeju Island; it is expected to conclude around September 11, with North Korea having condemned the drills as a 'threat.'</div>
-</td>
-</tr>
-</table>
+<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">LDP / Takaichi Cabinet</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://www.japantimes.co.jp/news/2026/09/09/japan/politics/japan-innovation-party-cabinet-minister/" style="color:#1B2A4A;text-decoration:underline;">Japan Innovation Party (JIP) expected to receive first Cabinet post in upcoming September 16 reshuffle</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">The Japan Innovation Party is likely to receive its first Cabinet post in the upcoming reshuffle planned for around September 16, as Prime Minister Takaichi seeks to broaden her governing coalition base following the opposition's collapse.</div>
 </div>
 </div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="alliance"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">US&ndash;Japan Alliance &amp; Trade</div><div class="tariff-box" style="margin-bottom:16px;padding:14px;background:#FBFBFD;border-radius:6px;border:1px solid #E6E6EC;">
+</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="alliance" id="alliance"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">US&ndash;Japan Alliance &amp; Trade</span></td></tr></table><div class="tariff-box" style="margin-bottom:16px;padding:14px;background:#FBFBFD;border-radius:6px;border:1px solid #E6E6EC;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#BC002D;font-weight:700;margin-bottom:10px;">US Tariffs on Japan</div>
 <table class="mkt-table" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1B2A4A;border-radius:4px;margin-bottom:10px;"><tr><td width="100%" align="center" style="padding:12px 10px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;margin-bottom:4px;">Autos · 2025 deal</div><div style="font-size:16px;font-weight:700;color:#fff;font-family:'Courier New',Courier,monospace;">15% (incl. MFN, 2025 agreement)</div></td></tr></table>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;"><tr style="border-bottom:1px solid #EEE;"><td style="padding:5px 6px 5px 0;font-size:13px;font-weight:600;color:#1B2A4A;">Steel</td><td style="padding:5px 6px;font-size:14px;font-weight:700;color:#BC002D;text-align:center;">50%</td><td style="padding:5px 6px;font-size:10px;color:#999;text-transform:uppercase;">Section 232</td></tr><tr style="border-bottom:1px solid #EEE;"><td style="padding:5px 6px 5px 0;font-size:13px;font-weight:600;color:#1B2A4A;">Aluminum</td><td style="padding:5px 6px;font-size:14px;font-weight:700;color:#BC002D;text-align:center;">50%</td><td style="padding:5px 6px;font-size:10px;color:#999;text-transform:uppercase;">Section 232</td></tr></table>
 <div style="margin-top:6px;font-size:13px;line-height:1.5;color:#333;"><strong style="color:#1B2A4A;">Investment framework:</strong> $550B strategic investment framework (2025 agreement)</div>
 <div style="margin-top:6px;font-size:13px;line-height:1.5;color:#333;"><strong style="color:#1B2A4A;">Section 301:</strong> 12.5% forced-labor tariff in force since Jul 24, 2026 (net of MFN); excess-capacity investigation ongoing</div>
-<div style="margin-top:10px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">Deal: 2025 US-Japan agreement in force &middot; Section 122 surcharge expired Jul 24, 2026; Section 301 forced-labor tariff entered into force Jul 24, 2026</div>
-</div><div style="margin-bottom:16px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#BC002D;font-weight:700;margin-bottom:8px;">New Agreements / Pledges</div>
-<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #BC002D;">
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;line-height:1.4;"><a href="https://news.google.com/search?q=US+Treasury+Secretary+Bessent+signals+end+of+Abenomics+and+pushes+BOJ+toward+normalization&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">US Treasury Secretary Bessent signals end of Abenomics and pushes BOJ toward normalization</a></div>
-<div style="font-size:13px;line-height:1.5;color:#444;">['US Treasury', 'Bank of Japan'] — US Treasury Secretary Scott Bessent told BOJ Governor Kazuo Ueda that the US supports efforts to strengthen the yen and signaled the end of Abenomics-era monetary policy, aligning US preferences with the BOJ's expected September rate hike.</div>
-</div>
+<div style="margin-top:10px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">Deal: 2025 US-Japan agreement in force &middot; Section 301 forced-labor tariff entered into force July 24, 2026; Section 122 surcharge expired July 24, 2026</div>
 </div></div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="diet"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Diet Watch</div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #2C3E50;">
-<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">LDP / Cabinet</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://news.google.com/search?q=Cabinet+reshuffle+scheduled+for+September+16+with+continuity+as+guiding+principle&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">Cabinet reshuffle scheduled for September 16 with continuity as guiding principle</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">PM Takaichi has arranged to reshuffle the cabinet and ruling party executives on September 16, one year after taking office. She is reported to be retaining three internal rivals to shore up her position ahead of an LDP presidential election.</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="diet" id="diet"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Diet Watch</span></td></tr></table><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #2C3E50;">
+<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">LDP / Takaichi Cabinet</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://www.bloomberg.com/news/articles/2026-09-07/japan-pm-takaichi-to-prioritize-continuity-in-cabinet-reshuffle" style="color:#1B2A4A;text-decoration:underline;">Cabinet reshuffle confirmed for September 16; continuity emphasized</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Prime Minister Takaichi's government confirmed the cabinet reshuffle is planned for around September 16; Bloomberg reported Takaichi will prioritize continuity, and the Japan Times reported the Japan Innovation Party is likely to receive its first cabinet post.</div>
 </div></div>
 
 <div style="padding:12px 32px;background:#1B2A4A;text-align:center;" class="sec">
@@ -424,33 +414,29 @@
 <span style="font-size:10px;font-family:Arial,sans-serif;color:#FFFFFF;text-transform:uppercase;letter-spacing:5px;font-weight:700;">WIRE</span>
 <div style="height:1px;background:rgba(188,0,45,0.5);margin-top:10px;"></div>
 </div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="business"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Business &amp; Economy</div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
-<div style="font-size:11px;color:#888;text-transform:uppercase;">finance · The Japan Times</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://www.japantimes.co.jp/business/2026/09/09/economy/japan-rising-yields-repatriation-risk/" style="color:#1B2A4A;text-decoration:underline;">Rising JGB yields stir debate over Japanese capital repatriation risk</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">As 10-year JGB yields rise to 1.50%, analysts warn markets may be underpricing how quickly Japanese institutional investors could repatriate overseas holdings to capture domestic yields — a dynamic with global financial-stability implications. Bloomberg and Japan Times both flag the debate over the timing and scale of potential repatriation flows.</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="business" id="business"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Business &amp; Economy</span></td></tr></table><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
+<div style="font-size:11px;color:#888;text-transform:uppercase;">semiconductors · Reuters</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://www.reuters.com/world/asia-pacific/japan-manufacturers-mood-hits-near-5-year-high-semiconductor-demand-2026-09-08/" style="color:#1B2A4A;text-decoration:underline;">Japan manufacturers' mood hits near 5-year high on semiconductor demand</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Japanese manufacturers' business sentiment reached a near five-year high, driven by semiconductor demand, per Reuters reporting on the latest confidence survey. The result arrives as China's dichlorosilane anti-dumping measures introduce new supply-chain risk for chipmakers.</div>
 </div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
-<div style="font-size:11px;color:#888;text-transform:uppercase;">auto · Bloomberg</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://news.google.com/search?q=Japanese+carmakers+brace+for+profit+hit+as+yen+strengthens+sharply&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">Japanese carmakers brace for profit hit as yen strengthens sharply</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">Bloomberg reports Japanese automakers are bracing for a significant profit squeeze as the yen surged to the 152-zone against the dollar — a roughly 3.45% move in a single session — disrupting export earnings assumptions. Hedge funds are betting the yen will strengthen further, past 150, by year-end.</div>
-</div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
-<div style="font-size:11px;color:#888;text-transform:uppercase;">semiconductors · Nikkei Asia · Samsung Electronics</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://asia.nikkei.com/business/tech/semiconductors/samsung-opens-japan-ai-chip-r-d-hub-for-advanced-packaging-collaboration" style="color:#1B2A4A;text-decoration:underline;">Samsung opens Yokohama AI chip R&amp;D hub for advanced packaging collaboration</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">Samsung Electronics fully opened its Yokohama semiconductor research hub, targeting advanced packaging collaboration with Japanese chip manufacturers and research institutes as competition with Chinese rivals intensifies. The hub is positioned within Japan's broader semiconductor-cluster strategy anchored by TSMC Kumamoto and Rapidus in Hokkaido.</div>
-</div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
-<div style="font-size:11px;color:#888;text-transform:uppercase;">macro · Kyodo News</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://english.kyodonews.net/articles/-/84270" style="color:#1B2A4A;text-decoration:underline;">Japan April-June GDP revised up to 1.4% annualized; capex decline narrows</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">Japan's April-June GDP growth was revised upward to 1.4% annualized from an earlier estimate, as the decline in capital expenditure narrowed — providing the BOJ additional support for its anticipated September rate hike. The revision follows July nominal wages rising 4.7% and real wages gaining 2.4%.</div>
+<div style="font-size:11px;color:#888;text-transform:uppercase;">tech · Nikkei Asia · Tamron, Sony</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://asia.nikkei.com/business/companies/japan-lens-maker-tamron-weighs-sony-bid-as-china-rivals-close-in" style="color:#1B2A4A;text-decoration:underline;">Lens maker Tamron weighs Sony acquisition bid as Chinese rivals advance</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Japan's Tamron is weighing a potential bid from Sony as Chinese competitors close in on the optical component market, illustrating consolidation pressure on mid-tier Japanese precision manufacturers.</div>
 </div></div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="indo-pacific"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">Indo-Pacific</div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #1B2A4A;">
-<div style="font-size:11px;color:#1B2A4A;text-transform:uppercase;font-weight:600;">Trilateral · Yonhap</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://news.google.com/search?q=Senior+Japan-ROK-US+defense+officials+reaffirm+trilateral+cooperation+for+regional+peace&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">Senior Japan-ROK-US defense officials reaffirm trilateral cooperation for regional peace</a></div>
-<div style="font-size:13px;line-height:1.4;color:#555;">Senior defense officials from South Korea, Japan, and the United States met and reaffirmed three-way security cooperation for regional peace, coinciding with the launch of Freedom Edge 2026 exercises near Jeju Island.</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="indo-pacific" id="indo-pacific"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Indo-Pacific</span></td></tr></table><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #1B2A4A;">
+<div style="font-size:11px;color:#1B2A4A;text-transform:uppercase;font-weight:600;">Indo-Pacific · Nikkei Asia</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://asia.nikkei.com/politics/international-relations/indo-pacific/japan-india-and-australia-hedge-against-a-us-quad-retreat" style="color:#1B2A4A;text-decoration:underline;">Japan, India, Australia deepen ties hedging against potential US Quad retreat</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Japan, India, and Australia are advancing trilateral security and economic coordination as insurance against possible US disengagement from the Quad framework, per Nikkei Asia.</div>
+</div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #1B2A4A;">
+<div style="font-size:11px;color:#1B2A4A;text-transform:uppercase;font-weight:600;">Korea-Japan · Yonhap</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://en.yna.co.kr/view/AEN20260909006600315" style="color:#1B2A4A;text-decoration:underline;">South Korea skips Sado mine memorial for third straight year, sustaining Japan-ROK historical friction</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Seoul confirmed it will not attend the Sado Island gold mine memorial event for the third year running, prolonging a wartime labor dispute that periodically constrains Japan-ROK security cooperation.</div>
 </div></div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="wire"></a><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">The Wire</div><div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#55607A;margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">Indo-Pacific</div><table width="100%" cellpadding="0" cellspacing="0" border="0" class="flash-table"><tr><td style="padding:8px 0;vertical-align:top;border-bottom:1px solid #EEF0F3;"><div style="font-family:Georgia,serif;font-size:14px;font-weight:600;line-height:1.4;color:#1A222E;"><a href="https://news.google.com/search?q=Japanese+helicopters+to+join+Indonesia+wildfire+battle+this+weekend&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">Japanese helicopters to join Indonesia wildfire battle this weekend</a></div><div style="font-family:Arial,sans-serif;font-size:11px;line-height:1.5;color:#6B7280;margin-top:2px;">Japan will dispatch helicopters to support Indonesia's firefighting operations against wildfires that have been raging for months, reflecting Tokyo's continued humanitarian engagement in Southeast Asia. &middot; Reuters</div></td></tr></table><div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#55607A;margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">Economy-Boj</div><table width="100%" cellpadding="0" cellspacing="0" border="0" class="flash-table"><tr><td style="padding:8px 0;vertical-align:top;border-bottom:1px solid #EEF0F3;"><div style="font-family:Georgia,serif;font-size:14px;font-weight:600;line-height:1.4;color:#1A222E;"><a href="https://asia.nikkei.com/economy/inflation-threatens-to-snap-japan-s-7-month-streak-of-real-wage-growth" style="color:#1B2A4A;text-decoration:underline;">Inflation threatens to snap Japan's seven-month streak of real wage growth</a></div><div style="font-family:Arial,sans-serif;font-size:11px;line-height:1.5;color:#6B7280;margin-top:2px;">Nikkei Asia reports that rising inflation poses a risk to Japan's seven consecutive months of real wage growth, complicating the BOJ's rate-hike calculations even as July data showed the strongest real wage gain since 2021. &middot; Nikkei Asia</div></td></tr></table></div>
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1B2A4A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #BC002D;">On This Day</div><div style="padding:12px 14px;background:#FAFAF5;border-radius:4px;border-left:3px solid #7F8C8D;">
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="wire" id="wire"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">The Wire</span></td></tr></table><div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#55607A;margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">Indo-Pacific</div><table width="100%" cellpadding="0" cellspacing="0" border="0" class="flash-table"><tr><td style="padding:8px 0;vertical-align:top;border-bottom:1px solid #EEF0F3;"><div style="font-family:Georgia,serif;font-size:14px;font-weight:600;line-height:1.4;color:#1A222E;"><a href="https://asia.nikkei.com/politics/international-relations/australia-s-new-envoy-to-japan-calls-out-china-missile-buildup-and-coercion" style="color:#1B2A4A;text-decoration:underline;">Australia's new Japan envoy publicly calls out China missile buildup and coercion</a></div><div style="font-family:Arial,sans-serif;font-size:11px;line-height:1.5;color:#6B7280;margin-top:2px;">Australia's new ambassador to Japan directly called out China's missile buildup and coercive behavior, a public framing rare for incoming envoys that signals Canberra's alignment with Tokyo's security concerns. &middot; Nikkei Asia</div></td></tr></table><div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#55607A;margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">Technology</div><table width="100%" cellpadding="0" cellspacing="0" border="0" class="flash-table"><tr><td style="padding:8px 0;vertical-align:top;border-bottom:1px solid #EEF0F3;"><div style="font-family:Georgia,serif;font-size:14px;font-weight:600;line-height:1.4;color:#1A222E;"><a href="https://asia.nikkei.com/business/technology/artificial-intelligence/sumitomo-partners-with-sakana-ai-to-push-japan-built-ai-model" style="color:#1B2A4A;text-decoration:underline;">Sumitomo partners with Sakana AI to develop Japan-built AI model</a></div><div style="font-family:Arial,sans-serif;font-size:11px;line-height:1.5;color:#6B7280;margin-top:2px;">Sumitomo Corporation has partnered with Sakana AI to develop and promote a Japan-built artificial intelligence model, advancing domestic AI capabilities as Japan pursues strategic autonomy in frontier technology. &middot; Nikkei Asia</div></td></tr></table></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#BC002D;line-height:1;vertical-align:middle;margin-right:9px;">&#9675;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">On This Day</span></td></tr></table><div style="padding:12px 14px;background:#FAFAF5;border-radius:4px;border-left:3px solid #7F8C8D;">
 <div style="font-size:11px;color:#7F8C8D;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">September 8, 1951</div>
-<div style="font-size:14px;font-weight:600;color:#1B2A4A;font-family:Georgia,serif;margin:4px 0;">The San Francisco Peace Treaty was signed, formally ending the Allied Occupation of Japan and establishing the original US-Japan Security Treaty.</div>
-<div style="font-size:13px;color:#555;font-style:italic;line-height:1.5;">The alliance architecture created that day remains the framework within which today's US-Japan defense cooperation, host-nation support negotiations, and the Freedom Edge trilateral exercises are conducted.</div>
+<div style="font-size:14px;font-weight:600;color:#1B2A4A;font-family:Georgia,serif;margin:4px 0;">The San Francisco Peace Treaty was signed, ending the Allied Occupation of Japan; the original US-Japan Security Treaty was signed the same day.</div>
+<div style="font-size:13px;color:#555;font-style:italic;line-height:1.5;">The 75th anniversary of the treaty framework underpinning the US-Japan alliance falls within 24 hours of today's date, as both governments negotiate alliance modernization and tariff terms.</div>
 </div></div>
 
 <!-- The house footer. Korea carries a CSIS lockup built in HTML; the other
@@ -458,12 +444,17 @@
      name instead. Everything else matches: centred, the city and domain on
      their own line, the links as links rather than a run-on sentence, and
      the disclaimer set in the reading face rather than the label face. -->
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec footer" style="background:#1B2A4A;border-top:4px solid #BC002D;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec footer" style="background:#14181F;border-top:4px solid #BC002D;">
   <tr><td style="padding:20px 32px 6px;text-align:center;">
-    <div style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#FFFFFF;letter-spacing:0.5px;line-height:1.2;">CSIS Japan Chair</div>
+    <div style="font-family:Georgia,serif;font-size:38px;font-weight:700;color:#FFFFFF;letter-spacing:1px;line-height:1.1;">CSIS Japan Chair</div>
     <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.72);margin-top:6px;">Japan Daily Brief</div>
     <div style="font-family:Georgia,serif;font-size:13px;color:rgba(255,255,255,0.72);margin-top:12px;">Washington, D.C.</div>
-    <div style="margin-top:11px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;"><a href="https://andysaulim.github.io/Daily-Japan-Digest/index.html" style="color:rgba(255,255,255,0.95);text-decoration:none;">Read online</a></div>
+    <div style="margin-top:11px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;"><a href="https://andysaulim.github.io/Daily-Japan-Digest/index.html" style="display:inline-block;padding:6px 15px;margin:0 4px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:#14181F;background:#FFFFFF;border-radius:14px;text-decoration:none;white-space:nowrap;">Read online</a><span style="color:rgba(255,255,255,0.45);">&nbsp;&middot;&nbsp;</span><a href="https://andysaulim.github.io/Daily-Japan-Digest/archive.html" style="display:inline-block;padding:6px 15px;margin:0 4px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:#14181F;background:#FFFFFF;border-radius:14px;text-decoration:none;white-space:nowrap;">Past issues</a></div>
+  </td></tr>
+  <tr><td style="padding:16px 32px 4px;text-align:center;">
+    <div style="font-family:Georgia,serif;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.80);max-width:520px;margin:0 auto;">
+      You are receiving the Japan Daily Brief as a member of the CSIS Japan Chair distribution list.
+    </div>
   </td></tr>
   <tr><td style="padding:14px 32px 10px;text-align:center;">
     <div style="border-top:1px solid rgba(255,255,255,0.14);padding-top:12px;font-family:Georgia,serif;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.82);max-width:560px;margin:0 auto;">
@@ -472,8 +463,13 @@
     </div>
   </td></tr>
   <tr><td style="padding:0 32px 20px;text-align:center;">
-    <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:rgba(255,255,255,0.70);margin-bottom:9px;">generated 12:07 AM ET</div>
+    <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:rgba(255,255,255,0.70);margin-bottom:9px;">generated 7:06 AM ET</div>
     <a href="#top" style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.95);text-decoration:none;">&#8593; Back to top</a>
+  </td></tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="footer-end" style="background:#FFFFFF;">
+  <tr><td style="padding:12px 32px 18px;text-align:center;font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:#6B7280;">
+    &copy; 2026 Center for Strategic and International Studies
   </td></tr>
 </table>
 </td>

@@ -437,12 +437,12 @@
     },
     "2026-09-09": {
       "signals": {
-        "china_signal": "China imposed provisional anti-dumping measures on Japanese dichlorosilane — a key semiconductor precursor chemical — requiring cash deposits of up to 99.2%, drawing an immediate Japanese protest and impact-assessment pledge. Separately, the JASDF scrambled fighters for a fifth consecutive day in re",
-        "dprk_signal": "North Korea commissioned its second Choe Hyon-class guided-missile destroyer — the vessel that capsized at its May 2025 launch — timed to the opening of Freedom Edge 2026; Kim Jong Un declared it part of DPRK's nuclear response system and pledged a nuclear-armed navy. North Korea's defense minister ",
-        "russia_signal": "The Kremlin formally rejected Tokyo's request to dismantle the WWII memorial statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker, extending the bilateral symbolic-provocation standoff that follows Putin's Etorofu visit and Russia's August 21 Bastion missile l"
+        "china_signal": "The JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance aircraft flights. China's Foreign Ministry Spokesperson Mao Ning's September 8 press conference reiterated Beijing's position that 'correctly addressing history is a benchmark for testing Japan's commitmen",
+        "dprk_signal": "North Korea commissioned the Kang Kon, its second Choe Hyon-class 5,000-tonne guided-missile destroyer in 75 days — the same vessel that capsized at its May 2025 launch — with Kim Jong Un declaring it integrated into Pyongyang's nuclear response system and pledging a nuclear-armed navy; North Korea'",
+        "russia_signal": "The Kremlin formally rejected Tokyo's request to dismantle the WWII memorial statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker, extending the symbolic-provocation standoff that follows President Putin's Etorofu visit and Russia's August 21 Bastion missile l"
       },
-      "watch_flag": false
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-09-09T04:07:52.964926+00:00"
+  "last_updated": "2026-09-09T11:06:26.211399+00:00"
 }
