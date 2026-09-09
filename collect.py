@@ -237,6 +237,18 @@ POLL_FEEDS = {
 
 
 # ── KEYWORD FILTERS ───────────────────────────────────────────────────────────
+# Feeds that are Japan-related by construction, and so must not be put
+# through JAPAN_KEYWORDS. That filter exists to strip world news out of
+# general wires. Applied to a ministry feed it does the opposite of its job:
+# "Statement by the Prime Minister" and "Press Conference by the Chief Cabinet
+# Secretary" carry none of the tokens it looks for, so the Kantei, MOFA, MOD,
+# METI, MOF and BOJ feeds were largely discarded before the model saw them.
+JAPAN_NATIVE_FEEDS = {
+    "Kantei / PMO", "MOFA Japan", "MOD Japan", "METI Japan", "MOF Japan",
+    "Bank of Japan", "Kantei / PM", "MOFA presser",
+}
+
+
 JAPAN_KEYWORDS = re.compile(
     r"\bjapan\b|\bjapanese\b|\btokyo\b|\bdiet\b|\bkantei\b|\bldp\b"
     r"|\bkomeito\b|\bcdp\b|\bdpp\b|\bself[\s-]?defense\b|\bjsdf\b|\bsdf\b"
@@ -479,7 +491,8 @@ def _collect_tier1() -> list:
         for entry in entries:
             if not _is_recent(entry, hours=24):
                 continue
-            if not _is_japan_related(entry):
+            # A primary source needs no relevance test; see JAPAN_NATIVE_FEEDS.
+            if source not in JAPAN_NATIVE_FEEDS and not _is_japan_related(entry):
                 continue
             if _is_lifestyle(entry):
                 continue
@@ -496,7 +509,8 @@ def _collect_tier2() -> list:
         for entry in entries:
             if not _is_recent(entry, hours=36):
                 continue
-            if not _is_japan_related(entry):
+            # A primary source needs no relevance test; see JAPAN_NATIVE_FEEDS.
+            if source not in JAPAN_NATIVE_FEEDS and not _is_japan_related(entry):
                 continue
             article = _entry_to_article(entry, source, extra={
                 "prestige_tier": prestige,
@@ -513,7 +527,8 @@ def _collect_tier3() -> list:
         for entry in entries:
             if not _is_recent(entry, hours=72):
                 continue
-            if not _is_japan_related(entry):
+            # A primary source needs no relevance test; see JAPAN_NATIVE_FEEDS.
+            if source not in JAPAN_NATIVE_FEEDS and not _is_japan_related(entry):
                 continue
             text = f"{entry.get('title', '')} {entry.get('summary', entry.get('description', ''))}".lower()
             academic_signals = ("journal", "paper", "study", "research", "analysis",

@@ -263,7 +263,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="vertical-align:top;">
 <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#BC002D;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
+<h1 style="margin:0 0 4px 0;font-size:26px;font-weight:700;font-family:Georgia,serif;color:#fff;letter-spacing:0.3px;">{_hinomaru(16)}Japan Daily Brief</h1>
 <div style="font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">{_esc(date_str)}</div>
 </td>
 <td style="vertical-align:top;text-align:right;">
@@ -289,19 +289,19 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
         _topix_val = str(topix.get("value", "—"))
         _has_topix = _topix_val not in ("—", "", "None")
         _asof = now.strftime("%b %-d")
-        _nikkei_cell = f"""<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">Nikkei 225</div>
-<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(nikkei.get("value", "—")))}</div>
+        _nikkei_cell = f"""<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">Nikkei 225</div>
+<div style="font-size:22px;font-weight:700;margin:2px 0;">{_esc(str(nikkei.get("value", "—")))}</div>
 <div style="font-size:11px;">{_arrow(nikkei.get("change_pct", 0))}</div>
-<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
-        _usdjpy_cell = f"""<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">USD/JPY</div>
-<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(str(usd_jpy.get("value", "—")))}</div>
+<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
+        _usdjpy_cell = f"""<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">USD/JPY</div>
+<div style="font-size:22px;font-weight:700;margin:2px 0;">{_esc(str(usd_jpy.get("value", "—")))}</div>
 <div style="font-size:11px;">{_arrow(usd_jpy.get("change_pct", 0))}</div>
-<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
+<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
         if _has_topix:
-            _topix_cell = f"""<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">TOPIX</div>
-<div style="font-size:20px;font-weight:700;margin:2px 0;">{_esc(_topix_val)}</div>
+            _topix_cell = f"""<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.2px;opacity:0.55;">TOPIX</div>
+<div style="font-size:22px;font-weight:700;margin:2px 0;">{_esc(_topix_val)}</div>
 <div style="font-size:11px;">{_arrow(topix.get("change_pct", 0))}</div>
-<div style="font-size:9px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
+<div style="font-size:10px;opacity:0.4;margin-top:2px;">as of {_asof}</div>"""
             _top_row = (f'<td width="33%" align="center" style="padding:12px 8px 10px;">{_nikkei_cell}</td>'
                         f'<td width="34%" align="center" style="padding:12px 8px 10px;border-left:1px solid rgba(255,255,255,0.12);border-right:1px solid rgba(255,255,255,0.12);">{_topix_cell}</td>'
                         f'<td width="33%" align="center" style="padding:12px 8px 10px;">{_usdjpy_cell}</td>')
@@ -319,22 +319,22 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <tr>
 <td width="25%" align="center" style="padding:8px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">EUR/JPY</div>
-<div style="font-size:15px;font-weight:700;">{_esc(str(eur_jpy.get("value", "—")))}</div>
+<div style="font-size:14px;font-weight:700;">{_esc(str(eur_jpy.get("value", "—")))}</div>
 <div style="font-size:10px;">{_arrow(eur_jpy.get("change_pct", 0))}</div>
 </td>
 <td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Brent</div>
-<div style="font-size:15px;font-weight:700;">${_esc(str(brent.get("value", "—")))}</div>
+<div style="font-size:14px;font-weight:700;">${_esc(str(brent.get("value", "—")))}</div>
 <div style="font-size:10px;">{_arrow(brent.get("change_pct", 0))}</div>
 </td>
 <td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">10Y JGB</div>
-<div style="font-size:15px;font-weight:700;">{_esc(str(jgb.get("value", "—")))}</div>
+<div style="font-size:14px;font-weight:700;">{_esc(str(jgb.get("value", "—")))}</div>
 <div style="font-size:10px;opacity:0.5;">yield</div>
 </td>
 <td width="25%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">Japan 5Y CDS</div>
-<div style="font-size:15px;font-weight:700;">{_esc(str(cds.get("value", "—")))} bps</div>
+<div style="font-size:14px;font-weight:700;">{_esc(str(cds.get("value", "—")))} bps</div>
 <div style="font-size:10px;">{_cds_arrow(cds.get("change_bps", 0))}</div>
 </td>
 </tr>
@@ -343,12 +343,12 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <tr>
 <td width="50%" align="center" style="padding:8px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">BOJ Policy Rate</div>
-<div style="font-size:15px;font-weight:700;">{_esc(str(boj.get("value", "—")))}</div>
+<div style="font-size:14px;font-weight:700;">{_esc(str(boj.get("value", "—")))}</div>
 <div style="font-size:10px;opacity:0.6;">{_esc(str(boj.get("last_change", "")))}</div>
 </td>
 <td width="50%" align="center" style="padding:8px;border-left:1px solid rgba(255,255,255,0.1);">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;opacity:0.6;">GDP (annualized)</div>
-<div style="font-size:15px;font-weight:700;">{_esc(str(gdp.get("value", "—")))}</div>
+<div style="font-size:14px;font-weight:700;">{_esc(str(gdp.get("value", "—")))}</div>
 <div style="font-size:10px;opacity:0.6;">{_esc(str(gdp.get("source", "Cabinet Office")))}{" · " + _esc(str(gdp.get("period", ""))) if gdp.get("period") else ""}</div>
 </td>
 </tr>
@@ -421,11 +421,11 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                        f"per {_lead}&ldquo;{_link_or_text(_esc(orig), url, style='color:#999;text-decoration:underline;')}&rdquo;</div>")
             sh += f"""
 <div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;font-weight:700;margin-bottom:6px;">{cat}</div>
 <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;">{_link_or_text(h, url, style="color:#1B2A4A;text-decoration:none;")}</h3>
 {"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
-{"<p style='margin:0 0 6px 0;font-size:12px;line-height:1.5;color:#555;font-style:italic;'><strong style='color:#1B2A4A;font-style:normal;'>So what:</strong> " + _link_or_text(sw, url, style="color:#555;text-decoration:underline;") + "</p>" if sw else ""}
-{"<p style='margin:0 0 6px 0;font-size:12px;line-height:1.5;color:#777;font-style:italic;'><strong style='color:#555;font-style:normal;'>Pattern:</strong> " + pn + "</p>" if pn else ""}
+{"<p style='margin:0 0 6px 0;font-size:13px;line-height:1.5;color:#555;font-style:italic;'><strong style='color:#1B2A4A;font-style:normal;'>So what:</strong> " + _link_or_text(sw, url, style="color:#555;text-decoration:underline;") + "</p>" if sw else ""}
+{"<p style='margin:0 0 6px 0;font-size:13px;line-height:1.5;color:#777;font-style:italic;'><strong style='color:#555;font-style:normal;'>Pattern:</strong> " + pn + "</p>" if pn else ""}
 {ref}
 <div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
@@ -446,9 +446,9 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             bar = cat_colors.get(cat_raw, "#1B2A4A")
             fh += f"""
 <div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
-<div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;">{cat} &middot; {src}</div>
+<div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;">{cat} &middot; {src}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{b}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{b}</div>
 </div>"""
         sections_today.append(f'<div {_SEC_ALERT}>{_sec_label("&#9889; Overnight Flash", color="#C0392B", rule="#C0392B")}{fh}</div>')
 
@@ -458,8 +458,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
         sections_today.append(f"""
 <div style="padding:12px 32px;background:#1B2A4A;color:#fff;border-bottom:1px solid #E0E0E0;text-align:center;" class="sec">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;opacity:0.6;margin-bottom:2px;">Stat of the Day</div>
-<div class="key-stat-num" style="font-size:32px;font-weight:700;font-family:Georgia,serif;">{_esc(str(stat.get("number", "")))}</div>
-<div style="font-size:12px;opacity:0.85;margin-top:2px;">{_esc(stat.get("label", ""))}</div>
+<div class="key-stat-num" style="font-size:26px;font-weight:700;font-family:Georgia,serif;">{_esc(str(stat.get("number", "")))}</div>
+<div style="font-size:13px;opacity:0.85;margin-top:2px;">{_esc(stat.get("label", ""))}</div>
 <div style="font-size:11px;opacity:0.65;margin-top:4px;font-style:italic;">{_esc(stat.get("context", ""))}</div>
 {"<div style='font-size:10px;opacity:0.45;margin-top:4px;'>Source: " + _esc(stat.get("source", "")) + "</div>" if stat.get("source") else ""}
 </div>""")
@@ -521,7 +521,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
         vol = _esc(xd.get("output_volume", ""))
         watch = xd.get("watch_flag")
         watch_badge = ('<span style="display:inline-block;padding:2px 8px;border-radius:3px;'
-                       'font-size:9px;font-weight:700;color:#fff;background:#C0392B;'
+                       'font-size:10px;font-weight:700;color:#fff;background:#C0392B;'
                        'letter-spacing:0.5px;margin-left:8px;">WATCH</span>') if watch else ""
 
         sections_analysis.append(f"""
@@ -571,7 +571,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
 <div style="margin-bottom:6px;">{hdr}</div>
 <div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">{act}</div>
-<div style="font-size:12px;line-height:1.55;color:#555;">{det}</div>
+<div style="font-size:13px;line-height:1.55;color:#555;">{det}</div>
 {slink}
 </div>"""
         gov_grid = gov_rows_html if prc_gov else ""
@@ -591,8 +591,8 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 pl = f'<div style="font-size:11px;color:#888;margin-top:2px;">Succeeds: {pred}</div>' if pred else ""
                 pi += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {ac_c};">
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{nm}{bg}</div>
-<div style="font-size:12px;color:#555;">{pos}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{det}</div>
+<div style="font-size:13px;color:#555;">{pos}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{det}</div>
 {pl}
 </div>"""
             pers_html = f"""<div style="margin-top:16px;">
@@ -611,7 +611,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 ni += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #7F8C8D;">
 <div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{body}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{det}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{det}</div>
 </div>"""
             npc_html = f"""<div style="margin-top:16px;">
 <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#7F8C8D;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Diet Sessions / LDP</div>
@@ -630,11 +630,11 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
 <tr>
 <td width="50" style="padding:10px 10px 10px 0;text-align:center;vertical-align:top;">
 <div style="font-size:10px;text-transform:uppercase;color:#888;letter-spacing:0.5px;">{cm}</div>
-<div style="font-size:18px;font-weight:300;color:#1B2A4A;line-height:1.2;">{cd}</div>
+<div style="font-size:16px;font-weight:300;color:#1B2A4A;line-height:1.2;">{cd}</div>
 </td>
 <td style="padding:10px 0;vertical-align:top;">
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;margin-bottom:2px;">{ch}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{cdet}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{cdet}</div>
 </td>
 </tr>
 </table>"""
@@ -677,20 +677,20 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                     bl = "border-left:1px solid rgba(255,255,255,0.12);" if i else ""
                     tds += (f'<td width="{w}%" align="center" style="padding:12px 10px;{bl}">'
                             f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{SLATE_LABEL};margin-bottom:4px;">{lab}</div>'
-                            f'<div style="font-size:18px;font-weight:700;color:#fff;font-family:\'Courier New\',Courier,monospace;">{val}</div></td>')
+                            f'<div style="font-size:16px;font-weight:700;color:#fff;font-family:\'Courier New\',Courier,monospace;">{val}</div></td>')
                 strip_html = (f'<table class="mkt-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
                               f'style="background:{NAVY};border-radius:4px;margin-bottom:10px;"><tr>{tds}</tr></table>')
             # Section 232 rates — navy label, single red accent on the value
             sr = ""
             for sec, rate in s232.items():
                 sr += (f'<tr style="border-bottom:1px solid #EEE;">'
-                       f'<td style="padding:5px 6px 5px 0;font-size:12px;font-weight:600;color:{NAVY};">{_esc(str(sec).title())}</td>'
+                       f'<td style="padding:5px 6px 5px 0;font-size:13px;font-weight:600;color:{NAVY};">{_esc(str(sec).title())}</td>'
                        f'<td style="padding:5px 6px;font-size:14px;font-weight:700;color:{HINOMARU_RED};text-align:center;">{_esc(str(rate))}</td>'
                        f'<td style="padding:5px 6px;font-size:10px;color:#999;text-transform:uppercase;">Section 232</td></tr>')
             s232_html = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">{sr}</table>') if sr else ""
-            il = (f'<div style="margin-top:6px;font-size:12px;line-height:1.5;color:#333;">'
+            il = (f'<div style="margin-top:6px;font-size:13px;line-height:1.5;color:#333;">'
                   f'<strong style="color:{NAVY};">Investment framework:</strong> {invf}</div>') if invf else ""
-            s3l = (f'<div style="margin-top:6px;font-size:12px;line-height:1.5;color:#333;">'
+            s3l = (f'<div style="margin-top:6px;font-size:13px;line-height:1.5;color:#333;">'
                    f'<strong style="color:{NAVY};">Section 301:</strong> {s301}</div>') if s301 else ""
             meta_parts = [x for x in ((("Deal: " + deal) if deal else ""),
                                       (("Next: " + nt) if nt else ""), lc) if x]
@@ -719,7 +719,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 url = d.get("url", "")
                 dr += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid {HINOMARU_RED};">
 <div style="font-size:13px;font-weight:600;color:{NAVY};line-height:1.4;">{_link_or_text(hd, url)}{(' <span style="color:#888;font-weight:400;font-size:11px;">· ' + val + '</span>') if val else ''}</div>
-<div style="font-size:12px;line-height:1.5;color:#444;">{parties}{(' — ' + det) if det else ''}</div>
+<div style="font-size:13px;line-height:1.5;color:#444;">{parties}{(' — ' + det) if det else ''}</div>
 </div>"""
             body += f"""<div style="margin-bottom:16px;">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:8px;">New Agreements / Pledges</div>
@@ -744,7 +744,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             bh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
 <div style="font-size:11px;color:#888;text-transform:uppercase;">{sec} · {src}{(' · ' + cs) if cs else ''}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{bt}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
         sections_wire.append(f'<div {_SEC}>{_sec_label("Business &amp; Economy")}{bh}</div>')
 
@@ -762,7 +762,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             ih += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
 <div style="font-size:11px;color:{bar};text-transform:uppercase;font-weight:600;">{_esc(r)} · {src}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{bt}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
         sections_wire.append(f'<div {_SEC}>{_sec_label("Indo-Pacific")}{ih}</div>')
 
@@ -778,7 +778,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             ch += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #2C3E50;">
 <div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{comm}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{det}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{det}</div>
 </div>"""
         sections_trackers.append(f'<div {_SEC}>{_sec_label("Diet Watch")}{ch}</div>')
 
@@ -800,7 +800,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 body += f"""<div style="margin-bottom:14px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
 <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src}{(' · ' + auth) if auth else ''}</div>
 <div style="font-size:14px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:6px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
-{"<div style='font-size:12px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>" + ca + "</div>" if ca else ""}
+{"<div style='font-size:13px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>" + ca + "</div>" if ca else ""}
 {"<div style='font-size:11px;line-height:1.5;color:#666;'>" + sm + "</div>" if sm else ""}
 {"<div style='font-size:11px;color:#1B2A4A;margin-top:4px;font-weight:600;'>" + ps + "</div>" if ps else ""}
 </div>"""
@@ -816,7 +816,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 body += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
 <div style="font-size:10px;color:#1B2A4A;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src} · {tier}{(' · ' + auth) if auth else ''}</div>
 <div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
-<div style="font-size:12px;line-height:1.5;color:#555;">{sm}</div>
+<div style="font-size:13px;line-height:1.5;color:#555;">{sm}</div>
 </div>"""
         sections_analysis.append(f'<div {_SEC}>{_sec_label("Op-Eds, Commentaries &amp; Events")}{body}</div>')
 
@@ -874,15 +874,15 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
                 pn = _esc(p.get("party", ""))
                 pp = _esc(str(p.get("support_pct", "")))
                 pr += f"""<tr style="border-bottom:1px solid #EEE;">
-<td style="padding:4px 6px 4px 0;font-size:12px;color:#1B2A4A;">{pn}</td>
-<td style="padding:4px 0;font-size:12px;font-weight:700;color:#1B2A4A;text-align:right;">{pp}</td>
+<td style="padding:4px 6px 4px 0;font-size:13px;color:#1B2A4A;">{pn}</td>
+<td style="padding:4px 0;font-size:13px;font-weight:700;color:#1B2A4A;text-align:right;">{pp}</td>
 </tr>"""
             _party_note = "primary poll" if len(polls) >= 2 else "same poll"
             poll_body += f"""<div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#2C3E50;margin:6px 0;">Party Support ({_party_note})</div>
 <table width="100%" cellpadding="0" cellspacing="0" border="0">{pr}</table>"""
 
         if disc:
-            poll_body += f'<div style="font-size:12px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> {disc}</div>'
+            poll_body += f'<div style="font-size:13px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> {disc}</div>'
 
         # Aggregator link (Observing Japan poll tracker)
         poll_body += (f'<div style="margin-top:12px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#888;">'
@@ -939,7 +939,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             ah += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {bar};">
 <div style="font-size:10px;color:#888;text-transform:uppercase;">{c} &middot; {src}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
-<div style="font-size:12px;line-height:1.4;color:#555;">{b}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{b}</div>
 </div>"""
         sections_wire.append(f'<div {_SEC}>{_sec_label("Also Today / The Wire")}{ah}</div>')
 
@@ -951,7 +951,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
             oh += f"""<div style="padding:12px 14px;background:#FAFAF5;border-radius:4px;border-left:3px solid #7F8C8D;">
 <div style="font-size:11px;color:#7F8C8D;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">{_esc(it.get("date", ""))}</div>
 <div style="font-size:14px;font-weight:600;color:#1B2A4A;font-family:Georgia,serif;margin:4px 0;">{_esc(it.get("event", ""))}</div>
-<div style="font-size:12px;color:#555;font-style:italic;line-height:1.5;">{_esc(it.get("relevance", ""))}</div>
+<div style="font-size:13px;color:#555;font-style:italic;line-height:1.5;">{_esc(it.get("relevance", ""))}</div>
 </div>"""
         sections_wire.append(f'<div {_SEC}>{_sec_label("On This Day")}{oh}</div>')
 
@@ -959,7 +959,7 @@ Email not rendering? <a href="{_esc(web_url)}" style="color:{HINOMARU_RED};text-
     sections_post.append(f"""
 <div style="padding:20px 32px;background:#1B2A4A;text-align:center;" class="sec footer">
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FF6B6B;font-family:Arial,sans-serif;margin-bottom:10px;">For Internal Use Only</div>
-<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.45);font-family:Arial,sans-serif;line-height:2;">
 CSIS Japan Chair &nbsp;·&nbsp; Japan Daily Brief &nbsp;·&nbsp; Generated <span style="font-family:'Courier New',Courier,monospace;">{gen_time}</span>
 </div>
 <div style="max-width:520px;margin:10px auto 12px;font-size:11px;line-height:1.6;color:rgba(255,255,255,0.62);font-family:Arial,sans-serif;">
@@ -999,8 +999,8 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
     .key-stat-num {{ font-size:26px !important; }}
     /* Market strip stays multi-across on phones — smaller mono, tighter pad */
     .mkt-table td {{ padding:8px 4px 10px !important; }}
-    .mkt-table div[style*="font-size:20px"] {{ font-size:16px !important; }}
-    .mkt-table div[style*="font-size:15px"] {{ font-size:13px !important; }}
+    .mkt-table div[style*="font-size:22px"] {{ font-size:16px !important; }}
+    .mkt-table div[style*="font-size:14px"] {{ font-size:13px !important; }}
     /* Story cards */
     .story-card {{ padding:12px 12px !important; }}
     /* Dark Regional Pressure Watch panel */
@@ -1010,7 +1010,7 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
     /* Overflow + legibility safety */
     p, div, td {{ word-wrap:break-word !important; overflow-wrap:break-word !important; }}
     body, td, div, p, span {{ -webkit-text-size-adjust:100%; }}
-    div[style*="font-size:9px"], span[style*="font-size:9px"] {{ font-size:10px !important; }}
+    div[style*="font-size:10px"], span[style*="font-size:10px"] {{ font-size:10px !important; }}
     a {{ min-height:44px; }}
     p a, div a, td a {{ min-height:auto; padding:6px 0; }}
     img {{ max-width:100% !important; height:auto !important; }}
@@ -1019,7 +1019,7 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
   @media only screen and (min-width: 621px) and (max-width: 768px) {{
     .wrapper {{ width:100% !important; }}
     .sec, .footer {{ padding:16px 22px !important; }}
-    h1 {{ font-size:24px !important; }}
+    h1 {{ font-size:22px !important; }}
     .mkt-table td {{ padding:10px 10px 12px !important; }}
   }}
   /* Dark mode — scoped, non-destructive. The masthead, market strip,
@@ -1041,6 +1041,38 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
     .wrapper .sent-approve {{ background:#16261B !important; }}
     .wrapper .sent-disapprove {{ background:#2A1518 !important; }}
     .wrapper .mkt-table td {{ border-color:rgba(255,255,255,0.08) !important; }}
+    /* The rules above select h1-h3, .sec p and a. The markup also uses
+       166 div, 32 td and 23 span, so most body text kept its light-mode
+       inline colour on the new dark ground. These are generated from the
+       colours this template actually uses. */
+    .wrapper [style*="color:#1B2A4A"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#1b2a4a"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#27AE60"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#27ae60"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#2C3E50"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#2c3e50"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#7F8C8D"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#7f8c8d"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#B7791F"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#b7791f"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#BC002D"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#bc002d"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#C0392B"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#c0392b"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#FF6B6B"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#ff6b6b"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="background:#F0F0F0"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#f0f0f0"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#F2F3F5"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#f2f3f5"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#F7F8FA"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#f7f8fa"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#FAFAF5"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#fafaf5"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#FBFBFD"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#fbfbfd"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#FFFFFF"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#ffffff"] {{ background-color:#262A30 !important; }}
   }}
 </style>
 <!--[if mso]>
