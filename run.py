@@ -1363,10 +1363,12 @@ def run_pipeline(args: argparse.Namespace) -> int:
 
     # ─── Send ────────────────────────────────────────────────────────────
     sent_ok = False
+    send_blocked = False
     if not validation_passed and not args.force_send:
         # Fail closed. This printed "Use --force-send to override validation
         # gate" and then sent the brief regardless, so every failure it ever
         # reported went out to the list anyway and the message was untrue.
+        send_blocked = True
         print("\n📭 Validation failed: not sending. Re-run once the findings "
               "above are addressed, or pass --force-send.")
     elif args.no_send:
@@ -1400,6 +1402,13 @@ def run_pipeline(args: argparse.Namespace) -> int:
     print(f"  ✅ Pipeline complete in {elapsed:.0f}s")
     print(f"{'=' * 64}\n")
 
+    if send_blocked:
+        # Exit non-zero so the workflow goes red and the failure alert fires.
+        # A green run that sent nothing is silent, and silence is what made
+        # this morning's miss invisible until someone noticed an empty inbox.
+        print("\n✖  Run failed: the brief was generated but NOT sent "
+              "(validation gate). The rendered HTML is in the artifact.")
+        return 1
     return 0
 
 
