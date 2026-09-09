@@ -1300,7 +1300,14 @@ def render_html(digest: dict) -> str:
     .wrapper h1, .wrapper h2, .wrapper h3 {{ color:#E8E6E1 !important; }}
     .wrapper .sec p {{ color:#C4C8CE !important; }}
     .wrapper a {{ color:#6FA8E8 !important; }}
-    .wrapper .footer {{ background:#6E0019 !important; }}
+    /* The footer is black in light mode now, so its dark counterpart is a
+       dark neutral, not the deep red it inherited from the red footer. */
+    .wrapper .footer {{ background:#0B0E13 !important; }}
+    .wrapper .sec-bar {{ background:#0B0E13 !important; }}
+    /* The terminal strip is white by design in light mode; left unmapped it
+       stays white in dark mode, a bright band across the bottom. */
+    .wrapper .footer-end {{ background:#1a1a1a !important; }}
+    .wrapper .footer-end td {{ color:#9AA3AE !important; }}
     .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
     /* Trade dashboard light boxes → neutral dark equivalents */
     .wrapper .tariff-box, .wrapper .alliance-box {{ background:#22262C !important; border-color:#33373D !important; }}
