@@ -86,19 +86,6 @@ jobs:
       - name: Offline smoke tests
         run: python3 smoke_test.py
 
-      - name: Install Chromium (for print PDF)
-        run: python -m playwright install --with-deps chromium
-
-      # The visual check: contrast, typeface count and horizontal overflow,
-      # measured in a real browser. None of it is visible by reading the
-      # HTML, which is why it kept being found by eye instead. Needs the
-      # browser installed below, so it runs after that step.
-      - name: Visual checks
-        if: steps.guard.outputs.should_run != 'false'
-        run: |
-          python3 preview.py
-          BRIEF_HTML=preview.html python3 test_render_visual.py
-
       # Idempotency guard: on a scheduled run, skip only if today's email (ET) was
       # already SENT — tracked by last_sent.txt, which the pipeline writes ONLY
       # after a successful send. Keying on the send (not the archive, which is
@@ -132,6 +119,27 @@ jobs:
           else
             echo "should_run=true" >> "$GITHUB_OUTPUT"
           fi
+
+      # After the guard, so a skipped catch-up run does not pay for a browser
+      # install, and so the `if` below actually reads a value. continue-on-error
+      # because this is only the PDF exporter and the visual check: a runner
+      # hiccup installing Chromium must not hold the brief. Two consecutive
+      # scheduled runs failed here and nothing was sent.
+      - name: Install Chromium (for print PDF)
+        if: steps.guard.outputs.should_run != 'false'
+        continue-on-error: true
+        run: python -m playwright install --with-deps chromium
+
+      # The visual check: contrast, typeface count and horizontal overflow,
+      # measured in a real browser. None of it is visible by reading the
+      # HTML, which is why it kept being found by eye instead. Needs the
+      # browser installed above, so it runs after that step. It skips itself
+      # (exit 0) when no browser is available; a real finding still fails.
+      - name: Visual checks
+        if: steps.guard.outputs.should_run != 'false'
+        run: |
+          python3 preview.py
+          BRIEF_HTML=preview.html python3 test_render_visual.py
 
       - name: Run pipeline
         if: ${{ steps.guard.outputs.should_run != 'false' }}
