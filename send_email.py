@@ -42,8 +42,13 @@ def send_digest(html: str, subject: str | None = None,
         recipients = [r.strip() for r in to_str.split(",") if r.strip()]
 
     if subject is None:
-        date_str = datetime.now(ZoneInfo("America/New_York")).strftime("%a %b %-d %Y")
-        subject = f"Japan Daily Brief — {date_str}"
+        # House format, shared with the other three briefs:
+        # "Japan Daily Brief | Tuesday, September 8, 2026". The name comes
+        # first because that is what a reader filters and searches on, and the
+        # date is spelled out rather than abbreviated.
+        date_str = datetime.now(ZoneInfo("America/New_York")).strftime(
+            "%A, %B %-d, %Y")
+        subject = f"Japan Daily Brief | {date_str}"
 
     msg = EmailMessage()
     msg["Subject"] = subject
