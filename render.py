@@ -62,6 +62,41 @@ def _str(val) -> str:
     return val if isinstance(val, str) else str(val) if val is not None else ""
 
 
+
+# Grounds already dark in both schemes, or white type on an accent fill:
+# these need no dark variant and the coverage guard skips them.
+_DARK_EXEMPT = {
+    "#041a33", "#0a0f1e", "#0d1b2a", "#0e1c33", "#0f1b30", "#121212",
+    "#162340", "#1a1a1a", "#1b2a4a", "#1e2126", "#262a30", "#2e3644",
+    "#051f3d", "#6e0019", "#bc002d", "#de2910", "#17798c",
+}
+
+
+def _check_dark_coverage(html: str) -> list[str]:
+    """Every inline colour in the output must have a dark counterpart.
+
+    Hand-maintained dark rules drift silently: a colour added to the brief
+    keeps its light value in dark mode, so a reader sees near-black type on a
+    near-black ground and nothing catches it, because absent CSS is not an
+    error. This is that catch, and the render test calls it.
+    """
+    import re as _re
+    body = html.split("<body", 1)[-1]
+    _m = _re.search(r"prefers-color-scheme:\s*dark", html)
+    dark = html[_m.start():_m.start() + 20000] if _m else ""
+    covered = {c.lower() for c in _re.findall(r"#[0-9A-Fa-f]{3,6}", dark)} | _DARK_EXEMPT
+    missing = []
+    for hexv in {c.lower() for c in
+                 _re.findall(r"(?<!-)color:\s*(#[0-9A-Fa-f]{3,6})", body)}:
+        if hexv not in covered:
+            missing.append(f"text colour {hexv} has no dark rule")
+    for hexv in {c.lower() for c in
+                 _re.findall(r"background(?:-color)?:\s*(#[0-9A-Fa-f]{3,6})", body)}:
+        if hexv not in covered:
+            missing.append(f"background {hexv} has no dark rule")
+    return sorted(missing)
+
+
 def _esc(text) -> str:
     if text is None or text == "":
         return ""
@@ -1233,6 +1268,30 @@ def render_html(digest: dict) -> str:
     .wrapper [style*="background:#fbfbfd"] {{ background-color:#262A30 !important; }}
     .wrapper [style*="background:#FFFFFF"] {{ background-color:#262A30 !important; }}
     .wrapper [style*="background:#ffffff"] {{ background-color:#262A30 !important; }}
+    /* Filled from a measured audit of the rendered brief: these
+       colours reached the output with no dark rule, so they kept
+       their light values and rendered near-black on near-black. */
+    .wrapper [style*="color:#1a222e"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#1A222E"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#222"] {{ color:#E8E6E1 !important; }}
+    .wrapper [style*="color:#444"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#4a5260"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#4A5260"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#555"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#55607a"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#55607A"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#666"] {{ color:#C4C8CE !important; }}
+    .wrapper [style*="color:#6b7280"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#6B7280"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#888"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#aaa"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#AAA"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="background:#f7f3f4"] {{ background-color:#2A1D20 !important; }}
+    .wrapper [style*="background:#F7F3F4"] {{ background-color:#2A1D20 !important; }}
+    .wrapper [style*="background:#fbeef1"] {{ background-color:#2A1518 !important; }}
+    .wrapper [style*="background:#FBEEF1"] {{ background-color:#2A1518 !important; }}
+    .wrapper [style*="background:#fff"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#FFF"] {{ background-color:#262A30 !important; }}
   }}
 </style>
 <!--[if mso]>
