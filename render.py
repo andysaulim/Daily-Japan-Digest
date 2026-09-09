@@ -1039,7 +1039,7 @@ From the CSIS Japan Chair. This newsletter is automatically generated, so it may
     /* Overflow + legibility safety */
     p, div, td {{ word-wrap:break-word !important; overflow-wrap:break-word !important; }}
     body, td, div, p, span {{ -webkit-text-size-adjust:100%; }}
-    div[style*="font-size:10px"], span[style*="font-size:10px"] {{ font-size:10px !important; }}
+    div[style*="font-size:10px"], span[style*="font-size:10px"] {{ font-size:11px !important; }}
     a {{ min-height:44px; }}
     p a, div a, td a {{ min-height:auto; padding:6px 0; }}
     img {{ max-width:100% !important; height:auto !important; }}
