@@ -284,11 +284,11 @@ def render_html(digest: dict) -> str:
     sections_wire = []      # Business, Indo-Pacific, Also Today, On This Day
     sections_post = []      # Footer
 
-    # 0a. Internal-use banner — the very first thing in the email.
-    sections_pre.append(
-        '<div style="background:#BC002D;color:#fff;padding:6px 32px;text-align:center;'
-        'font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;'
-        'font-family:Arial,sans-serif;" class="sec">For Internal Use Only</div>')
+    # 0a. The internal-use notice lives in the utility row below, which is the
+    # house treatment. It used to have a full-width red band of its own as
+    # well, so the notice rendered twice — once in red and once in slate,
+    # stacked — and three red bands (strip, masthead, footer) was more red
+    # than the flag has in it.
 
     # ── 0. Utility row: internal-use notice left, links right ─────────────
     # The house treatment, matching the other editions. "Email not rendering?"
@@ -1192,7 +1192,7 @@ def render_html(digest: dict) -> str:
     .wrapper h1, .wrapper h2, .wrapper h3 {{ color:#E8E6E1 !important; }}
     .wrapper .sec p {{ color:#C4C8CE !important; }}
     .wrapper a {{ color:#6FA8E8 !important; }}
-    .wrapper .footer {{ background:#6E0019 !important; }}
+    .wrapper .footer {{ background:#0F1B30 !important; }}
     .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
     /* Trade dashboard light boxes → neutral dark equivalents */
     .wrapper .tariff-box, .wrapper .alliance-box {{ background:#22262C !important; border-color:#33373D !important; }}
