@@ -793,7 +793,16 @@ def _load_ledger() -> list:
 
 
 def _ledger_recent_keys(entries: list, today, window: int = _LEDGER_WINDOW_DAYS):
-    """URLs and titles published within the trailing `window` days."""
+    """URLs and titles published in a PREVIOUS edition within `window` days.
+
+    Today's own entries are excluded. Everywhere else a same-day re-run is a
+    replacement: the archive drops the existing entry for that date before
+    inserting the new one, and public/<date>.html and its PDF are overwritten.
+    The ledger was the one place that treated it as a duplicate instead, so a
+    second run on the same date suppressed every story the first had carried
+    and produced a gutted brief. What stops two editions reaching the list is
+    the once-a-day guard in the workflow, not this.
+    """
     cutoff = today - timedelta(days=window)
     urls, titles = set(), set()
     for e in entries:
@@ -801,7 +810,7 @@ def _ledger_recent_keys(entries: list, today, window: int = _LEDGER_WINDOW_DAYS)
             d = datetime.strptime(str(e.get("date", "")), "%Y-%m-%d").date()
         except Exception:
             continue
-        if d < cutoff:
+        if d < cutoff or d >= today:
             continue
         if e.get("url"):
             urls.add(e["url"])
