@@ -729,6 +729,46 @@ def _robust_json_parse(raw: str) -> dict:
 FAST_MODEL = "claude-sonnet-4-6"
 PRIMARY_MODEL = "claude-opus-4-8"
 
+# Per-call token ledger, for metrics.jsonl and cost_report.py. Every call
+# already reported its own token counts to the run log and then dropped them,
+# so a day's spend could only be reconstructed by reading logs that expire.
+TOKEN_LEDGER: list[dict] = []
+
+# USD per million tokens. Update alongside FAST_MODEL / PRIMARY_MODEL.
+MODEL_PRICING = {
+    "claude-opus-5":     {"input": 5.00, "output": 25.00, "cache_write": 6.25, "cache_read": 0.50},
+    "claude-sonnet-5":   {"input": 2.00, "output": 10.00, "cache_write": 2.50, "cache_read": 0.20},
+    "claude-opus-4-8":   {"input": 5.00, "output": 25.00, "cache_write": 6.25, "cache_read": 0.50},
+    "claude-sonnet-4-6": {"input": 3.00, "output": 15.00, "cache_write": 3.75, "cache_read": 0.30},
+}
+
+
+def cost_of(entry: dict) -> float:
+    """USD for one call. An unpriced model bills at the Opus rate rather than
+    zero: a silent nought in a cost report is worse than an overestimate."""
+    p = MODEL_PRICING.get(entry.get("model", ""),
+                          {"input": 5.0, "output": 25.0, "cache_write": 6.25, "cache_read": 0.5})
+    return (entry.get("input", 0) * p["input"]
+            + entry.get("output", 0) * p["output"]
+            + entry.get("cache_write", 0) * p["cache_write"]
+            + entry.get("cache_read", 0) * p["cache_read"]) / 1_000_000
+
+
+def run_cost() -> float:
+    return round(sum(cost_of(e) for e in TOKEN_LEDGER), 4)
+
+
+def get_run_usage() -> dict:
+    """Aggregate this run's usage, for metrics.jsonl."""
+    return {
+        "api_calls": len(TOKEN_LEDGER),
+        "input_tokens": sum(e.get("input", 0) for e in TOKEN_LEDGER),
+        "output_tokens": sum(e.get("output", 0) for e in TOKEN_LEDGER),
+        "cache_write_tokens": sum(e.get("cache_write", 0) for e in TOKEN_LEDGER),
+        "cache_read_tokens": sum(e.get("cache_read", 0) for e in TOKEN_LEDGER),
+        "est_cost_usd": run_cost(),
+    }
+
 
 def _stream_claude(client, messages: list, max_tokens: int = 32000,
                   retries: int = 3, model: str | None = None) -> dict:
@@ -777,6 +817,15 @@ def _stream_claude(client, messages: list, max_tokens: int = 32000,
 
             print(f"   ⏱ {model_label} call: {elapsed:.0f}s "
                   f"({response.usage.input_tokens} in / {response.usage.output_tokens} out{cache_info})")
+
+            TOKEN_LEDGER.append({
+                "model": use_model,
+                "input": response.usage.input_tokens,
+                "output": response.usage.output_tokens,
+                "cache_write": cache_create,
+                "cache_read": cache_read,
+                "seconds": round(elapsed, 1),
+            })
 
             return _robust_json_parse(raw_text)
 

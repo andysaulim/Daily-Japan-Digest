@@ -36,6 +36,9 @@ _LEDGER_WINDOW_DAYS = 14
 # is the guard's authoritative "already sent today" signal — set by the send, not
 # by the archive (which is written before the email even goes out).
 LAST_SENT_TXT = ROOT / "last_sent.txt"
+# One JSON line per run: tokens, cost, words, whether it sent. Committed by the
+# workflow so the history outlives any cache.
+METRICS_JSONL = ROOT / "metrics.jsonl"
 
 # Per-pollster approval history (cached across Actions runs like the other
 # trackers). Powers the poll table's "vs prior" delta (change since the last
@@ -1534,6 +1537,33 @@ def run_pipeline(args: argparse.Namespace) -> int:
             print(f"   ✓ Marked sent for {today_et.isoformat()} (once-a-day guard)")
         except Exception as e:
             print(f"   ⚠ Could not write send marker (non-fatal): {e}")
+
+    # ─── Cost and run metrics ────────────────────────────────────────────
+    # Every API call already printed its token counts and then dropped them,
+    # so a day's spend could only be recovered from job logs, which expire.
+    # One line per run, appended and committed, so the cost of the brief is a
+    # number you can read back months later rather than an impression.
+    # Never fatal: the brief is already sent by this point.
+    try:
+        from digest import get_run_usage
+        _usage = get_run_usage()
+        _metrics = {
+            "date": today_et.isoformat(),
+            "run_at": datetime.now(ZoneInfo("America/New_York")).isoformat(timespec="seconds"),
+            "sent": bool(sent_ok),
+            "test_send": bool(_test_to) if "_test_to" in dir() else False,
+            "words": _shown_words(digest) if "_shown_words" in dir() else None,
+            "top_stories": len(digest.get("top_stories") or []),
+            **_usage,
+        }
+        with open(METRICS_JSONL, "a", encoding="utf-8") as _f:
+            _f.write(json.dumps(_metrics, ensure_ascii=False) + "\n")
+        if _usage["api_calls"]:
+            print(f"  💰  API cost this run: ${_usage['est_cost_usd']:.2f} "
+                  f"({_usage['api_calls']} calls, {_usage['input_tokens']:,} in / "
+                  f"{_usage['output_tokens']:,} out)")
+    except Exception as _e:                                     # noqa: BLE001
+        print(f"   ⚠ Metrics not recorded (non-fatal): {_e}")
 
     elapsed = time.time() - pipeline_start
     print(f"\n{'=' * 64}")
