@@ -22,10 +22,10 @@
   },
   "kyodo": {
     "pollster": "Kyodo",
-    "approval": 55.0,
-    "disapproval": 30.0,
+    "approval": 48.0,
+    "disapproval": 33.0,
     "as_of": "2026-09-10",
-    "poll_date": "Sep 6, 2026"
+    "poll_date": "Sep 10, 2026"
   },
   "mainichi": {
     "pollster": "Mainichi",
@@ -53,14 +53,14 @@
     "approval": 52.0,
     "disapproval": 30.0,
     "as_of": "2026-09-10",
-    "poll_date": "Sep 7, 2026"
+    "poll_date": "Sep 10, 2026"
   },
   "jiji": {
     "pollster": "Jiji",
     "approval": 41.0,
     "disapproval": 38.0,
     "as_of": "2026-09-10",
-    "poll_date": "Sep 9, 2026"
+    "poll_date": "Jul 16, 2026"
   },
   "jnn": {
     "pollster": "JNN",

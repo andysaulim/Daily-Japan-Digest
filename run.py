@@ -1153,6 +1153,12 @@ def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
         structured = [dict(p) for p in RECENT_APPROVAL_POLLS]
         source = "verified baseline"
 
+    # Dates FIRST, then the age filter. The Wikipedia rows can arrive with an
+    # empty poll_date for _annotate_poll_dates to backfill, and filtering ahead
+    # of that read them as undated, dropped them, and emptied the section on
+    # exactly the days the live fetch had worked.
+    _annotate_poll_dates(structured, RECENT_APPROVAL_POLLS)
+
     before = len(structured)
     structured = _fresh_baseline(structured)
     if before != len(structured):
@@ -1164,9 +1170,6 @@ def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
         print("   ⚠ Polls: no poll is recent enough to show — the section will be "
               "omitted rather than carry a stale figure. Refresh the baseline.")
         return digest
-    # Ensure every row has a real fieldwork date (backfilled from baseline) and an
-    # age stamp, and warn if the whole set is dated.
-    _annotate_poll_dates(structured, RECENT_APPROVAL_POLLS)
     ps = digest.get("public_sentiment")
     if not isinstance(ps, dict):
         ps = {}
@@ -1383,7 +1386,15 @@ def run_pipeline(args: argparse.Namespace) -> int:
     _prev_urls, _prev_titles = _ledger_recent_keys(_load_ledger(), today_et)
     digest = _dedupe_cross_day(digest, _prev_urls, _prev_titles)
     # ─── Polls: authoritative structured figures (Wikipedia fetch → baseline) ─
-    digest = _resolve_polls(digest, payload.get("wiki_polls"))
+    # Never fatal. This reaches out to Wikipedia and parses a table that can be
+    # restructured under it at any time; the poll table is one section, and no
+    # failure in it is a reason to hold the whole brief. On error the section is
+    # simply left as the model wrote it.
+    try:
+        digest = _resolve_polls(digest, payload.get("wiki_polls"))
+    except Exception as _e:                                     # noqa: BLE001
+        print(f"   ⚠ Polls: resolution failed ({type(_e).__name__}: {_e}) — "
+              f"leaving the section as the model wrote it; the brief still sends")
     # ─── Clean approval polls (recognized Japanese pollsters + numeric only)
     digest = _sanitise_polls(digest)
 
