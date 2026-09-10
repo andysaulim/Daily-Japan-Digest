@@ -100,8 +100,13 @@ jobs:
         run: |
           TODAY=$(TZ=America/New_York date +%Y-%m-%d)
           LAST_SENT=$(tr -d '[:space:]' < last_sent.txt 2>/dev/null || true)
+          # Only the SUBJECT line carries the tag. Grepping the whole message
+          # meant a commit that merely mentioned "[live-send]" in its body —
+          # such as the one describing this very guard — mailed the list. That
+          # is how the 10 September edition went out at 12:44 AM.
+          SUBJECT=$(printf '%s' "$COMMIT_MSG" | head -n 1)
           if [ "${{ github.event_name }}" = "push" ]; then
-            if printf '%s' "$COMMIT_MSG" | grep -q '\[live-send\]'; then
+            if printf '%s' "$SUBJECT" | grep -q '\[live-send\]'; then
               # A tagged push used to send unconditionally, so two of them in
               # one morning put two briefs in the list nine minutes apart. The
               # once-a-day rule is about the recipients, not about which event
@@ -114,7 +119,7 @@ jobs:
                 echo "::notice::Push tagged [live-send]: full pipeline, live send."
                 echo "should_run=true" >> "$GITHUB_OUTPUT"
               fi
-            elif printf '%s' "$COMMIT_MSG" | grep -q '\[test-send\]'; then
+            elif printf '%s' "$SUBJECT" | grep -q '\[test-send\]'; then
               echo "::notice::Push tagged [test-send]: full pipeline, test address only."
               echo "should_run=test" >> "$GITHUB_OUTPUT"
             else
