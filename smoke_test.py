@@ -324,6 +324,30 @@ def test_email():
     check("comma-separated recipients parse", len(parsed) == 3, str(parsed))
 
 
+
+# ── Subject line ─────────────────────────────────────────────────────────────
+# One shape across all four editions: "<Edition> Daily Brief | <Weekday>,
+# <Month> <D>, <Year>". Korea used to carry a DIGEST_SUBJECT_STYLE variable that
+# appended the lead story, so its subject differed from its siblings depending
+# on a repo setting nobody would think to check.
+import inspect as _insp, re as _re
+from datetime import datetime as _dt
+from zoneinfo import ZoneInfo as _ZI
+import send_email as _se
+_src = _insp.getsource(_se)
+_m = _re.search(r'subject = f"([^"]+)"', _src)
+check("send_email builds a default subject", _m is not None)
+if _m:
+    _tmpl = _m.group(1)
+    _ds = _dt.now(_ZI("America/New_York")).strftime("%A, %B %-d, %Y")
+    _subj = _tmpl.replace("{date_str}", _ds)
+    if "{BRIEF_NAME}" in _subj:
+        _subj = _subj.replace("{BRIEF_NAME}", _se.BRIEF_NAME)
+    check("house subject format: <Edition> Daily Brief | <Weekday>, <Month> <D>, <Year>",
+          _re.fullmatch(r"Japan Daily Brief \| \w+, \w+ \d{1,2}, \d{4}", _subj) is not None,
+          _subj)
+    check("the separator is a pipe, not a dash", "|" in _tmpl and "—" not in _tmpl, _tmpl)
+
 def main() -> int:
     for t in (test_render, test_source_diversity, test_dark_mode, test_print_and_mobile, test_length,
               test_validation_gate, test_feeds, test_calendar, test_email):
@@ -340,3 +364,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
