@@ -348,6 +348,33 @@ if _m:
           _subj)
     check("the separator is a pipe, not a dash", "|" in _tmpl and "—" not in _tmpl, _tmpl)
 
+# ── BOJ Policy Board roster ──────────────────────────────────────────────────
+# A story reached the brief reading "BOJ board member Masu" six times, with no
+# given name, because the source headline named no one and the NAMES rule
+# rightly forbids filling that in from memory. The roster is verified data from
+# boj.or.jp, so completing a surname from it is not inventing — the rule now
+# says so, narrowly.
+_BOJ_BOARD = ["Kazuo Ueda", "Shinichi Uchida", "Ryozo Himino", "Hajime Takata",
+              "Naoki Tamura", "Junko Koeda", "Kazuyuki Masu", "Toichiro Asada",
+              "Ayano Sato"]
+# The roster rides in the user payload's leaders reference; the NAMES rule
+# that governs its use is in the system prompt. Check each where it lives.
+_roster = digest_mod._POLITICAL_LEADERS
+_prompt = digest_mod.SYSTEM_PROMPT
+check("the Policy Board roster is in the leaders reference", "BANK OF JAPAN POLICY BOARD" in _roster)
+for _n in _BOJ_BOARD:
+    check(f"roster names {_n}", _n in _roster)
+check("all nine members are listed", sum(_roster.count(n) >= 1 for n in _BOJ_BOARD) == 9)
+check("the roster cites its source", "boj.or.jp" in _roster)
+check("the roster is dated, so staleness is visible", "as of Sep 10 2026" in _roster)
+check("the NAMES rule allows completion from a reference block",
+      "you may complete it ONLY from a REFERENCE BASELINE block" in _prompt)
+check("completion still requires an unambiguous match",
+      "matches more than one person" in _prompt)
+check("supplying a name from memory is still forbidden",
+      "never supply a given name from your own knowledge" in _prompt)
+
+
 def main() -> int:
     for t in (test_render, test_source_diversity, test_dark_mode, test_print_and_mobile, test_length,
               test_validation_gate, test_feeds, test_calendar, test_email):
@@ -356,6 +383,7 @@ def main() -> int:
         except Exception as exc:                                # noqa: BLE001
             FAILURES.append(f"{t.__name__}: crashed: {exc}")
             print(f"  FAIL  {t.__name__} crashed: {exc}")
+
     print(f"\n{PASSED} checks passed, {len(FAILURES)} failed")
     for f in FAILURES:
         print(f"  - {f}")

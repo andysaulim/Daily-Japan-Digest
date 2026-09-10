@@ -124,7 +124,7 @@ NEVER report that a routine press conference or briefing merely took place when 
 
 FORMATTING: Do NOT use emojis anywhere in the output. Plain text only.
 
-NAMES — always give a person's FULL name (given + family name) with their correct title on FIRST mention, e.g. "Okinawa Governor Denny Tamaki," "BOJ Governor Kazuo Ueda," not "Governor Denny" or "Governor Ueda." NEVER refer to someone by their given name alone ("Governor Denny," "Mayor Genta") or drop the family name. After the first full mention you may use the family name only ("Tamaki said…"). If the source text gives only a partial name, use exactly what the source provides and do not invent the rest — but do not truncate a full name that the source supplies.
+NAMES — always give a person's FULL name (given + family name) with their correct title on FIRST mention, e.g. "Okinawa Governor Denny Tamaki," "BOJ Governor Kazuo Ueda," not "Governor Denny" or "Governor Ueda." NEVER refer to someone by their given name alone ("Governor Denny," "Mayor Genta") or drop the family name. After the first full mention you may use the family name only ("Tamaki said…"). If the source text gives only a partial name, you may complete it ONLY from a REFERENCE BASELINE block above — the political leaders list and the Bank of Japan Policy Board roster are verified data, and using them is not inventing. The match must be unambiguous: the same surname AND the same institution and role as the article describes. So an article about "BOJ board member Masu" becomes "BOJ Policy Board member Kazuyuki Masu" on first mention. If the surname is not in a reference block, or matches more than one person, or the role does not line up, use exactly what the source provides and invent nothing — never supply a given name from your own knowledge. Do not truncate a full name the source already supplies.
 
 DEDUPLICATION — CRITICAL (ZERO TOLERANCE):
 
@@ -164,6 +164,19 @@ JAPAN GOVERNMENT (Takaichi Cabinet, inaugurated Oct 21 2025, reshuffled Feb 18 2
 - Internal Affairs & Communications Minister: Yoshimasa Hayashi
 - Minister for Economic Security: Kimi Onoda — also handles the "foreign nationals" (foreign residents/immigration policy coordination) portfolio
 - Bank of Japan Governor: Kazuo Ueda — since April 2023 (verify)
+
+BANK OF JAPAN POLICY BOARD — all nine members, from boj.or.jp/en/about/organization/policyboard (roster as of Sep 10 2026).
+The BOJ writes these family-name-first in capitals; the brief uses ordinary given-then-family order, shown here.
+This exists so a story that refers to a board member by surname alone can still be given a full name and title.
+- Governor: Kazuo Ueda
+- Deputy Governor: Shinichi Uchida
+- Deputy Governor: Ryozo Himino
+- Policy Board member: Hajime Takata
+- Policy Board member: Naoki Tamura
+- Policy Board member: Junko Koeda
+- Policy Board member: Kazuyuki Masu
+- Policy Board member: Toichiro Asada
+- Policy Board member: Ayano Sato
 - LDP leadership (President = PM by convention; Secretary-General, Policy Research Council chair): VERIFY
 - Komeito (LDP's coalition partner): leader VERIFY from articles
 - Main opposition: Constitutional Democratic Party (CDP) — leader Yoshihiko Noda (verify); other parties: DPP (Democratic Party for the People), Ishin (Japan Innovation Party), JCP (Japanese Communist Party), Reiwa Shinsengumi, Sanseito
@@ -183,18 +196,18 @@ If today's articles name a different officeholder for any position, USE THE NAME
 
 
 _TRADE_BASELINES = """\
-US-JAPAN ALLIANCE & TRADE BASELINES (as of mid-2026 — carry forward unless today's articles report a change):
+US-JAPAN ALLIANCE BASELINES (as of mid-2026 — carry forward unless today's articles report a change):
 
-TARIFFS APPLIED TO JAPAN (Section 232 / 122 under the 2025 US-Japan agreement — national-security and emergency authorities apply to allies too):
-- Automobiles: 15%, INCLUSIVE OF the MFN rate, under the 2025 US-Japan trade agreement (this REPLACES the earlier 25% Section 232 auto rate for Japan). This is the headline auto rate for Japan.
-- Section 232 Steel & Aluminum: 50% remains the core Section 232 rate (country exemptions eliminated). Applies to Japan unless a deal carve-out is reported.
-- Section 122 surcharge: EXPIRED July 24, 2026 — no longer in effect. Do NOT report a Section 122 surcharge unless today's articles announce a NEW one.
-- Section 301: (a) a 12.5% forced-labor tariff that WENT INTO FORCE on July 24, 2026 (no longer "proposed" — it is now applied); and (b) an excess-capacity investigation that remains ONGOING (no final determination yet). Report the forced-labor tariff as in force and the excess-capacity probe as ongoing. VERIFY status from today's articles.
-- $550 billion US-Japan strategic investment framework: the flagship investment pledge under the 2025 agreement. Surface any story on its structure, disbursement, project selection, governance, or drawdown in the trade block and Business & Economy. Do NOT invent figures — carry the $550B headline only, and attribute specifics to today's articles.
+The standing tariff table that used to live here is gone with the US-Japan
+Alliance & Trade section (Sep 2026). Its rates rarely moved and the pipeline
+could not reliably tell when they had, so an expired Section 122 surcharge sat
+in the brief for a month. Report a tariff figure ONLY from today's articles.
+
+- $550 billion US-Japan strategic investment framework: the flagship investment pledge under the 2025 agreement. Surface any story on its structure, disbursement, project selection, governance, or drawdown in Business & Economy. Do NOT invent figures — carry the $550B headline only, and attribute specifics to today's articles.
 
 ALLIANCE & DEFENSE BASELINES:
 - Defense spending: Japan brought its 2%-of-GDP defense-spending target FORWARD to JFY2025 (fiscal year ended March 31, 2026) — no longer "by FY2027". A 2026 review of the Three Strategic Documents (National Security Strategy / National Defense Strategy / Defense Buildup Program) is underway. Carry forward unless today's articles update.
-- US-Japan Security Treaty Article 5: the US treaty commitment to defend territories under Japanese administration — successive US administrations have affirmed it covers the Senkaku Islands. Surface Article 5 reaffirmations in the alliance/trade block or Top Stories when today's articles report them.
+- US-Japan Security Treaty Article 5: the US treaty commitment to defend territories under Japanese administration — successive US administrations have affirmed it covers the Senkaku Islands. Surface Article 5 reaffirmations in Top Stories or Indo-Pacific when today's articles report them.
 - Host-Nation Support ("Sympathy Budget" / omoiyari yosan): current Special Measures Agreement runs THROUGH MARCH 31, 2027, at approximately ¥211 billion/year. Carry forward unless updated.
 - USFJ realignment: MCAS Futenma relocation to Henoko (Camp Schwab) remains ongoing and contested in Okinawa; carry forward.
 - Semiconductor / economic security cooperation: Rapidus (2nm foundry, Hokkaido), TSMC Kumamoto (JASM) fabs, and Japan's alignment with US export controls on advanced chips to China. Carry forward unless updated.
@@ -480,7 +493,7 @@ POLITICAL LEADERS REFERENCE
 {_POLITICAL_LEADERS}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-US-JAPAN ALLIANCE & TRADE BASELINES
+US-JAPAN ALLIANCE BASELINES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {_TRADE_BASELINES}
 
