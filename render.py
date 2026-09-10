@@ -824,81 +824,13 @@ def render_html(digest: dict) -> str:
 {gov_grid}{pers_html}{npc_html}
 </div>""")
 
-    # 9. US–Japan Alliance & Trade
-    trade = digest.get("us_china_trade") or {}
-    if trade:
-        body = ""
-        tt = trade.get("tariff_tracker") or {}
-        if tt:
-            h_auto = _esc(str(tt.get("headline_auto_rate", "")))
-            s122 = _esc(str(tt.get("section_122_surcharge", "")))
-            deal = _esc(str(tt.get("trade_deal_status", "")))
-            lc = _esc(str(tt.get("last_change", "")))
-            nt = _esc(str(tt.get("next_trigger", "")))
-            s301 = _esc(str(tt.get("section_301", tt.get("section_301_watch", "")) or ""))
-            invf = _esc(str(tt.get("investment_framework", "") or ""))
-            s232 = tt.get("section_232_rates", {})
-            # Headline numbers → clean navy metric strip (readable, one accent)
-            strip_cells = [c for c in (("Autos · 2025 deal", h_auto), ("Section 122 surcharge", s122)) if c[1]]
-            strip_html = ""
-            if strip_cells:
-                w = 100 // len(strip_cells)
-                tds = ""
-                for i, (lab, val) in enumerate(strip_cells):
-                    bl = "border-left:1px solid rgba(255,255,255,0.12);" if i else ""
-                    tds += (f'<td width="{w}%" align="center" style="padding:12px 10px;{bl}">'
-                            f'<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{SLATE_LABEL};margin-bottom:4px;">{lab}</div>'
-                            f'<div style="font-size:16px;font-weight:700;color:#fff;font-family:\'Courier New\',Courier,monospace;">{val}</div></td>')
-                strip_html = (f'<table class="mkt-table" width="100%" cellpadding="0" cellspacing="0" border="0" '
-                              f'style="background:{NAVY};border-radius:4px;margin-bottom:10px;"><tr>{tds}</tr></table>')
-            # Section 232 rates — navy label, single red accent on the value
-            sr = ""
-            for sec, rate in s232.items():
-                sr += (f'<tr style="border-bottom:1px solid #EEE;">'
-                       f'<td style="padding:5px 6px 5px 0;font-size:13px;font-weight:600;color:{NAVY};">{_esc(str(sec).title())}</td>'
-                       f'<td style="padding:5px 6px;font-size:14px;font-weight:700;color:{HINOMARU_RED};text-align:center;">{_esc(str(rate))}</td>'
-                       f'<td style="padding:5px 6px;font-size:10px;color:#6B7280;text-transform:uppercase;">Section 232</td></tr>')
-            s232_html = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">{sr}</table>') if sr else ""
-            il = (f'<div style="margin-top:6px;font-size:13px;line-height:1.5;color:#333;">'
-                  f'<strong style="color:{NAVY};">Investment framework:</strong> {invf}</div>') if invf else ""
-            s3l = (f'<div style="margin-top:6px;font-size:13px;line-height:1.5;color:#333;">'
-                   f'<strong style="color:{NAVY};">Section 301:</strong> {s301}</div>') if s301 else ""
-            meta_parts = [x for x in ((("Deal: " + deal) if deal else ""),
-                                      (("Next: " + nt) if nt else ""), lc) if x]
-            meta_line = (f'<div style="margin-top:10px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#6B7280;">'
-                         + " &middot; ".join(meta_parts) + "</div>") if meta_parts else ""
-            body += f"""<div class="tariff-box" style="margin-bottom:16px;padding:14px;background:#FBFBFD;border-radius:6px;border:1px solid #E6E6EC;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:10px;">US Tariffs on Japan</div>
-{strip_html}
-{s232_html}
-{il}
-{s3l}
-{meta_line}
-</div>"""
+    # The US-Japan Alliance & Trade section was removed at the Japan Chair's
+    # request (Sep 2026). It had narrowed to a standing tariff table whose
+    # figures rarely move, and the pipeline could not reliably tell when they
+    # had — the expired Section 122 surcharge sat in the brief for a month.
+    # A standing reference table is the wrong thing for a daily; real trade
+    # developments still reach the reader through the news sections.
 
-        # Alliance Dashboard removed per Japan Chair feedback (Aug 2026): its fields
-        # rarely change, and any real development is captured elsewhere in the brief.
-
-        deals = trade.get("deals") or []
-        if deals:
-            dr = ""
-            for d in deals[:4]:
-                hd = _esc(d.get("headline", ""))
-                val = _esc(d.get("value", "")) if d.get("value") else ""
-                parties = _esc(d.get("parties", ""))
-                det = _esc(d.get("detail", ""))
-                url = d.get("url", "")
-                dr += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid {HINOMARU_RED};">
-<div style="font-size:13px;font-weight:600;color:{NAVY};line-height:1.4;">{_link_or_text(hd, url)}{(' <span style="color:#6B7280;font-weight:400;font-size:11px;">· ' + val + '</span>') if val else ''}</div>
-<div style="font-size:13px;line-height:1.5;color:#444;">{parties}{(' — ' + det) if det else ''}</div>
-</div>"""
-            body += f"""<div style="margin-bottom:16px;">
-<div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:{HINOMARU_RED};font-weight:700;margin-bottom:8px;">New Agreements / Pledges</div>
-{dr}
-</div>"""
-
-        if body:
-            sections_trackers.append(f'<div {_SEC}><a name="alliance" id="alliance"></a>{_sec_label("US&ndash;Japan Alliance &amp; Trade")}{body}</div>')
 
     # 10. Business & Economy
     biz = digest.get("business_economy") or []
@@ -1194,7 +1126,7 @@ def render_html(digest: dict) -> str:
     # only when the section actually emitted its anchor, so a quiet day that
     # drops sections simply gets fewer links rather than dead ones.
     _NAV = [("Top Stories", "top-stories"), ("Overnight", "overnight"),
-            ("Tokyo", "tokyo"), ("Alliance", "alliance"),
+            ("Tokyo", "tokyo"),
             ("Markets", "business"), ("Indo-Pacific", "indo-pacific"),
             ("Diet", "diet"), ("Polling", "polling"),
             ("Upcoming", "upcoming"), ("Analysis", "analysis"),
@@ -1261,7 +1193,6 @@ def render_html(digest: dict) -> str:
     /* Dark Regional Pressure Watch panel */
     .watch-dark td {{ padding-left:16px !important; padding-right:16px !important; }}
     /* Trade dashboard boxes */
-    .tariff-box, .alliance-box {{ padding:10px 12px !important; }}
     /* Overflow + legibility safety */
     p, div, td {{ word-wrap:break-word !important; overflow-wrap:break-word !important; }}
     body, td, div, p, span {{ -webkit-text-size-adjust:100%; }}
@@ -1313,8 +1244,6 @@ def render_html(digest: dict) -> str:
     .wrapper .footer-end td {{ color:#9AA3AE !important; }}
     .wrapper .story-card {{ background:#262A30 !important; border-color:#33373D !important; }}
     /* Trade dashboard light boxes → neutral dark equivalents */
-    .wrapper .tariff-box, .wrapper .alliance-box {{ background:#22262C !important; border-color:#33373D !important; }}
-    .wrapper .tariff-box strong, .wrapper .alliance-box strong {{ color:#C4C8CE !important; }}
     /* Public Sentiment stat boxes */
     .wrapper .sent-approve {{ background:#16261B !important; }}
     .wrapper .sent-disapprove {{ background:#2A1518 !important; }}

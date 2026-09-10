@@ -47,10 +47,22 @@ import run as run_mod     # noqa: E402
 import send_email         # noqa: E402
 
 
+def _today_et() -> str:
+    """Today in ET, formatted the way the pipeline writes digest_date."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    return datetime.now(ZoneInfo("America/New_York")).strftime("%A, %B %-d, %Y")
+
+
 def _digest(**over) -> dict:
     """A digest with every section populated, so the renderer is fully walked."""
     d = {
-        "digest_date": "Wednesday, September 9, 2026",
+        # Computed, never hardcoded: run.py's validator compares this against
+        # today in ET, so a literal date passes on the day it is written and
+        # fails every day after. This gate has no continue-on-error and sits
+        # ahead of the pipeline, so a stale fixture date would have blocked
+        # every send from 10 September onward.
+        "digest_date": _today_et(),
         "re_line": "Diet reconvenes · BOJ holds · Osprey grounding lifted",
         "morning_memo": ["First.", "Second.", "Third."],
         "web_url": "https://example.org/index.html",

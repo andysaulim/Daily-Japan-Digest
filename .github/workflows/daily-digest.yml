@@ -26,7 +26,7 @@ on:
   workflow_dispatch:
     inputs:
       force_send:
-        description: 'Send even if validation fails. Use only when you have read the findings and accept them.'
+        description: 'Override the safety holds: send even if validation fails, and even if today''s edition already went out. Use only when you have read the findings and accept them.'
         type: boolean
         default: false
       dry_run:
@@ -102,8 +102,18 @@ jobs:
           LAST_SENT=$(tr -d '[:space:]' < last_sent.txt 2>/dev/null || true)
           if [ "${{ github.event_name }}" = "push" ]; then
             if printf '%s' "$COMMIT_MSG" | grep -q '\[live-send\]'; then
-              echo "::notice::Push tagged [live-send]: full pipeline, live send."
-              echo "should_run=true" >> "$GITHUB_OUTPUT"
+              # A tagged push used to send unconditionally, so two of them in
+              # one morning put two briefs in the list nine minutes apart. The
+              # once-a-day rule is about the recipients, not about which event
+              # started the run, so it applies here too. workflow_dispatch is
+              # still the deliberate override for a genuine second send.
+              if [ "$LAST_SENT" = "$TODAY" ]; then
+                echo "::notice::Push tagged [live-send], but today's edition ($TODAY) was already sent — not sending again. Use workflow_dispatch to force a second send."
+                echo "should_run=dry" >> "$GITHUB_OUTPUT"
+              else
+                echo "::notice::Push tagged [live-send]: full pipeline, live send."
+                echo "should_run=true" >> "$GITHUB_OUTPUT"
+              fi
             elif printf '%s' "$COMMIT_MSG" | grep -q '\[test-send\]'; then
               echo "::notice::Push tagged [test-send]: full pipeline, test address only."
               echo "should_run=test" >> "$GITHUB_OUTPUT"
@@ -112,7 +122,23 @@ jobs:
               echo "should_run=dry" >> "$GITHUB_OUTPUT"
             fi
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            # The once-a-day rule is about the recipients, so it covers every
+            # path that mails the list — dispatch included. This one is
+            # dispatched several times a morning by the external cron, each
+            # with live_send, and each of those used to be a separate email:
+            # the list got four briefs on 9 September. A dispatch that does
+            # NOT mail the list (a test run, a send_to address, a dry run) is
+            # never suppressed, and force_send overrides deliberately.
+            if [ "${{ inputs.live_send }}" = "true" ] \
+               && [ -z "${{ inputs.send_to }}" ] \
+               && [ "${{ inputs.dry_run }}" != "true" ] \
+               && [ "${{ inputs.force_send }}" != "true" ] \
+               && [ "$LAST_SENT" = "$TODAY" ]; then
+              echo "::notice::Dispatch requested a live send, but today's edition ($TODAY) already went out — skipping. Re-run with force_send to override."
+              echo "should_run=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "should_run=true" >> "$GITHUB_OUTPUT"
+            fi
           elif [ "$LAST_SENT" = "$TODAY" ]; then
             echo "::notice::Today's edition ($TODAY) already sent — skipping (catch-up no-op)."
             echo "should_run=false" >> "$GITHUB_OUTPUT"

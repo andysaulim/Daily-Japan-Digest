@@ -478,8 +478,6 @@ def _attach_orig_titles(digest: dict, collected_by_url: dict) -> dict:
     for section in _URL_SECTIONS:
         for item in (digest.get(section) or []):
             _stamp(item)
-    for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
-        _stamp(item)
     return digest
 
 
@@ -524,20 +522,6 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
             elif "news.google.com" in url:
                 google_urls[url] = url
 
-    # Also handle deals inside us_china_trade (US-Japan Alliance & Trade)
-    trade = digest.get("us_china_trade") or {}
-    for item in (trade.get("deals") or []):
-        if not isinstance(item, dict):
-            continue
-        url = item.get("url", "")
-        if not url or not url.startswith("http"):
-            item["url"] = ""
-            continue
-        if not _url_allowed(url):
-            item["url"] = ""
-        elif "news.google.com" in url:
-            google_urls[url] = url
-
     if google_urls:
         print(f"   ↻ Decoding {len(google_urls)} Google News URL(s)...")
         with _ThreadPoolExecutor(max_workers=6) as pool:
@@ -564,9 +548,6 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
             for item in (digest.get(section) or []):
                 if isinstance(item, dict):
                     _apply(item)
-        for item in ((digest.get("us_china_trade") or {}).get("deals") or []):
-            if isinstance(item, dict):
-                _apply(item)
 
     # Japanese Government items render a source LINK next to the acting ministry.
     # Derive its label from the (now-resolved) URL's domain so it names the real
@@ -732,9 +713,6 @@ def _drop_hollow_items(digest: dict) -> dict:
     for section in _DEDUPE_ORDER:
         if isinstance(digest.get(section), list):
             digest[section] = _filter(digest[section])
-    trade = digest.get("us_china_trade")
-    if isinstance(trade, dict) and isinstance(trade.get("deals"), list):
-        trade["deals"] = _filter(trade["deals"])
     if dropped:
         print(f"   ✓ Dropped {dropped} hollow (no-substance) filler item(s)")
     return digest
@@ -795,9 +773,6 @@ def _dedupe_sections(digest: dict) -> dict:
             seen_urls.add(ks_url)
 
     digest["overnight_items"] = _sweep(digest.get("overnight_items"))
-    trade = digest.get("us_china_trade")
-    if isinstance(trade, dict) and trade.get("deals"):
-        trade["deals"] = _sweep(trade.get("deals"))
     for section in _DEDUPE_ORDER[2:]:
         digest[section] = _sweep(digest.get(section))
 
@@ -856,9 +831,6 @@ def _dedupe_cross_day(digest: dict, prev_urls: set, prev_titles: set) -> dict:
         items = digest.get(section)
         if isinstance(items, list):
             digest[section] = [it for it in items if _keep(it)]
-    trade = digest.get("us_china_trade")
-    if isinstance(trade, dict) and isinstance(trade.get("deals"), list):
-        trade["deals"] = [it for it in trade["deals"] if _keep(it)]
 
     if removed:
         print(f"   ✓ Removed {removed} item(s) already published in the last "
@@ -880,10 +852,6 @@ def _record_ledger(digest: dict, today_iso: str) -> None:
 
     for section in _DEDUPE_ORDER:
         for it in (digest.get(section) or []):
-            _add(it)
-    trade = digest.get("us_china_trade")
-    if isinstance(trade, dict):
-        for it in (trade.get("deals") or []):
             _add(it)
 
     try:
@@ -952,29 +920,6 @@ def _wiki_agrees_with_baseline(wiki: list, baseline: list, tol: float = 5.0) -> 
     return anchors > 0
 
 
-def _resolve_tariffs(digest: dict) -> dict:
-    """Force the US-tariffs-on-Japan reference figures to databases.TARIFF_FACTS,
-    OVERRIDING the model — which repeatedly carried stale tariff facts forward (an
-    expired Section 122 surcharge displayed for a month). Day-specific fields
-    (last_change, next_trigger, deals) are left to the model. Update the figures in
-    databases.TARIFF_FACTS, the single source of truth for the tariff box."""
-    try:
-        from databases import TARIFF_FACTS
-    except Exception as e:
-        print(f"   ⚠ Tariff facts unavailable ({e}) — leaving model values")
-        return digest
-    trade = digest.get("us_china_trade")
-    if not isinstance(trade, dict):
-        trade = {}
-        digest["us_china_trade"] = trade
-    tt = trade.get("tariff_tracker")
-    if not isinstance(tt, dict):
-        tt = {}
-        trade["tariff_tracker"] = tt
-    tt.update(TARIFF_FACTS)                 # authoritative reference figures win
-    tt.pop("section_301_watch", None)       # drop the stale legacy key/label
-    print("   ✓ Tariff facts set from authoritative baseline (databases.TARIFF_FACTS)")
-    return digest
 
 
 _MONTHS_IDX = {m: i + 1 for i, m in enumerate(
@@ -1033,34 +978,29 @@ def _iso_to_display(iso: str) -> str:
         return iso
 
 
-def _fmt_delta(delta: float) -> str:
-    """Format an approval delta as a signed string, e.g. 2.0 -> '+2.0', -1.5 -> '-1.5'."""
-    r = round(delta, 1)
-    if r == 0:
-        return "0.0"
-    return f"{'+' if r > 0 else ''}{r:g}"
 
 
 def _annotate_poll_dates(structured: list, baseline: list) -> None:
-    """Give every poll row a real date, a 'vs prior' delta, and a `days_old` age,
-    using three sources in priority order plus a persistent per-pollster history:
+    """Give every poll row a real date and a `days_old` age, using the sources
+    in priority order plus a persistent per-pollster history:
 
       poll_date  — the row's own survey date if present (parseable), else the
                    verified-baseline survey date for that pollster, else the date
                    this reading first appeared in our history (fallback).
-      vs prior   — the row's own approval_change if the source gave one, else the
-                   delta vs the last DIFFERENT approval we recorded for that
-                   pollster (a true edition-over-edition change).
 
-    The history (POLL_HISTORY_JSON) is updated in place and persisted across runs
-    like the PM/region trackers."""
-    base_dates, base_changes = {}, {}
+    The history (POLL_HISTORY_JSON) is what makes the date honest: a reading
+    that has not moved keeps the date we first recorded it rather than looking
+    like today's fieldwork. It is persisted across runs like the PM/region
+    trackers.
+
+    No edition-over-edition delta is computed. The brief showed a "vs prior"
+    column and it was dropped: a daily newsletter is the wrong format for it,
+    and the number was only as good as whichever of three fallbacks answered."""
+    base_dates = {}
     for p in baseline:
         key = str(p.get("pollster", "")).strip().lower()
         if str(p.get("poll_date", "")).strip():
             base_dates.setdefault(key, str(p.get("poll_date")).strip())
-        if str(p.get("approval_change", "")).strip():
-            base_changes.setdefault(key, str(p.get("approval_change")).strip())
 
     today = datetime.now(ZoneInfo("America/New_York")).date()
     today_iso = today.isoformat()
@@ -1098,18 +1038,6 @@ def _annotate_poll_dates(structured: list, baseline: list) -> None:
             if freshest is None or age < freshest:
                 freshest = age
 
-        # ── vs prior: own change → baseline change → history delta ──
-        chg = str(p.get("approval_change", "")).strip()
-        if not chg:
-            chg = base_changes.get(key, "")
-        if not chg and cur is not None and hist_appr is not None and abs(cur - hist_appr) >= 0.05:
-            chg = _fmt_delta(cur - hist_appr)
-        elif not chg and cur is not None and hist_appr is not None:
-            # Unchanged reading — carry the last delta we computed, if any.
-            chg = str(hist.get("change", "")).strip()
-        if chg:
-            p["approval_change"] = chg
-
         # ── Update history for this pollster ──
         if cur is not None:
             changed = hist_appr is None or abs(cur - hist_appr) >= 0.05
@@ -1118,7 +1046,6 @@ def _annotate_poll_dates(structured: list, baseline: list) -> None:
                 "approval": cur,
                 "disapproval": _pct_to_float(p.get("cabinet_disapproval")),
                 "as_of": today_iso if changed else hist.get("as_of", today_iso),
-                "change": chg,
                 "poll_date": pd,
             }
 
@@ -1380,8 +1307,6 @@ def run_pipeline(args: argparse.Namespace) -> int:
     digest = _resolve_polls(digest, payload.get("wiki_polls"))
     # ─── Clean approval polls (recognized Japanese pollsters + numeric only)
     digest = _sanitise_polls(digest)
-    # ─── Tariffs: authoritative US-on-Japan figures (override the model) ──
-    digest = _resolve_tariffs(digest)
 
     DIGEST_JSON.write_text(json.dumps(digest, ensure_ascii=False, indent=2),
                           encoding="utf-8")

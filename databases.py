@@ -62,12 +62,15 @@ RECENT_APPROVAL_POLLS = [
 ]
 
 
-# AUTHORITATIVE "US Tariffs on Japan" reference figures. run.py forces the digest's
-# tariff_tracker to these values, OVERRIDING the model — which repeatedly carried
-# stale tariff facts forward (an expired Section 122 surcharge showed for a month).
-# These are the ONLY source of truth for the tariff box; the model can still add
-# day-specific `deals`, `last_change`, and `next_trigger`. UPDATE this block when
-# US tariff policy toward Japan changes — that is the single place to edit.
+# "US Tariffs on Japan" reference figures.
+#
+# NOTHING READS THIS ANY MORE. The US-Japan Alliance & Trade section it fed was
+# removed at the Japan Chair's request (Sep 2026), so there is no longer a
+# tariff box in the brief and no reason to keep these current — they are kept
+# only as a record of where the figures stood. Do not treat the note below as a
+# standing maintenance instruction; letting it drift costs nothing today, and a
+# section that displayed figures nobody could tell had gone stale is precisely
+# why the box was dropped.
 #
 # Current as of 2026-08 (verify each ~quarterly):
 #   • Autos: 15% incl. MFN under the 2025 US-Japan agreement.

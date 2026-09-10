@@ -767,7 +767,6 @@ def _fetch_wikipedia_polls(max_polls: int = 10) -> list:
                 "poll_date": _wiki_row_date(cells) or "",
                 "cabinet_approval": f"{appr:g}%",
                 "cabinet_disapproval": f"{disp:g}%" if disp is not None else None,
-                "approval_change": None,
             })
             if len(out) >= max_polls:
                 break
