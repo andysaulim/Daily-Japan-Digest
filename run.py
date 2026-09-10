@@ -894,6 +894,28 @@ def _pct_to_float(v):
     return float(m.group(0)) if m else None
 
 
+# A hand-seeded baseline poll is authoritative only while it is recent. These
+# rows were seeded in July and were still shipping in September, stamped "56d
+# ago" — and worse, they anchor the cross-check below, so as real approval drifts
+# away from a stale seed the live fetch gets REJECTED for disagreeing with it and
+# the stale row wins. The older the baseline, the more certain it is to be used.
+# Past this age a baseline row neither anchors the check nor reaches the reader.
+_BASELINE_MAX_AGE_DAYS = 45
+
+
+def _fresh_baseline(baseline: list) -> list:
+    """The baseline rows still recent enough to trust, newest first."""
+    today = datetime.now(ZoneInfo("America/New_York")).date()
+    out = []
+    for p in baseline or []:
+        d = _parse_poll_date(str(p.get("poll_date", "")))
+        if d is None:
+            continue
+        if (today - d).days <= _BASELINE_MAX_AGE_DAYS:
+            out.append(p)
+    return out
+
+
 def _wiki_agrees_with_baseline(wiki: list, baseline: list, tol: float = 5.0) -> bool:
     """SAFETY CROSS-CHECK for the live Wikipedia fetch, which can't be eyeballed
     from the dev sandbox. Trust the parsed set only if, for every pollster that
@@ -1077,13 +1099,25 @@ def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
     # inspected from the dev sandbox.
     trust_wiki = os.environ.get("TRUST_WIKI_POLLS", "").strip().lower() in ("1", "true", "yes")
     wiki = [p for p in (wiki_polls or []) if isinstance(p, dict)] if trust_wiki else []
-    if len(wiki) >= 3 and _wiki_agrees_with_baseline(wiki, RECENT_APPROVAL_POLLS):
+    fresh_base = _fresh_baseline(RECENT_APPROVAL_POLLS)
+    stale_count = len(RECENT_APPROVAL_POLLS) - len(fresh_base)
+    if stale_count:
+        print(f"   ⚠ Polls: {stale_count} baseline row(s) older than "
+              f"{_BASELINE_MAX_AGE_DAYS}d — not used as an anchor and not shown. "
+              f"Update RECENT_APPROVAL_POLLS in databases.py.")
+    if len(wiki) >= 3 and (not fresh_base or _wiki_agrees_with_baseline(wiki, fresh_base)):
+        # A stale baseline cannot veto the live fetch: with no fresh anchor the
+        # count check and _sanitise_polls are what stand between the fetch and
+        # the reader, and fresh unverified beats two months old.
         structured = wiki
-        source = "Wikipedia fetch (baseline-verified)"
+        source = ("Wikipedia fetch (baseline-verified)" if fresh_base
+                  else "Wikipedia fetch (no fresh baseline to verify against)")
     else:                                        # not trusted / thin / failed check → baseline
-        structured = [dict(p) for p in RECENT_APPROVAL_POLLS]
+        structured = [dict(p) for p in fresh_base]
         source = "verified baseline"
     if not structured:
+        print("   ⚠ Polls: no poll is recent enough to show — the section will be "
+              "omitted rather than carry a stale figure. Refresh the baseline.")
         return digest
     # Ensure every row has a real fieldwork date (backfilled from baseline) and an
     # age stamp, and warn if the whole set is dated.

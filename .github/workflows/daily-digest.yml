@@ -10,12 +10,16 @@ on:
     # concurrency group serializes any overlap — so recipients still get exactly
     # ONE email, on the earliest slot GitHub actually honors. All times are UTC;
     # ET shown for DST (subtract 1h in standard time). Off the congested :00/:30.
-    - cron: '17 10 * * *'   # 6:17 AM ET — primary
-    - cron: '47 10 * * *'   # 6:47 AM ET — catch-up 1
-    - cron: '27 11 * * *'   # 7:27 AM ET — catch-up 2
-    - cron: '27 12 * * *'   # 8:27 AM ET — catch-up 3
-    - cron: '27 13 * * *'   # 9:27 AM ET — catch-up 4
-    - cron: '27 14 * * *'   # 10:27 AM ET — final backstop
+    # The brief goes out at 7 AM ET. The external cron dispatches at 11:00 UTC
+    # and is the primary; these are the fallbacks if it is missed or GitHub
+    # drops a slot, so the first sits a few minutes later to let the primary
+    # finish and record its send. Nothing here can fire earlier than the
+    # EARLIEST_SEND_HOUR_ET floor in the guard below regardless.
+    - cron: '5 11 * * *'    # 7:05 AM ET — fallback if the external cron missed
+    - cron: '35 11 * * *'   # 7:35 AM ET — catch-up 1
+    - cron: '35 12 * * *'   # 8:35 AM ET — catch-up 2
+    - cron: '35 13 * * *'   # 9:35 AM ET — catch-up 3
+    - cron: '35 14 * * *'   # 10:35 AM ET — final backstop
   # A push to this branch runs a dry collection — no model call, no email —
   # unless the commit message carries [live-send] or [test-send]. That is the
   # same guard the China brief uses, and it exists because workflow_dispatch
@@ -99,7 +103,23 @@ jobs:
         id: guard
         run: |
           TODAY=$(TZ=America/New_York date +%Y-%m-%d)
-          LAST_SENT=$(tr -d '[:space:]' < last_sent.txt 2>/dev/null || true)
+          HOUR_ET=$(TZ=America/New_York date +%-H)
+          # Earliest hour this brief may reach the list, in ET. Nothing that
+          # mails the distribution list runs before it, whatever started the
+          # run — the external cron dispatches around midnight ET, and a
+          # mistagged commit put the 10 September edition in inboxes at 12:44
+          # AM. A test send, a send_to address, a dry run and force_send are
+          # all exempt: none of them mails the list, or the person asked.
+          EARLIEST_ET="${{ vars.EARLIEST_SEND_HOUR_ET || '7' }}"
+          TOO_EARLY=false
+          [ "$HOUR_ET" -lt "$EARLIEST_ET" ] && TOO_EARLY=true
+          # From the REMOTE, not the checkout. This run may have started before
+          # an earlier one finished committing its send, and the checkout is
+          # frozen at that moment — reading it locally is how two runs minutes
+          # apart can both believe nothing has been sent.
+          git fetch -q origin "${GITHUB_REF_NAME}" 2>/dev/null || true
+          LAST_SENT=$(git show "origin/${GITHUB_REF_NAME}:last_sent.txt" 2>/dev/null | tr -d '[:space:]' || true)
+          [ -n "$LAST_SENT" ] || LAST_SENT=$(tr -d '[:space:]' < last_sent.txt 2>/dev/null || true)
           # Only the SUBJECT line carries the tag. Grepping the whole message
           # meant a commit that merely mentioned "[live-send]" in its body —
           # such as the one describing this very guard — mailed the list. That
@@ -114,6 +134,9 @@ jobs:
               # still the deliberate override for a genuine second send.
               if [ "$LAST_SENT" = "$TODAY" ]; then
                 echo "::notice::Push tagged [live-send], but today's edition ($TODAY) was already sent — not sending again. Use workflow_dispatch to force a second send."
+                echo "should_run=dry" >> "$GITHUB_OUTPUT"
+              elif [ "$TOO_EARLY" = "true" ]; then
+                echo "::notice::Push tagged [live-send] at ${HOUR_ET}:00 ET, before the ${EARLIEST_ET}:00 ET earliest send — running dry. The scheduled run will send."
                 echo "should_run=dry" >> "$GITHUB_OUTPUT"
               else
                 echo "::notice::Push tagged [live-send]: full pipeline, live send."
@@ -138,14 +161,21 @@ jobs:
                && [ -z "${{ inputs.send_to }}" ] \
                && [ "${{ inputs.dry_run }}" != "true" ] \
                && [ "${{ inputs.force_send }}" != "true" ] \
-               && [ "$LAST_SENT" = "$TODAY" ]; then
-              echo "::notice::Dispatch requested a live send, but today's edition ($TODAY) already went out — skipping. Re-run with force_send to override."
+               && { [ "$LAST_SENT" = "$TODAY" ] || [ "$TOO_EARLY" = "true" ]; }; then
+              if [ "$LAST_SENT" = "$TODAY" ]; then
+                echo "::notice::Dispatch requested a live send, but today's edition ($TODAY) already went out — skipping. Re-run with force_send to override."
+              else
+                echo "::notice::Dispatch requested a live send at ${HOUR_ET}:00 ET, before the ${EARLIEST_ET}:00 ET earliest send — skipping. Re-run with force_send to override."
+              fi
               echo "should_run=false" >> "$GITHUB_OUTPUT"
             else
               echo "should_run=true" >> "$GITHUB_OUTPUT"
             fi
           elif [ "$LAST_SENT" = "$TODAY" ]; then
             echo "::notice::Today's edition ($TODAY) already sent — skipping (catch-up no-op)."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          elif [ "$TOO_EARLY" = "true" ]; then
+            echo "::notice::Scheduled run at ${HOUR_ET}:00 ET is before the ${EARLIEST_ET}:00 ET earliest send — skipping."
             echo "should_run=false" >> "$GITHUB_OUTPUT"
           else
             echo "should_run=true" >> "$GITHUB_OUTPUT"
