@@ -1435,9 +1435,21 @@ def run_pipeline(args: argparse.Namespace) -> int:
         print("   ✓ All validation checks passed")
 
     # ─── Length ceiling ──────────────────────────────────────────────────
+    # Trim against the count the READER is shown. There are two counters here
+    # and they disagree by about 1.4x: run._count_words walks a narrow list of
+    # JSON fields, render._word_count walks every visible one and is the number
+    # stamped into the masthead. The ceiling governed the first while the
+    # masthead printed the second, so a brief could sit inside a 2,400 budget
+    # by the trimmer's reckoning and tell the reader 2,470 — which is what
+    # shipped on 8 September. Enforce the number on the page.
     import length_budget
-    for _line in length_budget.apply(digest, _count_words, WORD_CEILING):
+    from render import _word_count as _shown_words
+    for _line in length_budget.apply(digest, _shown_words, WORD_CEILING):
         print(f"   {_line}")
+    _shown = _shown_words(digest)
+    if _shown > WORD_CEILING:
+        print(f"   ⚠  still {_shown} words after trimming; the sections that "
+              f"may not be trimmed are carrying the excess")
 
     # ─── Render ──────────────────────────────────────────────────────────
     print("\n🎨 Rendering HTML email...")
