@@ -375,6 +375,40 @@ check("supplying a name from memory is still forbidden",
       "never supply a given name from your own knowledge" in _prompt)
 
 
+
+import render as _rmod
+
+# ── Raw markdown must never reach a reader ───────────────────────────────────
+# The prompt asks for a name in **double asterisks** and a figure in *single*
+# ones, and the renderer converts them. A field that skips the conversion ships
+# the asterisks instead: the 10 September China brief carried eighteen, among
+# them **Ford** and a half-open **Cynthia "Xanthi". Walking every prose field
+# means a newly added one cannot leak quietly.
+import copy as _copy
+import preview as _preview
+_PROSE = ("body","body_text","summary","detail","context","text","note",
+          "analyst_note","so_what","headline","central_argument")
+_d = _copy.deepcopy(_preview.DIGEST)
+_marks = {}
+def _mark(o):
+    if isinstance(o, dict):
+        for k, v in list(o.items()):
+            if k in _PROSE and isinstance(v, str) and v.strip():
+                t = "MARK%d" % len(_marks); _marks[t] = k; o[k] = "**%s** tail." % t
+            else: _mark(v)
+    elif isinstance(o, list):
+        for x in o: _mark(x)
+_mark(_d)
+_html = _rmod.render_html(_d)
+_leaks = sorted({f for t, f in _marks.items() if "**%s**" % t in _html})
+check("no prose field ships literal ** to the reader", not _leaks, ", ".join(_leaks))
+_d2 = _copy.deepcopy(_preview.DIGEST)
+_d2["top_stories"][0]["body"] = "**<script>alert(1)</script>** and **A Name**"
+_h2 = _rmod.render_html(_d2)
+check("emphasis cannot smuggle markup past the escaper", "<script>" not in _h2)
+check("a genuine name still bolds", 'font-weight:700;">A Name</strong>' in _h2)
+
+
 def main() -> int:
     for t in (test_render, test_source_diversity, test_dark_mode, test_print_and_mobile, test_length,
               test_validation_gate, test_feeds, test_calendar, test_email):

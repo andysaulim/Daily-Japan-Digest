@@ -537,7 +537,7 @@ def render_html(digest: dict) -> str:
         sh = ""
         for s in stories:
             cat = _esc(_str(s.get("category_tag", s.get("category", ""))))
-            h = _esc(s.get("headline", ""))
+            h = _emphasis(_esc(s.get("headline", "")))
             b_raw = s.get("body", "") or ""
             b = _emphasis(_esc(b_raw)) if b_raw.strip() and b_raw.strip() != s.get("headline", "").strip() else ""
             # Primary source = the publisher the link actually opens (link_source,
@@ -579,7 +579,7 @@ def render_html(digest: dict) -> str:
         fh = ""
         for it in overnight:
             cat = _esc(_str(it.get("category", "")))
-            h = _esc(it.get("headline", ""))
+            h = _emphasis(_esc(it.get("headline", "")))
             b = _emphasis(_esc(it.get("body_text", "")))
             src = _esc(_clean_src(it.get("source", "")))
             url = it.get("url", "")
@@ -614,7 +614,7 @@ def render_html(digest: dict) -> str:
     <tr><td style="padding:14px 16px;">
       <div class="key-stat-num" style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:{HINOMARU_RED};line-height:1;">{_esc(str(stat.get("number", "")))}</div>
       <div style="font-family:Georgia,serif;font-size:14px;color:{INK};margin-top:5px;line-height:1.4;">{_esc(stat.get("label", ""))}</div>
-      {"<div style='font-family:Georgia,serif;font-size:13px;color:#4A5260;margin-top:4px;line-height:1.5;'>" + _esc(stat.get("context", "")) + "</div>" if stat.get("context") else ""}
+      {"<div style='font-family:Georgia,serif;font-size:13px;color:#4A5260;margin-top:4px;line-height:1.5;'>" + _emphasis(_esc(stat.get("context", ""))) + "</div>" if stat.get("context") else ""}
       {"<div style='font-family:Arial,sans-serif;font-size:11px;color:#55607A;margin-top:7px;'>" + _esc(stat.get("source", "")) + "</div>" if stat.get("source") else ""}
     </td></tr>
   </table>
@@ -711,7 +711,7 @@ def render_html(digest: dict) -> str:
             mn = _esc(it.get("ministry", ""))
             mjp = _esc(it.get("ministry_jp", ""))
             act = _esc(it.get("action", ""))
-            det = _esc(it.get("detail", ""))
+            det = _emphasis(_esc(it.get("detail", "")))
             url = it.get("url", "")
             lbl = _esc(it.get("source_label", ""))
             off = _esc(it.get("official", ""))
@@ -749,7 +749,7 @@ def render_html(digest: dict) -> str:
                 pos = _esc(p.get("position", ""))
                 nm = _esc(p.get("name", ""))
                 a = p.get("action", "appointed")
-                det = _esc(p.get("detail", ""))
+                det = _emphasis(_esc(p.get("detail", "")))
                 pred = _esc(p.get("predecessor", "")) if p.get("predecessor") else ""
                 ac_c = ac.get(a, "#1B2A4A")
                 bg = f'<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;color:#fff;background:{ac_c};text-transform:uppercase;margin-left:6px;">{_esc(a)}</span>'
@@ -771,7 +771,7 @@ def render_html(digest: dict) -> str:
             for n in npc:
                 body = _emphasis(_esc(n.get("body", "")))
                 act = _esc(n.get("action", ""))
-                det = _esc(n.get("detail", ""))
+                det = _emphasis(_esc(n.get("detail", "")))
                 url = n.get("url", "")
                 ni += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #7F8C8D;">
 <div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{body}</div>
@@ -794,8 +794,8 @@ def render_html(digest: dict) -> str:
             for c in calendar:
                 cm = _esc(c.get("month", ""))
                 cd = _esc(str(c.get("day", "")))
-                ch = _esc(c.get("headline", ""))
-                cdet = _esc(c.get("detail", ""))
+                ch = _emphasis(_esc(c.get("headline", "")))
+                cdet = _emphasis(_esc(c.get("detail", "")))
                 ci += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
 <tr>
 <td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
@@ -837,7 +837,7 @@ def render_html(digest: dict) -> str:
     if biz:
         bh = ""
         for b in biz[:6]:
-            h = _esc(b.get("headline", ""))
+            h = _emphasis(_esc(b.get("headline", "")))
             bt = _emphasis(_esc(b.get("body_text", "")))
             url = b.get("url", "")
             src = _esc(b.get("source", ""))
@@ -858,7 +858,7 @@ def render_html(digest: dict) -> str:
         for it in ip[:6]:
             r = it.get("region_tag", "Indo-Pacific")
             bar = NAVY
-            h = _esc(it.get("headline", ""))
+            h = _emphasis(_esc(it.get("headline", "")))
             bt = _emphasis(_esc(it.get("body_text", "")))
             url = it.get("url", "")
             src = _esc(_clean_src(it.get("source", "")))
@@ -876,7 +876,7 @@ def render_html(digest: dict) -> str:
         for c in cw:
             comm = _esc(c.get("committee", ""))
             act = _esc(c.get("action", ""))
-            det = _esc(c.get("detail", ""))
+            det = _emphasis(_esc(c.get("detail", "")))
             url = c.get("url", "")
             ch += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #2C3E50;">
 <div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{comm}</div>
@@ -1038,7 +1038,7 @@ def render_html(digest: dict) -> str:
         for _cat, _items in _groups.items():
             rows = "".join(
                 _compact_row(cat="" if _multi else _esc(_cat),
-                             headline=_esc(i.get("headline", "")),
+                             headline=_emphasis(_esc(i.get("headline", ""))),
                              url=i.get("url", ""),
                              src=_esc(_clean_src(i.get("source", ""))),
                              body=_emphasis(_esc(i.get("body_text", ""))))
