@@ -912,6 +912,29 @@ def _pct_to_float(v):
 _BASELINE_MAX_AGE_DAYS = 45
 
 
+def _baseline_age_days(baseline: list) -> int:
+    """Days since the newest baseline poll; a large number if none parses."""
+    today = datetime.now(ZoneInfo("America/New_York")).date()
+    ages = []
+    for p in baseline or []:
+        d = _parse_poll_date(str(p.get("poll_date", "")))
+        if d is not None:
+            ages.append((today - d).days)
+    return min(ages) if ages else 9999
+
+
+def _anchor_tolerance(age_days: int) -> float:
+    """How far the live fetch may differ from the baseline before it is refused.
+
+    Five points while the baseline is current, widening by a quarter point a day
+    as it ages, capped at twenty. Cabinet approval moved about ten points over
+    the two months this baseline sat unrefreshed, so a fixed five-point window
+    would have rejected every honest reading; twenty still refuses a column of
+    party vote-shares, which sits far further out than that.
+    """
+    return min(5.0 + 0.25 * max(0, age_days), 20.0)
+
+
 def _fresh_baseline(baseline: list) -> list:
     """The baseline rows still recent enough to trust, newest first."""
     today = datetime.now(ZoneInfo("America/New_York")).date()
@@ -1108,22 +1131,35 @@ def _resolve_polls(digest: dict, wiki_polls: list | None = None) -> dict:
     # inspected from the dev sandbox.
     trust_wiki = os.environ.get("TRUST_WIKI_POLLS", "").strip().lower() in ("1", "true", "yes")
     wiki = [p for p in (wiki_polls or []) if isinstance(p, dict)] if trust_wiki else []
-    fresh_base = _fresh_baseline(RECENT_APPROVAL_POLLS)
-    stale_count = len(RECENT_APPROVAL_POLLS) - len(fresh_base)
-    if stale_count:
-        print(f"   ⚠ Polls: {stale_count} baseline row(s) older than "
-              f"{_BASELINE_MAX_AGE_DAYS}d — not used as an anchor and not shown. "
-              f"Update RECENT_APPROVAL_POLLS in databases.py.")
-    if len(wiki) >= 3 and (not fresh_base or _wiki_agrees_with_baseline(wiki, fresh_base)):
-        # A stale baseline cannot veto the live fetch: with no fresh anchor the
-        # count check and _sanitise_polls are what stand between the fetch and
-        # the reader, and fresh unverified beats two months old.
+    # Two separate questions, and conflating them is what went wrong.
+    #
+    # (1) Is the live fetch SANE? The baseline answers that even when it is old:
+    #     approval drifts a few points a month, but a structurally broken parse
+    #     (a party vote-share column, a stale row, the wrong table) is off by
+    #     far more. So the anchor keeps using every baseline row, with a
+    #     tolerance that widens as the baseline ages — tight while it is fresh,
+    #     loose enough at two months not to reject genuine drift. Dropping the
+    #     anchor entirely would have let a misparse through unchallenged.
+    #
+    # (2) Is a row FIT TO SHOW? Only its own age answers that. A July poll
+    #     stamped "56d ago" in a September brief is not reporting, whichever
+    #     source it came from.
+    _age = _baseline_age_days(RECENT_APPROVAL_POLLS)
+    _tol = _anchor_tolerance(_age)
+    if len(wiki) >= 3 and _wiki_agrees_with_baseline(wiki, RECENT_APPROVAL_POLLS, tol=_tol):
         structured = wiki
-        source = ("Wikipedia fetch (baseline-verified)" if fresh_base
-                  else "Wikipedia fetch (no fresh baseline to verify against)")
+        source = f"Wikipedia fetch (anchored on a {_age}d baseline, +/-{_tol:g}pts)"
     else:                                        # not trusted / thin / failed check → baseline
-        structured = [dict(p) for p in fresh_base]
+        structured = [dict(p) for p in RECENT_APPROVAL_POLLS]
         source = "verified baseline"
+
+    before = len(structured)
+    structured = _fresh_baseline(structured)
+    if before != len(structured):
+        print(f"   ⚠ Polls: dropped {before - len(structured)} row(s) older than "
+              f"{_BASELINE_MAX_AGE_DAYS}d — too old to show. If these are the "
+              f"latest polls published, refresh RECENT_APPROVAL_POLLS in "
+              f"databases.py; the section is omitted rather than dated.")
     if not structured:
         print("   ⚠ Polls: no poll is recent enough to show — the section will be "
               "omitted rather than carry a stale figure. Refresh the baseline.")
