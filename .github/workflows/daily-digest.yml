@@ -311,6 +311,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # The email is already out by the time this runs; this only publishes the
+      # web archive the brief links to. On 10 September the deployment sat
+      # queued and in_progress for the action's default ten minutes and was
+      # aborted with "Timeout reached", leaving the site on the previous
+      # edition while the email pointed at it. That is Pages congestion, not a
+      # fault here, so give it longer before giving up.
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 1200000        # 20 minutes, up from the default 10
+          error_count: 10
+          reporting_interval: 10000
