@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-11": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry directed a message to NATO to 'abandon Cold War mentality,' a formulation Beijing has applied to Japan's engagement with NATO and Western security forums. Nikkei Asia reports China has stepped up its simultaneous maritime push against both the Philippines and Japan, framing ",
-        "dprk_signal": "KCNA reported North Korea has decided to expand its nuclear force 'both in quality and quantity' while modernizing its military and strengthening combat readiness, continuing a messaging campaign that has specifically targeted Japan's counterstrike capability program in recent weeks per the regional"
-      },
-      "watch_flag": false
-    },
     "2026-07-12": {
       "signals": {
         "china_signal": "China's Foreign Ministry issued a statement to NATO calling for abandonment of 'Cold War mentality,' a formulation Beijing has repeatedly applied to Japan's NATO engagement and Western security alignment. No new Senkaku territorial-waters intrusion is reported in today's feed; the July 7-8 CCG intru",
@@ -442,7 +435,15 @@
         "russia_signal": "The Kremlin formally rejected Tokyo's request to dismantle the WWII memorial statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker, extending the symbolic provocation standoff following President Putin's Etorofu visit and Russia's August 21 Bastion missile live"
       },
       "watch_flag": true
+    },
+    "2026-09-10": {
+      "signals": {
+        "china_signal": "The JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance aircraft flights near Japanese airspace, extending the most sustained aerial surveillance streak tracked in recent weeks. China's Foreign Ministry Spokesperson Mao Ning's September 8 press conference reite",
+        "dprk_signal": "North Korea commissioned its second Choe Hyon-class 5,000-tonne guided-missile destroyer — the Kang Kon — carrying 88 vertical launch cells, within roughly two months of the first commissioning. Kim Jong Un declared both vessels integrated into Pyongyang's nuclear response system and pledged to buil",
+        "russia_signal": "Russia's Foreign Ministry formally rebuffed Japan's demand to remove the Khabarovsk memorial statue depicting destruction of a Japanese imperial border marker, issuing a statement telling Japan to stay out of Russian internal affairs. The standoff extends the summer of bilateral tension following Pr"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-09T13:42:18.814316+00:00"
+  "last_updated": "2026-09-10T04:44:21.752721+00:00"
 }
