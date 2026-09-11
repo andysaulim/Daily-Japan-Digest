@@ -1053,10 +1053,10 @@ def render_html(digest: dict) -> str:
     if otd:
         oh = ""
         for it in otd[:1]:
-            oh += f"""<div style="padding:12px 14px;background:#FAFAF5;border-radius:4px;border-left:3px solid #7F8C8D;">
+            oh += f"""<div style="padding:13px 0 3px;background:#FFFFFF;border-top:2px solid #7F8C8D;">
 <div style="font-size:11px;color:#7F8C8D;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">{_esc(it.get("date", ""))}</div>
 <div style="font-size:14px;font-weight:600;color:#1B2A4A;font-family:Georgia,serif;margin:4px 0;">{_esc(it.get("event", ""))}</div>
-<div style="font-size:13px;color:#555;font-style:italic;line-height:1.5;">{_esc(it.get("relevance", ""))}</div>
+<div style="font-size:13px;color:#4A5260;line-height:1.55;font-family:Georgia,serif;">{_esc(it.get("relevance", ""))}</div>
 </div>"""
         sections_wire.append(f'<div {_SEC}>{_sec_label("On This Day")}{oh}</div>')
 
