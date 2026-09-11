@@ -484,9 +484,86 @@ def _attach_orig_titles(digest: dict, collected_by_url: dict) -> dict:
     return digest
 
 
-def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
-    """Null out hallucinated URLs; resolve Google News redirects for real ones."""
+_TITLE_STOPWORDS = frozenset(
+    "the a an of to in on for and or with at by from as is are was were its "
+    "his her their this that after over into first new said says".split())
+
+
+def _title_tokens(text: str) -> set:
+    """A headline reduced to the words that distinguish it from another."""
+    import re as _re
+    words = _re.sub(r"[^a-z0-9 ]+", " ", str(text).lower()).split()
+    return {w for w in words if w not in _TITLE_STOPWORDS and len(w) > 2}
+
+
+def _same_site(a: str, b: str) -> bool:
+    """Same publisher, allowing for a feed subdomain."""
     from urllib.parse import urlparse as _up
+    def reg(u):
+        h = (_up(u).hostname or "").lower()
+        return ".".join(h.split(".")[-3:]) if h.endswith(
+            (".co.jp", ".co.uk", ".or.jp", ".go.jp")) else ".".join(h.split(".")[-2:])
+    ra, rb = reg(a), reg(b)
+    return bool(ra) and ra == rb
+
+
+def _recover_url(item: dict, collected: dict) -> str:
+    """Find the collected article an item is plainly about, by its headline.
+
+    The model paraphrases headlines, so a URL it got slightly wrong usually
+    sits in front of a collected article whose title is still recognisably the
+    same story. Match on that before concluding the item has no source.
+
+    Two constraints keep this from inventing a citation. Only articles from
+    the publisher the model itself linked are considered, so a recovery can
+    correct a path but never move a story to a different outlet — which would
+    put one masthead's link under another's byline. And the headline has to
+    overlap substantially: at least four distinguishing words, and at least
+    half the shorter headline's vocabulary. Measured against real pairs, that
+    separates paraphrases of the same story (0.50–0.86) from different stories
+    on the same beat (0.40 and below).
+
+    The case that prompted this is not recoverable by design: no Washington
+    Post article had been collected at all, so there is nothing to match, and
+    the item is dropped rather than published with a source it cannot show.
+    """
+    wrote = str(item.get("url", ""))
+    target = _title_tokens(item.get("orig_title") or item.get("headline") or "")
+    if len(target) < 4:
+        return ""
+    best, best_score = "", 0.0
+    for url, title in collected.items():
+        if not _same_site(wrote, url):
+            continue
+        cand = _title_tokens(title)
+        if len(target & cand) < 4:
+            continue
+        score = len(target & cand) / min(len(target), len(cand))
+        if score > best_score:
+            best, best_score = url, score
+    return best if best_score >= 0.50 else ""
+
+
+def _sanitise_urls(digest: dict, collected: dict) -> dict:
+    """Null out hallucinated URLs; resolve Google News redirects for real ones.
+
+    An item whose URL fails this check is an item that does not trace to a
+    collected article, which is what SOURCE-OR-SKIP forbids. Blanking the URL
+    and keeping the claim published the violation instead of catching it: a
+    reader got a story attributed to the Washington Post with nothing behind
+    the attribution, which is the one thing the rule exists to prevent.
+
+    So a failed URL is now first given a chance to be recovered by headline —
+    the common case is a real, collected story under a URL the model mistyped
+    — and an item that cannot be traced after that is dropped.
+
+    Items that arrive with no URL at all are left alone here. That is a
+    different condition with its own handling, and changing it blind would
+    quietly empty the sections that legitimately carry unlinked entries.
+    """
+    from urllib.parse import urlparse as _up
+
+    collected_urls = set(collected)
 
     collected_domains: set = set()
     for u in collected_urls:
@@ -512,18 +589,37 @@ def _sanitise_urls(digest: dict, collected_urls: set) -> dict:
 
     google_urls = {}
 
+    recovered, untraceable = 0, []
     for section in _URL_SECTIONS:
+        kept = []
         for item in (digest.get(section) or []):
             if not isinstance(item, dict):
+                kept.append(item)
                 continue
             url = item.get("url", "")
             if not url or not url.startswith("http"):
                 item["url"] = ""
+                kept.append(item)            # never claimed a source; not ours
                 continue
             if not _url_allowed(url):
-                item["url"] = ""  # unknown domain — hallucinated
-            elif "news.google.com" in url:
-                google_urls[url] = url
+                fixed = _recover_url(item, collected)
+                if fixed:
+                    item["url"] = fixed
+                    recovered += 1
+                else:
+                    untraceable.append(
+                        (section, str(item.get("headline", ""))[:70]))
+                    continue                 # asserted a source it cannot show
+            if "news.google.com" in item.get("url", ""):
+                google_urls[item["url"]] = item["url"]
+            kept.append(item)
+        if section in digest:
+            digest[section] = kept
+
+    if recovered:
+        print(f"   ↺ {recovered} URL(s) recovered by headline match")
+    for section, headline in untraceable:
+        print(f"   ✗ dropped from {section}, source cannot be traced: {headline}")
 
     if google_urls:
         print(f"   ↻ Decoding {len(google_urls)} Google News URL(s)...")
@@ -1341,7 +1437,7 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # (while item['url'] still matches the collected article) — preserves a
     # verbatim, traceable source title behind any synthesized display headline.
     digest = _attach_orig_titles(digest, collected_by_url)
-    digest = _sanitise_urls(digest, set(collected_by_url))
+    digest = _sanitise_urls(digest, collected_by_url)
     print(f"   ✓ URL sanitisation complete ({len(collected_by_url)} collected URLs as reference)")
 
     # ─── Drop hollow "no-substance" filler (SOURCE-OR-SKIP) ──────────────
