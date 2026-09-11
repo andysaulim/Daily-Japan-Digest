@@ -349,9 +349,87 @@ callout(doc, "Read this row first:",
         "almost wholly search-dependent, at 1 of 30 and 0 of 18. Section 8 sets out what "
         "to do about it.")
 
+# ── 4. HOW ARTICLES ARE CHOSEN ──────────────────────────────────────────────
+doc.add_page_break()
+heading(doc, "4.  How Articles Are Chosen")
+para(doc,
+     "Collection returns far more than one issue can hold. Two mechanisms decide "
+     "what the model is allowed to see: a relevance filter applied at collection, "
+     "and a ranked cut applied when the prompt is built.",
+     size=11, color=GRAY, space_after=8)
+
+para(doc, "The relevance filter, and what is exempt from it", bold=True, size=12,
+     color=NAVY, space_after=4)
+para(doc,
+     "General wires carry the whole world, so a Japan keyword filter strips their "
+     "output down to Japan coverage. Applied to a Japanese ministry feed that same "
+     "filter deletes almost everything, because a real ministry headline often "
+     "contains none of the English tokens it looks for. The feeds below are therefore "
+     f"exempt: everything they publish reaches the ranking stage. There are "
+     f"{len(collect.JAPAN_NATIVE_FEEDS)} of them, and any new Japanese government or "
+     "Japanese-language feed has to be added to that set or most of it is discarded "
+     "before the model ever sees it.",
+     size=10.5, color=GRAY, space_after=6)
+table(doc, ["Exempt from the keyword filter", ""],
+      [(n, "") for n in sorted(collect.JAPAN_NATIVE_FEEDS)],
+      col_widths=[3.6, 2.6])
+
+para(doc, "The ranked cut", bold=True, size=12, color=NAVY, space_after=4, space_before=8)
+para(doc,
+     "At most 140 articles per tier reach the prompt. That cut used to be the first 60 "
+     "of a list ordered by nothing — the parallel fetcher fills results in completion "
+     "order, so tier 1 arrived sorted by which feed answered fastest, and the outlets "
+     "the editorial rules call mandatory were frequently not in the prompt at all. "
+     "Articles are now sorted into four bands before the cut, and within every band one "
+     "article is taken from each source before any source gets a second.",
+     size=10.5, color=GRAY, space_after=6)
+table(doc,
+    ["Band", "What lands in it", "Why it is first"],
+    [
+        ("1", "Primary documents — the ministry and central-bank feeds listed above",
+         "Official text outranks reporting about official text"),
+        ("2", "Outlets an editorial rule names as mandatory, and flagged correspondents",
+         "A rule the prompt cannot satisfy is not a rule"),
+        ("3", "Japanese-language articles",
+         "The Japanese press is the point of difference, and is easily crowded out"),
+        ("4", "Everything else that cleared the filter",
+         "Filled in as space allows"),
+    ],
+    col_widths=[0.6, 3.1, 2.5]
+)
+
+para(doc, "Outlets treated as mandatory", bold=True, size=12, color=NAVY,
+     space_after=4, space_before=8)
+para(doc,
+     f"{len(collect.MAJOR_FEEDS)} outlets are enforced: if they published on Japan that "
+     "day, the brief is expected to reflect it. They are " +
+     ", ".join(sorted(collect.MAJOR_FEEDS)) + ".",
+     size=10.5, color=GRAY, space_after=8)
+
+para(doc, "Correspondents tracked by name", bold=True, size=12, color=NAVY,
+     space_after=4, space_before=6)
+para(doc,
+     f"{len(collect.PRESTIGE_JOURNALISTS)} Japan correspondents are flagged by byline. "
+     "An article carrying one of these names is promoted into band 2 regardless of "
+     "which feed delivered it, so a piece by a bureau correspondent is not cut in "
+     "favour of an agency rewrite of the same story.",
+     size=10.5, color=GRAY, space_after=6)
+
+_j = sorted(collect.PRESTIGE_JOURNALISTS)
+_half = (len(_j) + 1) // 2
+table(doc, ["Correspondent", "Correspondent"],
+      [(_j[i], _j[i + _half] if i + _half < len(_j) else "") for i in range(_half)],
+      col_widths=[3.1, 3.1])
+
+callout(doc, "Maintenance note:",
+        "This list is hand-maintained. A correspondent who moves desk or masthead "
+        "keeps their promotion until the name is removed, and a new hire gets none "
+        "until the name is added. It is worth a read at the same time as the source "
+        "list.")
+
 # ── 4. THE FULL SOURCE LIST ─────────────────────────────────────────────────
 doc.add_page_break()
-heading(doc, "4.  Every Source It Reads")
+heading(doc, "5.  Every Source It Reads")
 para(doc,
      "The complete list, generated from the running code rather than transcribed. "
      "\"Native RSS\" means the publisher's own feed is tried first. \"Google News search\" "
@@ -370,7 +448,7 @@ for attr, label, window, desc in _TIERS:
 doc.add_page_break()
 
 # ── 5. WHAT EACH ISSUE COVERS ────────────────────────────────────────────────
-heading(doc, "5.  What Each Issue Covers")
+heading(doc, "6.  What Each Issue Covers")
 para(doc,
      "Sections in the order they appear in the email. A section with nothing behind it "
      "that day is absent rather than padded — an empty section is a signal, and filling "
@@ -413,7 +491,7 @@ table(doc,
 )
 
 # ── 6. EDITORIAL RULES ───────────────────────────────────────────────────────
-heading(doc, "6.  The Rules That Constrain It")
+heading(doc, "7.  The Rules That Constrain It")
 para(doc,
      "These are enforced in code after the model writes, not merely asked for in the "
      "prompt. That distinction is the whole credibility argument: a rule the model is "
@@ -444,7 +522,7 @@ callout(doc, "Length",
 
 # ── 7. COST AND RELIABILITY ──────────────────────────────────────────────────
 doc.add_page_break()
-heading(doc, "7.  Cost and Reliability")
+heading(doc, "8.  Cost and Reliability")
 
 para(doc, "Cost", bold=True, size=12, color=NAVY, space_after=4)
 para(doc,
@@ -487,7 +565,7 @@ callout(doc, "Why the split:",
 
 # ── 8. OPEN DECISIONS ────────────────────────────────────────────────────────
 doc.add_page_break()
-heading(doc, "8.  Open Decisions")
+heading(doc, "9.  Open Decisions")
 para(doc,
      "The places the brief is currently weakest, each stated with the decision that would "
      "settle it. This is the section worth marking up.",
