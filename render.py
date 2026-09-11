@@ -136,7 +136,7 @@ def _arrow(val) -> str:
     except (TypeError, ValueError):
         return '<span style="color:#7F8C8D;">—</span>'
     if val > 0:
-        return f'<span style="color:#27AE60;">&#9650; +{val:.2f}%</span>'
+        return f'<span style="color:#69C88E;">&#9650; +{val:.2f}%</span>'
     if val < 0:
         return f'<span style="color:#E8697A;">&#9660; {val:.2f}%</span>'
     return '<span style="color:#7F8C8D;">— flat</span>'
@@ -150,7 +150,7 @@ def _cds_arrow(val) -> str:
     if val > 0:
         return f'<span style="color:#E8697A;">&#9650; +{val:.1f} bps</span>'
     if val < 0:
-        return f'<span style="color:#27AE60;">&#9660; {val:.1f} bps</span>'
+        return f'<span style="color:#69C88E;">&#9660; {val:.1f} bps</span>'
     return '<span style="color:#7F8C8D;">— flat</span>'
 
 
@@ -583,7 +583,12 @@ def render_html(digest: dict) -> str:
             b = _emphasis(_esc(it.get("body_text", "")))
             src = _esc(_clean_src(it.get("source", "")))
             url = it.get("url", "")
-            tail = (f'<span style="color:{MUTE};"> &mdash; {b}</span>' if b else "")
+            # Headline on its own line, the clause beneath it. Running them
+            # together behind an em-dash made a two-line wrap read as one long
+            # sentence, and the eye could not find where an item ended.
+            tail = (f'<div style="font-family:Georgia,serif;font-size:13px;'
+                    f'line-height:1.45;color:{MUTE};margin-top:2px;">{b}</div>'
+                    if b else "")
             fh += (f'<tr>'
                    f'<td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;'
                    f'font-family:Arial,sans-serif;font-size:10px;font-weight:700;'
@@ -592,9 +597,9 @@ def render_html(digest: dict) -> str:
                    f'<td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;'
                    f'font-size:13px;line-height:1.45;color:{INK};'
                    f'border-bottom:1px solid #EEF0F3;">'
-                   f'{_link_or_text(h, url)}{tail}'
+                   f'<div>{_link_or_text(h, url)}'
                    f'<span style="font-family:Arial,sans-serif;font-size:11px;color:{MUTE};">'
-                   f' &middot; {src}</span></td>'
+                   f' &middot; {src}</span></div>{tail}</td>'
                    f'</tr>')
         fh = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" '
               f'class="flash-table" style="border-top:2px solid {HINOMARU_RED};">{fh}</table>')
@@ -1270,7 +1275,7 @@ def render_html(digest: dict) -> str:
        colours this template actually uses. */
     .wrapper [style*="color:#1B2A4A"] {{ color:#E8E6E1 !important; }}
     .wrapper [style*="color:#1b2a4a"] {{ color:#E8E6E1 !important; }}
-    .wrapper [style*="color:#27AE60"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#69C88E"] {{ color:#9AA3AE !important; }}
     .wrapper [style*="color:#27ae60"] {{ color:#9AA3AE !important; }}
     .wrapper [style*="color:#2C3E50"] {{ color:#E8E6E1 !important; }}
     .wrapper [style*="color:#2c3e50"] {{ color:#E8E6E1 !important; }}
