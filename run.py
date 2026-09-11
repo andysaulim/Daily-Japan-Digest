@@ -1217,48 +1217,12 @@ def _sanitise_polls(digest: dict) -> dict:
 
 
 def _build_archive_index(archive: list) -> str:
-    """public/archive.html: every issue, newest first, with its PDF.
-
-    Every brief links "Past issues" at archive.html and nothing wrote the
-    file, so the pill 404'd in every issue ever sent. Built from archive.json
-    rather than the directory listing, so it carries the headline line and
-    the word count the reader is choosing between.
-    """
-    from html import escape
-    rows = []
-    for a in archive:
-        d = str(a.get("date") or "")
-        try:
-            label = datetime.strptime(d, "%Y-%m-%d").strftime("%A, %B %-d, %Y")
-        except ValueError:
-            label = d
-        re_line = escape(str(a.get("re_line") or ""))
-        wc = a.get("word_count") or ""
-        rows.append(
-            f'<tr><td style="padding:10px 8px;border-bottom:1px solid #EBEBEB;'
-            f'white-space:nowrap;font-family:Arial,sans-serif;font-size:13px;'
-            f'color:#14181F;font-weight:700;">'
-            f'<a href="{escape(d)}.html" style="color:#14181F;text-decoration:none;">{label}</a>'
-            f' &middot; <a href="{escape(d)}.pdf" style="color:#C1123C;text-decoration:none;">PDF</a></td>'
-            f'<td style="padding:10px 8px;border-bottom:1px solid #EBEBEB;'
-            f'font-family:Georgia,serif;font-size:13px;color:#444;">{re_line}</td>'
-            f'<td style="padding:10px 8px;border-bottom:1px solid #EBEBEB;'
-            f'font-family:Arial,sans-serif;font-size:11px;color:#767676;'
-            f'text-align:right;white-space:nowrap;">{wc} words</td></tr>')
-    body = "\n".join(rows) or '<tr><td style="padding:12px;">No issues archived yet.</td></tr>'
-    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Japan Daily Brief &middot; Archive</title></head>
-<body style="margin:0;background:#F4F4F1;">
-<div style="max-width:760px;margin:0 auto;background:#fff;">
-<div style="background:#14181F;color:#fff;padding:18px 32px 14px;">
-<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FF144C;font-family:Arial,sans-serif;margin-bottom:6px;">CSIS Japan Chair</div>
-<h1 style="margin:0 0 4px 0;font-size:28px;font-weight:700;font-family:Georgia,serif;">Japan Daily Brief</h1>
-<div style="font-size:14px;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">Archive &middot; {len(archive)} issues &middot; <a href="index.html" style="color:#FF144C;text-decoration:none;">Latest issue &#8594;</a></div>
-</div>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding:8px 24px 24px;">{body}</table>
-<div style="padding:16px 32px;font-size:10px;color:#767676;font-family:Arial,sans-serif;text-align:center;">Generated automatically; every item links to its source. Prepared by Andy Lim, CSIS Japan Chair.</div>
-</div></body></html>"""
+    """The house archive page. Layout and search both live in archive_page,
+    which every edition shares, so the four cannot drift apart again."""
+    import archive_page
+    return archive_page.build(archive, title="Japan Daily Brief",
+                              chair="CSIS Japan Chair", accent="#FF144C",
+                              latest_href="index.html")
 
 
 def _archive_html(html: str, digest: dict) -> None:
