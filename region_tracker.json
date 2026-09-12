@@ -1,11 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-13": {
-      "signals": {
-        "china_signal": "China's foreign ministry lodged stern representations with Japan over the foreign minister's co-signature of a 14-nation joint statement reaffirming the 2016 South China Sea arbitral ruling as legally binding, with Beijing's spokesperson 'strongly deploring' the statement and warning against 'stirri"
-      },
-      "watch_flag": false
-    },
     "2026-07-14": {
       "signals": {
         "china_signal": "China launched a two-track diplomatic response after Japan's foreign minister co-signed a 14-nation joint statement reaffirming the 2016 South China Sea arbitral ruling as legally binding: Beijing summoned Japan's ambassador and simultaneously had the Chinese Embassy in Japan file a separate solemn "
@@ -443,7 +437,15 @@
         "russia_signal": "The Equal Earth UN world map dispute — in which the newly UN-endorsed projection shaded Japan's claimed Northern Territories the same color as Russia — prompted a Japanese government demand for correction and the mapmaker's agreement to recolor the islands, extending the sustained Russia-Japan symbo"
       },
       "watch_flag": false
+    },
+    "2026-09-12": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry confirmed a sevenfold hike in visa fees for Japanese nationals, citing Japan's July introduction of higher fees for foreign nationals as the reciprocity basis; the move follows September's anti-dumping levies on Japanese dichlorosilane and extends Beijing's multi-instrument ",
+        "dprk_signal": "North Korea fired multiple ballistic missiles toward the Sea of Japan on September 12, one day after Freedom Edge 2026 US-Japan-South Korea trilateral exercises concluded near Jeju Island; South Korea's Joint Chiefs of Staff confirmed the launches and the US stated they posed no immediate threat.",
+        "russia_signal": "The Japanese government confirmed the Equal Earth map — which had shaded Japan's claimed Northern Territories the same color as Russia — was corrected after Tokyo demanded recoloring; the resolution addresses one specific symbolic provocation while the broader Russia-Japan standoff over the Khabarov"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-09-11T11:07:00.757708+00:00"
+  "last_updated": "2026-09-12T11:05:29.787971+00:00"
 }

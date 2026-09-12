@@ -1,1 +1,2 @@
 {"date": "2026-09-11", "run_at": "2026-09-11T07:07:03-04:00", "sent": true, "test_send": false, "words": 2373, "top_stories": 4, "api_calls": 1, "input_tokens": 55793, "output_tokens": 14345, "cache_write_tokens": 3903, "cache_read_tokens": 0, "est_cost_usd": 0.3972}
+{"date": "2026-09-12", "run_at": "2026-09-12T07:05:34-04:00", "sent": true, "test_send": false, "words": 2224, "top_stories": 4, "api_calls": 1, "input_tokens": 48393, "output_tokens": 10965, "cache_write_tokens": 3903, "cache_read_tokens": 0, "est_cost_usd": 0.3243}
