@@ -122,37 +122,40 @@ def table(doc, headers, rows, col_widths=None):
 
 
 # ── BUILD ────────────────────────────────────────────────────────────────────
-# Feed tables are read out of collect.py at build time rather than transcribed,
-# so this document and the running brief cannot drift apart silently.
+# Written for the Japan Chair, not for an engineer. No filenames, no code, no
+# jargon that is not explained on the spot. The source lists are read out of
+# the collector at build time so the document cannot drift from the brief.
 import collect
 
 _TIERS = [
-    ("TIER1_FEEDS", "Tier 1 — News", "24-hour window",
-     "Wires, correspondents, the Japanese dailies, US and Japanese government."),
-    ("TIER2_FEEDS", "Tier 2 — Analysis", "36-hour window",
-     "Think tanks, chairs and commentary."),
-    ("TIER3_FEEDS", "Tier 3 — Academic", "72-hour window",
-     "Peer-reviewed journals in security and Japan studies."),
-    ("TIER4_FEEDS", "Tier 4 — Primary statements", "48-hour window",
-     "Official statements and pressers, read as primary text."),
-    ("PM_TRACKER_FEEDS", "PM appearance tracker", "30-day window",
-     "Feeds the days-since-last-seen line."),
-    ("POLL_FEEDS", "Polling", "72-hour window",
-     "Cabinet approval and party support by pollster."),
+    ("TIER1_FEEDS", "News", "Last 24 hours",
+     "Wire services, foreign correspondents, the Japanese dailies, and the "
+     "Japanese and US governments. This is where most of the brief comes from."),
+    ("TIER2_FEEDS", "Analysis", "Last 36 hours",
+     "Think tanks, university centres and named commentators."),
+    ("TIER3_FEEDS", "Academic", "Last 72 hours",
+     "Peer-reviewed journals in security studies and Japan studies."),
+    ("TIER4_FEEDS", "Official statements", "Last 48 hours",
+     "Government statements and press conferences, read as primary text rather "
+     "than as news about them."),
+    ("PM_TRACKER_FEEDS", "Prime Minister tracker", "Last 30 days",
+     "Feeds the count of how long it has been since the PM was seen in public."),
+    ("POLL_FEEDS", "Opinion polling", "Last 72 hours",
+     "Cabinet approval and party support, by pollster."),
 ]
 
-def _first_url(value):
-    """The URL a feed is tried at first.
 
-    Feed values are a mix: a plain string for most, a tuple of candidates for
-    the rest. Indexing [0] on a string yields "h", which is not a URL and never
-    matches the Google News prefix — so treating every value as a sequence
-    silently classified 38 search-only feeds as native.
+def _first_url(value):
+    """The address a source is tried at first.
+
+    Some entries are a single address, others a list of candidates. Indexing
+    into a plain string returns its first character, which is not an address —
+    reading every entry as a list silently miscounted 38 sources.
     """
     return value if isinstance(value, str) else value[0]
 
 
-def _is_native(value):
+def _is_own_feed(value):
     return not _first_url(value).startswith("https://news.google.com")
 
 
@@ -160,9 +163,9 @@ def _feed_rows(attr):
     d = getattr(collect, attr)
     rows = []
     for name, value in sorted(d.items()):
-        if _is_native(value):
-            how = ("Native RSS, search fallback" if name in collect._FALLBACK
-                   else "Native RSS")
+        if _is_own_feed(value):
+            how = ("Publisher's own feed, with search backup"
+                   if name in collect._FALLBACK else "Publisher's own feed")
         else:
             how = "Google News search"
         rows.append((name, how))
@@ -171,12 +174,12 @@ def _feed_rows(attr):
 
 def _counts(attr):
     d = getattr(collect, attr)
-    return len(d), sum(1 for v in d.values() if _is_native(v))
+    return len(d), sum(1 for v in d.values() if _is_own_feed(v))
+
 
 TOTAL = sum(_counts(a)[0] for a, *_ in _TIERS)
-TOTAL_NATIVE = sum(_counts(a)[1] for a, *_ in _TIERS)
-TOTAL_SEARCH = TOTAL - TOTAL_NATIVE
-FALLBACK_COUNT = len(collect._FALLBACK)
+TOTAL_OWN = sum(_counts(a)[1] for a, *_ in _TIERS)
+TOTAL_SEARCH = TOTAL - TOTAL_OWN
 
 doc = Document()
 for section in doc.sections:
@@ -196,19 +199,20 @@ r.font.size = Pt(10); r.font.color.rgb = GOLD; r.bold = True
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p.add_run("Japan Daily Brief")
-r.font.size = Pt(26); r.font.color.rgb = NAVY; r.bold = True
+r = p.add_run("The Japan Daily Brief")
+r.font.size = Pt(28); r.font.color.rgb = NAVY; r.bold = True
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
 p.paragraph_format.space_after = Pt(4)
-r = p.add_run("How It Is Built")
-r.font.size = Pt(15); r.font.color.rgb = GRAY
+r = p.add_run("How It Is Built, and Where Every Story Comes From")
+r.font.size = Pt(14); r.font.color.rgb = GRAY
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-p.paragraph_format.space_after = Pt(28)
-r = p.add_run("Pipeline  ·  Sourcing  ·  Sections  ·  Editorial Rules  ·  Cost  ·  Open Decisions")
+p.paragraph_format.space_after = Pt(26)
+r = p.add_run(f"A complete account of all {TOTAL} sources, the editorial rules, "
+              "and what still needs deciding")
 r.font.size = Pt(11); r.font.color.rgb = MID; r.italic = True
 
 p = doc.add_paragraph()
@@ -217,202 +221,226 @@ r = p.add_run("Prepared by Andy Lim  ·  CSIS Japan Chair  ·  September 2026")
 r.font.size = Pt(10); r.font.color.rgb = MID
 
 doc.add_page_break()
-
-# ── 1. WHAT IS THIS ──────────────────────────────────────────────────────────
-heading(doc, "1.  What Is This?")
+# ── 1 ────────────────────────────────────────────────────────────────────────
+heading(doc, "1.  What it is")
 para(doc,
-     "An automated daily intelligence briefing on Japan, delivered to the distribution "
-     "list at 7:00 AM ET every morning. Each issue covers overnight news, Japanese "
-     "government action, Diet business, business and economy, the Indo-Pacific as it "
-     "bears on Japan, cabinet approval polling and expert commentary, drawn from "
-     f"{TOTAL} sources. It is a five-minute read, and it replaces roughly ninety minutes "
-     "a morning of manual scanning.",
+     "The Japan Daily Brief is an eight-page email on Japanese politics, security, "
+     "economy and regional affairs that arrives at 7:00 AM Eastern every morning. "
+     f"It is assembled automatically from {TOTAL} news sources, and nobody writes it "
+     "by hand. It takes about five minutes to read.",
      size=11, color=GRAY, space_after=8)
 
-callout(doc, "The one-line pitch:",
-        "A senior analyst's morning scan, automated. No staff time, no manual curation. "
-        "It runs on its own every day for about $9 a month.")
+para(doc,
+     "The work it replaces is roughly ninety minutes of a person opening the Japanese "
+     "dailies, the wire services, the ministry websites and the think-tank output, and "
+     "deciding what a Japan desk needs to know before the day starts.",
+     size=11, color=GRAY, space_after=8)
+
+callout(doc, "The one thing to understand about it:",
+        "The brief cannot write from memory. Every sentence in it has to trace back to "
+        "an article collected that morning. If the reporting is not in front of it, the "
+        "item is left out. Section 7 explains how that is enforced rather than merely "
+        "requested.")
 
 table(doc,
-    ["", "Japan Daily Brief"],
+    ["", ""],
     [
-        ("Sources", f"{TOTAL} feeds across six collections"),
-        ("Tiers", "4 (News / Analysis / Academic / Primary statements), plus a PM tracker and polling"),
-        ("Languages", "English and Japanese, translated by Claude"),
-        ("Sections", "14 in the email, each omitted on a day with nothing behind it"),
-        ("Length", "1,900–2,200 words; hard ceiling 2,400, hard minimum 1,600"),
-        ("Persistent trackers", "PM appearances, regional pressure, feed health, verified calendar"),
-        ("Delivery", "7:00 AM ET daily, with five fallback runs through 10:35 AM"),
-        ("Monthly API cost", "About $9"),
+        ("Arrives", "7:00 AM Eastern, every day"),
+        ("Length", "Around 2,000 words — an eight-minute read at most"),
+        ("Sources", f"{TOTAL}, listed in full in Section 4"),
+        ("Languages", "English and Japanese; Japanese articles are translated"),
+        ("Sections", "14, and any with nothing behind it that day is left out"),
+        ("Written by", "Anthropic's Claude, following a fixed set of instructions"),
+        ("Cost", "About $9 a month"),
+        ("Archive", "Every issue published to a searchable web page with a PDF"),
     ],
-    col_widths=[1.7, 4.5]
+    col_widths=[1.5, 4.7]
 )
 
-# ── 2. HOW IT WORKS ──────────────────────────────────────────────────────────
-heading(doc, "2.  How It Works")
+# ── 2 ────────────────────────────────────────────────────────────────────────
+doc.add_page_break()
+heading(doc, "2.  What happens each morning")
 para(doc,
-     "Every morning GitHub's servers wake up and run a six-stage pipeline in three to "
-     "five minutes. Each stage hands the next a single structured object, and nothing "
-     "reaches a reader that has not passed all six.",
-     size=11, color=GRAY, space_after=6)
+     "Six steps, start to finish in three to five minutes, on a free scheduled server. "
+     "Nothing reaches a reader that has not been through all six.",
+     size=11, color=GRAY, space_after=8)
 
-bullet(doc, f"{TOTAL} feeds pulled in parallel across 25 threads, each tier with its own "
-            "recency window. Market data, the PM appearance tracker and cabinet approval "
-            "polling are fetched live rather than recalled.", bold_prefix="Step 1 — Collect")
-bullet(doc, "Only the strongest articles per tier reach the model. Ordered by primary "
-            "documents first, then the outlets an editorial rule names, then flagged "
-            "correspondents, then Japanese full text — taking one article per source "
-            "before any source gets a second, so a prolific wire cannot crowd out the "
-            "Japanese press.", bold_prefix="Step 2 — Rank")
-bullet(doc, "One structured call to Claude. Sonnet first, Opus on retry. The prompt "
-            "carries the day's articles plus the trackers' real historical baselines, "
-            "and demands JSON with a fixed field for every section.", bold_prefix="Step 3 — Write")
-bullet(doc, "A gate checks the output before anything sends: every link traced back to a "
-            "collected article or the item dropped, duplicates removed within the issue "
-            "and against the past week, hollow filler stripped, per-source caps enforced, "
-            "length trimmed to the ceiling.", bold_prefix="Step 4 — Validate")
-bullet(doc, "The JSON becomes table-based HTML with inline CSS, built to survive Outlook "
-            "and Gmail forwarding. Dark mode, the mobile layout and the print PDF all "
-            "come from the same markup.", bold_prefix="Step 5 — Render")
-bullet(doc, "Gmail SMTP to the distribution list, then the same issue to the web archive "
-            "with a PDF beside it.", bold_prefix="Step 6 — Send and publish")
+bullet(doc, f"All {TOTAL} sources are read at once. How recent an article has to be "
+            "depends on the kind of source: overnight for news, three days for an "
+            "academic journal. Market data, the Prime Minister tracker and the latest "
+            "opinion polling are fetched fresh at the same time, so no figure in the "
+            "brief is recalled from memory.", bold_prefix="1. Gather")
+bullet(doc, "Far more arrives than one issue can hold, so the morning's articles are "
+            "put in priority order and the strongest are passed on. Official documents "
+            "come first, then the outlets the editorial rules require, then named "
+            "correspondents, then the Japanese-language press. Section 5 explains this "
+            "in full.", bold_prefix="2. Prioritise")
+bullet(doc, "Those articles are handed to Claude together with the editorial rules and "
+            "the real historical figures the brief keeps — so it is reading them, not "
+            "remembering them. Claude returns the whole issue in a fixed structure, one "
+            "field per section.", bold_prefix="3. Write")
+bullet(doc, "Before anything is sent: every link is checked against the articles "
+            "actually collected, and an item whose source cannot be traced is removed. "
+            "Stories repeated from earlier in the week are dropped. Empty filler is "
+            "stripped. No single outlet is allowed to dominate. The issue is trimmed if "
+            "it runs long.", bold_prefix="4. Check")
+bullet(doc, "The issue is laid out as an email built to survive Outlook, Gmail and "
+            "forwarding, and to stay readable on a phone and in dark mode. The web "
+            "version and the PDF come from the same layout, so all three are the same "
+            "issue.", bold_prefix="5. Lay out")
+bullet(doc, "The email goes to the distribution list, and the same issue is published "
+            "to the web archive with a PDF beside it.", bold_prefix="6. Send")
 
 para(doc, "", space_after=4)
-callout(doc, "Fallback logic:",
-        "If the 7:00 AM dispatch is missed, five scheduled runs from 7:05 to 10:35 AM ET "
-        "cover it, and a skip guard prevents a second send the same day. If every run "
-        "fails, no email goes out — silence is better than a bad product.")
+callout(doc, "If something goes wrong:",
+        "Five further attempts run through the morning in case the first is missed, and "
+        "a check stops a second copy going out once one has. If every attempt fails, no "
+        "email is sent at all — silence is better than a brief that is wrong.")
+
+# ── 3 ────────────────────────────────────────────────────────────────────────
+doc.add_page_break()
+heading(doc, "3.  Where the news comes from")
+para(doc,
+     "Most publications offer a standing subscription to their output — a feed that "
+     "lists what they have just published. The brief holds one of these for each "
+     "source and reads all of them at once, every morning. Nothing is searched for "
+     "ad hoc, and nothing arrives because the brief went looking for a particular "
+     "story.",
+     size=11, color=GRAY, space_after=8)
+
+para(doc, "Two ways a source is reached", bold=True, size=12, color=NAVY, space_after=4)
+para(doc,
+     "This distinction matters more than any other in this document, and it is the one "
+     "thing worth taking away from it.",
+     size=10.5, color=GRAY, space_after=6)
 
 table(doc,
-    ["Tool", "Role", "Cost"],
+    ["How", "What it means", "How dependable"],
     [
-        ("Python 3.12", "Pipeline code", "Free"),
-        ("GitHub Actions", "Runs on a timer — no server needed", "Free"),
-        ("Claude API", "Reads, translates and writes the digest", "About $9/month"),
-        ("Gmail SMTP", "Sends the email", "Free"),
-        ("GitHub Pages", "Public archive of past issues, with PDFs", "Free"),
+        (("The publisher's own feed", True),
+         "The brief reads the publication directly, the way a subscriber would",
+         "Dependable. It breaks only if the publisher changes something, and the brief notices when a source goes quiet"),
+        (("A Google News search", True),
+         "The brief runs a standing keyword search restricted to that publication, and takes whatever Google returns",
+         "Dependent on Google. If Google changes how it indexes that publication, the source simply stops appearing, with no error"),
     ],
-    col_widths=[1.7, 3.3, 1.3]
+    col_widths=[1.6, 2.6, 2.0]
 )
 
-doc.add_page_break()
-
-# ── 3. SOURCING ──────────────────────────────────────────────────────────────
-heading(doc, "3.  Sourcing")
 para(doc,
-     "A source can be reached two ways: the publisher's own RSS feed, or a Google News "
-     "site-restricted search standing in for it. Where a publisher feed is configured, a "
-     "Google News search is registered behind it as an automatic fallback — if the "
-     "publisher feed returns nothing at fetch time, the search is tried instead. That "
-     "fallback is what lets an unverified publisher URL be added safely: if the URL turns "
-     "out to be wrong, the search answers exactly as it did before and nothing goes "
-     "missing.",
-     size=11, color=GRAY, space_after=8)
+     "Where a publisher's own feed is configured, a Google News search is kept behind "
+     f"it as a backup: if the publisher's feed returns nothing one morning, the search "
+     f"is tried instead. That backup is in place for {len(collect._FALLBACK)} of the "
+     f"{TOTAL_OWN} sources that have a publisher feed. It cannot be extended to the "
+     f"other {TOTAL_SEARCH}, because for those the search is not the backup — it is the "
+     "only route in.",
+     size=10.5, color=GRAY, space_after=8)
 
-para(doc,
-     f"That protection currently covers {FALLBACK_COUNT} of the {TOTAL_NATIVE} feeds that "
-     f"have a publisher URL. It does not extend to the other {TOTAL_SEARCH}, because there "
-     "is nothing to fall back from — a search-only feed is already the fallback, with no "
-     "publisher feed in front of it.",
-     size=11, color=GRAY, space_after=8)
-
-callout(doc, "The vulnerability this guards against:",
-        "A brief built mostly on Google News searches has a single point of failure. One "
-        "change upstream takes most of the sources at once, silently — the issue does not "
-        "error, it just arrives thin.")
-
-para(doc,
-     "Two further rules govern what survives collection. A keyword filter strips world "
-     "news out of general wires, but it is not applied to Japanese government or "
-     "Japanese-language feeds: a real ministry headline often contains none of its "
-     "English tokens, and applying the filter there deleted most of them. And only the "
-     "highest-ranked articles per tier reach the model, ordered so that primary documents "
-     "and the outlets the editorial rules name are never crowded out by whichever feed "
-     "happened to publish most that morning.",
-     size=11, color=GRAY, space_after=8)
-
-para(doc, "Where the sources stand today", bold=True, size=12, color=NAVY, space_after=4)
+para(doc, "How the sources divide today", bold=True, size=12, color=NAVY,
+     space_after=4, space_before=4)
 table(doc,
-    ["Collection", "Feeds", "Native RSS", "Search only", "Recency window"],
+    ["Group", "Sources", "Publisher's own feed", "Search only", "How recent"],
     [(label, str(_counts(attr)[0]), str(_counts(attr)[1]),
       str(_counts(attr)[0] - _counts(attr)[1]), window)
-     for attr, label, window, _desc in _TIERS]
-    + [(("Total", True), (str(TOTAL), True), (str(TOTAL_NATIVE), True),
+     for attr, label, window, _d in _TIERS]
+    + [(("Total", True), (str(TOTAL), True), (str(TOTAL_OWN), True),
         (str(TOTAL_SEARCH), True), ("", True))],
-    col_widths=[2.1, 0.8, 1.0, 1.0, 1.3]
+    col_widths=[1.7, 0.8, 1.4, 0.9, 1.4]
 )
 
-callout(doc, "Read this row first:",
-        f"{TOTAL_SEARCH} of {TOTAL} feeds have no publisher RSS in front of them and "
-        "depend entirely on Google's index. Tier 1 — the wires, the Japanese dailies and "
-        "the government sites — is much the healthiest at 26 of 47. Tiers 2 and 3 are "
-        "almost wholly search-dependent, at 1 of 30 and 0 of 18. Section 8 sets out what "
-        "to do about it.")
+callout(doc, "What that table says, in one sentence:",
+        f"{TOTAL_SEARCH} of the {TOTAL} sources reach the brief only through Google. "
+        "The news group — the wires, the Japanese dailies, the ministries — is in good "
+        "shape at 26 of 47 read directly. Analysis and academic are almost "
+        "entirely dependent on Google: 1 of 30, and 0 of 18. This is the brief's "
+        "largest structural weakness and it is the first item in Section 9.")
 
-# ── 4. HOW ARTICLES ARE CHOSEN ──────────────────────────────────────────────
-doc.add_page_break()
-heading(doc, "4.  How Articles Are Chosen")
 para(doc,
-     "Collection returns far more than one issue can hold. Two mechanisms decide "
-     "what the model is allowed to see: a relevance filter applied at collection, "
-     "and a ranked cut applied when the prompt is built.",
-     size=11, color=GRAY, space_after=8)
-
-para(doc, "The relevance filter, and what is exempt from it", bold=True, size=12,
-     color=NAVY, space_after=4)
-para(doc,
-     "General wires carry the whole world, so a Japan keyword filter strips their "
-     "output down to Japan coverage. Applied to a Japanese ministry feed that same "
-     "filter deletes almost everything, because a real ministry headline often "
-     "contains none of the English tokens it looks for. The feeds below are therefore "
-     f"exempt: everything they publish reaches the ranking stage. There are "
-     f"{len(collect.JAPAN_NATIVE_FEEDS)} of them, and any new Japanese government or "
-     "Japanese-language feed has to be added to that set or most of it is discarded "
-     "before the model ever sees it.",
+     "The risk is not that one source fails; a single quiet source is noticed and "
+     "reported. The risk is that one change at Google removes two whole groups at "
+     "once, and the brief simply arrives thinner than usual with nothing to indicate "
+     "why.",
      size=10.5, color=GRAY, space_after=6)
-table(doc, ["Exempt from the keyword filter", ""],
+
+para(doc, "Japanese-language and government sources", bold=True, size=12, color=NAVY,
+     space_after=4, space_before=8)
+para(doc,
+     "Wire services carry the whole world, so a Japan filter is applied to strip out "
+     "everything unrelated. That filter would destroy a Japanese ministry feed, because "
+     "a genuine ministry headline often contains none of the English words it looks "
+     f"for. The {len(collect.JAPAN_NATIVE_FEEDS)} sources below are therefore exempt — "
+     "everything they publish is considered. Any Japanese government or "
+     "Japanese-language source added in future has to be added to this list, or most of "
+     "it would be discarded before anyone saw it.",
+     size=10.5, color=GRAY, space_after=6)
+table(doc, ["Exempt from the Japan filter", ""],
       [(n, "") for n in sorted(collect.JAPAN_NATIVE_FEEDS)],
       col_widths=[3.6, 2.6])
 
-para(doc, "The ranked cut", bold=True, size=12, color=NAVY, space_after=4, space_before=8)
+# ── 4 ────────────────────────────────────────────────────────────────────────
+doc.add_page_break()
+heading(doc, "4.  Every source, in full")
 para(doc,
-     "At most 140 articles per tier reach the prompt. That cut used to be the first 60 "
-     "of a list ordered by nothing — the parallel fetcher fills results in completion "
-     "order, so tier 1 arrived sorted by which feed answered fastest, and the outlets "
-     "the editorial rules call mandatory were frequently not in the prompt at all. "
-     "Articles are now sorted into four bands before the cut, and within every band one "
-     "article is taken from each source before any source gets a second.",
-     size=10.5, color=GRAY, space_after=6)
+     "The complete list, generated from the brief's own configuration rather than "
+     "typed out, so it cannot fall out of date. Each entry shows how that source is "
+     "reached.",
+     size=11, color=GRAY, space_after=8)
+
+for attr, label, window, desc in _TIERS:
+    n, own = _counts(attr)
+    para(doc, label, bold=True, size=12.5, color=NAVY, space_after=2, space_before=10)
+    para(doc, desc, size=10.5, color=GRAY, space_after=3)
+    para(doc, f"{n} sources · {own} read directly · {n - own} through Google · {window}",
+         size=10, color=MID, space_after=5)
+    table(doc, ["Source", "How it is reached"], _feed_rows(attr),
+          col_widths=[3.4, 2.8])
+
+# ── 5 ────────────────────────────────────────────────────────────────────────
+doc.add_page_break()
+heading(doc, "5.  How the brief decides what to include")
+para(doc,
+     "A normal morning brings several hundred articles. Only about 140 from each group "
+     "are shown to Claude — enough to choose from, few enough to read properly. Which "
+     "140 is an editorial decision, not a technical one, so it follows a stated order.",
+     size=11, color=GRAY, space_after=8)
+
 table(doc,
-    ["Band", "What lands in it", "Why it is first"],
+    ["Order", "What goes here", "The reasoning"],
     [
-        ("1", "Primary documents — the ministry and central-bank feeds listed above",
-         "Official text outranks reporting about official text"),
-        ("2", "Outlets an editorial rule names as mandatory, and flagged correspondents",
-         "A rule the prompt cannot satisfy is not a rule"),
-        ("3", "Japanese-language articles",
-         "The Japanese press is the point of difference, and is easily crowded out"),
-        ("4", "Everything else that cleared the filter",
-         "Filled in as space allows"),
+        (("First", True), "Official documents — the ministries, the Cabinet Office, the Bank of Japan",
+         "What a government actually published outranks reporting about it"),
+        (("Second", True), "The outlets the editorial rules name, and the correspondents listed below",
+         "A rule requiring the Financial Times to appear is meaningless if the FT was never put in front of the writer"),
+        (("Third", True), "Japanese-language articles",
+         "The Japanese press is what distinguishes this brief, and is the first thing crowded out"),
+        (("Fourth", True), "Everything else that passed the Japan filter",
+         "Included as space allows"),
     ],
-    col_widths=[0.6, 3.1, 2.5]
+    col_widths=[0.8, 2.7, 2.7]
 )
 
-para(doc, "Outlets treated as mandatory", bold=True, size=12, color=NAVY,
-     space_after=4, space_before=8)
 para(doc,
-     f"{len(collect.MAJOR_FEEDS)} outlets are enforced: if they published on Japan that "
-     "day, the brief is expected to reflect it. They are " +
+     "Within each of those, one article is taken from each publication before any "
+     "publication gets a second. Without that, a wire service filing forty times "
+     "before dawn would fill the list and push out the Japanese dailies. Before this "
+     "order existed, the cut was simply whichever sources happened to answer fastest, "
+     "and the outlets the rules call mandatory were frequently not in front of the "
+     "writer at all.",
+     size=10.5, color=GRAY, space_after=8)
+
+para(doc, "Outlets that must appear if they published", bold=True, size=12,
+     color=NAVY, space_after=4, space_before=4)
+para(doc,
      ", ".join(sorted(collect.MAJOR_FEEDS)) + ".",
      size=10.5, color=GRAY, space_after=8)
 
-para(doc, "Correspondents tracked by name", bold=True, size=12, color=NAVY,
-     space_after=4, space_before=6)
+para(doc, "Correspondents followed by name", bold=True, size=12, color=NAVY,
+     space_after=4, space_before=4)
 para(doc,
-     f"{len(collect.PRESTIGE_JOURNALISTS)} Japan correspondents are flagged by byline. "
-     "An article carrying one of these names is promoted into band 2 regardless of "
-     "which feed delivered it, so a piece by a bureau correspondent is not cut in "
-     "favour of an agency rewrite of the same story.",
+     f"{len(collect.PRESTIGE_JOURNALISTS)} Japan correspondents are recognised by "
+     "byline. An article carrying one of these names is promoted in the order above "
+     "whatever publication it arrived through, so a bureau correspondent's own piece is "
+     "not dropped in favour of an agency rewrite of the same story.",
      size=10.5, color=GRAY, space_after=6)
 
 _j = sorted(collect.PRESTIGE_JOURNALISTS)
@@ -421,243 +449,233 @@ table(doc, ["Correspondent", "Correspondent"],
       [(_j[i], _j[i + _half] if i + _half < len(_j) else "") for i in range(_half)],
       col_widths=[3.1, 3.1])
 
-callout(doc, "Maintenance note:",
-        "This list is hand-maintained. A correspondent who moves desk or masthead "
-        "keeps their promotion until the name is removed, and a new hire gets none "
-        "until the name is added. It is worth a read at the same time as the source "
-        "list.")
+callout(doc, "This list needs the Chair's eye:",
+        "It is maintained by hand. A correspondent who changes masthead keeps their "
+        "promotion until the name is removed, and a new arrival on the Japan beat gets "
+        "none until the name is added. It is worth reading at the same time as the "
+        "source list.")
 
-# ── 4. THE FULL SOURCE LIST ─────────────────────────────────────────────────
+# ── 6 ────────────────────────────────────────────────────────────────────────
 doc.add_page_break()
-heading(doc, "5.  Every Source It Reads")
+heading(doc, "6.  What is in each issue")
 para(doc,
-     "The complete list, generated from the running code rather than transcribed. "
-     "\"Native RSS\" means the publisher's own feed is tried first. \"Google News search\" "
-     "means there is no publisher feed configured and the source reaches the brief only "
-     "through Google's index.",
+     "Fourteen sections, in the order they appear. A section with nothing behind it "
+     "that morning is absent rather than padded — an empty section is information, and "
+     "filling it would destroy that information.",
      size=11, color=GRAY, space_after=8)
 
-for attr, label, window, desc in _TIERS:
-    n, nat = _counts(attr)
-    para(doc, f"{label}", bold=True, size=12, color=NAVY, space_after=2, space_before=10)
-    para(doc, f"{desc}  {n} feeds, {nat} native, {window}.",
-         size=10, color=MID, space_after=4)
-    table(doc, ["Source", "How it is reached"], _feed_rows(attr),
-          col_widths=[3.6, 2.6])
-
-doc.add_page_break()
-
-# ── 5. WHAT EACH ISSUE COVERS ────────────────────────────────────────────────
-heading(doc, "6.  What Each Issue Covers")
-para(doc,
-     "Sections in the order they appear in the email. A section with nothing behind it "
-     "that day is absent rather than padded — an empty section is a signal, and filling "
-     "it would destroy the signal.",
-     size=11, color=GRAY, space_after=6)
-
 table(doc,
-    ["Section", "Limit", "Content"],
+    ["Section", "How much", "What it carries"],
     [
         ("Today at a Glance", "3 items",
-         "The morning memo: what a Japan desk officer says in the elevator. One sentence each, verb first."),
-        ("Top Stories", "2–4",
-         "Hard news only — wires, correspondents, the Japanese press, government. Never op-eds or think-tank commentary."),
-        ("Overnight", "6 max",
-         "What moved while Washington slept. Headline on one line, a two-sentence summary on the next."),
+         "The three things a Japan desk officer would say walking into a meeting. One sentence each."),
+        ("Top Stories", "2 to 4",
+         "Hard news only — wires, correspondents, the Japanese press, government. Never opinion or think-tank commentary."),
+        ("Overnight", "Up to 6",
+         "What moved while Washington slept. Headline on one line, two sentences beneath it."),
         ("Stat of the Day", "1 figure",
-         "A single striking number from the day's reporting, and it must differ from yesterday's."),
-        ("Upcoming", "4–5 events",
-         "The next 14–30 days. Dates come from the day's articles or the verified calendar, never from memory."),
-        ("Japanese Government", "variable",
-         "Kantei, Chief Cabinet Secretary, MOFA, MOD and Joint Staff, METI, MOF, BOJ, NSS — ministry named in Japanese and English."),
-        ("Business & Economy", "up to 6",
-         "Figures, companies and sector. The $550bn US–Japan investment framework is a standing priority when the day carries it."),
-        ("Indo-Pacific", "4–6",
-         "China–Japan, Korea–Japan, the DPRK, the trilateral, the Quad, Taiwan, Southeast Asia, Australia, India — each as it bears on Japan."),
-        ("Diet Watch", "variable",
-         "Floor and committee activity, bills, the budget, LDP and coalition manoeuvring."),
-        ("Op-Eds, Commentaries & Events", "tier 2",
-         "Think-tank and commentary output, ordered by prestige and then by score."),
-        ("Public Sentiment & Approval Polling", "live fetch",
-         "Cabinet approval and party support, fetched before each issue rather than recalled."),
-        ("Social Statements", "0–4",
-         "Verbatim quotation from senior officials. A quotation section, not a second headline digest."),
-        ("The Wire", "up to 6",
-         "Everything else that cleared the scoring threshold, grouped by subject."),
-        ("On This Day", "0–1",
-         "Only from the verified Japan dates file, and only on an exact month-and-day match. Empty is the normal state."),
+         "One striking number from the morning's reporting, and it must differ from yesterday's."),
+        ("Upcoming", "4 to 5",
+         "The next two to four weeks. Dates come only from the day's articles or a verified calendar, never from memory."),
+        ("Japanese Government", "Varies",
+         "The Cabinet Office, Chief Cabinet Secretary, Foreign Ministry, Defence Ministry and Joint Staff, METI, Finance, the Bank of Japan and the National Security Secretariat."),
+        ("Business & Economy", "Up to 6",
+         "Figures, companies and sectors. The $550bn US-Japan investment framework is a standing priority whenever the day carries it."),
+        ("Indo-Pacific", "4 to 6",
+         "China, Korea, North Korea, the trilateral, the Quad, Taiwan, Southeast Asia, Australia and India — each as it bears on Japan."),
+        ("Diet Watch", "Varies",
+         "Floor and committee business, bills, the budget, and LDP and coalition manoeuvring."),
+        ("Op-Eds & Commentary", "Varies",
+         "Think-tank and commentary output, strongest first."),
+        ("Approval Polling", "Varies",
+         "Cabinet approval and party support, fetched fresh before each issue."),
+        ("Social Statements", "0 to 4",
+         "Direct quotation from senior officials. A quotation section, not a second run of headlines."),
+        ("The Wire", "Up to 6",
+         "Everything else worth flagging, grouped by subject."),
+        ("On This Day", "0 or 1",
+         "Only from a verified list of Japanese anniversaries, and only on an exact date match. Empty is the normal state."),
     ],
-    col_widths=[1.7, 0.8, 3.7]
+    col_widths=[1.5, 0.8, 3.9]
 )
 
-# ── 6. EDITORIAL RULES ───────────────────────────────────────────────────────
-heading(doc, "7.  The Rules That Constrain It")
+# ── 7 ────────────────────────────────────────────────────────────────────────
+doc.add_page_break()
+heading(doc, "7.  The rules that keep it honest")
 para(doc,
-     "These are enforced in code after the model writes, not merely asked for in the "
-     "prompt. That distinction is the whole credibility argument: a rule the model is "
-     "asked to follow is a preference, and a rule the pipeline checks is a guarantee.",
+     "These are checked by the system after the brief is written, not merely requested "
+     "beforehand. That distinction is the whole credibility argument: a rule the writer "
+     "is asked to follow is a preference, and a rule the system verifies is a guarantee.",
      size=11, color=GRAY, space_after=8)
 
-callout(doc, "Source-or-skip",
-        "Every factual claim must trace to an article collected that morning or to a "
-        "baseline supplied in the prompt. A claim from neither is omitted. An item whose "
-        "link cannot be traced back to a collected article is now dropped outright rather "
-        "than printed without one — the earlier behaviour published the violation instead "
-        "of catching it.")
-callout(doc, "Same-poll-date",
-        "Every figure inside one poll object comes from a single pollster's single survey "
-        "over one date range. Approval and party support are never blended across weeks "
-        "or across houses.")
-callout(doc, "Dates from sources only",
-        "Calendar entries and anniversaries use dates found in the day's articles or in "
-        "the verified dates file. Nothing is recalled. A standing fixture with no "
-        "announced date is described as a window or left out, never given a day.")
-callout(doc, "Source diversity",
-        "No more than three Overnight items from any one outlet, and ranking takes one "
-        "article per source before any source gets a second.")
-callout(doc, "Length",
-        "1,900–2,200 words, hard ceiling 2,400, hard minimum 1,600. Over the ceiling, "
-        "whole items are dropped from the tail of the weaker sections — nothing is "
-        "rewritten, so what survives is what the model wrote against its sources.")
+callout(doc, "Source or skip",
+        "Every factual claim must trace to an article collected that morning, or to a "
+        "figure supplied with the instructions. A claim from neither is left out. An "
+        "item whose link cannot be traced back to a collected article is now removed "
+        "entirely — until recently the link was quietly dropped and the story kept, "
+        "which published the problem rather than catching it.")
+callout(doc, "One poll at a time",
+        "Every number inside a single polling block comes from one pollster's one "
+        "survey over one set of dates. Approval and party support are never blended "
+        "across weeks or across pollsters.")
+callout(doc, "Dates only from sources",
+        "Calendar entries and anniversaries use dates found in the morning's articles "
+        "or in a verified list. Nothing is recalled. A recurring event with no announced "
+        "date is described as a window or left out — never given a specific day.")
+callout(doc, "No single voice dominates",
+        "No more than three Overnight items from any one outlet, and the priority order "
+        "takes one article from each publication before any gets a second.")
+callout(doc, "Length is enforced, not requested",
+        "Around 2,000 words, with a hard ceiling. Over it, whole items are dropped from "
+        "the weaker sections — nothing is rewritten or compressed, so what survives is "
+        "what was written against its sources.")
 
-# ── 7. COST AND RELIABILITY ──────────────────────────────────────────────────
+# ── 8 ────────────────────────────────────────────────────────────────────────
 doc.add_page_break()
-heading(doc, "8.  Cost and Reliability")
+heading(doc, "8.  Reliability and cost")
 
-para(doc, "Cost", bold=True, size=12, color=NAVY, space_after=4)
+para(doc, "Getting there every morning", bold=True, size=12, color=NAVY, space_after=4)
 para(doc,
-     "Every run records its own token ledger and the dollar cost of the call. The figures "
-     "below come from that ledger, not from an estimate. Cost recording was added "
-     "recently, so the sample is still short and the monthly figure is an extrapolation "
-     "from it.",
+     "The brief is triggered at 7:00 AM Eastern, with five further attempts through the "
+     "morning in case that one is missed. A check makes every later attempt do nothing "
+     "once the issue has gone out, so the list is never mailed twice.",
+     size=10.5, color=GRAY, space_after=6)
+
+table(doc,
+    ["Check", "What it looks at", "Can it stop the brief?"],
+    [
+        ("Test suite", "86 checks on layout, sourcing, length and email formatting", ("Yes", True)),
+        ("Date independence", "Proves the tests do not pass only because of today's date", ("Yes", True)),
+        ("Duplicate guard", "Whether the list has already been mailed today", ("Yes", True)),
+        ("Hour check", "Refuses to send before the delivery hour", ("Yes", True)),
+        ("Design checks", "Contrast, typefaces and phone layout, measured in a real browser", "No — reports only"),
+        ("Source health", "Flags any source silent three mornings running", "No — reports only"),
+    ],
+    col_widths=[1.5, 3.2, 1.5]
+)
+
+callout(doc, "Why the split:",
+        "Anything that can cancel the brief has to be a fault in the system itself. "
+        "Anything that measures the day's content reports and lets the brief go. A "
+        "design check once measured a single caption as slightly too small and "
+        "cancelled an entire morning's issue; that is the wrong trade, and it no "
+        "longer happens.")
+
+para(doc, "What it costs", bold=True, size=12, color=NAVY, space_after=4, space_before=8)
+para(doc,
+     "Every run records what it spent. The figure moves with how much news there is, "
+     "so it is measured rather than estimated.",
      size=10.5, color=GRAY, space_after=6)
 table(doc,
-    ["Item", "Figure"],
+    ["", ""],
     [
-        ("Cost per issue", "$0.40 (measured)"),
-        ("Implied monthly cost", "About $9 at 22 issues"),
-        ("Primary model", "Claude Sonnet 4.6"),
-        ("Retry model", "Claude Opus 4.8"),
-        ("Everything else", "Free — GitHub Actions, Gmail SMTP, GitHub Pages"),
+        ("Per issue", "About $0.40"),
+        ("Per month", "About $9"),
+        ("Everything else", "Free — the scheduling, the email, the archive and the PDF"),
     ],
-    col_widths=[2.4, 3.8]
+    col_widths=[1.6, 4.6]
 )
 
-para(doc, "Reliability", bold=True, size=12, color=NAVY, space_after=4, space_before=8)
-table(doc,
-    ["Guard", "What it does", "Blocks a send?"],
-    [
-        ("Offline test suite", "86 checks on render, sourcing, length, email format", ("Yes", True)),
-        ("Time-independence check", "Proves the suite does not pass only on today's date", ("Yes", True)),
-        ("Skip guard", "Prevents a second send when a fallback run fires", ("Yes", True)),
-        ("Earliest-hour floor", "Refuses to send before the delivery hour", ("Yes", True)),
-        ("Visual checks", "Contrast, typeface count, mobile overflow in a real browser", "No — reports"),
-        ("Chromium / PDF", "Print export for the archive", "No — reports"),
-        ("Feed health", "Flags any feed silent three or more consecutive runs", "No — reports"),
-    ],
-    col_widths=[1.7, 3.3, 1.3]
-)
-callout(doc, "Why the split:",
-        "A check that can cancel the brief has to be a check about the code. A visual "
-        "measurement that shifts with the day's content should report, not cancel — an "
-        "earlier arrangement let a contrast reading on one caption stop an entire issue "
-        "from going out.")
-
-# ── 8. OPEN DECISIONS ────────────────────────────────────────────────────────
+# ── 9 ────────────────────────────────────────────────────────────────────────
 doc.add_page_break()
-heading(doc, "9.  Open Decisions")
+heading(doc, "9.  What needs a decision")
 para(doc,
-     "The places the brief is currently weakest, each stated with the decision that would "
+     "Five things the Chair should know about, each with the question that would "
      "settle it. This is the section worth marking up.",
-     size=11, color=GRAY, space_after=8)
+     size=11, color=GRAY, space_after=10)
 
-para(doc, "1.  Most feeds have no publisher RSS behind them", bold=True, size=11.5,
-     color=NAVY, space_after=3, space_before=6)
+para(doc, "1.  Most sources depend on Google", bold=True, size=12, color=NAVY,
+     space_after=3)
 para(doc,
-     f"Of {TOTAL} feeds, {TOTAL_SEARCH} are Google News searches with no native path. "
-     "Tier 3 is 18 of 18; tier 2 is 29 of 30, which means CSIS, Brookings, Carnegie, "
-     "Stimson, Hudson, NBR and Pacific Forum reach the brief only if Google indexes them "
-     "that morning. Tier 1 is materially better at 26 of 47 native, and that is where the "
-     "government feeds, the Japanese dailies and the major wires sit. The risk is not one "
-     "feed failing; it is one upstream change taking most of two tiers at once, with no "
-     "error to notice.",
+     f"Of {TOTAL} sources, {TOTAL_SEARCH} are reached only through a Google News "
+     "search, with no direct feed behind them. Every academic journal is in that "
+     "position — 18 of 18 — and so is almost the whole analysis group at 29 of 30, "
+     "which means CSIS, Brookings, Carnegie, Stimson, Hudson, NBR and Pacific Forum "
+     "reach the brief only if Google indexes them that morning. The news group is much "
+     "healthier: 26 of 47 read directly, and that is where the ministries, the "
+     "Japanese dailies and the major wires sit.",
      size=10.5, color=GRAY, space_after=4)
-callout(doc, "Decision:",
-        "Is it worth a pass to add native RSS behind the tier 2 institutions the Chair "
-        "actually reads? Roughly 25 feeds, and most of them publish RSS.")
+callout(doc, "The question:",
+        "Is it worth the work to connect directly to the analysis institutions the "
+        "Chair actually reads? That is roughly 25 sources, and most of them publish a "
+        "feed. It would put the weakest group on the same footing as the news group.")
 
-para(doc, "2.  Named sources that have gone quiet", bold=True, size=11.5,
-     color=NAVY, space_after=3, space_before=8)
+para(doc, "2.  Two Japanese dailies have gone quiet", bold=True, size=12, color=NAVY,
+     space_after=3, space_before=8)
 para(doc,
-     "Feed health tracks how long each source has gone without delivering. Mainichi and "
-     "Jiji Press have both been silent for roughly two months. Neither absence was visible "
-     "in the brief: a source that stops delivering does not announce itself, it simply "
-     "stops appearing. Both have native URLs configured, so this is a moved or broken "
-     "endpoint rather than a design flaw — but two of the Japanese dailies the brief "
-     "claims to read have not been in it since July.",
+     "Mainichi and Jiji Press have not delivered an article in roughly two months. "
+     "Both are configured to be read directly, so this is a moved or broken address "
+     "rather than a design fault — but it means two of the Japanese dailies this brief "
+     "claims to read have not been in it since July. A source that stops delivering "
+     "does not announce itself; it simply stops appearing.",
      size=10.5, color=GRAY, space_after=4)
-callout(doc, "Decision:",
-        "Which Japanese-language dailies are non-negotiable? Those get their endpoints "
-        "verified and a health alert that blocks the send rather than reporting quietly.")
+callout(doc, "The question:",
+        "Which Japanese-language dailies are non-negotiable? Those should have their "
+        "addresses verified, and their silence should raise an alert rather than pass "
+        "quietly.")
 
-para(doc, "3.  Polling baselines drift between manual updates", bold=True, size=11.5,
-     color=NAVY, space_after=3, space_before=8)
+para(doc, "3.  Polling falls back to an old figure", bold=True, size=12, color=NAVY,
+     space_after=3, space_before=8)
 para(doc,
-     "Cabinet approval is fetched live before each issue, which is the reliable path. The "
-     "fallback table behind it is hand-maintained and currently carries July figures, so "
-     "a failed fetch falls back to a two-month-old baseline rather than to nothing.",
+     "Cabinet approval is fetched fresh before each issue, which is the reliable route. "
+     "Behind it sits a hand-maintained figure used if that fetch fails, and it "
+     "currently holds July numbers — so a failed fetch falls back to a two-month-old "
+     "reading rather than to nothing.",
      size=10.5, color=GRAY, space_after=4)
-callout(doc, "Decision:",
-        "Should a failed fetch suppress the polling section entirely rather than fall "
-        "back to a stale table?")
+callout(doc, "The question:",
+        "Should a failed fetch drop the polling section entirely rather than print an "
+        "old figure?")
 
-para(doc, "4.  A built tension index that nothing uses", bold=True, size=11.5,
-     color=NAVY, space_after=3, space_before=8)
+para(doc, "4.  Section scope after the alliance section was removed",
+     bold=True, size=12, color=NAVY, space_after=3, space_before=8)
 para(doc,
-     "tension_scorer.py computes a regional tension score on a 0–10 scale. It is complete "
-     "and tested, and no part of the pipeline imports it, so it has never appeared in an "
-     "issue.",
+     "The US-Japan Alliance & Trade section was removed at the Chair's request. Its "
+     "subject matter now appears in Business & Economy and in Indo-Pacific, and the "
+     "number of stories was raised to fill the space it left.",
      size=10.5, color=GRAY, space_after=4)
-callout(doc, "Decision:",
-        "Wire it in as a standing indicator, or delete it. Carrying it unused is the "
-        "worst of the three.")
+callout(doc, "The question:",
+        "Is alliance and trade coverage landing where the Chair expects to find it, or "
+        "does it need a named home again?")
 
-para(doc, "5.  Section scope after the alliance section was removed", bold=True, size=11.5,
-     color=NAVY, space_after=3, space_before=8)
+para(doc, "5.  There is no weekly edition", bold=True, size=12, color=NAVY,
+     space_after=3, space_before=8)
 para(doc,
-     "The US–Japan Alliance & Trade section was removed at the Chair's request. Its "
-     "subject matter now lands in Business & Economy and in Indo-Pacific, and the story "
-     "count was raised to fill the space it left.",
+     "The Korea and Australia briefs each publish a Friday review that reads back the "
+     "week's issues and draws out the through-lines. Japan has none. Building one is a "
+     "matter of editorial judgement rather than engineering — the machinery exists and "
+     "the layout would carry over unchanged.",
      size=10.5, color=GRAY, space_after=4)
-callout(doc, "Decision:",
-        "Is alliance and trade coverage landing where the Chair expects it, or does it "
-        "need a named home again?")
+callout(doc, "The question:",
+        "Would a Friday Week in Review be useful to the Chair, and what should it "
+        "cover that the dailies do not?")
 
 # ── CLOSE ────────────────────────────────────────────────────────────────────
 doc.add_page_break()
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
 p.paragraph_format.space_before = Pt(50)
-r = p.add_run("CSIS Japan Chair  ·  Japan Daily Brief")
+r = p.add_run("CSIS Japan Chair  ·  The Japan Daily Brief")
 r.font.size = Pt(12); r.font.color.rgb = NAVY; r.bold = True
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-p.paragraph_format.space_after = Pt(20)
-r = p.add_run("Pipeline  ·  Sourcing  ·  Sections  ·  Editorial Rules  ·  Open Decisions")
+p.paragraph_format.space_after = Pt(18)
+r = p.add_run("7:00 AM Eastern, every morning")
 r.font.size = Pt(11); r.font.color.rgb = GRAY
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-r = p.add_run("Feed counts and section limits in this document are generated from the "
-              "running code, not transcribed.")
+r = p.add_run("The source lists, counts and section limits in this document are read "
+              "directly from the brief's own configuration, so this document and the "
+              "brief cannot disagree.")
 r.font.size = Pt(9.5); r.font.color.rgb = MID; r.italic = True
 
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+p.paragraph_format.space_before = Pt(14)
 r = p.add_run("Prepared by Andy Lim  ·  September 2026")
 r.font.size = Pt(10); r.font.color.rgb = MID
 
 doc.save("JAPAN_DIGEST_PRESENTATION.docx")
 print(f"Saved JAPAN_DIGEST_PRESENTATION.docx  "
-      f"({TOTAL} feeds: {TOTAL_NATIVE} native, {TOTAL_SEARCH} search-only)")
+      f"({TOTAL} sources: {TOTAL_OWN} direct, {TOTAL_SEARCH} search-only)")
