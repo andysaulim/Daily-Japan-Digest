@@ -52,24 +52,23 @@ A Japan story from **WSJ, NYT, WaPo, Bloomberg, FT, The Economist, CNN, Reuters,
 
 ## 3. Newsletter structure (sections in delivery order)
 
-1. **Header** — date, RE: line (one-sentence theme summary), editor's note
-2. **Market Strip** — Nikkei · USD/JPY · EUR/JPY · 10Y JGB · BOJ rate · Brent
-3. **Morning Memo** — exactly 3 one-line items (the elevator brief)
-4. **Key Stat** — one striking number from the day's news
-5. **Top Stories** — 2–4 biggest hard-news items, each with a "so what" and (when sourced) a precedent note
-6. **Overnight Flash** — up to 6 secondary items
-7. **Regional Pressure Watch** *(dark section)* — adversary signals: China/Senkaku, North Korea, Russia (see §5)
-8. **Japanese Government** — Kantei, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ
-9. **US–Japan Alliance & Trade** — tariff/defense/alliance dashboard
-10. **Business & Economy** — corporates, BOJ, macro
-11. **Indo-Pacific** — China-Japan, Korea-Japan, DPRK, trilateral, Quad, Taiwan, SE Asia, Australia, India
-12. **Diet Watch** — House of Representatives, House of Councillors, budget, key bills, LDP leadership
-13. **Expert Analysts** — Tier 2 op-eds + Tier 3 academic
-14. **Public Sentiment & Approval Polling** — cabinet approval & party support (see §6)
-15. **Social Statements** — sourced quotes from senior officials
-16. **Also Today / The Wire** — up to 6 brief items
-17. **On This Day** — a verified historical Japan event matching today's date
-18. **Footer**
+1. **Header** — date, RE: line (one-sentence theme summary), market strip (Nikkei · USD/JPY · Brent · BOJ rate), jump row
+2. **Today at a Glance** — exactly 3 one-line items (the elevator brief)
+3. **Top Stories** — 2–4 biggest hard-news items
+4. **Overnight** — up to 6 secondary items
+5. **Stat of the Day** — one striking number from the day's news
+6. **Japanese Government** — PM Watch, then Kantei, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ, plus Personnel Changes and Diet Sessions / LDP (floor and committee business, bills, the budget, LDP and coalition manoeuvring)
+7. **Public Sentiment & Approval Polling** — cabinet approval & party support (see §6)
+8. **Business & Economy** — corporates, BOJ, macro, the $550bn investment framework
+9. **Regional Pressure Watch** *(dark section)* — adversary signals: China/Senkaku, North Korea, Russia (see §5)
+10. **U.S.-Japan Relations** — up to 4: alliance, basing/USFJ, host-nation support, defence-industrial, tariffs and trade, US Congress action on Japan
+11. **Indo-Pacific Partners** — 4–6: South Korea, Southeast Asia, India, Australia, New Zealand, Pacific Islands, trilateral, Quad. China, DPRK, Russia and Taiwan are deliberately excluded
+12. **Expert Analysis and Events** — Tier 2 op-eds + Tier 3 academic + think-tank events
+13. **Social Statements** — 0–4 verbatim quotes from senior officials
+14. **The Wire** — up to 6 brief items
+15. **Upcoming** — 4–5 dated events in the next two to four weeks
+16. **On This Day** — a verified historical Japan event matching today's date
+17. **Footer**
 
 ---
 
@@ -124,7 +123,7 @@ Cabinet approval and party support drawn from **NHK, Jiji, Yomiuri, Asahi, and K
 2. **Recipient list.** Who receives it at launch? (Configured as a secret, not in code.)
 3. **US–Japan trade/tariff baseline.** The alliance-and-trade baseline (Section 232 autos/steel, any 2024–25 US-Japan tariff arrangement, host-nation support, the 2% GDP defense plan) is marked "verify" — please confirm the current state you want as the standing baseline.
 4. **Source adds/drops.** Any outlets, think tanks, or journals to add or remove?
-5. **Section weighting.** Any section you want promoted, demoted, or cut (e.g., emphasis on Diet Watch vs. Alliance vs. Regional Pressure Watch)?
+5. **Section weighting.** Any section you want promoted, demoted, or cut (e.g., emphasis on U.S.-Japan Relations vs. Indo-Pacific Partners vs. Regional Pressure Watch)?
 6. **Go-live date.**
 
 *On approval, configure the GitHub secrets and enable the daily workflow — no code changes required to go live.*

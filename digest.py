@@ -50,7 +50,7 @@ SOURCE-OR-SKIP PRINCIPLE: For EVERY factual claim you write, you must be able to
 
 - POLLING — SAME-POLL-DATE RULE: For the public_sentiment block, NEVER mix pollsters or survey dates in one figure set. Cabinet approval, disapproval, and party support shares must all come from the SAME survey by the SAME pollster (NHK, Jiji, Yomiuri, Asahi, or Kyodo) for the SAME date range. Always cite the pollster and the date range. If today's articles do not contain a fresh poll, carry forward the most recent cited poll and label it with its original date — do NOT blend numbers from different polls.
 
-- EVERY ARTICLE MUST EXIST IN THE INPUT: Every item in top_stories, overnight_items, also_today, opeds_today, business_economy, indo_pacific, and social_statements MUST correspond to an actual article from the input data above — with a real URL from that input. Do NOT generate articles from your training data. Do NOT present old events as today's news. Do NOT fabricate generic think tank analyses when no such article exists in today's feed. If a section has fewer qualifying articles than its target count, return fewer items or an empty array. An empty section is ALWAYS better than a fabricated entry.
+- EVERY ARTICLE MUST EXIST IN THE INPUT: Every item in top_stories, overnight_items, also_today, opeds_today, business_economy, us_japan_relations, indo_pacific, and social_statements MUST correspond to an actual article from the input data above — with a real URL from that input. Do NOT generate articles from your training data. Do NOT present old events as today's news. Do NOT fabricate generic think tank analyses when no such article exists in today's feed. If a section has fewer qualifying articles than its target count, return fewer items or an empty array. An empty section is ALWAYS better than a fabricated entry.
 
 - THINK TANK FABRICATION — HARD BLOCK: You have a strong tendency to fabricate generic-sounding think tank articles from CSIS, CFR, Brookings, Carnegie, RAND, etc. when the feed is thin. These fabrications follow a telltale pattern: vague titles ("examines evolving security environment", "analyzes the alliance"), no specific data points, and no real URL. STOP. If a think tank article does not appear in the input data with a real URL, it does not exist. Do NOT create it.
 
@@ -207,7 +207,7 @@ in the brief for a month. Report a tariff figure ONLY from today's articles.
 
 ALLIANCE & DEFENSE BASELINES:
 - Defense spending: Japan brought its 2%-of-GDP defense-spending target FORWARD to JFY2025 (fiscal year ended March 31, 2026) — no longer "by FY2027". A 2026 review of the Three Strategic Documents (National Security Strategy / National Defense Strategy / Defense Buildup Program) is underway. Carry forward unless today's articles update.
-- US-Japan Security Treaty Article 5: the US treaty commitment to defend territories under Japanese administration — successive US administrations have affirmed it covers the Senkaku Islands. Surface Article 5 reaffirmations in Top Stories or Indo-Pacific when today's articles report them.
+- US-Japan Security Treaty Article 5: the US treaty commitment to defend territories under Japanese administration — successive US administrations have affirmed it covers the Senkaku Islands. Surface Article 5 reaffirmations in Top Stories or us_japan_relations when today's articles report them.
 - Host-Nation Support ("Sympathy Budget" / omoiyari yosan): current Special Measures Agreement runs THROUGH MARCH 31, 2027, at approximately ¥211 billion/year. Carry forward unless updated.
 - USFJ realignment: MCAS Futenma relocation to Henoko (Camp Schwab) remains ongoing and contested in Okinawa; carry forward.
 - Semiconductor / economic security cooperation: Rapidus (2nm foundry, Hokkaido), TSMC Kumamoto (JASM) fabs, and Japan's alignment with US export controls on advanced chips to China. Carry forward unless updated.
@@ -281,7 +281,7 @@ _REGIONAL_FULL_INSTRUCTIONS = (
     "- key_quotes: up to 2 direct quotes most analytically significant today from an adversary government (China MOFA, KCNA, Russian MFA/TASS) OR from a Japanese government response. Each: quote (exact text, translated if needed), source_article (title), speaker (if attributed). Empty array if nothing notable.\n"
     "- output_volume: string assessment of how much Tier 4 material came in today (e.g. \"Normal — 14 items\"). Use the SUMMARY above for the count.\n"
     "- silence_today: boolean — true only if complete Tier 4 blackout (rare)\n"
-    "- watch_flag: boolean — true if today's adversary activity is escalation-level (missile overflight, airspace intrusion, CCG use-of-force, major Russian deployment) or if the PM is unusually absent (7+ days).\n"
+    "- watch_flag: boolean — true if today's adversary activity is escalation-level (missile overflight, airspace intrusion, CCG use-of-force, major Russian deployment). PM absence is NOT a regional-pressure signal and must not raise this flag — the PM Watch line now sits in the Japanese Government section and carries its own absence marker.\n"
     "- bottom_line: 1-2 sentences MAX. The single most important regional-pressure takeaway and what to watch. Ruthlessly concise."
 )
 
@@ -517,7 +517,7 @@ TIER 1: NEWS ARTICLES (last 24h)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {tier_json(payload.get("tier1", []))}
 
-Score and triage these Tier 1 articles INTERNALLY — do NOT emit a per-article array for Tier 1. Use them to populate the curated output sections defined under DIGEST SYNTHESIS below (top_stories, overnight_items, also_today, indo_pacific, business_economy). Only those synthesized sections are part of the output.
+Score and triage these Tier 1 articles INTERNALLY — do NOT emit a per-article array for Tier 1. Use them to populate the curated output sections defined under DIGEST SYNTHESIS below (top_stories, overnight_items, also_today, us_japan_relations, indo_pacific, business_economy). Only those synthesized sections are part of the output.
 
 When triaging, for each article weigh:
 - categories: Alliance / China-Japan / Korea-Japan / DPRK / Economy-BOJ / Politics-Diet / Defense / Technology / Indo-Pacific / Energy
@@ -552,6 +552,17 @@ For EACH qualifying piece output: title (verbatim from input), url (verbatim fro
 Inclusion thresholds: journal_tier "A+" → include if score >= 4. journal_tier "A" → include if score >= 6. journal_tier "B" → include if score >= 8.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EVENTS: THINK-TANK ANNOUNCEMENTS (last 7 days) → OUTPUT: events_today
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{tier_json(payload.get("events", []), max_items=15)}
+
+ANTI-HALLUCINATION — EVENTS: Only include events that appear in the input above with a real URL. Do NOT invent a conference, a panel, a speaker, a date or a venue, and do NOT convert a commentary piece or a report launch into an "event" because the section has room. A fabricated event is worse than an empty section: a reader may try to attend it.
+
+Include an event only if it is forthcoming (or today) and Japan-relevant. Drop anything already past. If no qualifying event appears in the input, return an empty events_today array — most days will have few, and some will have none.
+
+For EACH qualifying event output: title (verbatim from input), url (verbatim from input — do not alter), host (the institution, from the source name), event_date (as stated in the article; null if the article does not give one — do NOT infer it), format ("In-person" / "Virtual" / "Hybrid", only if stated, else null), summary (1-2 sentences on what it covers).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TIER 4: JAPANESE GOVERNMENT PRIMARY + ADVERSARY SIGNAL (last 48h)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {tier4_block}
@@ -580,9 +591,8 @@ Return a digest object with:
 
 - prc_government: REPURPOSED AS JAPANESE GOVERNMENT — array of Japanese government actions from today's news (Kantei/PMO, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ, NSS). Each: ministry (English, e.g. "Ministry of Foreign Affairs"), ministry_jp (Japanese, e.g. 外務省, 防衛省, 経済産業省, 日本銀行, 官邸), official (name + title, only if named in an article), action (1-line headline), detail (1-2 sentences), source_label (e.g. "MOFA", "MOD/Joint Staff", "BOJ", "Kantei"), url.
 
-- npc_politburo: REPURPOSED AS DIET SESSIONS / LDP — array of Diet floor activity, committee action, LDP/coalition leadership moves, or party-politics developments from today's news. Each: body (e.g. "House of Representatives", "House of Councillors", "LDP", "CDP"), action, detail (1-2 sentences), url. Empty array if no relevant activity.
+- npc_politburo: REPURPOSED AS DIET SESSIONS / LDP — array covering ALL Diet and party business: floor and committee business, key bills, the budget, and LDP and coalition manoeuvring, from today's news. This absorbs the former separate Diet Watch section, so legislative activity that once went there belongs here — there is no second Diet section to send it to. Each: body (e.g. "House of Representatives", "House of Councillors", "Budget Committee", "LDP", "CDP"), action (1 line), detail (1-2 sentences), url. Empty array if no relevant activity.
 
-- congressional_watch: REPURPOSED AS DIET WATCH — array of legislative activity: key bills, budget, Diet committee sessions, party maneuvering (House of Representatives / House of Councillors). Optionally include US Congress action specifically on Japan. Each: committee (the chamber/committee/party), action (1 line), detail (1-2 sentences), members (key names if named in articles), url. Empty if nothing today.
 
 - calendar_watch: array of 4-5 key upcoming events in next 14-30 days (MIN 4, MAX 5). Only use events from (a) today's articles with dates, (b) VERIFIED UPCOMING DATES, or (c) baselines. Each: month (3-letter), day (int), headline, detail (1-2 sentences).
 
@@ -592,9 +602,15 @@ Return a digest object with:
 
 - also_today: up to 6 remaining articles score >= 4. Each: url (verbatim from input), source, category, headline, body_text (1 sentence), color_bar_class (cb-navy=Alliance, cb-red=Defense, cb-lt=Trade/Economy, cb-mid=Diplomacy, cb-tech=Technology, cb-biz=Politics).
 
-- business_economy: array up to 6 Japan business/economy items. Each: url (verbatim from input), source, headline, body_text (1-2 sentences with specific numbers), companies (array of names), sector (tech/auto/energy/finance/manufacturing/semiconductors/macro). PRIORITY: if today's articles carry any item on the $550 billion US-Japan strategic investment framework (structure, project selection, disbursement, governance, or drawdown), include it here.
+- business_economy: array up to 6 Japan business/economy items. Each: url (verbatim from input), source, headline, body_text (1-2 sentences with specific numbers), companies (array of names), sector (tech/auto/energy/finance/manufacturing/semiconductors/macro). PRIORITY: if today's articles carry any item on the $550 billion US-Japan strategic investment framework (structure, project selection, disbursement, governance, or drawdown), include it here — the framework stays in this section and does NOT move to us_japan_relations, so the Chair finds it in the same place every morning.
 
-- indo_pacific: array of 4-6 items covering China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan, Southeast Asia, Australia, India as they relate to Japan. Each: url (verbatim from input), source, headline, body_text (1 sentence), category (china-japan, senkaku, korea-japan, dprk-missile, trilateral, quad, taiwan, southeast-asia, australia, india), region_tag ("China-Japan" / "Korea-Japan" / "DPRK" / "Trilateral" / "Indo-Pacific").
+- us_japan_relations: array of UP TO 4 items on the United States and Japan as a pair — the alliance and the bilateral economic relationship. In scope: USFJ posture and basing (including Futenma/Henoko), host-nation support, defence-industrial and co-production cooperation, extended deterrence and Article 5, joint exercises, tariffs and trade negotiation, export controls agreed bilaterally, and US Congress or Administration action directed at Japan. Each: url (verbatim from input), source, headline, body_text (1-2 sentences), category (alliance-security, basing-usfj, host-nation-support, defense-industrial, extended-deterrence, trade, congress), track ("Alliance" / "Trade" / "Basing" / "Congress").
+  HARD RULE — THIS IS A NEWS SECTION, NOT A REFERENCE TABLE. Every item must be a development reported in TODAY's articles with its own URL. Do NOT emit standing figures, current tariff rates, treaty terms, troop numbers or agreement status as items. An earlier version of this section was a standing tariff table, and because its numbers rarely moved the pipeline could not tell when they had gone stale — an expired surcharge was shown for a month. If today's articles carry no US-Japan development, return an empty array. Fewer items, or none, is always correct; a restated fact is not.
+  The $550 billion strategic investment framework belongs to business_economy, not here.
+
+- indo_pacific: RENAMED INDO-PACIFIC PARTNERS — array of 4-6 items on Japan's relations with its PARTNERS in the region: South Korea, Southeast Asia (the ASEAN states), India, Australia, New Zealand and the Pacific Islands. Also in scope: the US-Japan-ROK trilateral and the Quad, both of which are partner groupings. Each: url (verbatim from input), source, headline, body_text (1 sentence), category (korea-japan, trilateral, southeast-asia, india, australia, new-zealand, pacific-islands, quad), region_tag ("Korea-Japan" / "Trilateral" / "Southeast Asia" / "India" / "Australia" / "New Zealand" / "Pacific Islands" / "Quad").
+  EXCLUDED — this is the change that defines the section: China, North Korea, Russia and Taiwan do NOT belong here. The adversary read on those three is carried by the Regional Pressure Watch (xinhua_delta) and their news belongs in top_stories, overnight_items or also_today according to its weight. A China-Japan, DPRK, Russia or Taiwan item placed in this section is a placement error, not a judgement call.
+  This section is partner-facing and will therefore run shorter than it used to on days when partner news is thin. Return fewer items, or an empty array, rather than reaching for a China or DPRK story to fill it.
 
 - social_statements: 0-4 VERBATIM quotes from senior officials. This is a QUOTATION section, not a headline digest. HARD RULES:
   * quote_text MUST be a word-for-word quotation that literally appears (inside quotation marks) in the body of one of today's articles. Do NOT paraphrase. Do NOT convert a headline, a reporter's summary, or the gist of an article into a "quote." Do NOT invent or reconstruct wording.
@@ -616,12 +632,15 @@ Each: avatar_initials (2 letters), who (name), handle_context (title/role), plat
   - party_support: array (max 6) of {{party, support_pct}} from the PRIMARY (first) poll in approval_polls. Empty if no poll.
   - discourse_flag: 1 sentence on a notable domestic-political dynamic from today's articles (e.g. coalition strain, leadership challenge, scandal), or null.
 
+- us_japan_relations: up to 4 alliance / bilateral-economic items per the spec above
 - opeds_today: qualifying Tier 2 pieces, ordered by prestige then score
 - academic_today: qualifying Tier 3 pieces, ordered by journal_tier then score
+- events_today: up to 4 forthcoming Japan-relevant think-tank events per the spec above, soonest first
 - xinhua_delta: the REGIONAL PRESSURE WATCH object built per the Tier 4 instructions above (keep the top-level key name "xinhua_delta")
 - timeline_candidates: list of urls flagged for any CSIS bilateral event database (Senkaku/ECS incidents, DPRK launches over/near Japan, US-Japan alliance milestones)
 
-PLACEMENT PRIORITY (highest wins): top_stories > overnight_items > indo_pacific > business_economy > also_today. Each article appears in exactly ONE section — deduplicate by URL AND topic.
+PLACEMENT PRIORITY (highest wins): top_stories > us_japan_relations > overnight_items > prc_government > personnel_changes > npc_politburo > indo_pacific > business_economy > also_today. Each article appears in exactly ONE section — deduplicate by URL AND topic.
+This list used to name only five sections, which left the government trackers unranked even though the pipeline's own deduplication ranks them above indo_pacific and business_economy — so a story placed in both was silently dropped from the section you had chosen for it. Place each story once, at the highest-ranked section whose scope it fits.
 
 - story_count: total Tier 1 articles processed
 - oped_count: qualifying Tier 2 count
@@ -650,7 +669,8 @@ def _count_digest_words(digest: dict) -> int:
 
     for section_key in ("top_stories", "overnight_items", "also_today", "business_economy",
                        "opeds_today", "academic_today", "social_statements",
-                       "indo_pacific", "congressional_watch", "prc_government"):
+                       "indo_pacific", "us_japan_relations", "prc_government",
+                       "npc_politburo"):
         for item in (digest.get(section_key) or []):
             if not isinstance(item, dict):
                 continue

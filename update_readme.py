@@ -28,7 +28,7 @@ def _count_words(digest: dict) -> int:
         elif isinstance(memo, str):
             words += len(memo.split())
     for key in ("top_stories", "overnight_items", "also_today",
-                "business_economy", "indo_pacific", "social_statements"):
+                "business_economy", "indo_pacific", "us_japan_relations", "social_statements"):
         for item in (digest.get(key) or []):
             for f in fields:
                 if isinstance(item, dict) and item.get(f):
@@ -39,7 +39,7 @@ def _count_words(digest: dict) -> int:
 def _unique_sources(digest: dict) -> int:
     sources = set()
     for key in ("top_stories", "overnight_items", "also_today",
-                "business_economy", "indo_pacific", "social_statements"):
+                "business_economy", "indo_pacific", "us_japan_relations", "social_statements"):
         for item in (digest.get(key) or []):
             src = (item.get("source") if isinstance(item, dict) else "") or ""
             if src.strip():
@@ -71,7 +71,7 @@ def update_readme() -> bool:
         article_count = sum(
             len(digest.get(k) or [])
             for k in ("top_stories", "overnight_items", "also_today",
-                     "business_economy", "indo_pacific")
+                     "business_economy", "indo_pacific", "us_japan_relations")
         )
 
     unique_sources = _unique_sources(digest)
