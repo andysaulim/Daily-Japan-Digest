@@ -295,6 +295,36 @@ def test_validation_gate():
     check("a failure blocks the send",
           "if not validation_passed and not args.force_send:" in src)
     check("the HTML is still written for review", "not sending" in src)
+
+    # 14 September: the brief shipped a Japan Times news commentary under
+    # "Op-Eds & Think Tank Commentary" on a run whose collector reported
+    # "Tier 2: 0 articles from 0 sources". The prompt forbids it and the
+    # prompt was not enough, so the boundary is checked after the fact now.
+    import run as _run
+    _tiered = _run._enforce_source_tiers(
+        {"opeds_today": [{"title": "From the news pool",
+                          "url": "https://example.org/tier1-only"},
+                         {"title": "Genuinely Tier 2",
+                          "url": "https://example.org/in-tier2"}],
+         "academic_today": [{"title": "Not in tier 3",
+                             "url": "https://example.org/nope"}]},
+        {"tier2": [{"url": "https://example.org/in-tier2"}],
+         "tier3": [],
+         "events": []})
+    _kept = [i["url"] for i in _tiered["opeds_today"]]
+    check("an op-ed absent from tier 2 is dropped",
+          "https://example.org/tier1-only" not in _kept, str(_kept))
+    check("an op-ed present in tier 2 survives",
+          "https://example.org/in-tier2" in _kept, str(_kept))
+    check("an empty tier empties its section",
+          _tiered["academic_today"] == [], str(_tiered["academic_today"]))
+
+    # A tier missing from the payload is unknown, not empty: an older cached
+    # collected.json predates the events key, and must not blank the section.
+    _unknown = _run._enforce_source_tiers(
+        {"events_today": [{"title": "Kept", "url": "https://example.org/e"}]}, {})
+    check("a tier absent from the payload is left alone",
+          len(_unknown["events_today"]) == 1, str(_unknown["events_today"]))
     check("force-send still exists", "--force-send" in src)
     bad = _digest(morning_memo=["only", "two"])
     check("a short memo is a failure",

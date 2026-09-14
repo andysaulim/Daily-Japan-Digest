@@ -797,6 +797,66 @@ def _is_hollow(item: dict) -> bool:
     return bool(_HOLLOW_ROUTINE_RE.search(text) and _HOLLOW_EMPTY_RE.search(text))
 
 
+# Sections fed by exactly one collection tier, and the payload key that feeds
+# them. Everything else (top_stories, overnight_items, also_today,
+# indo_pacific, business_economy, us_japan_relations) draws from the shared
+# Tier 1 pool, so there is no boundary to enforce.
+_TIER_SOURCED = {
+    "opeds_today": "tier2",
+    "academic_today": "tier3",
+    "events_today": "events",
+}
+
+
+def _enforce_source_tiers(digest: dict, payload: dict) -> dict:
+    """Drop items that did not come from the tier their section is fed by.
+
+    On 14 September the brief shipped a Japan Times news commentary under
+    "Op-Eds & Think Tank Commentary" on a run whose collector reported
+    "Tier 2: 0 articles from 0 sources". The prompt forbids exactly that — it
+    says to return an empty opeds_today when no Tier 2 article qualifies — but
+    the prompt is a request, and on a day when the tier came back empty the
+    model filled the section from the news pool instead.
+
+    The article was real and correctly linked, so this is a placement fault
+    rather than an invented citation. It is still worth catching, because it
+    defeats the signal the empty section carries: a missing Expert Analysis
+    section says the analysis supply is down, which is true and actionable,
+    while a section quietly backfilled from Tier 1 says nothing is wrong.
+
+    A tier absent from the payload is unknown rather than empty — an older
+    cached collected.json predates the events key — so it is skipped. A tier
+    present and empty is a real zero and is enforced.
+    """
+    dropped: list[str] = []
+    for section, tier_key in _TIER_SOURCED.items():
+        items = digest.get(section)
+        if not isinstance(items, list) or not items:
+            continue
+        tier = payload.get(tier_key)
+        if tier is None:
+            continue
+        allowed = {u for u in ((a.get("url") or "").strip()
+                               for a in tier if isinstance(a, dict)) if u}
+        kept = []
+        for it in items:
+            if not isinstance(it, dict):
+                continue
+            u = _item_url(it)
+            if u and u in allowed:
+                kept.append(it)
+            else:
+                title = (it.get("title") or it.get("headline") or "?")[:60]
+                dropped.append(f"{section}: {title} (not in {tier_key})")
+        digest[section] = kept
+
+    if dropped:
+        print(f"   ✓ Dropped {len(dropped)} item(s) not sourced from their own tier")
+        for line in dropped[:10]:
+            print(f"      {line}")
+    return digest
+
+
 def _drop_hollow_items(digest: dict) -> dict:
     """Remove content-free filler (SOURCE-OR-SKIP) across all list sections."""
     dropped = 0
@@ -1444,6 +1504,9 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # (while item['url'] still matches the collected article) — preserves a
     # verbatim, traceable source title behind any synthesized display headline.
     digest = _attach_orig_titles(digest, collected_by_url)
+    # Before _sanitise_urls for the same reason _attach_orig_titles is: the
+    # comparison is against the collected URLs, and sanitisation rewrites them.
+    digest = _enforce_source_tiers(digest, payload or {})
     digest = _sanitise_urls(digest, collected_by_url)
     print(f"   ✓ URL sanitisation complete ({len(collected_by_url)} collected URLs as reference)")
 
