@@ -38,6 +38,7 @@ def section(title: str) -> None:
 
 
 import collect            # noqa: E402
+import time as _time      # noqa: E402
 import digest as digest_mod   # noqa: E402
 import feed_health        # noqa: E402
 import japan_calendar     # noqa: E402
@@ -319,6 +320,38 @@ def test_feeds():
         check(f"{name} has a native path first",
               "news.google.com" not in feeds.get(name, ""), feeds.get(name, "missing"))
         check(f"{name} keeps a search fallback", name in collect._FALLBACK)
+
+    # Every collector consumes _fetch_feeds_parallel's {source: (entries, extra)}
+    # shape, and the one that forgot to unpack the tuple walked the entries LIST
+    # as though it were a single entry. Collection died on the first .get and
+    # the brief could not send. The offline suite never calls the collectors —
+    # they need network — so nothing here could see it; substituting the fetcher
+    # tests the contract without one. Guard every collector, not just the one
+    # that broke.
+    _fake_entry = {
+        "title": "Japan and the alliance: a panel discussion",
+        "summary": "A panel on Japan policy. Register to attend. Tokyo, Diet, MOFA.",
+        "link": "https://example.org/event",
+        "published_parsed": _time.gmtime(),
+    }
+    _real_fetch = collect._fetch_feeds_parallel
+    for _name, _fn, _tiered in (
+            ("events", collect._collect_events, None),
+            ("tier1", collect._collect_tier1, None),
+            ("tier2", collect._collect_tier2, "A"),
+            ("tier3", collect._collect_tier3, "A+"),
+            ("tier4", collect._collect_tier4, None),
+    ):
+        collect._fetch_feeds_parallel = (
+            lambda d, is_tiered=False, _t=_tiered: {"Fake Feed": ([_fake_entry], _t)})
+        try:
+            _fn()
+            _ok, _why = True, ""
+        except Exception as _e:
+            _ok, _why = False, f"{type(_e).__name__}: {_e}"
+        finally:
+            collect._fetch_feeds_parallel = _real_fetch
+        check(f"_collect_{_name} unpacks the fetcher's (entries, extra) shape", _ok, _why)
 
     # record() reloads from disk on every call, so the run-to-run count only
     # accumulates through the save-backed helper. Point it at a temp file so

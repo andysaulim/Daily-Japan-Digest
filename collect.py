@@ -607,7 +607,11 @@ def _collect_events() -> list:
     """
     articles = []
     results = _fetch_feeds_parallel(EVENT_FEEDS)
-    for source, entries in results.items():
+    # _fetch_feeds_parallel returns {source: (entries, extra)} whether or not
+    # is_tiered is set, so the tuple has to be unpacked here as it is in every
+    # other collector. Iterating it directly walked the entries LIST as though
+    # it were one entry, and collection died on the first .get.
+    for source, (entries, _) in results.items():
         for entry in entries:
             # A week, not 36 hours: an event announced on Monday is still
             # forthcoming — and still news — on Friday.
