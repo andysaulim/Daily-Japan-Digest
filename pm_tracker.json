@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-14",
+      "activity": "Prime Minister Sanae Takaichi met IEA Executive Director Fatih Birol in Tokyo and called for closer Japan-IEA cooperation on energy security.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-14T13:35:25.065871+00:00"
+    },
+    {
       "date": "2026-09-09",
       "activity": "PM Takaichi demanded Russia remove the war-victory statue in Khabarovsk and government confirmed the September 16 cabinet reshuffle plan, with Chief Cabinet Secretary Kihara holding the afternoon press conference to announce Japan's response to China's dichlorosilane anti-dumping measures.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "seed",
       "url": "",
       "recorded_at": "2026-06-16T09:00:00+00:00"
-    },
-    {
-      "date": "2026-06-13",
-      "activity": "SEED DATA — Prime Minister met with a visiting foreign delegation at the Kantei (placeholder seed; verify against live articles).",
-      "source": "seed",
-      "url": "",
-      "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-09-09T13:42:18.813586+00:00"
+  "last_updated": "2026-09-14T13:35:25.065931+00:00"
 }
