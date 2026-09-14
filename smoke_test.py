@@ -107,6 +107,59 @@ def _digest(**over) -> dict:
             {"headline": "The alliance after the election", "authors": "A. Writer",
              "summary": "An argument.", "central_argument": "The core claim.",
              "source": "Foreign Affairs", "url": "https://example.org/i"}],
+        # The docstring above claimed every section was populated and this
+        # fixture carried nine keys, so the blocking gate never walked the
+        # government cards, the PM Watch line, the pressure panel, the poll
+        # table, quoted statements or either new section. It does now.
+        "us_japan_relations": [
+            {"headline": "Host-nation support talks open", "body_text": "First round.",
+             "track": "Alliance", "source": "Kyodo", "url": "https://example.org/j"}],
+        "events_today": [
+            {"title": "The next host-nation support agreement", "host": "CSIS",
+             "event_date": "Sep 18, 2026", "format": "Hybrid",
+             "summary": "A panel.", "url": "https://example.org/k"}],
+        "academic_today": [
+            {"title": "Basing access and credibility", "journal_tier": "A+",
+             "authors": "Nakamura", "summary": "A study.",
+             "source": "International Security", "url": "https://example.org/l"}],
+        "prc_government": [
+            {"ministry": "Ministry of Foreign Affairs", "ministry_jp": "外務省",
+             "official": "Kihara Seiji, Foreign Minister",
+             "action": "MOFA lodges a protest", "detail": "Over a survey vessel.",
+             "source_label": "Kyodo", "url": "https://example.org/m"}],
+        "npc_politburo": [
+            {"body": "Budget Committee", "action": "Sets the supplementary timetable",
+             "detail": "A floor vote follows.", "url": "https://example.org/n"}],
+        "personnel_changes": [
+            {"position": "Ambassador to Australia", "name": "Hayashi Motoko",
+             "action": "appointed", "detail": "The post was vacant since July.",
+             "predecessor": "Suzuki Takeshi"}],
+        "social_statements": [
+            {"avatar_initials": "KS", "who": "Kimura Shunsuke",
+             "handle_context": "Chief Cabinet Secretary",
+             "platform_date": "Kyodo · Sep 9",
+             "quote_text": "We have conveyed our position through diplomatic channels.",
+             "analyst_note": "The figure is new.", "badge_class": "sb-p",
+             "url": "https://example.org/o"}],
+        "public_sentiment": {
+            "approval_polls": [{"pollster": "NHK", "cabinet_approval": "48%",
+                                "cabinet_disapproval": "34%", "poll_date": "Sep 5-7",
+                                "days_old": 4}],
+            "party_support": [{"party": "LDP", "support_pct": "34%"}],
+            "discourse_flag": "Coalition strain over the supplementary budget."},
+        "xinhua_delta": {
+            "pm_appearance_today": True,
+            "pm_days_since_last_appearance": 0,
+            "pm_activity": "Chaired the disaster-response meeting.",
+            "china_signal": "A visa-fee increase was confirmed.",
+            "dprk_signal": None, "russia_signal": None,
+            "senkaku_status": "Two vessels remain in the contiguous zone.",
+            "key_quotes": [], "output_volume": "Normal — 14 items",
+            "silence_today": False, "watch_flag": False,
+            "bottom_line": "Economic-pressure measures are accumulating."},
+        "on_this_day": [
+            {"date": "September 8, 1951", "event": "The peace treaty was signed.",
+             "relevance": "The security treaty followed the same day."}],
         "calendar_watch": [],
         "market_indicators": {
             "nikkei": {"value": "39,110", "change_pct": 0.6},

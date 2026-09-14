@@ -126,6 +126,25 @@ TIER1_FEEDS = {
     "Indian Express re Japan": _gnews("Japan+site:indianexpress.com"),
     "Rappler re Japan":   _gnews("Japan+site:rappler.com"),
 
+    # ── Indo-Pacific partner layer ──────────────────────────────────────────
+    # Added Sep 2026 when the Indo-Pacific section was rescoped to partners
+    # only. The section previously leaned on China and DPRK volume; with those
+    # excluded it has to be fed from the partner capitals themselves or it runs
+    # empty. Every query is Japan-scoped on purpose: _collect_tier1 drops any
+    # entry failing _is_japan_related unless its source is a Japan-native feed,
+    # so an unscoped partner feed would be filtered to nothing.
+    "Straits Times re Japan":  _gnews("Japan+site:straitstimes.com"),
+    "Jakarta Post re Japan":   _gnews("Japan+site:thejakartapost.com"),
+    "Bangkok Post re Japan":   _gnews("Japan+site:bangkokpost.com"),
+    "VN Express re Japan":     _gnews("Japan+site:e.vnexpress.net"),
+    "The Hindu re Japan":      _gnews("Japan+site:thehindu.com"),
+    "ABC Australia re Japan":  _gnews("Japan+site:abc.net.au"),
+    "RNZ re Japan":            _gnews("Japan+site:rnz.co.nz"),
+    "NZ Herald re Japan":      _gnews("Japan+site:nzherald.co.nz"),
+    "RNZ Pacific re Japan":    _gnews("Japan+Pacific+site:rnz.co.nz"),
+    "Islands Business":        _gnews("Japan+site:islandsbusiness.com"),
+    "PINA Pacific re Japan":   _gnews("Japan+%22Pacific+Islands+Forum%22+OR+%22Pacific+Islands%22+Kiribati+OR+Fiji+OR+Palau"),
+
     # ── Specialist Japan outlets ────────────────────────────────────────────
     # The Diplomat's feed is pan-Asia; the tier-1 Japan keyword filter keeps only
     # Japan items, and links are real permalinks (fallback: GN search).
@@ -180,6 +199,36 @@ TIER2_FEEDS = {
     "Foreign Affairs Japan":   (_gnews("Japan+site:foreignaffairs.com"), "A"),
     "Foreign Policy Japan":    (_gnews("Japan+site:foreignpolicy.com"), "B"),
     "War on the Rocks Japan":  (_gnews("Japan+site:warontherocks.com"), "B"),
+}
+
+
+# ── EVENTS: THINK-TANK EVENT ANNOUNCEMENTS (7-day window) ─────────────────────
+# The analysis section has been LABELLED "... & Events" since it was built, but
+# nothing ever collected an event: there was no feed, no prompt field and no
+# renderer. This is the missing half.
+#
+# Two things differ from the article tiers. Events are announcements of things
+# that have not happened yet, so the window is a week rather than 36 hours — an
+# event posted on Monday is still news to a reader on Wednesday. And several
+# hosts publish a real event feed, which is far better than a Google News query
+# for this purpose, because event pages are poorly indexed by news search.
+#
+# A host whose feed stops delivering shows up in feed_health after three silent
+# runs, which is the point at which a dead feed should be dropped rather than
+# left to look like a quiet week.
+EVENT_FEEDS = {
+    "CSIS Events":            _direct("CSIS Events", "https://www.csis.org/events/feed",
+                                  "site:csis.org+events+Japan"),
+    "Brookings Events":       _direct("Brookings Events", "https://www.brookings.edu/events/feed/",
+                                  "site:brookings.edu+events+Japan"),
+    "Carnegie Events":        _gnews("Japan+event+OR+webinar+site:carnegieendowment.org"),
+    "Hudson Events":          _gnews("Japan+event+OR+webinar+site:hudson.org"),
+    "Stimson Events":         _gnews("Japan+event+OR+webinar+site:stimson.org"),
+    "Sasakawa USA Events":    _gnews("Japan+event+OR+symposium+site:spfusa.org"),
+    "NBR Events":             _gnews("Japan+event+OR+webinar+site:nbr.org"),
+    "East-West Center Events": _gnews("Japan+event+OR+seminar+site:eastwestcenter.org"),
+    "Asia Society Events":    _gnews("Japan+event+OR+webinar+site:asiasociety.org"),
+    "Wilson Center Events":   _gnews("Japan+event+OR+webinar+site:wilsoncenter.org"),
 }
 
 
@@ -545,6 +594,35 @@ def _collect_tier2() -> list:
                 "japan_primary": prestige == "A",
             })
             articles.append(article)
+    return _dedup(articles)
+
+
+def _collect_events() -> list:
+    """Think-tank event announcements for the Expert Analysis and Events section.
+
+    Kept deliberately strict. An event entry that cannot be told apart from an
+    ordinary commentary post is worse than no entry, because it puts a piece of
+    analysis under a heading that promises a date and a venue. The title or
+    summary therefore has to carry an event word before anything is emitted.
+    """
+    articles = []
+    results = _fetch_feeds_parallel(EVENT_FEEDS)
+    for source, entries in results.items():
+        for entry in entries:
+            # A week, not 36 hours: an event announced on Monday is still
+            # forthcoming — and still news — on Friday.
+            if not _is_recent(entry, hours=168):
+                continue
+            if not _is_japan_related(entry):
+                continue
+            text = f"{entry.get('title', '')} {entry.get('summary', entry.get('description', ''))}".lower()
+            event_signals = ("event", "webinar", "seminar", "conference", "symposium",
+                             "panel", "discussion", "book launch", "roundtable",
+                             "briefing", "workshop", "forum", "register", "rsvp",
+                             "livestream", "fireside")
+            if not any(sig in text for sig in event_signals):
+                continue
+            articles.append(_entry_to_article(entry, source))
     return _dedup(articles)
 
 
@@ -1144,6 +1222,10 @@ def collect_all() -> dict:
     tier3 = _collect_tier3()
     print(f"  ✔ {len(tier3)} articles from {len({a['source'] for a in tier3})} sources")
 
+    print("\n🔍 Events: think-tank announcements (7-day window)...")
+    events = _collect_events()
+    print(f"  ✔ {len(events)} event announcements from {len({a['source'] for a in events})} sources")
+
     print("\n🔍 Tier 4: Japan Government Primary + Adversary Signal (48h window)...")
     tier4 = _collect_tier4()
     print(f"  ✔ {len(tier4)} articles from {len({a['source'] for a in tier4})} sources")
@@ -1183,14 +1265,15 @@ def collect_all() -> dict:
     # nothing to flag it — which is how Mainichi and Jiji went 51 days
     # without delivering an article and no one noticed.
     _counts = {}
-    for _art in tier1 + tier2 + tier3 + tier4:
+    for _art in tier1 + tier2 + tier3 + tier4 + events:
         _s = (_art.get("source") or "").strip()
         if _s:
             _counts[_s] = _counts.get(_s, 0) + 1
     # Shaped the way feed_health.record expects: a feed that delivered
     # nothing is not an absent key, it is an explicit failure for this run.
     _per_source = {}
-    for _name in list(TIER1_FEEDS) + list(TIER2_FEEDS) + list(TIER3_FEEDS) + list(TIER4_FEEDS):
+    for _name in (list(TIER1_FEEDS) + list(TIER2_FEEDS) + list(TIER3_FEEDS)
+                  + list(TIER4_FEEDS) + list(EVENT_FEEDS)):
         _n = _counts.get(_name, 0)
         _per_source[_name] = {"success": _n > 0, "count": _n}
 
@@ -1199,6 +1282,7 @@ def collect_all() -> dict:
         "tier2": tier2,
         "tier3": tier3,
         "tier4": tier4,
+        "events": events,
         "per_source": _per_source,
         "pm_tracker_articles": pm_articles,
         "poll_articles": poll_articles,

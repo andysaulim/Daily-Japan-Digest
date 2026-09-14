@@ -60,25 +60,23 @@ collect.py          digest.py           render.py          send_email.py
 
 | # | Section | Description |
 | - | - | - |
-| 1 | Header | Date · RE line · editor's note |
-| 2 | Market Strip | Nikkei 225 · USD/JPY · EUR/JPY · Brent · 10Y JGB · Japan 5Y CDS · BOJ policy rate · GDP |
-| 3 | Δ Since Yesterday | What moved: BOJ, tariffs, scrambles, CCG presence, DPRK launches |
-| 4 | Morning Memo | Top 3 stories at a glance — elevator brief |
-| 5 | Top Stories | 2–4 biggest hard news stories with "So what" + pattern_note |
-| 6 | Overnight Flash | Up to 6 secondary items |
-| 7 | Key Stat | Single striking number from today's news |
-| 8 | Regional Pressure Watch | **DARK SECTION** — China / DPRK / Russia adversary signals toward Japan + PM watch |
-| 9 | Expert Analysts | Op-eds + academic journals |
-| 10 | Public Sentiment | Cabinet approval & party support (NHK/Jiji/Yomiuri/Asahi/Kyodo, same-poll rule) |
-| 11 | Social Statements | Quotes from the PM, ministers, BOJ Governor, US/allied officials |
-| 12 | Japanese Government | Kantei, Cabinet Sec, MOFA, MOD/Joint Staff, METI, MOF, BOJ + Personnel + Diet Sessions/LDP + Calendar |
-| 13 | US–Japan Alliance & Trade | Section 232 autos/steel, Section 301 (forced-labor tariff in force, excess-capacity probe), $550B investment framework, trade-deal status, new deals |
-| 14 | Diet Watch | House of Representatives / House of Councillors, key bills, budget |
-| 15 | Business & Economy | Major corporates, semiconductors (Rapidus, JASM), macro indicators |
-| 16 | Indo-Pacific | China-Japan, Korea-Japan, DPRK, US-Japan-ROK trilateral, Quad, Taiwan |
-| 17 | Also Today / The Wire | Up to 6 third-tier items |
-| 18 | On This Day | Verified historical event matching today's exact date |
-| 19 | Footer | — |
+| 1 | Header | Date · RE line · market strip (Nikkei 225 · USD/JPY · Brent · BOJ policy rate) · jump row |
+| 2 | Today at a Glance | Top 3 stories at a glance — elevator brief |
+| 3 | Top Stories | 2–4 biggest hard news stories |
+| 4 | Overnight | Up to 6 secondary items |
+| 5 | Stat of the Day | Single striking number from today's news |
+| 6 | Japanese Government | PM Watch · Kantei, Cabinet Sec, MOFA, MOD/Joint Staff, METI, MOF, BOJ + Personnel + Diet Sessions/LDP (floor and committee business, bills, budget, LDP and coalition manoeuvring) |
+| 7 | Public Sentiment & Approval Polling | Cabinet approval & party support (NHK/Jiji/Yomiuri/Asahi/Kyodo, same-poll rule) |
+| 8 | Business & Economy | Major corporates, semiconductors (Rapidus, JASM), macro, the $550B investment framework |
+| 9 | Regional Pressure Watch | **DARK SECTION** — China / DPRK / Russia adversary signals toward Japan |
+| 10 | U.S.-Japan Relations | Up to 4 — alliance, basing/USFJ, host-nation support, defence-industrial, tariffs and trade, US Congress action on Japan |
+| 11 | Indo-Pacific Partners | 4–6 — South Korea, Southeast Asia, India, Australia, New Zealand, Pacific Islands, trilateral, Quad |
+| 12 | Expert Analysis and Events | Op-eds + academic journals + think-tank event announcements |
+| 13 | Social Statements | 0–4 verbatim quotes from the PM, ministers, BOJ Governor, US/allied officials |
+| 14 | The Wire | Up to 6 third-tier items |
+| 15 | Upcoming | 4–5 dated events in the next two to four weeks |
+| 16 | On This Day | Verified historical event matching today's exact date |
+| 17 | Footer | — |
 
 ---
 

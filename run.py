@@ -116,8 +116,9 @@ def _count_words(digest: dict) -> int:
             words += len(mi.split())
 
     for key in ("top_stories", "overnight_items", "also_today", "business_economy",
-                "indo_pacific", "social_statements", "opeds_today", "academic_today",
-                "prc_government", "congressional_watch", "npc_politburo",
+                "indo_pacific", "us_japan_relations", "social_statements",
+                "opeds_today", "academic_today",
+                "prc_government", "npc_politburo",
                 "personnel_changes"):
         for item in (digest.get(key) or []):
             if not isinstance(item, dict):
@@ -462,8 +463,9 @@ def _resolve_payload_urls(payload: dict) -> dict:
 
 _URL_SECTIONS = (
     "top_stories", "overnight_items", "also_today", "business_economy",
-    "indo_pacific", "opeds_today", "academic_today", "social_statements",
-    "prc_government", "congressional_watch", "npc_politburo", "personnel_changes",
+    "us_japan_relations", "indo_pacific", "opeds_today", "academic_today",
+    "events_today", "social_statements", "prc_government", "npc_politburo",
+    "personnel_changes",
 )
 
 
@@ -689,9 +691,9 @@ def _sanitise_urls(digest: dict, collected: dict) -> dict:
 # (Previously only eight sections were swept, which let the same story appear in,
 # e.g., the MOFA tracker AND Personnel Changes at once.)
 _DEDUPE_ORDER = (
-    "top_stories", "overnight_items", "prc_government", "personnel_changes",
-    "congressional_watch", "npc_politburo", "indo_pacific", "business_economy",
-    "opeds_today", "academic_today", "social_statements", "also_today",
+    "top_stories", "overnight_items", "us_japan_relations", "prc_government",
+    "personnel_changes", "npc_politburo", "indo_pacific", "business_economy",
+    "opeds_today", "academic_today", "events_today", "social_statements", "also_today",
 )
 
 # Common brief words carrying no story identity — dropped before comparing titles
@@ -872,7 +874,12 @@ def _dedupe_sections(digest: dict) -> dict:
             seen_urls.add(ks_url)
 
     digest["overnight_items"] = _sweep(digest.get("overnight_items"))
-    for section in _DEDUPE_ORDER[2:]:
+    # Named rather than sliced. This was _DEDUPE_ORDER[2:], which silently
+    # assumed the first two entries were exactly the two swept above; adding a
+    # section at the head of the tuple would have swept one of them twice,
+    # around the key_stat fingerprint seeding in between.
+    _already_swept = ("top_stories", "overnight_items")
+    for section in (x for x in _DEDUPE_ORDER if x not in _already_swept):
         digest[section] = _sweep(digest.get(section))
 
     if removed:
@@ -1467,6 +1474,21 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── Update persistent trackers ──────────────────────────────────────
     try:
         from pm_tracker import update_from_digest as update_pm
+        # Stamp the tracker's own count over the model's before the write, so
+        # the "N days since last confirmed appearance" line the reader sees is
+        # arithmetic over the persistent log rather than a number the model
+        # recalled. The prompt already calls the tracker ground truth; this is
+        # what makes that true rather than requested. An appearance confirmed
+        # today is zero days by definition, so only the absent case is stamped.
+        _rw = digest.get("xinhua_delta")
+        if isinstance(_rw, dict):
+            if _rw.get("pm_appearance_today"):
+                _rw["pm_days_since_last_appearance"] = 0
+            else:
+                from pm_tracker import days_since_last_appearance as _pm_days
+                _d = _pm_days()
+                if isinstance(_d, int):
+                    _rw["pm_days_since_last_appearance"] = _d
         update_pm(digest)
     except Exception as e:
         print(f"⚠ PM tracker update failed (non-fatal): {e}")

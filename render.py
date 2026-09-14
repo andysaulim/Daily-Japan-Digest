@@ -69,6 +69,8 @@ _DARK_EXEMPT = {
     "#041a33", "#0a0f1e", "#0d1b2a", "#0e1c33", "#0f1b30", "#121212",
     "#162340", "#1a1a1a", "#1b2a4a", "#1e2126", "#262a30", "#2e3644",
     "#051f3d", "#6e0019", "#bc002d", "#de2910", "#17798c",
+    # Regional Pressure Watch panel type: already chosen to read on navy.
+    "#e4eaf2", "#9db2ce", "#f2718a",
 }
 
 
@@ -134,24 +136,24 @@ def _arrow(val) -> str:
     try:
         val = float(val)
     except (TypeError, ValueError):
-        return '<span style="color:#7F8C8D;">—</span>'
+        return '<span style="color:#5A6667;">—</span>'
     if val > 0:
         return f'<span style="color:#69C88E;">&#9650; +{val:.2f}%</span>'
     if val < 0:
         return f'<span style="color:#E8697A;">&#9660; {val:.2f}%</span>'
-    return '<span style="color:#7F8C8D;">— flat</span>'
+    return '<span style="color:#5A6667;">— flat</span>'
 
 
 def _cds_arrow(val) -> str:
     try:
         val = float(val)
     except (TypeError, ValueError):
-        return '<span style="color:#7F8C8D;">—</span>'
+        return '<span style="color:#5A6667;">—</span>'
     if val > 0:
         return f'<span style="color:#E8697A;">&#9650; +{val:.1f} bps</span>'
     if val < 0:
         return f'<span style="color:#69C88E;">&#9660; {val:.1f} bps</span>'
-    return '<span style="color:#7F8C8D;">— flat</span>'
+    return '<span style="color:#5A6667;">— flat</span>'
 
 
 def _link_or_text(text: str, url: str,
@@ -164,7 +166,40 @@ def _link_or_text(text: str, url: str,
 _SEC = 'style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"'
 _SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #E8697A;border-bottom:1px solid #EBEBEB;" class="sec"'
 
+# The order the reader meets the brief in, stated once.
+#
+# This used to be an emergent property of six "chapter" lists that sections were
+# appended to in source order, which meant the running order could only be read
+# by tracing which bucket each append landed in, and could only be changed by
+# moving blocks of HTML around. The Japan Chair's September line-up interleaves
+# across those buckets — government before polling before business before the
+# pressure watch — which the buckets could not express at all.
+#
+# Each section now writes itself into a dict under its own id and this tuple
+# decides the running order. A section that produced nothing is simply absent
+# from the dict, which is how an empty section stays absent from the brief.
+SECTION_ORDER = (
+    "memo",          # Today at a Glance
+    "top-stories",   # Top Stories
+    "overnight",     # Overnight
+    "key-stat",      # Stat of the Day
+    "tokyo",         # Japanese Government (+ PM Watch, Personnel, Diet Sessions)
+    "polling",       # Public Sentiment & Approval Polling
+    "business",      # Business & Economy
+    "watch",         # Regional Pressure Watch
+    "us-japan",      # U.S.-Japan Relations
+    "indo-pacific",  # Indo-Pacific Partners
+    "analysis",      # Expert Analysis and Events
+    "social",        # Social Statements
+    "wire",          # The Wire
+    "upcoming",      # Upcoming
+    "on-this-day",   # On This Day
+)
+
 INK  = "#1A222E"
+# Mirrors pm_tracker.ABSENCE_THRESHOLD_DAYS. Kept as a literal so render
+# has no import-time dependency on the tracker module.
+PM_ABSENCE_THRESHOLD_DAYS = 7
 MUTE = "#6B7280"
 
 
@@ -224,6 +259,48 @@ def _site_root(web_url: str) -> str:
     return base
 
 
+def _pm_watch_line(xd: dict) -> str:
+    """The Prime Minister's public posture, for the Japanese Government section.
+
+    This used to sit inside the Regional Pressure Watch panel, among the China,
+    North Korea and Russia signals. The Japan Chair asked for it here instead,
+    and the move is right on its own terms: whether the PM was seen in public
+    is a fact about the Japanese government, not about adversary pressure.
+
+    The markup is rebuilt rather than moved. The old version was written for
+    the navy panel — TEXT_ON_NAVY body text with a RED_ON_NAVY label — and both
+    are near-white, so lifting it onto the white government section unchanged
+    would have printed it invisibly.
+
+    The absence flag is computed here rather than asked of the model. It used
+    to ride on the model's own `watch_flag` judgement; a threshold comparison
+    is arithmetic, and arithmetic should not be delegated to a writer who may
+    disagree with it.
+    """
+    appeared = xd.get("pm_appearance_today")
+    days = xd.get("pm_days_since_last_appearance")
+    activity = _emphasis(_esc(xd.get("pm_activity", "")))
+    if appeared is None and days is None:
+        return ""
+
+    status = "PM appeared today" if appeared else "No confirmed PM appearance today"
+    # A literal middle dot, not the entity: this string goes through _esc,
+    # which would turn "&middot;" into a visible "&amp;middot;".
+    days_str = (f" · {days} day(s) since last confirmed appearance"
+                if isinstance(days, int) else "")
+    # 7 days is pm_tracker.ABSENCE_THRESHOLD_DAYS, the same line the tracker
+    # flags its own context block at.
+    flag = ""
+    if isinstance(days, int) and days >= PM_ABSENCE_THRESHOLD_DAYS:
+        flag = ('<span style="color:#8A5A00;font-weight:700;">'
+                '&nbsp;&middot; absence anomaly</span>')
+    return (f'<div style="margin:0 0 14px;padding:9px 12px;background:#F4F6F9;'
+            f'border-left:3px solid {NAVY};font-size:13px;line-height:1.5;color:{INK};">'
+            f'<strong style="color:{HINOMARU_RED};">PM Watch:</strong> '
+            f'{_esc(status)}{_esc(days_str)}{flag}'
+            f'{(" &mdash; " + activity) if activity else ""}</div>')
+
+
 def _sec_label(label: str, color: str = RING_ON_DARK) -> str:
     """A section bar: black field, an accent ring, a white letterspaced label.
 
@@ -276,7 +353,8 @@ def _word_count(d: dict) -> int:
             w += _w(s.get(f, ""))
 
     # Lists with headline + body_text
-    for key in ("overnight_items", "also_today", "business_economy", "indo_pacific"):
+    for key in ("overnight_items", "also_today", "business_economy", "indo_pacific",
+                "us_japan_relations"):
         for it in (d.get(key) or []):
             w += _w(it.get("headline", ""))
             w += _w(it.get("body_text", ""))
@@ -285,17 +363,17 @@ def _word_count(d: dict) -> int:
     for o in (d.get("opeds_today") or []):
         for f in ("title", "summary", "central_argument", "policy_so_what", "authors"):
             w += _w(o.get(f, ""))
+    for e in (d.get("events_today") or []):
+        for f in ("title", "summary", "host"):
+            w += _w(e.get(f, ""))
     for a in (d.get("academic_today") or []):
         for f in ("title", "summary", "authors"):
             w += _w(a.get(f, ""))
 
-    # Japanese government / Diet Watch / Diet sessions / Personnel
+    # Japanese government / Diet sessions and party business / Personnel
     for g in (d.get("prc_government") or []):
         for f in ("action", "detail", "official", "ministry"):
             w += _w(g.get(f, ""))
-    for c in (d.get("congressional_watch") or []):
-        for f in ("committee", "action", "detail"):
-            w += _w(c.get(f, ""))
     for n in (d.get("npc_politburo") or []):
         for f in ("body", "action", "detail"):
             w += _w(n.get(f, ""))
@@ -361,13 +439,11 @@ def render_html(digest: dict) -> str:
     wc = _word_count(digest)
     read_min = max(1, round(wc / 250))
     web_url = digest.get("web_url", "")
-    # Chapter buckets
-    sections_pre = []       # View-in-browser, header, markets, Δ Since Yesterday
-    sections_today = []     # Morning Memo, Top Stories, Overnight Flash, Key Stat
-    sections_analysis = []  # Regional Pressure Watch, Expert Analysts, Public Sentiment, Social Statements
-    sections_trackers = []  # Security Watch, Japanese Gov, US-Japan Alliance & Trade, Diet Watch
-    sections_wire = []      # Business, Indo-Pacific, Also Today, On This Day
+    # The masthead block and the footer are pinned; everything between them is
+    # keyed by section id and ordered by SECTION_ORDER above.
+    sections_pre = []       # View-in-browser, header, markets, Δ Since Yesterday, nav
     sections_post = []      # Footer
+    body_sections: dict[str, str] = {}
 
     # 0a. The internal-use notice lives in the utility row below, which is the
     # house treatment. It used to have a full-width red band of its own as
@@ -520,7 +596,7 @@ def render_html(digest: dict) -> str:
         # The memo sits on a tinted panel with a rule down the left, as in
         # Korea. Flat on white it read as the first of the news sections
         # rather than as the summary of all of them.
-        sections_today.append(f"""
+        body_sections["memo"] = (f"""
 <div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
 <a name="memo" id="memo"></a>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="glance-panel" style="background:#FBEEF1;border-left:3px solid {HINOMARU_RED};">
@@ -563,7 +639,7 @@ def render_html(digest: dict) -> str:
 {ref}
 <div style="font-size:10px;color:#6B7280;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
-        sections_today.append(f'<div {_SEC}><a name="top-stories" id="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>')
+        body_sections["top-stories"] = f'<div {_SEC}><a name="top-stories" id="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>'
 
     # 4b. Overnight Flash
     overnight = digest.get("overnight_items") or []
@@ -603,7 +679,7 @@ def render_html(digest: dict) -> str:
                    f'</tr>')
         fh = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" '
               f'class="flash-table" style="border-top:2px solid {HINOMARU_RED};">{fh}</table>')
-        sections_today.append(
+        body_sections["overnight"] = (
             f'<div {_SEC}><a name="overnight" id="overnight"></a>{_sec_label("Overnight")}{fh}</div>')
 
     # 5. Key Stat
@@ -612,7 +688,7 @@ def render_html(digest: dict) -> str:
         # A light panel, not a full-width navy band. The band interrupted the
         # brief with the loudest ground on the page for a single number, and
         # centred it away from the column every other section reads down.
-        sections_today.append(f"""
+        body_sections["key-stat"] = (f"""
 <div {_SEC}>
   <a name="key-stat" id="key-stat"></a>{_sec_label("Stat of the Day")}
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F3F4;border-top:2px solid {HINOMARU_RED};border-bottom:1px solid #E4E7EB;">
@@ -649,19 +725,6 @@ def render_html(digest: dict) -> str:
                         f'<strong style="color:{RED_ON_NAVY};">Senkaku / ECS:</strong> {senkaku}</div>'
                         if senkaku else "")
 
-        # PM appearance line
-        pm_appeared = xd.get("pm_appearance_today")
-        pm_days = xd.get("pm_days_since_last_appearance")
-        pm_activity = _esc(xd.get("pm_activity", ""))
-        pm_html = ""
-        if pm_appeared is not None or pm_days is not None:
-            pm_status = "PM appeared today" if pm_appeared else "No confirmed PM appearance today"
-            days_str = (f" · {pm_days} day(s) since last confirmed appearance"
-                        if isinstance(pm_days, int) else "")
-            pm_html = (f'<div style="margin-bottom:10px;font-size:13px;color:{TEXT_ON_NAVY};">'
-                       f'<strong style="color:{RED_ON_NAVY};">PM Watch:</strong> {_esc(pm_status)}{_esc(days_str)}'
-                       f'{(" — " + pm_activity) if pm_activity else ""}</div>')
-
         # Key quotes
         quotes_html = ""
         for q in (xd.get("key_quotes") or [])[:2]:
@@ -682,14 +745,14 @@ def render_html(digest: dict) -> str:
         vol = _esc(xd.get("output_volume", ""))
         watch = xd.get("watch_flag")
         watch_badge = ('<span style="display:inline-block;padding:2px 8px;border-radius:3px;'
-                       'font-size:10px;font-weight:700;color:#fff;background:#E8697A;'
+                       'font-size:10px;font-weight:700;color:#14181F;background:#E8697A;'
                        'letter-spacing:0.5px;margin-left:8px;">WATCH</span>') if watch else ""
 
-        sections_analysis.append(f"""
+        body_sections["watch"] = (f"""
 <div style="padding:20px 32px;background:{PANEL_NAVY};color:{TEXT_ON_NAVY};border-top:3px solid #BC002D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec watch-dark">
+<a name="watch" id="watch"></a>
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:{RED_ON_NAVY};font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(242,113,138,0.55);">Regional Pressure Watch{watch_badge}</div>
 {("<div style='font-size:11px;color:" + SLATE_LABEL + ";margin-top:-8px;margin-bottom:12px;'>" + vol + "</div>") if vol else ""}
-{pm_html}
 {signals_html if signals_html else "<div style='font-size:13px;color:" + SLATE_LABEL + ";'>No notable adversary activity flagged today.</div>"}
 {senkaku_html}
 {quotes_html}
@@ -700,6 +763,7 @@ def render_html(digest: dict) -> str:
     prc_gov = digest.get("prc_government") or []
     personnel = digest.get("personnel_changes") or []
     npc = digest.get("npc_politburo") or []
+    pm_html = _pm_watch_line(digest.get("xinhua_delta") or {})
     # Fixed observances are arithmetic, not recall, so they are computed and
     # merged with whatever dated events the model found today. Upcoming has
     # shipped empty and past-dated in other editions for exactly the reason
@@ -710,7 +774,7 @@ def render_html(digest: dict) -> str:
         calendar = japan_calendar.merge(digest.get("calendar_watch"))
     except Exception:
         calendar = digest.get("calendar_watch") or []
-    if prc_gov or personnel or npc or calendar:
+    if prc_gov or personnel or npc or pm_html:
         gov_rows_html = ""
         for it in prc_gov:
             mn = _esc(it.get("ministry", ""))
@@ -778,30 +842,40 @@ def render_html(digest: dict) -> str:
                 act = _esc(n.get("action", ""))
                 det = _emphasis(_esc(n.get("detail", "")))
                 url = n.get("url", "")
-                ni += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #7F8C8D;">
-<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{body}</div>
+                ni += f"""<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #5A6667;">
+<div style="font-size:11px;color:#5A6667;font-weight:600;text-transform:uppercase;">{body}</div>
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{det}</div>
 </div>"""
             npc_html = f"""<div style="margin-top:16px;">
-<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#7F8C8D;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Diet Sessions / LDP</div>
+<a name="diet" id="diet"></a><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#5A6667;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Diet Sessions / LDP</div>
 {ni}
 </div>"""
 
-        # Upcoming is promoted out of the ministry round-up into a section of
-        # its own, as in Korea: the forward look is what a reader acts on and
-        # should not be the tail of a government roundup. The date is a solid
-        # block in the identity colour rather than grey text, so the column
-        # scans as a calendar.
-        cal_html = ""
-        if calendar:
-            ci = ""
-            for c in calendar:
-                cm = _esc(c.get("month", ""))
-                cd = _esc(str(c.get("day", "")))
-                ch = _emphasis(_esc(c.get("headline", "")))
-                cdet = _emphasis(_esc(c.get("detail", "")))
-                ci += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+        ds = _esc(str(digest.get("digest_date", "")))
+        body_sections["tokyo"] = (f"""
+<div {_SEC}>
+<a name="tokyo" id="tokyo"></a>{_sec_label("Japanese Government")}
+<div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei/PM · Cabinet · MOFA · MOD · METI · MOF · BOJ · Diet{(" · " + ds) if ds else ""}</div>
+{pm_html}{gov_grid}{pers_html}{npc_html}
+</div>""")
+
+    # Upcoming is promoted out of the ministry round-up into a section of
+    # its own, as in Korea: the forward look is what a reader acts on and
+    # should not be the tail of a government roundup. The date is a solid
+    # block in the identity colour rather than grey text, so the column
+    # scans as a calendar.
+    if calendar:
+        ci = ""
+        # The brief specifies four to five dated entries. The prompt asks for
+        # that range and japan_calendar adds computed observances on top, so
+        # the ceiling is applied here rather than assumed upstream.
+        for c in calendar[:5]:
+            cm = _esc(c.get("month", ""))
+            cd = _esc(str(c.get("day", "")))
+            ch = _emphasis(_esc(c.get("headline", "")))
+            cdet = _emphasis(_esc(c.get("detail", "")))
+            ci += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
 <tr>
 <td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
 <table cellpadding="0" cellspacing="0" border="0" style="background:{HINOMARU_RED};">
@@ -817,17 +891,9 @@ def render_html(digest: dict) -> str:
 </td>
 </tr>
 </table>"""
-            sections_trackers.append(
-                f'<div {_SEC}><a name="upcoming" id="upcoming"></a>'
-                f'{_sec_label("Upcoming")}{ci}</div>')
-
-        ds = _esc(str(digest.get("digest_date", "")))
-        sections_trackers.append(f"""
-<div {_SEC}>
-<a name="tokyo" id="tokyo"></a>{_sec_label("Japanese Government")}
-<div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei · Cabinet · MOFA · MOD · METI · MOF · BOJ{(" · " + ds) if ds else ""}</div>
-{gov_grid}{pers_html}{npc_html}
-</div>""")
+        body_sections["upcoming"] = (
+            f'<div {_SEC}><a name="upcoming" id="upcoming"></a>'
+            f'{_sec_label("Upcoming")}{ci}</div>')
 
     # The US-Japan Alliance & Trade section was removed at the Japan Chair's
     # request (Sep 2026). It had narrowed to a standing tariff table whose
@@ -854,14 +920,39 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
-        sections_wire.append(f'<div {_SEC}><a name="business" id="business"></a>{_sec_label("Business &amp; Economy")}{bh}</div>')
+        body_sections["business"] = f'<div {_SEC}><a name="business" id="business"></a>{_sec_label("Business &amp; Economy")}{bh}</div>'
 
-    # 11. Indo-Pacific
+    # 11. U.S.-Japan Relations
+    # Restored as a named section at the Japan Chair's request (Sep 2026),
+    # after the question the build document had left open. It is deliberately
+    # NOT the section that was removed: that one was a standing tariff table
+    # whose figures rarely moved and whose staleness the pipeline could not
+    # detect, so an expired Section 122 surcharge sat in the brief for a
+    # month. This is a news list off the day's articles, capped at four, and
+    # it goes stale the same way any other news section does — by being
+    # replaced tomorrow.
+    usj = digest.get("us_japan_relations") or []
+    if usj:
+        uh = ""
+        for it in usj[:4]:
+            t = it.get("track", "Alliance")
+            h = _emphasis(_esc(it.get("headline", "")))
+            bt = _emphasis(_esc(it.get("body_text", "")))
+            url = it.get("url", "")
+            src = _esc(_clean_src(it.get("source", "")))
+            uh += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid {HINOMARU_RED};">
+<div style="font-size:11px;color:{HINOMARU_RED};text-transform:uppercase;font-weight:600;">{_esc(t)} &middot; {src}</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
+</div>"""
+        body_sections["us-japan"] = f'<div {_SEC}><a name="us-japan" id="us-japan"></a>{_sec_label("U.S.-Japan Relations")}{uh}</div>'
+
+    # 12. Indo-Pacific Partners
     ip = digest.get("indo_pacific") or []
     if ip:
         ih = ""
         for it in ip[:6]:
-            r = it.get("region_tag", "Indo-Pacific")
+            r = it.get("region_tag") or it.get("track") or "Partners"
             bar = NAVY
             h = _emphasis(_esc(it.get("headline", "")))
             bt = _emphasis(_esc(it.get("body_text", "")))
@@ -872,28 +963,13 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(h, url)}</div>
 <div style="font-size:13px;line-height:1.4;color:#555;">{bt}</div>
 </div>"""
-        sections_wire.append(f'<div {_SEC}><a name="indo-pacific" id="indo-pacific"></a>{_sec_label("Indo-Pacific")}{ih}</div>')
-
-    # 12. Diet Watch (key: congressional_watch)
-    cw = digest.get("congressional_watch") or []
-    if cw:
-        ch = ""
-        for c in cw:
-            comm = _esc(c.get("committee", ""))
-            act = _esc(c.get("action", ""))
-            det = _emphasis(_esc(c.get("detail", "")))
-            url = c.get("url", "")
-            ch += f"""<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #2C3E50;">
-<div style="font-size:11px;color:#7F8C8D;font-weight:600;text-transform:uppercase;">{comm}</div>
-<div style="font-size:13px;font-weight:600;color:#1B2A4A;">{_link_or_text(act, url)}</div>
-<div style="font-size:13px;line-height:1.4;color:#555;">{det}</div>
-</div>"""
-        sections_trackers.append(f'<div {_SEC}><a name="diet" id="diet"></a>{_sec_label("Diet Watch")}{ch}</div>')
+        body_sections["indo-pacific"] = f'<div {_SEC}><a name="indo-pacific" id="indo-pacific"></a>{_sec_label("Indo-Pacific Partners")}{ih}</div>'
 
     # 13. Expert Analysts
     opeds = digest.get("opeds_today") or []
     academics = digest.get("academic_today") or []
-    if opeds or academics:
+    events = digest.get("events_today") or []
+    if opeds or academics or events:
         body = ""
         if opeds:
             body += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Op-Eds &amp; Think Tank Commentary</div>'
@@ -901,7 +977,7 @@ def render_html(digest: dict) -> str:
                 title = _esc(o.get("title") or o.get("headline", ""))
                 src = _esc(o.get("source", ""))
                 auth = _esc(o.get("authors", ""))
-                ca = _esc(o.get("central_argument", ""))
+                ca = _emphasis(_esc(o.get("central_argument", "")))
                 sm = _emphasis(_esc(o.get("summary", "")))
                 url = o.get("url", "")
                 body += f"""<div style="margin-bottom:14px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
@@ -924,7 +1000,24 @@ def render_html(digest: dict) -> str:
 <div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 <div style="font-size:13px;line-height:1.5;color:#555;">{sm}</div>
 </div>"""
-        sections_analysis.append(f'<div {_SEC}><a name="analysis" id="analysis"></a>{_sec_label("Op-Eds, Commentaries &amp; Events")}{body}</div>')
+        if events:
+            body += ('<div style="font-size:11px;font-weight:600;text-transform:uppercase;'
+                     'letter-spacing:1px;color:#1B2A4A;margin:14px 0 8px 0;padding-bottom:4px;'
+                     'border-bottom:1px solid #E8E8E8;">Events</div>')
+            for e in events[:4]:
+                title = _esc(e.get("title", ""))
+                host = _esc(e.get("host", ""))
+                when = _esc(e.get("event_date") or "")
+                fmt = _esc(e.get("format") or "")
+                sm = _emphasis(_esc(e.get("summary", "")))
+                url = e.get("url", "")
+                meta = " &middot; ".join(x for x in (host, when, fmt) if x)
+                body += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid {HINOMARU_RED};box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+<div style="font-size:10px;color:{HINOMARU_RED};text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{meta}</div>
+<div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
+<div style="font-size:13px;line-height:1.5;color:#555;">{sm}</div>
+</div>"""
+        body_sections["analysis"] = f'<div {_SEC}><a name="analysis" id="analysis"></a>{_sec_label("Expert Analysis and Events")}{body}</div>'
 
     # 14. Public Sentiment — cabinet approval & party support
     ps = digest.get("public_sentiment") or {}
@@ -943,7 +1036,7 @@ def render_html(digest: dict) -> str:
             # header, left-aligned, plain values. Approve AND Disapprove shown.
             def _th(label):
                 return (f'<td style="padding:8px 12px;font-size:10px;text-transform:uppercase;'
-                        f'letter-spacing:0.8px;color:#8A8F98;font-weight:600;">{label}</td>')
+                        f'letter-spacing:0.8px;color:#5F6672;font-weight:600;">{label}</td>')
             header = f'<tr style="background:#F2F3F5;">{_th("Pollster")}{_th("Approve")}{_th("Disapprove")}</tr>'
             rows = ""
             for p in polls:
@@ -956,10 +1049,10 @@ def render_html(digest: dict) -> str:
                 days_old = p.get("days_old")
                 stale = ""
                 if isinstance(days_old, int) and days_old > 21:
-                    stale = (f' <span style="color:#B7791F;font-weight:600;">'
+                    stale = (f' <span style="color:#8A5A00;font-weight:600;">'
                              f'&middot; {days_old}d ago</span>')
                 name = (f'<strong style="color:{NAVY};">{pollster}</strong>'
-                        + (f' <span style="color:#9AA0A8;">&middot; {pdate}</span>' if pdate else '')
+                        + (f' <span style="color:#6B7280;">&middot; {pdate}</span>' if pdate else '')
                         + stale)
                 rows += (
                     '<tr style="border-top:1px solid #EAEBEE;">'
@@ -995,18 +1088,21 @@ def render_html(digest: dict) -> str:
                                       style="color:" + HINOMARU_RED + ";text-decoration:none;font-weight:600;")
                       + '</div>')
 
-        sections_analysis.append(f'<div {_SEC}><a name="polling" id="polling"></a>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>')
+        body_sections["polling"] = f'<div {_SEC}><a name="polling" id="polling"></a>{_sec_label("Public Sentiment &amp; Approval Polling")}{poll_body}</div>'
 
     # 15. Social Statements
     stmts = digest.get("social_statements") or []
     if stmts:
         sh = ""
-        for s in stmts[:6]:
+        # Four, not six. The brief specifies 0 to 4 quoted statements and the
+        # prompt asks for that; the renderer had been willing to print six, so
+        # the stated ceiling and the enforced one disagreed.
+        for s in stmts[:4]:
             who = _esc(s.get("who", ""))
             ctx = _esc(s.get("handle_context", ""))
             pd = _esc(s.get("platform_date", ""))
             q = _esc(s.get("quote_text", ""))
-            nt = _esc(s.get("analyst_note", ""))
+            nt = _emphasis(_esc(s.get("analyst_note", "")))
             initials = _esc(s.get("avatar_initials", (who[:2].upper() if who else "?")))
             url = s.get("url", "")
             meta = " &middot; ".join(x for x in (ctx, pd) if x)
@@ -1025,7 +1121,7 @@ def render_html(digest: dict) -> str:
 {"<p style='margin:6px 0 0 0;font-size:11px;color:#555;'><strong style='color:" + HINOMARU_RED + ";font-style:normal;'>Analyst:</strong> " + nt + "</p>" if nt else ""}
 {src_link}
 </div>"""
-        sections_analysis.append(f'<div {_SEC}>{_sec_label("Social Statements")}{sh}</div>')
+        body_sections["social"] = f'<div {_SEC}><a name="social" id="social"></a>{_sec_label("Social Statements")}{sh}</div>'
 
     # 16. Also Today
     also = digest.get("also_today") or []
@@ -1050,7 +1146,7 @@ def render_html(digest: dict) -> str:
                 for i in _items)
             ah += ((_subhead(_esc(_cat)) if _multi else "")
                    + rows)
-        sections_wire.append(
+        body_sections["wire"] = (
             f'<div {_SEC}><a name="wire" id="wire"></a>{_sec_label("The Wire")}{ah}</div>')
 
     # 17. On This Day
@@ -1058,12 +1154,12 @@ def render_html(digest: dict) -> str:
     if otd:
         oh = ""
         for it in otd[:1]:
-            oh += f"""<div style="padding:13px 0 3px;background:#FFFFFF;border-top:2px solid #7F8C8D;">
-<div style="font-size:11px;color:#7F8C8D;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">{_esc(it.get("date", ""))}</div>
+            oh += f"""<div style="padding:13px 0 3px;background:#FFFFFF;border-top:2px solid #5A6667;">
+<div style="font-size:11px;color:#5A6667;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">{_esc(it.get("date", ""))}</div>
 <div style="font-size:14px;font-weight:600;color:#1B2A4A;font-family:Georgia,serif;margin:4px 0;">{_esc(it.get("event", ""))}</div>
 <div style="font-size:13px;color:#4A5260;line-height:1.55;font-family:Georgia,serif;">{_esc(it.get("relevance", ""))}</div>
 </div>"""
-        sections_wire.append(f'<div {_SEC}>{_sec_label("On This Day")}{oh}</div>')
+        body_sections["on-this-day"] = f'<div {_SEC}><a name="on-this-day" id="on-this-day"></a>{_sec_label("On This Day")}{oh}</div>'
 
     # Footer
     # Both footer links point into the published archive, so neither exists
@@ -1116,12 +1212,15 @@ def render_html(digest: dict) -> str:
   </td></tr>
 </table>""")
 
+    # A section written under a key SECTION_ORDER does not list would vanish
+    # from the brief with every existing check still green, so say so loudly
+    # rather than shipping a silently shorter edition.
+    _unordered = set(body_sections) - set(SECTION_ORDER)
+    assert not _unordered, f"section(s) missing from SECTION_ORDER: {sorted(_unordered)}"
+
     sections = (
         sections_pre +
-        sections_today +
-        sections_analysis +
-        sections_trackers +
-        sections_wire +
+        [body_sections[k] for k in SECTION_ORDER if body_sections.get(k)] +
         sections_post
     )
 
@@ -1130,12 +1229,18 @@ def render_html(digest: dict) -> str:
     # "back to top". Label and anchor are paired here and each pair is kept
     # only when the section actually emitted its anchor, so a quiet day that
     # drops sections simply gets fewer links rather than dead ones.
+    # Listed in the order the sections are emitted, so the row reads as a map
+    # of the page rather than an arbitrary set. Two labels used to name the
+    # wrong thing: "Markets" pointed at Business & Economy (the market strip
+    # carries no anchor of its own) and "Tokyo" at the government round-up.
+    # A pair is kept only when its anchor is present, so listing a section
+    # that produced nothing today costs nothing.
     _NAV = [("Top Stories", "top-stories"), ("Overnight", "overnight"),
-            ("Tokyo", "tokyo"),
-            ("Markets", "business"), ("Indo-Pacific", "indo-pacific"),
-            ("Diet", "diet"), ("Polling", "polling"),
-            ("Upcoming", "upcoming"), ("Analysis", "analysis"),
-            ("The Wire", "wire"), ("Stat", "key-stat")]
+            ("Stat", "key-stat"), ("Government", "tokyo"),
+            ("Polling", "polling"), ("Business", "business"),
+            ("Pressure", "watch"), ("U.S.-Japan", "us-japan"),
+            ("Partners", "indo-pacific"), ("Analysis", "analysis"),
+            ("The Wire", "wire"), ("Upcoming", "upcoming")]
     body_html = "\n".join(s for s in sections if s)
     _links = [f'<a href="#{_a}" style="color:{HINOMARU_RED};text-decoration:underline;'
               f'text-underline-offset:2px;white-space:nowrap;">{_l}</a>'
@@ -1279,10 +1384,19 @@ def render_html(digest: dict) -> str:
     .wrapper [style*="color:#27ae60"] {{ color:#9AA3AE !important; }}
     .wrapper [style*="color:#2C3E50"] {{ color:#E8E6E1 !important; }}
     .wrapper [style*="color:#2c3e50"] {{ color:#E8E6E1 !important; }}
-    .wrapper [style*="color:#7F8C8D"] {{ color:#9AA3AE !important; }}
-    .wrapper [style*="color:#7f8c8d"] {{ color:#9AA3AE !important; }}
-    .wrapper [style*="color:#B7791F"] {{ color:#9AA3AE !important; }}
-    .wrapper [style*="color:#b7791f"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#5A6667"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#5a6667"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#5F6672"] {{ color:#9AA3AE !important; }}
+    .wrapper [style*="color:#5f6672"] {{ color:#9AA3AE !important; }}
+    /* The PM Watch line, moved into the Japanese Government section: a pale
+       panel ground and an amber absence marker, both needing dark values. */
+    .wrapper [style*="background:#F4F6F9"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="background:#f4f6f9"] {{ background-color:#262A30 !important; }}
+    .wrapper [style*="color:#8A5A00"] {{ color:#D8A657 !important; }}
+    .wrapper [style*="color:#8a5a00"] {{ color:#D8A657 !important; }}
+    /* The dot separating ministry, official and publisher on a government
+       card. Decorative, but it is still a text node on a changed ground. */
+    .wrapper [style*="color:#ccc"] {{ color:#4A4F57 !important; }}
     .wrapper [style*="color:#BC002D"] {{ color:#E8E6E1 !important; }}
     .wrapper [style*="color:#bc002d"] {{ color:#E8E6E1 !important; }}
     .wrapper [style*="color:#E8697A"] {{ color:#C4C8CE !important; }}

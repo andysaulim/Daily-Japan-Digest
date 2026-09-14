@@ -8,10 +8,11 @@ trimmed from the tail in a fixed order until it fits.
 
 The order is an editorial judgement, stated once here rather than improvised.
 Top stories and the morning memo are never trimmed — they are the brief. What
-goes first is breadth that repeats value found elsewhere: the tail of the
-wire, then quoted statements, then the second and third op-ed. Trimming takes
-from the end of each section because the model is asked to order by importance
-within a section, so the tail is the least important item it chose.
+goes first is breadth that repeats value found elsewhere: forthcoming event
+announcements, then the tail of the wire, then quoted statements, then the
+second and third op-ed. Trimming takes from the end of each section because
+the model is asked to order by importance within a section, so the tail is
+the least important item it chose.
 
 Nothing here rewrites text. It only drops whole items, so anything that
 survives is exactly what the model wrote and every remaining claim keeps the
@@ -24,10 +25,12 @@ from __future__ import annotations
 # calendar_watch, on_this_day, xinhua_delta.
 TRIM_ORDER: list[tuple[str, int]] = [
     # (section, floor — never trim below this many items)
+    ("events_today", 0),
     ("also_today", 3),
     ("social_statements", 2),
     ("personnel_changes", 2),
-    ("congressional_watch", 2),
+    ("npc_politburo", 2),
+    ("us_japan_relations", 2),
     ("academic_today", 1),
     ("opeds_today", 2),
     ("indo_pacific", 3),
