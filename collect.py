@@ -217,8 +217,12 @@ TIER2_FEEDS = {
 # runs, which is the point at which a dead feed should be dropped rather than
 # left to look like a quiet week.
 EVENT_FEEDS = {
-    "CSIS Events":            _direct("CSIS Events", "https://www.csis.org/events/feed",
-                                  "site:csis.org+events+Japan"),
+    # The direct path here was https://www.csis.org/events/feed, which 404s on
+    # every run (confirmed in runs 34810088505, 34835954951 and 34848304496).
+    # An asserted feed URL that has never answered is worse than none: it costs
+    # a round trip and a 404 line every morning to reach the same fallback.
+    # Probe a replacement with probe_feeds.py before putting one back.
+    "CSIS Events":            _gnews("site:csis.org+events+Japan"),
     "Brookings Events":       _direct("Brookings Events", "https://www.brookings.edu/events/feed/",
                                   "site:brookings.edu+events+Japan"),
     "Carnegie Events":        _gnews("Japan+event+OR+webinar+site:carnegieendowment.org"),

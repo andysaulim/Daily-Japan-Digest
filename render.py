@@ -301,6 +301,24 @@ def _pm_watch_line(xd: dict) -> str:
             f'{(" &mdash; " + activity) if activity else ""}</div>')
 
 
+def _kicker_line(label: str, text: str) -> str:
+    """A labelled closing line on an analysis card ("So what", "Implication").
+
+    The fields behind these were requested of the model on every item and
+    rendered nowhere, so the sharpest sentence in each entry never reached the
+    reader — and policy_so_what was worse than wasted, because _word_count
+    counted it, which meant invisible text pushed visible items out of the
+    brief when the length ceiling trimmed. Shared so the op-ed and academic
+    cards cannot drift apart.
+    """
+    if not text:
+        return ""
+    return (f'<div style="margin-top:8px;padding-top:7px;border-top:1px solid #EEEEEE;'
+            f'font-size:13px;line-height:1.5;color:#4A5260;">'
+            f'<strong style="color:{HINOMARU_RED};font-size:10px;text-transform:uppercase;'
+            f'letter-spacing:0.8px;">{label}</strong>&nbsp; {text}</div>')
+
+
 def _sec_label(label: str, color: str = RING_ON_DARK) -> str:
     """A section bar: black field, an accent ring, a white letterspaced label.
 
@@ -367,7 +385,7 @@ def _word_count(d: dict) -> int:
         for f in ("title", "summary", "host"):
             w += _w(e.get(f, ""))
     for a in (d.get("academic_today") or []):
-        for f in ("title", "summary", "authors"):
+        for f in ("title", "summary", "authors", "framework", "policy_implication"):
             w += _w(a.get(f, ""))
 
     # Japanese government / Diet sessions and party business / Personnel
@@ -979,12 +997,14 @@ def render_html(digest: dict) -> str:
                 auth = _esc(o.get("authors", ""))
                 ca = _emphasis(_esc(o.get("central_argument", "")))
                 sm = _emphasis(_esc(o.get("summary", "")))
+                sw = _emphasis(_esc(o.get("policy_so_what", "")))
                 url = o.get("url", "")
                 body += f"""<div style="margin-bottom:14px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
 <div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src}{(' · ' + auth) if auth else ''}</div>
 <div style="font-size:14px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:6px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 {"<div style='font-size:13px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>" + ca + "</div>" if ca else ""}
 {"<div style='font-family:Georgia,serif;font-size:13px;line-height:1.5;color:#4A5260;'>" + sm + "</div>" if sm else ""}
+{_kicker_line("So what", sw)}
 </div>"""
         if academics:
             body += '<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;margin:14px 0 8px 0;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Academic Journals</div>'
@@ -994,11 +1014,14 @@ def render_html(digest: dict) -> str:
                 tier = _esc(a.get("journal_tier", ""))
                 auth = _esc(a.get("authors", ""))
                 sm = _emphasis(_esc(a.get("summary", "")))
+                fw = _esc(a.get("framework", ""))
+                pi = _emphasis(_esc(a.get("policy_implication", "")))
                 url = a.get("url", "")
                 body += f"""<div style="margin-bottom:12px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-<div style="font-size:10px;color:#1B2A4A;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src} · {tier}{(' · ' + auth) if auth else ''}</div>
+<div style="font-size:10px;color:#1B2A4A;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">{src} · {tier}{(' · ' + auth) if auth else ''}{(' · ' + fw) if fw else ''}</div>
 <div style="font-size:13px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:5px;">{_link_or_text(title, url, style="color:#1B2A4A;text-decoration:none;")}</div>
 <div style="font-size:13px;line-height:1.5;color:#555;">{sm}</div>
+{_kicker_line("Implication", pi)}
 </div>"""
         if events:
             body += ('<div style="font-size:11px;font-weight:600;text-transform:uppercase;'
