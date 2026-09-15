@@ -43,15 +43,15 @@
   },
   "fnn": {
     "pollster": "FNN",
-    "approval": 62.5,
-    "disapproval": 32.0,
-    "as_of": "2026-09-05",
-    "poll_date": "Sep 5, 2026"
+    "approval": 61.6,
+    "disapproval": 32.2,
+    "as_of": "2026-09-15",
+    "poll_date": "Sep 15, 2026"
   },
   "nhk": {
     "pollster": "NHK",
     "approval": 52.8,
-    "disapproval": 33.2,
+    "disapproval": 30.8,
     "as_of": "2026-09-10",
     "poll_date": "Sep 10, 2026"
   },
