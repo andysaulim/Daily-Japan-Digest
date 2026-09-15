@@ -28,6 +28,10 @@ DIGEST = {'academic_today': [{'authors': 'Nakamura, Ellis',
                                          'on basing access rather than on declaratory '
                                          'commitments, and test the claim against four '
                                          'East Asian cases.',
+                              'framework': 'Deterrence credibility',
+                              'policy_implication': 'Access agreements deserve more '
+                                                    'weight than declaratory commitments '
+                                                    'in alliance-management planning.',
                               'title': 'Basing Access and the Credibility of Extended '
                                        'Deterrence in East Asia',
                               'url': 'https://example.org/21'}],
@@ -123,6 +127,9 @@ DIGEST = {'academic_today': [{'authors': 'Nakamura, Ellis',
                   'summary': 'The piece traces co-production talks since 2024 and '
                              'argues that *magazine depth*, not posture, is the '
                              'binding constraint on allied deterrence.',
+                  'policy_so_what': 'Washington should treat co-production capacity, '
+                                    'not declaratory policy, as the binding constraint '
+                                    'on allied deterrence in the next posture review.',
                   'title': 'The Alliance Runs on Factories Now',
                   'url': 'https://example.org/20'}],
  'overnight_items': [{'body_text': 'Second passage this week.',
