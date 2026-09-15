@@ -148,39 +148,83 @@ _SOURCE_CAP = 3
 
 
 def _enforce_source_diversity(digest: dict) -> list[str]:
-    """Cap any single source to _SOURCE_CAP appearances per section.
+    """Cap any single source, in the same scope the validator judges.
 
-    Skips top_stories: that section is two to four curated items where the
-    importance of the story outweighs source diversity, and dropping one to
-    satisfy a count would cost the brief its lead. Excess items are dropped
-    from the sections that carry breadth, and never below the section's floor.
+    This was ported from Korea to close a dead end — the gate rejecting an
+    over-represented outlet with no code path able to clear it — but the port
+    counted per section while the validator counts top_stories and
+    overnight_items TOGETHER. An outlet with one item in Top Stories and three
+    in Overnight was therefore under the cap in every section, saw nothing
+    dropped, and still failed a combined count of four. That is what stopped
+    the 15 September brief, and re-running could never have helped.
+
+    Counting is now combined. Dropping is not: only Overnight gives items up.
+    Top Stories is two to four curated items where the importance of the story
+    outweighs source diversity, and thinning it to satisfy a count would cost
+    the brief its lead. Overnight is never taken below its floor either, so a
+    residue can survive both rules — Top Stories alone over the cap, or a floor
+    that blocks the last removal. Those are real editorial problems rather than
+    plumbing faults, and the validator still reports them.
     """
     _SECTION_MINIMUMS = {"overnight_items": 3}
     log = []
-    for section_key in ("overnight_items", "also_today"):
-        items = digest.get(section_key)
-        if not items or not isinstance(items, list):
-            continue
-        floor = _SECTION_MINIMUMS.get(section_key, 0)
-        counts, kept, dropped = {}, [], []
-        for item in items:
-            src = str(item.get("source", "Unknown")).lower().strip()
+
+    def _src(item) -> str:
+        return str(item.get("source", "Unknown")).lower().strip()
+
+    # ── Combined top_stories + overnight_items, matching _validate_digest ──
+    overnight = digest.get("overnight_items")
+    if isinstance(overnight, list) and overnight:
+        # Top Stories is counted but never thinned, so it seeds the tally.
+        counts: dict[str, int] = {}
+        for item in (digest.get("top_stories") or []):
+            if isinstance(item, dict):
+                counts[_src(item)] = counts.get(_src(item), 0) + 1
+
+        kept, dropped = [], []
+        for item in overnight:
+            if not isinstance(item, dict):
+                kept.append(item)
+                continue
+            src = _src(item)
             counts[src] = counts.get(src, 0) + 1
             if counts[src] <= _SOURCE_CAP:
                 kept.append(item)
             else:
                 dropped.append((item, src, str(item.get("headline", ""))[:60]))
-        # Never breach the floor to satisfy the cap: put back the least
-        # egregious duplicates rather than ship a section under strength.
+
+        floor = _SECTION_MINIMUMS.get("overnight_items", 0)
         if len(kept) < floor and dropped:
             need = floor - len(kept)
             for item, _s, _h in dropped[-need:]:
                 kept.append(item)
             dropped = dropped[:-need]
+
         if dropped:
-            digest[section_key] = kept
+            digest["overnight_items"] = kept
             for _item, src, headline in dropped:
-                log.append(f"Removed excess {src} from {section_key}: '{headline}'")
+                log.append(f"Removed excess {src} from overnight_items: '{headline}'")
+
+    # ── also_today keeps its own per-section cap ──────────────────────────
+    # The validator does not check it, but breadth there is its own rule.
+    items = digest.get("also_today")
+    if isinstance(items, list) and items:
+        counts, kept, dropped = {}, [], []
+        for item in items:
+            if not isinstance(item, dict):
+                kept.append(item)
+                continue
+            src = _src(item)
+            counts[src] = counts.get(src, 0) + 1
+            if counts[src] <= _SOURCE_CAP:
+                kept.append(item)
+            else:
+                dropped.append((item, src, str(item.get("headline", ""))[:60]))
+        if dropped:
+            digest["also_today"] = kept
+            for _item, src, headline in dropped:
+                log.append(f"Removed excess {src} from also_today: '{headline}'")
+
     return log
 
 
@@ -213,10 +257,23 @@ def _validate_digest(digest: dict) -> list[str]:
         src = (item.get("source") or "").strip()
         if src:
             source_counts[src] = source_counts.get(src, 0) + 1
+    top_only = {}
+    for item in (digest.get("top_stories") or []):
+        s_ = (item.get("source") or "").strip()
+        if s_:
+            top_only[s_] = top_only.get(s_, 0) + 1
     for src, count in source_counts.items():
         if count > 3:
-            failures.append(f"SOURCE DIVERSITY: '{src}' appears {count} times "
-                          f"in top + overnight (max 3)")
+            # Say which kind of failure it is. Excess that trimming Overnight
+            # could have cleared is a bug; excess carried by Top Stories itself
+            # is an editorial call for a person, and force_send is the answer.
+            if top_only.get(src, 0) > 3:
+                failures.append(f"SOURCE DIVERSITY: '{src}' appears "
+                                f"{top_only[src]} times in top_stories alone "
+                                f"(max 3) — not fixable by trimming Overnight")
+            else:
+                failures.append(f"SOURCE DIVERSITY: '{src}' appears {count} times "
+                              f"in top + overnight (max 3)")
 
     # Date integrity
     digest_date = digest.get("digest_date", "")

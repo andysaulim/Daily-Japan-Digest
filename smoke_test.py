@@ -296,11 +296,54 @@ def test_validation_gate():
           "if not validation_passed and not args.force_send:" in src)
     check("the HTML is still written for review", "not sending" in src)
 
+    # 15 September: 'The Japan Times' appeared 4 times across top + overnight,
+    # the gate blocked the send, and nothing could clear it — the enforcer
+    # counts per section and skips top_stories, while the validator counts the
+    # two together. Under cap everywhere individually, over it combined.
+    import run as _run
+
+    def _src_failures(d):
+        return [f for f in _run._validate_digest(d) if f.startswith("SOURCE DIVERSITY")]
+
+    def _item(source, n):
+        return {"source": source, "headline": f"{source} story {n}",
+                "url": f"https://example.org/{source.replace(' ', '')}-{n}"}
+
+    _split = {"top_stories": [_item("The Japan Times", 1), _item("Nikkei", 2)],
+              "overnight_items": [_item("The Japan Times", 3), _item("The Japan Times", 4),
+                                  _item("The Japan Times", 5), _item("Kyodo", 6),
+                                  _item("Reuters", 7)]}
+    _run._enforce_source_diversity(_split)
+    _combined = sum(1 for i in _split["top_stories"] + _split["overnight_items"]
+                    if i.get("source") == "The Japan Times")
+    check("a source split across top and overnight is capped to 3 combined",
+          _combined <= 3, f"{_combined} remain")
+    check("and the gate then passes on it", not _src_failures(_split),
+          "; ".join(_src_failures(_split)))
+
+    # Top Stories alone over the cap cannot be fixed by trimming Overnight, and
+    # should still block — but say which it is, so force-send is an informed
+    # call rather than a hunt for a bug.
+    _lede = {"top_stories": [_item("The Japan Times", i) for i in range(1, 5)],
+             "overnight_items": [_item("Kyodo", 9)]}
+    _run._enforce_source_diversity(_lede)
+    _lede_fail = _src_failures(_lede)
+    check("top_stories alone over the cap still fails", bool(_lede_fail))
+    check("and the message names top_stories as the reason",
+          any("top_stories alone" in f for f in _lede_fail),
+          "; ".join(_lede_fail))
+
+    # The overnight floor outranks the cap: never ship the section short.
+    _floor = {"top_stories": [_item("The Japan Times", 1)],
+              "overnight_items": [_item("The Japan Times", i) for i in range(2, 5)]}
+    _run._enforce_source_diversity(_floor)
+    check("the overnight floor is not breached to satisfy the cap",
+          len(_floor["overnight_items"]) >= 3, str(len(_floor["overnight_items"])))
+
     # 14 September: the brief shipped a Japan Times news commentary under
     # "Op-Eds & Think Tank Commentary" on a run whose collector reported
     # "Tier 2: 0 articles from 0 sources". The prompt forbids it and the
     # prompt was not enough, so the boundary is checked after the fact now.
-    import run as _run
     _tiered = _run._enforce_source_tiers(
         {"opeds_today": [{"title": "From the news pool",
                           "url": "https://example.org/tier1-only"},
