@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-17": {
-      "signals": {
-        "china_signal": "China state media (Global Times and China Daily Asia) published pieces on July 17 characterizing Japan's co-signature of the 14-nation South China Sea arbitral-ruling statement as reflecting 'strategic ambitions' — continuing a multi-day diplomatic pressure campaign that began July 13 with China's f",
-        "dprk_signal": "The US, Japan, and South Korean defense chiefs issued a joint trilateral statement from Washington reaffirming cooperation on North Korean denuclearization; Radio Free Asia separately reported expert assessments that North Korean structures near the DMZ may constitute rocket launch infrastructure."
-      },
-      "watch_flag": false
-    },
     "2026-07-20": {
       "signals": {
         "china_signal": "China's foreign ministry warned Japan it 'should not ignore the prevailing trend on nuclear issues,' directly responding to Defense Minister Koizumi's public call for a nuclear weapons debate — a statement framed alongside Japanese local assembly resolutions upholding non-nuclear principles. Separat",
@@ -448,7 +441,15 @@
         "russia_signal": "Nikkei Asia reported today that Japan's LNG dependency is constraining its response options following President Putin's visit to the disputed Northern Territories islands, with Brent above $102/barrel reinforcing Japan's energy-dependence on Russian supplies."
       },
       "watch_flag": false
+    },
+    "2026-09-16": {
+      "signals": {
+        "china_signal": "Chinese Defense Minister Dong Jun used the Xiangshan Forum to warn against 'militarism and revisionism' in remarks widely read as directed at Japan, coming days after a cross-party Japanese parliamentary delegation's Beijing visit. Chinese state media framed the lawmakers' visit as an 'exploratory g",
+        "dprk_signal": "North Korea formally confirmed via state media that the September 12 launches constituted a 'joint firepower strike drill' combining long-range artillery, ballistic missiles, and attack drones targeting an island in the Sea of Japan, claiming 'huge destructive power.' Separately, a minister-led Nort",
+        "russia_signal": "Japan-Russia bilateral trade rose *19.51%* to $959 million in August per TASS, underscoring the economic interdependence that constrains Tokyo's response options following Putin's Northern Territories island visit. Nikkei Asia analysis confirms LNG dependency is the central constraint on any escalat"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-15T14:03:04.856053+00:00"
+  "last_updated": "2026-09-16T11:05:24.216464+00:00"
 }

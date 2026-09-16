@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-16",
+      "activity": "PM Takaichi presided over the LDP executive reshuffle on September 16, appointing a new party leadership team that retains most senior figures ahead of the fall Diet session.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-16T11:05:24.215487+00:00"
+    },
+    {
       "date": "2026-09-14",
       "activity": "Prime Minister Sanae Takaichi met IEA Executive Director Fatih Birol in Tokyo and called for closer Japan-IEA cooperation on energy security.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-18T18:39:14.152630+00:00"
-    },
-    {
-      "date": "2026-06-16",
-      "activity": "SEED DATA — Prime Minister attended an Upper House plenary session and held a brief press availability (placeholder seed; verify against live articles).",
-      "source": "seed",
-      "url": "",
-      "recorded_at": "2026-06-16T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-09-14T13:35:25.065931+00:00"
+  "last_updated": "2026-09-16T11:05:24.215543+00:00"
 }

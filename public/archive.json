@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-09-16",
+    "filename": "2026-09-16.html",
+    "re_line": "BOJ rate hike imminent \u00b7 LDP reshuffle \u00b7 Global Hawk crash \u00b7 DPRK drill confirmed \u00b7 trade deficit widens",
+    "top_stories": 4,
+    "overnight_items": 5,
+    "word_count": 1696
+  },
+  {
     "date": "2026-09-15",
     "filename": "2026-09-15.html",
     "re_line": "BOJ rate hike imminent \u00b7 Japan eyes 3.5% GDP defense \u00b7 Global Hawk crash \u00b7 Okinawa governor shift \u00b7 LDP reshuffle tomorrow",
