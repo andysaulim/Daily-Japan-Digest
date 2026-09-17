@@ -449,7 +449,15 @@
         "russia_signal": "Japan-Russia bilateral trade rose *19.51%* to $959 million in August per TASS, underscoring the economic interdependence that constrains Tokyo's response options following Putin's Northern Territories island visit. Nikkei Asia analysis confirms LNG dependency is the central constraint on any escalat"
       },
       "watch_flag": false
+    },
+    "2026-09-17": {
+      "signals": {
+        "china_signal": "A cross-party Japanese parliamentary delegation met a senior Chinese official in Beijing, per NHK, as the most recent diplomatic outreach channel between the two governments; Tokyo Game Show data showing a sharp drop in Chinese exhibitors illustrates the commercial-sector spillover from bilateral te",
+        "dprk_signal": "North Korea's September 12 joint firepower strike drill targeting an island in the Sea of Japan — combining ballistic missiles, long-range artillery, and attack drones — continues to be analyzed in regional defense media, with no new launch activity reported today; North Korea's sports minister sepa",
+        "russia_signal": "Russia's foreign ministry, via Xinhua, stated that Japan's remilitarization threatens Russian national security — the latest in a series of official Russian statements escalating rhetoric toward Japan's defense buildup. Russian companies are separately in talks with Japan and South Korea on resuming"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-16T11:05:24.216464+00:00"
+  "last_updated": "2026-09-17T11:05:59.669549+00:00"
 }

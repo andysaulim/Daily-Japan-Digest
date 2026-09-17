@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-17",
+      "activity": "Prime Minister Sanae Takaichi presided over her first cabinet reshuffle, retaining core ministers and incorporating a Japan Innovation Party member for the first time.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-17T11:05:59.668563+00:00"
+    },
+    {
       "date": "2026-09-16",
       "activity": "PM Takaichi presided over the LDP executive reshuffle on September 16, appointing a new party leadership team that retains most senior figures ahead of the fall Diet session.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-19T13:32:52.481810+00:00"
-    },
-    {
-      "date": "2026-06-18",
-      "activity": "PM Takaichi concluded the G7 Evian Summit, confirmed all her proposals were adopted in the final communique, held a bilateral with Italian President Meloni, and issued statements on the US-Iran deal and Strait of Hormuz.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-18T18:39:14.152630+00:00"
     }
   ],
-  "last_updated": "2026-09-16T11:05:24.215543+00:00"
+  "last_updated": "2026-09-17T11:05:59.668618+00:00"
 }
