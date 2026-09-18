@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-18",
+      "activity": "PM Takaichi held a post-reshuffle press conference recommitting to key policies including a strong-economy agenda, following the completion of her first cabinet reshuffle on September 17.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-18T11:06:27.410862+00:00"
+    },
+    {
       "date": "2026-09-17",
       "activity": "Prime Minister Sanae Takaichi presided over her first cabinet reshuffle, retaining core ministers and incorporating a Japan Innovation Party member for the first time.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-20T11:54:29.661441+00:00"
-    },
-    {
-      "date": "2026-06-19",
-      "activity": "PM Takaichi's office posted the G7 Evian Summit Day 3 readout confirming her participation in an AI adoption working lunch and bilateral meetings; she separately acknowledged advancing food-tax reduction talks.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-19T13:32:52.481810+00:00"
     }
   ],
-  "last_updated": "2026-09-17T11:05:59.668618+00:00"
+  "last_updated": "2026-09-18T11:06:27.410915+00:00"
 }
