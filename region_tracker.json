@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-20": {
-      "signals": {
-        "china_signal": "China's foreign ministry warned Japan it 'should not ignore the prevailing trend on nuclear issues,' directly responding to Defense Minister Koizumi's public call for a nuclear weapons debate — a statement framed alongside Japanese local assembly resolutions upholding non-nuclear principles. Separat",
-        "dprk_signal": "A Eurasia Review analysis on Japan-South Korea security cooperation was the only DPRK-tagged item in today's Tier 4 feed; no new North Korean missile launch, EEZ splashdown, or KCNA statement naming Japan was reported."
-      },
-      "watch_flag": false
-    },
     "2026-07-21": {
       "signals": {
         "china_signal": "A Chinese destroyer and Russian naval vessels conducted live-fire drills inside Japan's exclusive economic zone near Okinotorishima; Japan protested formally and China's foreign ministry rejected the protest as 'groundless,' simultaneously asserting Okinotorishima is a rock not entitled to an EEZ. C",
@@ -464,7 +457,15 @@
         "dprk_signal": "North Korea's sports minister arrived in central Japan for the Aichi-Nagoya Asian Games — a rare official North Korean government presence on Japanese soil; separately, Kim Yo Jong issued a statement accusing US-led multilateral exercises with Japan and South Korea of driving North Korea's nuclear a"
       },
       "watch_flag": false
+    },
+    "2026-09-19": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 18 regular press conference, and Chinese state media (Global Times) continued framing the 95th anniversary of the September 18 Mukden Incident with warnings against Japan's military revival. Separately, Chinese tourist arrivals to J",
+        "dprk_signal": "North Korean leader Kim Jong Un inspected munitions factories per NHK, following the September 12 integrated strike exercise. North Korean hackers linked to group WaterPlum conducted cryptocurrency thefts across 100 countries including Japan between December 2025 and July 2026, infecting more than 3",
+        "russia_signal": "Russia's Foreign Ministry lodged a formal protest with Japan over the deployment of US Typhon mid-range ground-launched cruise missile systems on Japanese territory and urged removal; TASS separately reported the Russian MFA spokeswomen's demand. This follows a sustained Russian escalation narrative"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-18T11:06:27.411853+00:00"
+  "last_updated": "2026-09-19T11:06:31.645467+00:00"
 }

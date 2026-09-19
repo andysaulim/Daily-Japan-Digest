@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-19",
+      "activity": "PM Takaichi's travel to New York for the UN General Assembly was confirmed, with a Trump bilateral set for Tuesday September 22 ahead of Xi Jinping's Washington state visit.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-19T11:06:31.644498+00:00"
+    },
+    {
       "date": "2026-09-18",
       "activity": "PM Takaichi held a post-reshuffle press conference recommitting to key policies including a strong-economy agenda, following the completion of her first cabinet reshuffle on September 17.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-21T12:08:37.995625+00:00"
-    },
-    {
-      "date": "2026-06-20",
-      "activity": "PM Takaichi's food-tax reduction talks were confirmed advancing per Kyodo News, and she is reported preparing an upcoming India visit with a business delegation including Suzuki and Itochu executives.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-20T11:54:29.661441+00:00"
     }
   ],
-  "last_updated": "2026-09-18T11:06:27.410915+00:00"
+  "last_updated": "2026-09-19T11:06:31.644550+00:00"
 }

@@ -36,10 +36,10 @@
   },
   "yomiuri": {
     "pollster": "Yomiuri",
-    "approval": 56.0,
-    "disapproval": 32.0,
-    "as_of": "2026-09-05",
-    "poll_date": "Sep 5, 2026"
+    "approval": 59.0,
+    "disapproval": 30.0,
+    "as_of": "2026-09-19",
+    "poll_date": "Sep 19, 2026"
   },
   "fnn": {
     "pollster": "FNN",
