@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-21": {
-      "signals": {
-        "china_signal": "A Chinese destroyer and Russian naval vessels conducted live-fire drills inside Japan's exclusive economic zone near Okinotorishima; Japan protested formally and China's foreign ministry rejected the protest as 'groundless,' simultaneously asserting Okinotorishima is a rock not entitled to an EEZ. C",
-        "russia_signal": "Russian naval vessels participated jointly with China in the live-fire drill inside Japan's EEZ; no separate Russian Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
-      },
-      "watch_flag": true
-    },
     "2026-07-22": {
       "signals": {
         "china_signal": "A Chinese destroyer conducted live-fire drills inside Japan's claimed EEZ near Okinotorishima alongside Russian naval vessels on July 21-22 — Japan's MOD described it as the first detected instance of its kind. China's foreign ministry rejected Japan's protest as 'groundless,' simultaneously contest",
@@ -465,7 +458,14 @@
         "russia_signal": "Russia's Foreign Ministry lodged a formal protest with Japan over the deployment of US Typhon mid-range ground-launched cruise missile systems on Japanese territory and urged removal; TASS separately reported the Russian MFA spokeswomen's demand. This follows a sustained Russian escalation narrative"
       },
       "watch_flag": false
+    },
+    "2026-09-20": {
+      "signals": {
+        "china_signal": "No new China Coast Guard, PLA, or MOFA incidents toward Japan are reported today; Global Times continues its framing of Japan's military revival as a regional threat, and Chinese state media published a piece debunking what it calls 'colonial glorification' of Japanese rule in Taiwan, sustaining the",
+        "dprk_signal": "North Korea fired two suspected short-range ballistic missiles on September 20 — the second launch in two weeks — into the East Sea; South Korea's JCS reports one flew approximately 450 km from the Wonsan area. Both fell outside Japan's EEZ. Japan tightened security in response. Separately, reportin"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-19T11:06:31.645467+00:00"
+  "last_updated": "2026-09-20T11:05:48.563162+00:00"
 }

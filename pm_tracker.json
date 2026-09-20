@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-20",
+      "activity": "PM Takaichi is en route to or present in New York for the UN General Assembly, with a confirmed Trump bilateral set for Tuesday and a Ukrainian bilateral meeting request pending, following her instruction to the new cabinet to focus on market stability and the Middle East.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-20T11:05:48.562180+00:00"
+    },
+    {
       "date": "2026-09-19",
       "activity": "PM Takaichi's travel to New York for the UN General Assembly was confirmed, with a Trump bilateral set for Tuesday September 22 ahead of Xi Jinping's Washington state visit.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-22T15:17:17.099787+00:00"
-    },
-    {
-      "date": "2026-06-21",
-      "activity": "PM Takaichi conducted informal dining outreach to senior LDP members and issued a statement asserting US commitment to the Indo-Pacific has not declined, per arabnews.jp and Asahi Shimbun.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-21T12:08:37.995625+00:00"
     }
   ],
-  "last_updated": "2026-09-19T11:06:31.644550+00:00"
+  "last_updated": "2026-09-20T11:05:48.562233+00:00"
 }
