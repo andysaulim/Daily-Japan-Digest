@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-22": {
-      "signals": {
-        "china_signal": "A Chinese destroyer conducted live-fire drills inside Japan's claimed EEZ near Okinotorishima alongside Russian naval vessels on July 21-22 — Japan's MOD described it as the first detected instance of its kind. China's foreign ministry rejected Japan's protest as 'groundless,' simultaneously contest",
-        "russia_signal": "Russian military bombers flew over the Sea of Japan on July 22, Jiji Press reported, the day after Russian naval vessels participated jointly with a Chinese destroyer in live-fire drills inside Japan's claimed EEZ near Okinotorishima."
-      },
-      "watch_flag": true
-    },
     "2026-07-23": {
       "signals": {
         "china_signal": "China's foreign ministry rejected Japan's formal protest over last week's joint Chinese-Russian live-fire drills inside Japan's claimed EEZ near Okinotorishima, defending the exercise as 'consistent with international law' and invoking the formulation 'Japan's neo-militarism has bared its fangs.' Ch",
@@ -465,7 +458,15 @@
         "dprk_signal": "North Korea fired two suspected short-range ballistic missiles on September 20 — the second launch in two weeks — into the East Sea; South Korea's JCS reports one flew approximately 450 km from the Wonsan area. Both fell outside Japan's EEZ. Japan tightened security in response. Separately, reportin"
       },
       "watch_flag": false
+    },
+    "2026-09-21": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry labeled Japan's deployment of the US Typhon intermediate-range ground-launched cruise missile system 'another indication of its accelerating remilitarization,' per Global Times. Beijing's FM spokesperson separately declined to confirm whether the US-China Washington summit w",
+        "dprk_signal": "North Korea fired two suspected short-range ballistic missiles toward the East Sea on Sunday within a three-hour window; South Korea's JCS reported one flew approximately 440 km from the Wonsan area. Both splashed down outside Japan's EEZ; Japan tightened surveillance and joined US and South Korea i",
+        "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles beyond the sustained rhetorical escalation of recent weeks; the NYT profiles Nemuro's dual dependence on Russia economically and politically, illustrating the local dimension of the dispute."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-20T11:05:48.563162+00:00"
+  "last_updated": "2026-09-21T11:05:55.023962+00:00"
 }

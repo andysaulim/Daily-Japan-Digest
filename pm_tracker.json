@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-21",
+      "activity": "Prime Minister Sanae Takaichi departed Japan for New York to attend the UN General Assembly, with a confirmed bilateral with President Trump on Tuesday, September 22.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-21T11:05:55.023398+00:00"
+    },
+    {
       "date": "2026-09-20",
       "activity": "PM Takaichi is en route to or present in New York for the UN General Assembly, with a confirmed Trump bilateral set for Tuesday and a Ukrainian bilateral meeting request pending, following her instruction to the new cabinet to focus on market stability and the Middle East.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-23T12:32:49.031737+00:00"
-    },
-    {
-      "date": "2026-06-22",
-      "activity": "PM Takaichi published a contributed article in France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-22T15:17:17.099787+00:00"
     }
   ],
-  "last_updated": "2026-09-20T11:05:48.562233+00:00"
+  "last_updated": "2026-09-21T11:05:55.023436+00:00"
 }
