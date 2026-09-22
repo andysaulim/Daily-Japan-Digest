@@ -61,16 +61,19 @@ ENTERTAINMENT_BLOCK = ("celebrity", "j-pop", "idol", "anime", "manga",
 
 
 # Minimum readable words (validation gate). Loosened from 1000 so light news
-# days don't trip the gate. Note _count_words below is narrower than the
-# header/display counter, so this maps to a higher displayed word count.
-MIN_WORD_COUNT = 650
+# days don't trip the gate, then again when Today at a Glance, Overnight and
+# The Wire were removed — they carried roughly a quarter of the brief, so the
+# old floor would have failed an ordinary day. Note _count_words below is
+# narrower than the header/display counter, so this maps to a higher displayed
+# word count.
+MIN_WORD_COUNT = 550
 
-# The band the prompt asks for is 1,900-2,200, shared with Korea. This is the
+# The band the prompt asks for is 1,400-1,700. This is the
 # ceiling, enforced after the model has written rather than requested of it:
 # a target competes with every other instruction in the prompt and loses on a
 # heavy news day. length_budget drops whole items from the tail of the weaker
 # sections until the brief fits; nothing is rewritten.
-WORD_CEILING = 2400
+WORD_CEILING = 1900
 
 
 
@@ -107,15 +110,7 @@ def _count_words(digest: dict) -> int:
                    "headline", "action")
     words = 0
 
-    for mi in (digest.get("morning_memo") or []):
-        if isinstance(mi, dict):
-            for v in mi.values():
-                if isinstance(v, str):
-                    words += len(v.split())
-        elif isinstance(mi, str):
-            words += len(mi.split())
-
-    for key in ("top_stories", "overnight_items", "also_today", "business_economy",
+    for key in ("top_stories", "business_economy",
                 "indo_pacific", "us_japan_relations", "social_statements",
                 "opeds_today", "academic_today",
                 "prc_government", "npc_politburo",
@@ -140,90 +135,74 @@ def _count_words(digest: dict) -> int:
 
 
 # The validator rejects a brief where one outlet appears more than three times
-# across top stories and overnight. Nothing enforced that, so an
-# over-represented source was a dead end: the gate blocked the send and no code
-# path could clear it. Korea caps and drops the excess before validating; this
-# is that, ported.
+# in Top Stories. Nothing enforced that, so an over-represented source was a
+# dead end: the gate blocked the send and no code path could clear it. Korea
+# caps and drops the excess before validating; this is that, ported.
 _SOURCE_CAP = 3
+
+# Top Stories is never taken below this. It is deliberately the SAME number as
+# the validator's own minimum: trimming for breadth must never hand the gate a
+# count failure instead, which is what a lower floor would do — drop the fourth
+# item to satisfy the cap and the very next check rejects the brief for having
+# three stories. Move one of these and move the other.
+_TOP_STORIES_FLOOR = 4
 
 
 def _enforce_source_diversity(digest: dict) -> list[str]:
-    """Cap any single source, in the same scope the validator judges.
+    """Cap any single source in Top Stories, the scope the validator judges.
 
-    This was ported from Korea to close a dead end — the gate rejecting an
-    over-represented outlet with no code path able to clear it — but the port
-    counted per section while the validator counts top_stories and
-    overnight_items TOGETHER. An outlet with one item in Top Stories and three
-    in Overnight was therefore under the cap in every section, saw nothing
-    dropped, and still failed a combined count of four. That is what stopped
-    the 15 September brief, and re-running could never have helped.
+    This used to count top_stories and overnight_items together and drop only
+    from Overnight, which was the right shape while Overnight existed: Top
+    Stories was two to four curated items, and thinning it to satisfy a count
+    would have cost the brief its lead. Overnight was the release valve.
 
-    Counting is now combined. Dropping is not: only Overnight gives items up.
-    Top Stories is two to four curated items where the importance of the story
-    outweighs source diversity, and thinning it to satisfy a count would cost
-    the brief its lead. Overnight is never taken below its floor either, so a
-    residue can survive both rules — Top Stories alone over the cap, or a floor
-    that blocks the last removal. Those are real editorial problems rather than
-    plumbing faults, and the validator still reports them.
+    Removing Overnight and The Wire took that valve away. Top Stories is now
+    the only section the gate looks at, and it grew to four to six items to
+    carry the general news those sections used to hold — which makes four
+    items from one outlet an ordinary Japan-heavy morning rather than an
+    editorial failure. Left unenforced the gate would be exactly the dead end
+    it was before: a rule nothing in the pipeline can satisfy, cleared only by
+    a person passing --force-send.
+
+    So Top Stories now gives items up. Dropping to _TOP_STORIES_FLOOR always
+    satisfies a cap of three, so the gate is clearable in every case the floor
+    permits; below the floor the brief has a length problem rather than a
+    breadth one, and the validator reports that instead.
     """
-    _SECTION_MINIMUMS = {"overnight_items": 3}
     log = []
 
     def _src(item) -> str:
         return str(item.get("source", "Unknown")).lower().strip()
 
-    # ── Combined top_stories + overnight_items, matching _validate_digest ──
-    overnight = digest.get("overnight_items")
-    if isinstance(overnight, list) and overnight:
-        # Top Stories is counted but never thinned, so it seeds the tally.
-        counts: dict[str, int] = {}
-        for item in (digest.get("top_stories") or []):
-            if isinstance(item, dict):
-                counts[_src(item)] = counts.get(_src(item), 0) + 1
+    stories = digest.get("top_stories")
+    if not (isinstance(stories, list) and stories):
+        return log
 
-        kept, dropped = [], []
-        for item in overnight:
-            if not isinstance(item, dict):
-                kept.append(item)
-                continue
-            src = _src(item)
-            counts[src] = counts.get(src, 0) + 1
-            if counts[src] <= _SOURCE_CAP:
-                kept.append(item)
-            else:
-                dropped.append((item, src, str(item.get("headline", ""))[:60]))
+    counts: dict[str, int] = {}
+    kept, dropped = [], []
+    for item in stories:
+        if not isinstance(item, dict):
+            kept.append(item)
+            continue
+        src = _src(item)
+        counts[src] = counts.get(src, 0) + 1
+        if counts[src] <= _SOURCE_CAP:
+            kept.append(item)
+        else:
+            dropped.append((item, src, str(item.get("headline", ""))[:60]))
 
-        floor = _SECTION_MINIMUMS.get("overnight_items", 0)
-        if len(kept) < floor and dropped:
-            need = floor - len(kept)
-            for item, _s, _h in dropped[-need:]:
-                kept.append(item)
-            dropped = dropped[:-need]
+    # The floor outranks the cap. Put back the last-dropped items — the model
+    # orders by importance, so the tail is the least costly thing to restore.
+    if len(kept) < _TOP_STORIES_FLOOR and dropped:
+        need = _TOP_STORIES_FLOOR - len(kept)
+        for item, _s, _h in dropped[-need:]:
+            kept.append(item)
+        dropped = dropped[:-need]
 
-        if dropped:
-            digest["overnight_items"] = kept
-            for _item, src, headline in dropped:
-                log.append(f"Removed excess {src} from overnight_items: '{headline}'")
-
-    # ── also_today keeps its own per-section cap ──────────────────────────
-    # The validator does not check it, but breadth there is its own rule.
-    items = digest.get("also_today")
-    if isinstance(items, list) and items:
-        counts, kept, dropped = {}, [], []
-        for item in items:
-            if not isinstance(item, dict):
-                kept.append(item)
-                continue
-            src = _src(item)
-            counts[src] = counts.get(src, 0) + 1
-            if counts[src] <= _SOURCE_CAP:
-                kept.append(item)
-            else:
-                dropped.append((item, src, str(item.get("headline", ""))[:60]))
-        if dropped:
-            digest["also_today"] = kept
-            for _item, src, headline in dropped:
-                log.append(f"Removed excess {src} from also_today: '{headline}'")
+    if dropped:
+        digest["top_stories"] = kept
+        for _item, src, headline in dropped:
+            log.append(f"Removed excess {src} from top_stories: '{headline}'")
 
     return log
 
@@ -237,43 +216,30 @@ def _validate_digest(digest: dict) -> list[str]:
         failures.append(f"WORD COUNT: {word_count} words (minimum {MIN_WORD_COUNT})")
 
     top_count = len(digest.get("top_stories") or [])
-    if top_count < 2:
-        failures.append(f"TOP STORIES: {top_count} (minimum 2)")
-    if top_count > 4:
-        failures.append(f"TOP STORIES: {top_count} (maximum 4)")
+    if top_count < 4:
+        failures.append(f"TOP STORIES: {top_count} (minimum 4)")
+    if top_count > 6:
+        failures.append(f"TOP STORIES: {top_count} (maximum 6)")
 
-    overnight_count = len(digest.get("overnight_items") or [])
-    if overnight_count < 3:
-        failures.append(f"OVERNIGHT ITEMS: {overnight_count} (minimum 3)")
-
-    memo = digest.get("morning_memo") or []
-    if len(memo) != 3:
-        failures.append(f"MORNING MEMO: {len(memo)} items (must be exactly 3)")
-
-    # Source diversity check
-    all_items = (digest.get("top_stories") or []) + (digest.get("overnight_items") or [])
+    # Source diversity check. Top Stories is the whole scope now — Overnight
+    # and The Wire, which used to share it, are gone.
+    #
+    # _enforce_source_diversity runs immediately before this and, with the cap
+    # and the floor both at 3, can always reach the cap: any digest carrying
+    # three or more stories keeps at least three, and three from one outlet is
+    # within the cap. So on the normal path this never fires. It stays because
+    # the gate is the guarantee and the enforcer is only the mechanism — a
+    # digest that reaches validation another way (--from-cache, a future
+    # caller, an edited enforcer) is still checked rather than trusted.
     source_counts = {}
-    for item in all_items:
+    for item in (digest.get("top_stories") or []):
         src = (item.get("source") or "").strip()
         if src:
             source_counts[src] = source_counts.get(src, 0) + 1
-    top_only = {}
-    for item in (digest.get("top_stories") or []):
-        s_ = (item.get("source") or "").strip()
-        if s_:
-            top_only[s_] = top_only.get(s_, 0) + 1
     for src, count in source_counts.items():
-        if count > 3:
-            # Say which kind of failure it is. Excess that trimming Overnight
-            # could have cleared is a bug; excess carried by Top Stories itself
-            # is an editorial call for a person, and force_send is the answer.
-            if top_only.get(src, 0) > 3:
-                failures.append(f"SOURCE DIVERSITY: '{src}' appears "
-                                f"{top_only[src]} times in top_stories alone "
-                                f"(max 3) — not fixable by trimming Overnight")
-            else:
-                failures.append(f"SOURCE DIVERSITY: '{src}' appears {count} times "
-                              f"in top + overnight (max 3)")
+        if count > _SOURCE_CAP:
+            failures.append(f"SOURCE DIVERSITY: '{src}' appears {count} times in "
+                            f"top_stories (max {_SOURCE_CAP})")
 
     # Date integrity
     digest_date = digest.get("digest_date", "")
@@ -282,7 +248,7 @@ def _validate_digest(digest: dict) -> list[str]:
         failures.append(f"DATE MISMATCH: digest_date='{digest_date}' vs today='{today_str}'")
 
     # Placeholder URL check
-    for key in ("top_stories", "overnight_items", "also_today"):
+    for key in ("top_stories",):
         for item in (digest.get(key) or []):
             url = (item.get("url") or "").strip()
             if url in ("#", "None", "null", ""):
@@ -519,7 +485,7 @@ def _resolve_payload_urls(payload: dict) -> dict:
 
 
 _URL_SECTIONS = (
-    "top_stories", "overnight_items", "also_today", "business_economy",
+    "top_stories", "business_economy",
     "us_japan_relations", "indo_pacific", "opeds_today", "academic_today",
     "events_today", "social_statements", "prc_government", "npc_politburo",
     "personnel_changes",
@@ -748,9 +714,9 @@ def _sanitise_urls(digest: dict, collected: dict) -> dict:
 # (Previously only eight sections were swept, which let the same story appear in,
 # e.g., the MOFA tracker AND Personnel Changes at once.)
 _DEDUPE_ORDER = (
-    "top_stories", "overnight_items", "us_japan_relations", "prc_government",
+    "top_stories", "us_japan_relations", "prc_government",
     "personnel_changes", "npc_politburo", "indo_pacific", "business_economy",
-    "opeds_today", "academic_today", "events_today", "social_statements", "also_today",
+    "opeds_today", "academic_today", "events_today", "social_statements",
 )
 
 # Common brief words carrying no story identity — dropped before comparing titles
@@ -855,9 +821,9 @@ def _is_hollow(item: dict) -> bool:
 
 
 # Sections fed by exactly one collection tier, and the payload key that feeds
-# them. Everything else (top_stories, overnight_items, also_today,
-# indo_pacific, business_economy, us_japan_relations) draws from the shared
-# Tier 1 pool, so there is no boundary to enforce.
+# them. Everything else (top_stories, indo_pacific, business_economy,
+# us_japan_relations) draws from the shared Tier 1 pool, so there is no
+# boundary to enforce.
 _TIER_SOURCED = {
     "opeds_today": "tier2",
     "academic_today": "tier3",
@@ -990,12 +956,11 @@ def _dedupe_sections(digest: dict) -> dict:
         if ks_url:
             seen_urls.add(ks_url)
 
-    digest["overnight_items"] = _sweep(digest.get("overnight_items"))
     # Named rather than sliced. This was _DEDUPE_ORDER[2:], which silently
-    # assumed the first two entries were exactly the two swept above; adding a
+    # assumed the leading entries were exactly the ones swept above; adding a
     # section at the head of the tuple would have swept one of them twice,
     # around the key_stat fingerprint seeding in between.
-    _already_swept = ("top_stories", "overnight_items")
+    _already_swept = ("top_stories",)
     for section in (x for x in _DEDUPE_ORDER if x not in _already_swept):
         digest[section] = _sweep(digest.get(section))
 
@@ -1481,7 +1446,6 @@ def _archive_html(html: str, digest: dict) -> None:
         "filename": f"{date_str}.html",
         "re_line": digest.get("re_line", ""),
         "top_stories": len(digest.get("top_stories") or []),
-        "overnight_items": len(digest.get("overnight_items") or []),
         "word_count": _count_words(digest),
     }
     archive = [a for a in archive if a.get("date") != date_str]

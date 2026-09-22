@@ -7,12 +7,17 @@ if the brief is over budget after the model has written it, sections are
 trimmed from the tail in a fixed order until it fits.
 
 The order is an editorial judgement, stated once here rather than improvised.
-Top stories and the morning memo are never trimmed — they are the brief. What
-goes first is breadth that repeats value found elsewhere: forthcoming event
-announcements, then the tail of the wire, then quoted statements, then the
-second and third op-ed. Trimming takes from the end of each section because
-the model is asked to order by importance within a section, so the tail is
-the least important item it chose.
+Top stories are never trimmed — they are the brief, and since Overnight and
+The Wire were removed they are also the only place most hard news can go.
+What goes first is breadth that repeats value found elsewhere: forthcoming
+event announcements, then quoted statements, then the personnel and Diet
+trackers, then the second and third op-ed. Trimming takes from the end of
+each section because the model is asked to order by importance within a
+section, so the tail is the least important item it chose.
+
+Losing Overnight and The Wire also took away the two largest pools this
+module used to cut from, so the sections below now carry the whole adjustment
+against a lower ceiling.
 
 Nothing here rewrites text. It only drops whole items, so anything that
 survives is exactly what the model wrote and every remaining claim keeps the
@@ -21,12 +26,11 @@ source it was checked against.
 from __future__ import annotations
 
 # Sections in the order they give up items, least costly first. A section not
-# named here is never trimmed: top_stories, morning_memo, key_stat,
-# calendar_watch, on_this_day, xinhua_delta.
+# named here is never trimmed: top_stories, key_stat, calendar_watch,
+# on_this_day, xinhua_delta.
 TRIM_ORDER: list[tuple[str, int]] = [
     # (section, floor — never trim below this many items)
     ("events_today", 0),
-    ("also_today", 3),
     ("social_statements", 2),
     ("personnel_changes", 2),
     ("npc_politburo", 2),
@@ -36,7 +40,6 @@ TRIM_ORDER: list[tuple[str, int]] = [
     ("indo_pacific", 3),
     ("business_economy", 3),
     ("prc_government", 3),
-    ("overnight_items", 3),
 ]
 
 

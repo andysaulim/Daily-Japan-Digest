@@ -15,7 +15,6 @@ Automated daily intelligence briefing on Japan and the US-Japan alliance for the
 | Articles collected | 78 |
 | Unique sources | 5 |
 | Top stories | 2 |
-| Overnight items | 5 |
 | Word count | ~805 |
 | PM appeared | No |
 
@@ -61,22 +60,19 @@ collect.py          digest.py           render.py          send_email.py
 | # | Section | Description |
 | - | - | - |
 | 1 | Header | Date · RE line · market strip (Nikkei 225 · USD/JPY · Brent · BOJ policy rate) · jump row |
-| 2 | Today at a Glance | Top 3 stories at a glance — elevator brief |
-| 3 | Top Stories | 2–4 biggest hard news stories |
-| 4 | Overnight | Up to 6 secondary items |
-| 5 | Stat of the Day | Single striking number from today's news |
-| 6 | Japanese Government | PM Watch · Kantei, Cabinet Sec, MOFA, MOD/Joint Staff, METI, MOF, BOJ + Personnel + Diet Sessions/LDP (floor and committee business, bills, budget, LDP and coalition manoeuvring) |
-| 7 | Public Sentiment & Approval Polling | Cabinet approval & party support (NHK/Jiji/Yomiuri/Asahi/Kyodo, same-poll rule) |
-| 8 | Business & Economy | Major corporates, semiconductors (Rapidus, JASM), macro, the $550B investment framework |
-| 9 | Regional Pressure Watch | **DARK SECTION** — China / DPRK / Russia adversary signals toward Japan |
-| 10 | U.S.-Japan Relations | Up to 4 — alliance, basing/USFJ, host-nation support, defence-industrial, tariffs and trade, US Congress action on Japan |
-| 11 | Indo-Pacific Partners | 4–6 — South Korea, Southeast Asia, India, Australia, New Zealand, Pacific Islands, trilateral, Quad |
-| 12 | Expert Analysis and Events | Op-eds + academic journals + think-tank event announcements |
-| 13 | Social Statements | 0–4 verbatim quotes from the PM, ministers, BOJ Governor, US/allied officials |
-| 14 | The Wire | Up to 6 third-tier items |
-| 15 | Upcoming | 4–5 dated events in the next two to four weeks |
-| 16 | On This Day | Verified historical event matching today's exact date |
-| 17 | Footer | — |
+| 2 | Top Stories | 4–6 biggest hard news stories — the default home for general news |
+| 3 | Stat of the Day | Single striking number from today's news |
+| 4 | Japanese Government | PM Watch · Kantei, Cabinet Sec, MOFA, MOD/Joint Staff, METI, MOF, BOJ + Personnel + Diet Sessions/LDP (floor and committee business, bills, budget, LDP and coalition manoeuvring) |
+| 5 | Public Sentiment & Approval Polling | Cabinet approval & party support (NHK/Jiji/Yomiuri/Asahi/Kyodo, same-poll rule) |
+| 6 | Business & Economy | Major corporates, semiconductors (Rapidus, JASM), macro, the $550B investment framework |
+| 7 | Regional Pressure Watch | **DARK SECTION** — China / DPRK / Russia adversary signals toward Japan |
+| 8 | U.S.-Japan Relations | Up to 4 — alliance, basing/USFJ, host-nation support, defence-industrial, tariffs and trade, US Congress action on Japan |
+| 9 | Indo-Pacific Partners | 4–6 — South Korea, Southeast Asia, India, Australia, New Zealand, Pacific Islands, trilateral, Quad |
+| 10 | Expert Analysis and Events | Op-eds + academic journals + think-tank event announcements |
+| 11 | Social Statements | 0–4 verbatim quotes from the PM, ministers, BOJ Governor, US/allied officials |
+| 12 | Upcoming | 4–5 dated events in the next two to four weeks |
+| 13 | On This Day | Verified historical event matching today's exact date |
+| 14 | Footer | — |
 
 ---
 
@@ -129,9 +125,9 @@ Required secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASS`, `DIGEST_T
 
 ## Validation Gates
 
-- **Word count**: Hard minimum 650 (validation counter; target ~1,200–1,800 as shown in the header)
-- **Section minimums**: 2–4 top stories, ≥3 overnight, exactly 3 morning memo
-- **Source diversity**: No single source >3 times in top + overnight
+- **Word count**: Hard minimum 550 (validation counter; prompt band 1,400–1,700, ceiling 1,900)
+- **Section minimums**: 4–6 top stories
+- **Source diversity**: No single source >3 times in Top Stories (trimmed to fit, never below 3 stories)
 - **Prestige outlets**: WSJ/NYT/WaPo/Bloomberg/FT/Economist/CNN/Reuters/NHK/Kyodo/Japan Times/Nikkei never dropped
 - **Same-poll-date rule**: Approval polling never mixes pollsters or survey dates
 - **Content filters**: J-pop/idol/anime/celebrity hard-blocked unless policy/security angle

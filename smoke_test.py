@@ -65,7 +65,6 @@ def _digest(**over) -> dict:
         # every send from 10 September onward.
         "digest_date": _today_et(),
         "re_line": "Diet reconvenes · BOJ holds · Osprey grounding lifted",
-        "morning_memo": ["First.", "Second.", "Third."],
         "web_url": "https://example.org/index.html",
         "top_stories": [
             {"headline": "Cabinet approves the defence budget request",
@@ -75,29 +74,22 @@ def _digest(**over) -> dict:
             {"headline": "BOJ holds rates", "body": "No change to the policy rate.",
              "source": "Nikkei", "src_line": 'per Nikkei: "BOJ holds"',
              "url": "https://example.org/b", "category_tag": "Economy"},
-        ],
-        "overnight_items": [
-            {"category": "Security", "headline": "Destroyer transits the strait",
-             "body_text": "Second passage this week.", "source": "Kyodo",
-             "url": "https://example.org/c"},
-            {"category": "Trade", "headline": "Tariff talks resume",
-             "body_text": "Officials meet in Washington.", "source": "Asahi",
-             "url": "https://example.org/d"},
-            {"category": "Politics", "headline": "Upper house committee sits",
-             "body_text": "Budget testimony scheduled.", "source": "NHK World",
-             "url": "https://example.org/d2"},
+            {"headline": "Destroyer transits the strait",
+             "body": "Second passage this week.", "source": "Kyodo",
+             "src_line": 'per Kyodo: "Destroyer transits"',
+             "url": "https://example.org/c", "category_tag": "Defense"},
+            {"headline": "Tariff talks resume",
+             "body": "Officials meet in Washington.", "source": "Asahi",
+             "src_line": 'per Asahi: "Tariff talks resume"',
+             "url": "https://example.org/d", "category_tag": "Alliance"},
+            {"headline": "Upper house committee sits",
+             "body": "Budget testimony scheduled.", "source": "NHK World",
+             "src_line": 'per NHK World: "Committee sits"',
+             "url": "https://example.org/d2", "category_tag": "Politics-Diet"},
         ],
         "key_stat": {"number": "1.4%", "label": "Q2 GDP, annualised",
                      "context": "Third consecutive quarter of growth.",
                      "source": "Cabinet Office"},
-        "also_today": [
-            {"category": "trade", "headline": "Chip subsidy tranche released",
-             "body_text": "METI names the recipients.", "source": "Nikkei",
-             "url": "https://example.org/e"},
-            {"category": "politics", "headline": "Reshuffle speculation",
-             "body_text": "Two portfolios in play.", "source": "Mainichi",
-             "url": "https://example.org/f"},
-        ],
         "business_economy": [
             {"headline": "Yen steadies", "body_text": "After a volatile session.",
              "source": "Bloomberg", "url": "https://example.org/g"}],
@@ -181,7 +173,9 @@ def test_render():
     # The footer referenced archive_url, which was never computed, so this
     # raised NameError on every call and no test existed to catch it.
     check("renders with no web_url at all",
-          len(render.render_html({"re_line": "x", "morning_memo": ["a", "b", "c"]})) > 3_000)
+          len(render.render_html({"re_line": "x", "top_stories": [
+              {"headline": "H", "body": "B", "source": "S",
+               "url": "https://example.org/x"}]})) > 3_000)
 
     body = html.split("<body", 1)[-1]
     hrefs = re.findall(r'href="([^"]*)"', body)
@@ -196,9 +190,7 @@ def test_render():
     check("every jump link resolves", jumps <= anchors, str(sorted(jumps - anchors)))
 
     check("jump row is labelled", "In this issue" in html)
-    check("overnight is a scan list", 'class="flash-table"' in html)
     check("stat panel present", 'a name="key-stat"' in html)
-    check("the wire is grouped", 'a name="wire"' in html)
     check("house footer", "CSIS Japan Chair" in html and "Washington, D.C." in html)
     check("contact is the Japan chair's", "dmartin@csis.org" in html)
     check("no Korea contact left behind", "alim@csis.org" not in html)
@@ -236,14 +228,17 @@ def test_print_and_mobile():
 # ── 4. Length ────────────────────────────────────────────────────────────
 def test_length():
     section("length ceiling")
-    check("ceiling is set", run_mod.WORD_CEILING == 2400, str(run_mod.WORD_CEILING))
+    check("ceiling is set", run_mod.WORD_CEILING == 1900, str(run_mod.WORD_CEILING))
     check("prompt states the band",
-          "1,900-2,200" in inspect.getsource(digest_mod))
+          "1,400-1,700" in inspect.getsource(digest_mod))
     check("run.py enforces it", "length_budget.apply(" in Path("run.py").read_text(encoding="utf-8"))
 
     over = _digest()
     filler = " ".join(["word"] * 120)
-    for key in ("overnight_items", "also_today", "business_economy", "indo_pacific"):
+    # Overnight and The Wire were the two biggest pools this used to inflate.
+    # What remains has to carry the whole overshoot on its own.
+    for key in ("business_economy", "indo_pacific", "opeds_today",
+                "us_japan_relations"):
         over[key] = [{"headline": "H", "body_text": filler, "source": "S",
                       "url": f"https://example.org/{key}{i}"} for i in range(9)]
     before = run_mod._count_words(over)
@@ -251,7 +246,7 @@ def test_length():
     length_budget.apply(over, run_mod._count_words, run_mod.WORD_CEILING)
     check("trimmer brings it under", run_mod._count_words(over) <= run_mod.WORD_CEILING,
           f"{before} -> {run_mod._count_words(over)}")
-    check("top stories are never trimmed", len(over["top_stories"]) == 2)
+    check("top stories are never trimmed", len(over["top_stories"]) == 5)
 
 
 # ── 4b. Source diversity ─────────────────────────────────────────────────
@@ -259,31 +254,48 @@ def test_source_diversity():
     """The rule the validator enforces must have something that satisfies it.
 
     The validator rejects a brief where one outlet appears more than three
-    times across top stories and overnight, and nothing used to cap it, so an
-    over-represented source blocked the send with no way to recover. Whole-
-    outlet RSS feeds return far more items per source than the site: searches
-    they replaced, which makes that input likely rather than exotic.
+    times in Top Stories, and nothing used to cap it, so an over-represented
+    source blocked the send with no way to recover. Whole-outlet RSS feeds
+    return far more items per source than the site: searches they replaced,
+    which makes that input likely rather than exotic.
+
+    Top Stories is the whole scope now. It used to be exempt, with Overnight
+    giving up the excess instead; removing Overnight and The Wire took that
+    release valve away, so this section has to give items up itself.
     """
     section("source diversity")
-    d = {"overnight_items": [{"source": "Reuters", "headline": f"r{i}"} for i in range(6)]
-                            + [{"source": "Kyodo", "headline": "k"}],
-         "also_today": [{"source": "Nikkei", "headline": f"n{i}"} for i in range(5)]}
+    d = {"top_stories": [{"source": "Reuters", "headline": f"r{i}",
+                          "url": f"https://example.org/r{i}"} for i in range(6)]
+                        + [{"source": "Kyodo", "headline": "k",
+                            "url": "https://example.org/k"}]}
     log = run_mod._enforce_source_diversity(d)
-    check("excess items are dropped", len(log) == 5, str(len(log)))
-    check("the cap holds", sum(1 for i in d["overnight_items"]
+    check("excess items are dropped", len(log) == 3, str(len(log)))
+    check("the cap holds", sum(1 for i in d["top_stories"]
                                if i["source"] == "Reuters") <= run_mod._SOURCE_CAP)
-    check("the section floor is respected", len(d["overnight_items"]) >= 3)
+    check("the section floor is respected",
+          len(d["top_stories"]) >= run_mod._TOP_STORIES_FLOOR,
+          str(len(d["top_stories"])))
     # And the gate it feeds must then pass.
-    full = dict(d, top_stories=[{"source": "A", "headline": "x"},
-                                {"source": "B", "headline": "y"}],
-                morning_memo=["a", "b", "c"])
     check("the validator no longer objects",
-          not [f for f in run_mod._validate_digest(full) if "DIVERSITY" in f])
-    # Top stories are deliberately exempt: two to four curated items where the
-    # story outweighs the count.
-    top = {"top_stories": [{"source": "Reuters", "headline": f"t{i}"} for i in range(4)]}
-    run_mod._enforce_source_diversity(top)
-    check("top stories are untouched", len(top["top_stories"]) == 4)
+          not [f for f in run_mod._validate_digest(d) if "DIVERSITY" in f])
+
+    # The floor outranks the cap. Trimming must never hand the gate a count
+    # failure in place of a breadth one, so the floor is the same number as
+    # the validator's minimum and the dropped item comes back.
+    floored = {"top_stories": [{"source": "Reuters", "headline": f"t{i}",
+                                "url": f"https://example.org/t{i}"} for i in range(4)]}
+    run_mod._enforce_source_diversity(floored)
+    check("the floor is never breached to satisfy the cap",
+          len(floored["top_stories"]) == run_mod._TOP_STORIES_FLOOR,
+          str(len(floored["top_stories"])))
+    check("the floor matches the validator's minimum, so trimming never "
+          "swaps one failure for another",
+          not [f for f in run_mod._validate_digest(floored)
+               if f.startswith("TOP STORIES")])
+    # And what survives is a real editorial problem, reported rather than hidden.
+    check("a brief entirely from one outlet still blocks",
+          [f for f in run_mod._validate_digest(floored)
+           if f.startswith("SOURCE DIVERSITY")])
 
 
 # ── 5. Validation gate ───────────────────────────────────────────────────
@@ -298,8 +310,9 @@ def test_validation_gate():
 
     # 15 September: 'The Japan Times' appeared 4 times across top + overnight,
     # the gate blocked the send, and nothing could clear it — the enforcer
-    # counts per section and skips top_stories, while the validator counts the
-    # two together. Under cap everywhere individually, over it combined.
+    # counted per section and skipped top_stories, while the validator counted
+    # the two together. Overnight is gone; the same shape now lands entirely
+    # in Top Stories, and the enforcer has to clear it there.
     import run as _run
 
     def _src_failures(d):
@@ -309,36 +322,37 @@ def test_validation_gate():
         return {"source": source, "headline": f"{source} story {n}",
                 "url": f"https://example.org/{source.replace(' ', '')}-{n}"}
 
-    _split = {"top_stories": [_item("The Japan Times", 1), _item("Nikkei", 2)],
-              "overnight_items": [_item("The Japan Times", 3), _item("The Japan Times", 4),
-                                  _item("The Japan Times", 5), _item("Kyodo", 6),
-                                  _item("Reuters", 7)]}
-    _run._enforce_source_diversity(_split)
-    _combined = sum(1 for i in _split["top_stories"] + _split["overnight_items"]
-                    if i.get("source") == "The Japan Times")
-    check("a source split across top and overnight is capped to 3 combined",
-          _combined <= 3, f"{_combined} remain")
-    check("and the gate then passes on it", not _src_failures(_split),
-          "; ".join(_src_failures(_split)))
+    _over = {"top_stories": [_item("The Japan Times", 1), _item("The Japan Times", 2),
+                             _item("The Japan Times", 3), _item("The Japan Times", 4),
+                             _item("Nikkei", 5)]}
+    _run._enforce_source_diversity(_over)
+    _remaining = sum(1 for i in _over["top_stories"]
+                     if i.get("source") == "The Japan Times")
+    check("an over-represented outlet is capped to 3", _remaining <= 3,
+          f"{_remaining} remain")
+    check("and the gate then passes on it", not _src_failures(_over),
+          "; ".join(_src_failures(_over)))
+    check("the brief keeps enough stories to send",
+          len(_over["top_stories"]) >= _run._TOP_STORIES_FLOOR,
+          str(len(_over["top_stories"])))
 
-    # Top Stories alone over the cap cannot be fixed by trimming Overnight, and
-    # should still block — but say which it is, so force-send is an informed
-    # call rather than a hunt for a bug.
-    _lede = {"top_stories": [_item("The Japan Times", i) for i in range(1, 5)],
-             "overnight_items": [_item("Kyodo", 9)]}
-    _run._enforce_source_diversity(_lede)
-    _lede_fail = _src_failures(_lede)
-    check("top_stories alone over the cap still fails", bool(_lede_fail))
-    check("and the message names top_stories as the reason",
-          any("top_stories alone" in f for f in _lede_fail),
-          "; ".join(_lede_fail))
+    # The gate is the guarantee, the enforcer only the mechanism. A digest
+    # that reaches validation without having been through the enforcer is
+    # still checked rather than trusted.
+    _unenforced = {"top_stories": [_item("The Japan Times", i) for i in range(1, 5)]}
+    check("the gate still catches an unenforced digest",
+          bool(_src_failures(_unenforced)), "; ".join(_src_failures(_unenforced)))
 
-    # The overnight floor outranks the cap: never ship the section short.
-    _floor = {"top_stories": [_item("The Japan Times", 1)],
-              "overnight_items": [_item("The Japan Times", i) for i in range(2, 5)]}
-    _run._enforce_source_diversity(_floor)
-    check("the overnight floor is not breached to satisfy the cap",
-          len(_floor["overnight_items"]) >= 3, str(len(_floor["overnight_items"])))
+    # The sections themselves are gone; nothing should re-introduce them.
+    _removed = ("morning_memo", "overnight_items", "also_today")
+    _gates = _run._validate_digest(_digest())
+    check("no gate demands a removed section",
+          not [f for f in _gates
+               if any(k.split("_")[0].upper() in f for k in _removed)],
+          "; ".join(_gates))
+    check("digest.py has no minimum for a removed section",
+          not [k for k in _removed
+               if k in inspect.getsource(digest_mod._check_content_minimums)])
 
     # 14 September: the brief shipped a Japan Times news commentary under
     # "Op-Eds & Think Tank Commentary" on a run whose collector reported
@@ -369,9 +383,10 @@ def test_validation_gate():
     check("a tier absent from the payload is left alone",
           len(_unknown["events_today"]) == 1, str(_unknown["events_today"]))
     check("force-send still exists", "--force-send" in src)
-    bad = _digest(morning_memo=["only", "two"])
-    check("a short memo is a failure",
-          any("MORNING MEMO" in f for f in run_mod._validate_digest(bad)))
+    bad = _digest(top_stories=[{"headline": "only one", "body": "b",
+                                "source": "S", "url": "https://example.org/z"}])
+    check("too few top stories is a failure",
+          any("TOP STORIES" in f for f in run_mod._validate_digest(bad)))
     # The word-count minimum is about a real brief, not a fixture, so it is
     # the one failure a fixture is allowed to trip.
     check("a complete digest passes every structural check",
