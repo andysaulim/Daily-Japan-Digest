@@ -1,55 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-15": {
-      "signals": {
-        "china_signal": "No new China Coast Guard territorial-waters intrusion or PLA activity near the Senkakus is reported in today's feed. The tracker's last recorded China signal was July 14, when Beijing summoned Japan's ambassador and the Chinese Embassy filed a solemn representation over Japan's co-signature of a 14-",
-        "russia_signal": "The Guardian published a detailed report on Russian intelligence networks operating inside Japan, noting expansion after Russia's 2022 invasion of Ukraine. Japan officially acknowledged a growing counter-espionage need in response; no new Northern Territories or Hokkaido air-sea incursion is reporte"
-      },
-      "watch_flag": false
-    },
-    "2026-07-16": {
-      "signals": {
-        "china_signal": "Global Times published two pieces on July 16 framing Japan's co-signature of the 14-nation South China Sea arbitral-ruling statement as reflecting 'strategic ambitions' and warning that countries backing the 2016 ruling risk undermining their own maritime rights — continuing Beijing's multi-day dipl",
-        "dprk_signal": "The US, South Korean, and Japanese defense chiefs convened in Washington and issued a joint trilateral statement reaffirming cooperation on North Korean denuclearization; StratNews Global separately reports Japan is internally assessing nuclear deterrence options in response to sustained DPRK nuclea",
-        "russia_signal": "No new Northern Territories or Hokkaido air-sea incursion reported in today's feed; the Guardian investigation into Russian espionage networks in Japan remains the active Russia-Japan story in the tracker."
-      },
-      "watch_flag": false
-    },
-    "2026-07-17": {
-      "signals": {
-        "china_signal": "China state media (Global Times and China Daily Asia) published pieces on July 17 characterizing Japan's co-signature of the 14-nation South China Sea arbitral-ruling statement as reflecting 'strategic ambitions' — continuing a multi-day diplomatic pressure campaign that began July 13 with China's f",
-        "dprk_signal": "The US, Japan, and South Korean defense chiefs issued a joint trilateral statement from Washington reaffirming cooperation on North Korean denuclearization; Radio Free Asia separately reported expert assessments that North Korean structures near the DMZ may constitute rocket launch infrastructure."
-      },
-      "watch_flag": false
-    },
-    "2026-07-20": {
-      "signals": {
-        "china_signal": "China's foreign ministry warned Japan it 'should not ignore the prevailing trend on nuclear issues,' directly responding to Defense Minister Koizumi's public call for a nuclear weapons debate — a statement framed alongside Japanese local assembly resolutions upholding non-nuclear principles. Separat",
-        "dprk_signal": "A Eurasia Review analysis on Japan-South Korea security cooperation was the only DPRK-tagged item in today's Tier 4 feed; no new North Korean missile launch, EEZ splashdown, or KCNA statement naming Japan was reported."
-      },
-      "watch_flag": false
-    },
-    "2026-07-21": {
-      "signals": {
-        "china_signal": "A Chinese destroyer and Russian naval vessels conducted live-fire drills inside Japan's exclusive economic zone near Okinotorishima; Japan protested formally and China's foreign ministry rejected the protest as 'groundless,' simultaneously asserting Okinotorishima is a rock not entitled to an EEZ. C",
-        "russia_signal": "Russian naval vessels participated jointly with China in the live-fire drill inside Japan's EEZ; no separate Russian Northern Territories or Hokkaido air-sea incursion is reported in today's feed."
-      },
-      "watch_flag": true
-    },
-    "2026-07-22": {
-      "signals": {
-        "china_signal": "A Chinese destroyer conducted live-fire drills inside Japan's claimed EEZ near Okinotorishima alongside Russian naval vessels on July 21-22 — Japan's MOD described it as the first detected instance of its kind. China's foreign ministry rejected Japan's protest as 'groundless,' simultaneously contest",
-        "russia_signal": "Russian military bombers flew over the Sea of Japan on July 22, Jiji Press reported, the day after Russian naval vessels participated jointly with a Chinese destroyer in live-fire drills inside Japan's claimed EEZ near Okinotorishima."
-      },
-      "watch_flag": true
-    },
-    "2026-07-23": {
-      "signals": {
-        "china_signal": "China's foreign ministry rejected Japan's formal protest over last week's joint Chinese-Russian live-fire drills inside Japan's claimed EEZ near Okinotorishima, defending the exercise as 'consistent with international law' and invoking the formulation 'Japan's neo-militarism has bared its fangs.' Ch",
-        "russia_signal": "Russia deployed a Tu-95 Bear strategic bomber near Japan escorted by a Su-35 fighter, per Zona Militar — a step up from unescorted Tu-95 flights reported on July 22 and following Russian naval vessels' participation in joint live-fire drills with a Chinese destroyer inside Japan's claimed EEZ near O"
-      },
-      "watch_flag": true
-    },
     "2026-07-24": {
       "signals": {
         "china_signal": "The Japan-China foreign ministers' phone call on July 24 — the first since ties deteriorated over PM Takaichi's Taiwan-related remarks — breaks a ministerial-level communication blackout. Separately, the US, Japan, and South Korea issued a joint statement expressing concern over China's ICBM test la",
@@ -447,7 +397,77 @@
         "russia_signal": "Japan Times analysis published today finds Tokyo constrained in its response to Putin's Northern Territories visit one month ago, as dependence on Russian oil and natural gas — with Brent above $104/barrel — limits the sanctions options available to the Takaichi government."
       },
       "watch_flag": true
+    },
+    "2026-09-14": {
+      "signals": {
+        "china_signal": "China raised visa fees *sevenfold* for Japanese nationals, citing reciprocity for Japan's July fee hike for foreign nationals — the latest in a sequence of economic-pressure measures following September's anti-dumping levies on Japanese dichlorosilane. Chinese state media (Xinhua, Global Times) sepa",
+        "dprk_signal": "North Korean state media confirmed the September 12 launches were a joint firepower strike drill combining long-range artillery, ballistic missiles, and attack drones, claiming 'huge destructive power'; Chosun Ilbo reported the exercise was framed as 'Kill Chain' training following defense chief Pak",
+        "russia_signal": "TASS reported Japan maintains its presence in Russian oil and gas projects despite bilateral tensions, citing a Russian diplomat — underscoring the energy-dependence constraint on Tokyo's sanctions options identified in recent Japan Times analysis."
+      },
+      "watch_flag": false
+    },
+    "2026-09-15": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 15 regular press conference, with China expressing hope that Japan-China friendship groups create conditions for improving bilateral ties — a measured formulation that falls short of an endorsement of the cross-party parliamentary d",
+        "dprk_signal": "North Korea formally confirmed via state media that the September 12 launches were a 'joint firepower strike drill' combining long-range artillery, ballistic missiles, and attack drones — claiming 'huge destructive power' — after multiple international outlets reported the launches; USNI News report",
+        "russia_signal": "Nikkei Asia reported today that Japan's LNG dependency is constraining its response options following President Putin's visit to the disputed Northern Territories islands, with Brent above $102/barrel reinforcing Japan's energy-dependence on Russian supplies."
+      },
+      "watch_flag": false
+    },
+    "2026-09-16": {
+      "signals": {
+        "china_signal": "Chinese Defense Minister Dong Jun used the Xiangshan Forum to warn against 'militarism and revisionism' in remarks widely read as directed at Japan, coming days after a cross-party Japanese parliamentary delegation's Beijing visit. Chinese state media framed the lawmakers' visit as an 'exploratory g",
+        "dprk_signal": "North Korea formally confirmed via state media that the September 12 launches constituted a 'joint firepower strike drill' combining long-range artillery, ballistic missiles, and attack drones targeting an island in the Sea of Japan, claiming 'huge destructive power.' Separately, a minister-led Nort",
+        "russia_signal": "Japan-Russia bilateral trade rose *19.51%* to $959 million in August per TASS, underscoring the economic interdependence that constrains Tokyo's response options following Putin's Northern Territories island visit. Nikkei Asia analysis confirms LNG dependency is the central constraint on any escalat"
+      },
+      "watch_flag": false
+    },
+    "2026-09-17": {
+      "signals": {
+        "china_signal": "A cross-party Japanese parliamentary delegation met a senior Chinese official in Beijing, per NHK, as the most recent diplomatic outreach channel between the two governments; Tokyo Game Show data showing a sharp drop in Chinese exhibitors illustrates the commercial-sector spillover from bilateral te",
+        "dprk_signal": "North Korea's September 12 joint firepower strike drill targeting an island in the Sea of Japan — combining ballistic missiles, long-range artillery, and attack drones — continues to be analyzed in regional defense media, with no new launch activity reported today; North Korea's sports minister sepa",
+        "russia_signal": "Russia's foreign ministry, via Xinhua, stated that Japan's remilitarization threatens Russian national security — the latest in a series of official Russian statements escalating rhetoric toward Japan's defense buildup. Russian companies are separately in talks with Japan and South Korea on resuming"
+      },
+      "watch_flag": false
+    },
+    "2026-09-18": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 18 regular press conference; separately, Chinese state media marked the 95th anniversary of the September 18 (Mukden/Liutiaohu) Incident with explicit calls on Japan to face its history of aggression and warnings against militarism'",
+        "dprk_signal": "North Korea's sports minister arrived in central Japan for the Aichi-Nagoya Asian Games — a rare official North Korean government presence on Japanese soil; separately, Kim Yo Jong issued a statement accusing US-led multilateral exercises with Japan and South Korea of driving North Korea's nuclear a"
+      },
+      "watch_flag": false
+    },
+    "2026-09-19": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 18 regular press conference, and Chinese state media (Global Times) continued framing the 95th anniversary of the September 18 Mukden Incident with warnings against Japan's military revival. Separately, Chinese tourist arrivals to J",
+        "dprk_signal": "North Korean leader Kim Jong Un inspected munitions factories per NHK, following the September 12 integrated strike exercise. North Korean hackers linked to group WaterPlum conducted cryptocurrency thefts across 100 countries including Japan between December 2025 and July 2026, infecting more than 3",
+        "russia_signal": "Russia's Foreign Ministry lodged a formal protest with Japan over the deployment of US Typhon mid-range ground-launched cruise missile systems on Japanese territory and urged removal; TASS separately reported the Russian MFA spokeswomen's demand. This follows a sustained Russian escalation narrative"
+      },
+      "watch_flag": false
+    },
+    "2026-09-20": {
+      "signals": {
+        "china_signal": "No new China Coast Guard, PLA, or MOFA incidents toward Japan are reported today; Global Times continues its framing of Japan's military revival as a regional threat, and Chinese state media published a piece debunking what it calls 'colonial glorification' of Japanese rule in Taiwan, sustaining the",
+        "dprk_signal": "North Korea fired two suspected short-range ballistic missiles on September 20 — the second launch in two weeks — into the East Sea; South Korea's JCS reports one flew approximately 450 km from the Wonsan area. Both fell outside Japan's EEZ. Japan tightened security in response. Separately, reportin"
+      },
+      "watch_flag": false
+    },
+    "2026-09-21": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry labeled Japan's deployment of the US Typhon intermediate-range ground-launched cruise missile system 'another indication of its accelerating remilitarization,' per Global Times. Beijing's FM spokesperson separately declined to confirm whether the US-China Washington summit w",
+        "dprk_signal": "North Korea fired two suspected short-range ballistic missiles toward the East Sea on Sunday within a three-hour window; South Korea's JCS reported one flew approximately 440 km from the Wonsan area. Both splashed down outside Japan's EEZ; Japan tightened surveillance and joined US and South Korea i",
+        "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles beyond the sustained rhetorical escalation of recent weeks; the NYT profiles Nemuro's dual dependence on Russia economically and politically, illustrating the local dimension of the dispute."
+      },
+      "watch_flag": false
+    },
+    "2026-09-22": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun used the September 21 press conference to label Japan's hosting of the US Typhon intermediate-range missile system 'another example of Japan's accelerated remilitarization' and called on Japan to halt what Beijing frames as a return to militarism. The",
+        "dprk_signal": "North Korea fired two ballistic missiles toward the Sea of Japan — South Korea's JCS confirmed one traveled approximately 440 km from the Wonsan area — and subsequently announced a 'successful' test of a 'new-type weapon' that outside experts assess as a hypersonic missile system. Kim Jong Un descri",
+        "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-09-13T11:05:23.694809+00:00"
+  "last_updated": "2026-09-22T11:06:56.291553+00:00"
 }

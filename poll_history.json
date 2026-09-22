@@ -36,30 +36,30 @@
   },
   "yomiuri": {
     "pollster": "Yomiuri",
-    "approval": 56.0,
-    "disapproval": 32.0,
-    "as_of": "2026-09-05",
-    "poll_date": "Sep 5, 2026"
+    "approval": 59.0,
+    "disapproval": 30.0,
+    "as_of": "2026-09-19",
+    "poll_date": "Sep 19, 2026"
   },
   "fnn": {
     "pollster": "FNN",
-    "approval": 62.5,
-    "disapproval": 32.0,
-    "as_of": "2026-09-05",
-    "poll_date": "Sep 5, 2026"
+    "approval": 61.6,
+    "disapproval": 32.2,
+    "as_of": "2026-09-15",
+    "poll_date": "Sep 15, 2026"
   },
   "nhk": {
     "pollster": "NHK",
     "approval": 52.8,
-    "disapproval": 33.2,
+    "disapproval": 30.8,
     "as_of": "2026-09-10",
     "poll_date": "Sep 10, 2026"
   },
   "jiji": {
     "pollster": "Jiji",
-    "approval": 48.4,
-    "disapproval": 26.9,
-    "as_of": "2026-09-10",
+    "approval": 44.1,
+    "disapproval": 29.3,
+    "as_of": "2026-09-18",
     "poll_date": "Jul 16, 2026"
   },
   "jnn": {

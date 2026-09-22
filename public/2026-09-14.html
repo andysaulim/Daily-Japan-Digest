@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- Tell the client this brief handles its own theming. Without these, a
+     dark-mode client applies its own inversion, and on a FORWARDED copy
+     where the <style> block carrying the dark rules has been stripped, the
+     result is a mixture: inline colours such as the black footer survive
+     while everything around them is recoloured by the client. -->
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>Japan Daily Brief &mdash; Monday, September 14, 2026</title>
+<style type="text/css">
+  /* Reset */
+  body, table, td, div, p { margin:0; padding:0; }
+  img { border:0; display:block; }
+  /* Data typography - monospace for machine-measured numbers */
+  .mkt-table div[style*="font-weight:700"], .key-stat-num { font-family:'Courier New',Courier,monospace !important; }
+  /* Mobile responsive */
+  @media only screen and (max-width: 620px) {
+      .util-row .util-cell { display:block !important; text-align:center !important;
+        padding:5px 8px !important; white-space:normal !important; }
+      .util-row .util-cell a { padding:4px 7px !important; margin:1px !important;
+        font-size:11px !important; letter-spacing:0.3px !important; }
+
+    /* Side by side, the nameplate gets 58% of a 320px screen and wraps to
+       four lines. Stacked, each half spans the width and the flag still
+       reads as red above white. */
+    /* No width:100% here. A table cell set to display:block already fills
+       its row, and 100% plus horizontal padding is measured content-box,
+       which pushed the masthead 24px past a 390px screen. */
+    /* The house masthead stacks the same way in all four briefs: the meta
+       cell drops under the nameplate and left-aligns. The old split-field
+       classes are gone with the split masthead they styled. */
+    .mast-main, .mast-meta { display:block !important; width:100% !important; }
+    .mast-meta { text-align:left !important; padding-top:10px !important; }
+
+    .wrapper { width:100% !important; }
+    .sec, .footer { padding:16px 16px !important; }
+    h1 { font-size:22px !important; }
+    .key-stat-num { font-size:26px !important; }
+    /* Market strip stays multi-across on phones - smaller mono, tighter pad */
+    .mkt-table td { padding:8px 4px 10px !important; }
+    .mkt-table div[style*="font-size:22px"] { font-size:16px !important; }
+    .mkt-table div[style*="font-size:14px"] { font-size:13px !important; }
+    /* Story cards */
+    .story-card { padding:12px 12px !important; }
+    /* Dark Regional Pressure Watch panel */
+    .watch-dark td { padding-left:16px !important; padding-right:16px !important; }
+    /* Trade dashboard boxes */
+    /* Overflow + legibility safety */
+    p, div, td { word-wrap:break-word !important; overflow-wrap:break-word !important; }
+    body, td, div, p, span { -webkit-text-size-adjust:100%; }
+    div[style*="font-size:10px"], span[style*="font-size:10px"] { font-size:11px !important; }
+    a { min-height:44px; }
+    p a, div a, td a { min-height:auto; padding:6px 0; }
+    img { max-width:100% !important; height:auto !important; }
+  }
+  /* Tablet breakpoint */
+  @media only screen and (min-width: 621px) and (max-width: 768px) {
+    .wrapper { width:100% !important; max-width:680px !important; }
+    .sec, .footer { padding:16px 22px !important; }
+    h1 { font-size:22px !important; }
+    .mkt-table td { padding:10px 10px 12px !important; }
+  }
+  /* Dark mode - scoped, non-destructive. The masthead, market strip,
+     Regional Pressure Watch panel, key stat, and footer are already dark
+     surfaces and need no inversion. */
+  /* Print. Without this a Print-to-PDF is a long screenshot: chrome on every
+     page, cards split across breaks, and the frame stuck at its email width. */
+  @media print {
+    .no-print, .util-row, .nav-row { display:none !important; }
+    .wrapper { max-width:100% !important; width:100% !important;
+                box-shadow:none !important; }
+    /* Let content flow across page breaks. Avoiding breaks pushes anything
+       that does not fit to the next page and leaves large empty gaps, which
+       is the lesson Korea's print block records. */
+    * { page-break-inside:auto !important; }
+    a { text-decoration:none !important; color:#000 !important; }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body { background:#121212 !important; }
+    .wrapper { background:#1a1a1a !important; }
+    .wrapper .sec { background:#1E2126 !important; border-bottom-color:#33373D !important; }
+    .wrapper h1, .wrapper h2, .wrapper h3 { color:#E8E6E1 !important; }
+    .wrapper .sec p { color:#C4C8CE !important; }
+    .wrapper a { color:#6FA8E8 !important; }
+    /* The footer is black in light mode now, so its dark counterpart is a
+       dark neutral, not the deep red it inherited from the red footer. */
+    .wrapper .footer { background:#0B0E13 !important; }
+    .wrapper .sec-bar { background:#0B0E13 !important; }
+    /* The terminal strip is white by design in light mode; left unmapped it
+       stays white in dark mode, a bright band across the bottom. */
+    .wrapper .footer-end { background:#1a1a1a !important; }
+    /* Last wins at equal specificity. .wrapper a above recolours every
+       link to the dark link blue, which on the pill's pale fill measures
+       1.99:1 - a button you cannot read. Restore both ends of the pair. */
+    /* a.pill, not .pill: the generated rules select on the inline style,
+       e.g. .wrapper [style*="background:#FFFFFF"], which is (0,2,0) and
+       outranks a plain .wrapper .pill whatever the order. Adding the
+       element takes it to (0,2,1) and the pill keeps its own pair. The
+       generic rule darkens the fill while the type stays dark: 1.23:1. */
+    .wrapper a.pill { background:#FFFFFF !important; color:#14181F !important; }
+      /* Keep the filled buttons filled. The generic white-background
+         rule darkens them while their type stays dark, which measured
+         1.23:1 - a button you cannot read. */
+    .wrapper .footer-end td { color:#9AA3AE !important; }
+    .wrapper .story-card { background:#262A30 !important; border-color:#33373D !important; }
+    /* Trade dashboard light boxes → neutral dark equivalents */
+    /* Public Sentiment stat boxes */
+    .wrapper .sent-approve { background:#16261B !important; }
+    .wrapper .sent-disapprove { background:#2A1518 !important; }
+    .wrapper .mkt-table td { border-color:rgba(255,255,255,0.08) !important; }
+    /* The rules above select h1-h3, .sec p and a. The markup also uses
+       166 div, 32 td and 23 span, so most body text kept its light-mode
+       inline colour on the new dark ground. These are generated from the
+       colours this template actually uses. */
+    .wrapper [style*="color:#1B2A4A"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#1b2a4a"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#69C88E"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#27ae60"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#2C3E50"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#2c3e50"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#5A6667"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#5a6667"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#5F6672"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#5f6672"] { color:#9AA3AE !important; }
+    /* The PM Watch line, moved into the Japanese Government section: a pale
+       panel ground and an amber absence marker, both needing dark values. */
+    .wrapper [style*="background:#F4F6F9"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#f4f6f9"] { background-color:#262A30 !important; }
+    .wrapper [style*="color:#8A5A00"] { color:#D8A657 !important; }
+    .wrapper [style*="color:#8a5a00"] { color:#D8A657 !important; }
+    /* The dot separating ministry, official and publisher on a government
+       card. Decorative, but it is still a text node on a changed ground. */
+    .wrapper [style*="color:#ccc"] { color:#4A4F57 !important; }
+    .wrapper [style*="color:#BC002D"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#bc002d"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#E8697A"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#c0392b"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#FFFFFF"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#ff6b6b"] { color:#9AA3AE !important; }
+    .wrapper [style*="background:#F0F0F0"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#f0f0f0"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#F2F3F5"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#f2f3f5"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#F7F8FA"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#f7f8fa"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#FAFAF5"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#fafaf5"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#FBFBFD"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#fbfbfd"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#FFFFFF"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#ffffff"] { background-color:#262A30 !important; }
+    /* Filled from a measured audit of the rendered brief: these
+       colours reached the output with no dark rule, so they kept
+       their light values and rendered near-black on near-black. */
+    .wrapper [style*="color:#1a222e"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#1A222E"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#222"] { color:#E8E6E1 !important; }
+    .wrapper [style*="color:#444"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#4a5260"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#4A5260"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#555"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#55607a"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#55607A"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#666"] { color:#C4C8CE !important; }
+    .wrapper [style*="color:#6b7280"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#6B7280"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#888"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#aaa"] { color:#9AA3AE !important; }
+    .wrapper [style*="color:#AAA"] { color:#9AA3AE !important; }
+    .wrapper [style*="background:#f7f3f4"] { background-color:#2A1D20 !important; }
+    .wrapper [style*="background:#F7F3F4"] { background-color:#2A1D20 !important; }
+    .wrapper [style*="background:#fbeef1"] { background-color:#2A1518 !important; }
+    .wrapper [style*="background:#FBEEF1"] { background-color:#2A1518 !important; }
+    .wrapper [style*="background:#fff"] { background-color:#262A30 !important; }
+    .wrapper [style*="background:#FFF"] { background-color:#262A30 !important; }
+  }
+</style>
+<!--[if mso]>
+<style type="text/css">
+  table { border-collapse:collapse; }
+  .wrapper { width:680px; }
+</style>
+<![endif]-->
+</head>
+<body style="margin:0;padding:0;background:#F2F3F5;font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+<a name="top" id="top"></a>
+<!-- Fixed-width frame as a centered TABLE. The width is an HTML attribute
+     (width="680"), so it survives when a client strips the <style> block on
+     forward/reply - keeping the layout's shape. class="wrapper" is retained so
+     the mobile media query can still flex it to 100% while the <style> is present. -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background:#F2F3F5;">
+<tr>
+<td align="center" valign="top" style="padding:0;">
+<!--[if mso]><table width="680" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td><![endif]-->
+<table role="presentation" class="wrapper" width="680" cellpadding="0" cellspacing="0" border="0" align="center" style="width:680px;max-width:100%;margin:0 auto;background:#FFFFFF;box-shadow:0 2px 20px rgba(0,0,0,0.08);">
+<tr>
+<td style="padding:0;">
+
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#2E3644;" class="util-row">
+          <tr>
+            <td class="util-cell" style="padding:7px 32px;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.72);white-space:nowrap;">For Internal Use Only</td>
+            <td class="util-cell" align="right" style="padding:5px 32px 5px 0;text-align:right;"><a class="pill" href="https://andysaulim.github.io/Daily-Japan-Digest/index.html" style="display:inline-block;padding:6px 14px;margin:0 3px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:#14181F;background:#FFFFFF;border-radius:3px;text-decoration:none;white-space:nowrap;">Read online</a><a class="pill" href="https://andysaulim.github.io/Daily-Japan-Digest/2026-09-14.pdf" style="display:inline-block;padding:6px 14px;margin:0 3px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:#14181F;background:#FFFFFF;border-radius:3px;text-decoration:none;white-space:nowrap;">Download PDF</a><a class="pill" href="https://andysaulim.github.io/Daily-Japan-Digest/archive.html" style="display:inline-block;padding:6px 14px;margin:0 3px;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.5px;color:#14181F;background:#FFFFFF;border-radius:3px;text-decoration:none;white-space:nowrap;">Past issues</a></td>
+          </tr>
+        </table>
+        
+
+    <a name="top" id="top"></a>
+    <div bgcolor="#BC002D" style="background-color:#BC002D;color:#fff;padding:16px 32px 16px;border-bottom:1px solid rgba(255,255,255,0.18);" class="sec mast-band">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        <td class="mast-main" style="vertical-align:top;">
+          <div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.78);margin-bottom:7px;">CSIS Japan Chair</div>
+          <h1 style="margin:0 0 4px 0;font-size:26px;font-weight:700;font-family:Georgia,'Times New Roman',serif;color:#fff;letter-spacing:0.5px;">
+            Japan Daily Brief
+          </h1>
+          <div style="margin-top:2px;font-size:16px;font-weight:400;color:rgba(255,255,255,0.85);font-family:Georgia,serif;">Monday, September 14, 2026</div>
+        </td>
+        <td class="mast-meta" style="vertical-align:bottom;text-align:right;">
+          <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;color:rgba(255,255,255,0.72);white-space:nowrap;">1,874 words &middot; 7 min read</div>
+        </td>
+      </tr></table>
+      <div style='margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.28);font-size:13px;color:rgba(255,255,255,0.92);font-family:Georgia,serif;line-height:1.55;'><strong style='color:#FFFFFF;font-size:11px;letter-spacing:1.5px;font-family:Arial,sans-serif;'>RE:</strong>&nbsp; Okinawa elects pro-base governor · BOJ rate hike imminent · Chubu nuclear scandal · DPRK drill · China visa hike</div>
+    </div>
+    
+<table class="mkt-table" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#1B2A4A;color:#fff;border-bottom:1px solid rgba(255,255,255,0.10);"><tr><td width="25%" align="center" style="padding:11px 6px 13px;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">Nikkei 225</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">63,492.99</div><div style="font-size:11px;margin-top:2px;"><span style="color:#E8697A;">&#9660; -2.72%</span></div></td><td width="25%" align="center" style="padding:11px 6px 13px;border-left:1px solid rgba(255,255,255,0.10);"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">USD/JPY</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">154.87</div><div style="font-size:11px;margin-top:2px;"><span style="color:#69C88E;">&#9650; +0.66%</span></div></td><td width="25%" align="center" style="padding:11px 6px 13px;border-left:1px solid rgba(255,255,255,0.10);"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">Brent</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">$108.95</div><div style="font-size:11px;margin-top:2px;"><span style="color:#69C88E;">&#9650; +7.65%</span></div></td><td width="25%" align="center" style="padding:11px 6px 13px;border-left:1px solid rgba(255,255,255,0.10);"><div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9DB2CE;">BOJ Rate</div><div style="font-family:'Courier New',Courier,monospace;font-size:16px;font-weight:700;margin-top:3px;">1.25%</div><div style="font-size:11px;margin-top:2px;"><span style="color:#9DB2CE;"></span></div></td></tr></table>
+<div class="nav-row sec" style="background:#F7F8FA;border-bottom:1px solid #E4E7EB;padding:9px 32px;text-align:center;font-family:Arial,sans-serif;font-size:11px;line-height:1.9;color:#6B7280;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;">In this issue &nbsp;</span><a href="#top-stories" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Top Stories</a> &nbsp;&middot;&nbsp; <a href="#overnight" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Overnight</a> &nbsp;&middot;&nbsp; <a href="#key-stat" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Stat</a> &nbsp;&middot;&nbsp; <a href="#tokyo" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Government</a> &nbsp;&middot;&nbsp; <a href="#polling" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Polling</a> &nbsp;&middot;&nbsp; <a href="#business" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Business</a> &nbsp;&middot;&nbsp; <a href="#watch" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Pressure</a> &nbsp;&middot;&nbsp; <a href="#us-japan" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">U.S.-Japan</a> &nbsp;&middot;&nbsp; <a href="#indo-pacific" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Partners</a> &nbsp;&middot;&nbsp; <a href="#analysis" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Analysis</a> &nbsp;&middot;&nbsp; <a href="#wire" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">The Wire</a> &nbsp;&middot;&nbsp; <a href="#upcoming" style="color:#BC002D;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;">Upcoming</a></div>
+
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
+<a name="memo" id="memo"></a>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="glance-panel" style="background:#FBEEF1;border-left:3px solid #BC002D;">
+  <tr><td style="padding:0;"><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Today at a Glance</span></td></tr></table></td></tr>
+            <tr><td style="padding:0 20px 8px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+<tr>
+<td width="28" style="vertical-align:top;padding-top:1px;">
+<div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">1</div>
+</td>
+<td style="vertical-align:top;padding-left:8px;">
+<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">Conservative <strong style="font-weight:700;">Genta Koja</strong> won Okinawa's gubernatorial election with a record 400,000-plus votes, defeating incumbent Denny Tamaki and becoming the first governor in 12 years to back the Futenma-to-Henoko base relocation plan.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+<tr>
+<td width="28" style="vertical-align:top;padding-top:1px;">
+<div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">2</div>
+</td>
+<td style="vertical-align:top;padding-left:8px;">
+<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">The Bank of Japan's policy board convenes Thursday-Friday for a meeting at which multiple outlets — FT, Nikkei Asia, Japan Times — treat a rate hike to <em>1.25%</em> as near-certain, with BOJ Governor Kazuo Ueda navigating pressure from both the Takaichi government and US Treasury Secretary Scott Bessent.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+<tr>
+<td width="28" style="vertical-align:top;padding-top:1px;">
+<div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">3</div>
+</td>
+<td style="vertical-align:top;padding-left:8px;">
+<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">Chubu Electric Power halted its application to restart nuclear reactors at Hamaoka and said top executives will resign following a seismic-data manipulation scandal, marking a setback for Japan's nuclear revival program.</div>
+</td>
+</tr>
+</table>
+  </td></tr>
+</table>
+</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="top-stories" id="top-stories"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Top Stories</span></td></tr></table>
+<div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;font-weight:700;margin-bottom:6px;">Defense</div>
+<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://www.nytimes.com/2026/09/13/world/asia/japapn-okinawa-election-governor-conservative-china-economy.html" style="color:#1B2A4A;text-decoration:none;">Conservative Genta Koja wins Okinawa governorship with record vote, ending 12 years of anti-base governance</a></h3>
+<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'><strong style="font-weight:700;">Genta Koja</strong> defeated incumbent <strong style="font-weight:700;">Denny Tamaki</strong> in Sunday's Okinawa gubernatorial election, receiving more than <em>400,000 votes</em> — a prefectural record — with exit surveys showing voters prioritized economic concerns over the US base relocation issue. Koja's victory removes a key local obstacle to the Henoko relocation and Japan's broader southwestern defense buildup near Taiwan.</p>
+<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#6B7280;font-style:italic;'>per NYT: &ldquo;<a href="https://www.nytimes.com/2026/09/13/world/asia/japapn-okinawa-election-governor-conservative-china-economy.html" style="color:#6B7280;text-decoration:underline;">Okinawa Elects a Conservative Amid Fears About China and the Economy</a>&rdquo;</div>
+<div style="font-size:10px;color:#6B7280;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">NYT</div>
+</div>
+<div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;font-weight:700;margin-bottom:6px;">Economy-BOJ</div>
+<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://www.ft.com/content/4f6a427f-3975-470f-83bf-b21423df59c8?syn-25a6b1a6=1" style="color:#1B2A4A;text-decoration:none;">BOJ policy board meets Thursday-Friday; rate hike to 1.25% treated as near-certain</a></h3>
+<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>BOJ Governor <strong style="font-weight:700;">Kazuo Ueda</strong> faces the September 18-19 policy meeting navigating competing pressure from the Takaichi government and US Treasury Secretary <strong style="font-weight:700;">Scott Bessent</strong>, with the FT, Nikkei Asia, and Japan Times each treating a hike from the current policy rate to <em>1.25%</em> as all but decided. A separate Reuters report flagged that a BOJ executive had flagged vigilance to 'non-linear' inflation spikes ahead of the meeting.</p>
+<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#6B7280;font-style:italic;'>per FT: &ldquo;<a href="https://www.ft.com/content/4f6a427f-3975-470f-83bf-b21423df59c8?syn-25a6b1a6=1" style="color:#6B7280;text-decoration:underline;">Japan’s central bank set for pivotal moment on rates</a>&rdquo;</div>
+<div style="font-size:10px;color:#6B7280;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">FT</div>
+</div>
+<div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+<div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;font-weight:700;margin-bottom:6px;">Energy</div>
+<h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;"><a href="https://www.ft.com/content/e1383b40-554a-445d-a431-a7068c68aa76?syn-25a6b1a6=1" style="color:#1B2A4A;text-decoration:none;">Chubu Electric halts Hamaoka reactor restart application, top executives to resign over seismic data scandal</a></h3>
+<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>Chubu Electric Power withdrew its application to restart reactors at Hamaoka nuclear plant and said its top executives would resign after a data manipulation scandal involving earthquake resistance figures, per the FT and Nikkei Asia. The decision sets back Japan's nuclear revival program <em>15 years</em> after the Fukushima disaster, with Asahi Shimbun reporting pressure from local communities concerned about safety standards.</p>
+<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#6B7280;font-style:italic;'>per FT: &ldquo;<a href="https://www.ft.com/content/e1383b40-554a-445d-a431-a7068c68aa76?syn-25a6b1a6=1" style="color:#6B7280;text-decoration:underline;">Japanese utility halts nuclear reactor restart after data manipulation scandal</a>&rdquo;</div>
+<div style="font-size:10px;color:#6B7280;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">FT</div>
+</div></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="overnight" id="overnight"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Overnight</span></td></tr></table><table width="100%" cellpadding="0" cellspacing="0" border="0" class="flash-table" style="border-top:2px solid #BC002D;"><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">DPRK</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><div><a href="https://news.google.com/search?q=North+Korea+says+September+12+missile+launches+were+part+of+coordinated+firepower+strike+drill&amp;hl=en-US&amp;gl=US&amp;ceid=US:en" style="color:#1B2A4A;text-decoration:underline;">North Korea says September 12 missile launches were part of coordinated firepower strike drill</a><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; Reuters</span></div><div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#6B7280;margin-top:2px;">North Korean state media confirmed the September 12 ballistic missile launches were a joint firepower attack drill involving long-range artillery, missile units, and drones. Pyongyang said the exercise demonstrated 'huge destructive power' against targets modeled on South Korea.</div></td></tr><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Politics-Diet</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><div><a href="https://mainichi.jp/english/articles/20260914/p2a/00m/0na/015000c" style="color:#1B2A4A;text-decoration:underline;">Crown Prince Akishino and Prince Hisahito visit 3.11 quake-hit area for first time together</a><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; Mainichi</span></div><div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#6B7280;margin-top:2px;">Crown Prince Akishino and his son, Prince Hisahito, visited a museum in Kesennuma, Miyagi, preserving ruins from the March 11, 2011, Great East Japan earthquake — Prince Hisahito's first visit to a 3.11-affected area.</div></td></tr><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Economy-BOJ</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><div><a href="https://www.theguardian.com/australia-news/2026/sep/14/as-japans-yen-peaks-is-the-era-of-budget-friendly-trips-coming-to-an-end-for-australian-travellers" style="color:#1B2A4A;text-decoration:underline;">Yen at six-month high against dollar as Tokyo-Washington intervention unwinds cheap-Japan trade</a><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; The Guardian</span></div><div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#6B7280;margin-top:2px;">The Japanese yen has reached its highest level against both the US and Australian dollars in six months after Tokyo and Washington intervened to support the currency, ending the sustained yen-weakness trade that drove record inbound tourism.</div></td></tr><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Economy-BOJ</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><div><a href="https://mainichi.jp/english/articles/20260914/p2g/00m/0bu/047000c" style="color:#1B2A4A;text-decoration:underline;">Nikkei ends at 1.5-month low on AI-sector concern</a><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; Mainichi</span></div><div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#6B7280;margin-top:2px;">The Nikkei stock index closed at its lowest level in a month and a half as remarks by US AI sector executives raised concerns about the pace of AI development investment, dampening technology-linked shares.</div></td></tr><tr><td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#BC002D;border-bottom:1px solid #EEF0F3;">Politics-Diet</td><td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#1A222E;border-bottom:1px solid #EEF0F3;"><div><a href="https://mainichi.jp/english/articles/20260914/p2g/00m/0na/042000c" style="color:#1B2A4A;text-decoration:underline;">Yamanashi Prefecture to charge reckless off-season climbers for Mt. Fuji helicopter rescues</a><span style="font-family:Arial,sans-serif;font-size:11px;color:#6B7280;"> &middot; Mainichi</span></div><div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#6B7280;margin-top:2px;">Yamanashi Prefecture decided to begin billing climbers for helicopter rescue operations during the closed season on Mount Fuji, targeting those who attempt the ascent without proper preparation after the closure period.</div></td></tr></table></div>
+
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
+  <a name="key-stat" id="key-stat"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Stat of the Day</span></td></tr></table>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F3F4;border-top:2px solid #BC002D;border-bottom:1px solid #E4E7EB;">
+    <tr><td style="padding:14px 16px;">
+      <div class="key-stat-num" style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#BC002D;line-height:1;">400,000+</div>
+      <div style="font-family:Georgia,serif;font-size:14px;color:#1A222E;margin-top:5px;line-height:1.4;">Votes received by Okinawa governor-elect Genta Koja</div>
+      <div style='font-family:Georgia,serif;font-size:13px;color:#4A5260;margin-top:4px;line-height:1.5;'>Koja's tally is a record for an Okinawa gubernatorial election, per the Okinawa election board, and ends 12 years of anti-base governance in the prefecture.</div>
+      <div style='font-family:Arial,sans-serif;font-size:11px;color:#55607A;margin-top:7px;'>Okinawa governor-elect Koja wins record 400,000-plus votes (Mainichi)</div>
+    </td></tr>
+  </table>
+</div>
+
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
+<a name="tokyo" id="tokyo"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Japanese Government</span></td></tr></table>
+<div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;margin-top:-10px;margin-bottom:14px;">Kantei/PM · Cabinet · MOFA · MOD · METI · MOF · BOJ · Diet · Monday, September 14, 2026</div>
+<div style="margin:0 0 14px;padding:9px 12px;background:#F4F6F9;border-left:3px solid #1B2A4A;font-size:13px;line-height:1.5;color:#1A222E;"><strong style="color:#BC002D;">PM Watch:</strong> PM appeared today · 0 day(s) since last confirmed appearance &mdash; Prime Minister Sanae Takaichi met IEA Executive Director Fatih Birol in Tokyo and called for closer Japan-IEA cooperation on energy security.</div>
+<div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">官邸</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.6px;">Prime Minister's Office (Kantei)</span> <span style="color:#ccc;">·</span> <span style="font-size:11px;color:#6B7280;font-style:italic;">Prime Minister Sanae Takaichi</span></div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">Takaichi meets IEA Executive Director, calls for energy supply cooperation</div>
+<div style="font-size:13px;line-height:1.55;color:#555;">Prime Minister <strong style="font-weight:700;">Sanae Takaichi</strong> held a meeting in Tokyo with IEA Executive Director <strong style="font-weight:700;">Fatih Birol</strong>, calling on the International Energy Agency to cooperate in ensuring stable global energy supplies and stating she hopes to make the global supply-demand structure more resilient.</div>
+<div style="margin-top:6px;font-size:11px;color:#6B7280;">→ <a href="https://www.japantimes.co.jp/news/2026/09/14/japan/takaichi-japan-iea-cooperation/" style="color:#6B7280;text-decoration:none;">The Japan Times ↗</a></div>
+</div>
+<div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">官房長官</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.6px;">Chief Cabinet Secretary</span> <span style="color:#ccc;">·</span> <span style="font-size:11px;color:#6B7280;font-style:italic;">Chief Cabinet Secretary Minoru Kihara</span></div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">Kihara holds morning press conference; Japan refutes Hormuz naval-support claim</div>
+<div style="font-size:13px;line-height:1.55;color:#555;"><strong style="font-weight:700;">Minoru Kihara</strong> held his September 14 morning press conference. Separately, the Chief Cabinet Secretary's office refuted a claim that Japan had promised naval support in the Strait of Hormuz, per Arab News reporting on the Jiji-sourced item.</div>
+<div style="margin-top:6px;font-size:11px;color:#6B7280;">→ <a href="https://japan.kantei.go.jp/tyoukanpress/202609/14_a.html" style="color:#6B7280;text-decoration:none;">Kantei ↗</a></div>
+</div>
+<div style="margin-bottom:12px;padding:12px 14px;border-left:3px solid #1B2A4A;border-bottom:1px solid #F0F0F0;">
+<div style="margin-bottom:6px;"><span style="font-size:11px;color:#666;">防衛省</span> <span style="color:#ccc;">·</span> <span style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.6px;">Ministry of Defense (MOD)</span></div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;line-height:1.4;margin-bottom:5px;">MOD visits by Stanford Hoover Institution delegation logged</div>
+<div style="font-size:13px;line-height:1.55;color:#555;">The Ministry of Defense recorded a visit by a delegation from Stanford University's Hoover Institution on September 14, per the MOD press release page.</div>
+
+</div><div style="margin-top:16px;">
+<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#2C3E50;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Personnel Changes</div>
+<div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #1B2A4A;">
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;">Not specified in source articles<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:600;color:#fff;background:#1B2A4A;text-transform:uppercase;margin-left:6px;">resigned</span></div>
+<div style="font-size:13px;color:#555;">President / Chief Executive, Chubu Electric Power</div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Chubu Electric Power's top executives announced they would resign following the company's withdrawal of its reactor restart application at Hamaoka nuclear plant after a seismic-data manipulation scandal.</div>
+
+</div>
+</div><div style="margin-top:16px;">
+<a name="diet" id="diet"></a><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#5A6667;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Diet Sessions / LDP</div>
+<div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #5A6667;">
+<div style="font-size:11px;color:#5A6667;font-weight:600;text-transform:uppercase;">LDP</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://www.japantimes.co.jp/news/2026/09/14/japan/politics/hideki-murai-cabinet-reshuffle/" style="color:#1B2A4A;text-decoration:underline;">Hideki Murai expected to be named LDP Diet affairs chief in party reshuffle</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;"><strong style="font-weight:700;">Hideki Murai</strong>, a mid-level LDP lawmaker, is being adjusted to serve as the party's parliamentary affairs chief ahead of the September 16 cabinet and party reshuffle; the post customarily goes to a former cabinet minister, and sources indicate the appointment reflects Takaichi's coalition outreach calculus.</div>
+</div><div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #5A6667;">
+<div style="font-size:11px;color:#5A6667;font-weight:600;text-transform:uppercase;">Japan Innovation Party (Ishin) / Cabinet</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="http://www.asahi.com/articles/ASV9G3F52V9GUTFK001M.html?ref=rss" style="color:#1B2A4A;text-decoration:underline;">Ishin Secretary General eyed for first cabinet post in reshuffle signaling 'cabinet cooperation' pivot</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Ishin (Japan Innovation Party) Secretary General is being adjusted for a cabinet post in the September 16 reshuffle, per Asahi Shimbun, marking a shift from the party's prior opposition posture to what sources describe as 'cabinet cooperation' — a potential realignment of Takaichi's coalition arithmetic.</div>
+</div><div style="margin-bottom:8px;padding-left:12px;border-left:3px solid #5A6667;">
+<div style="font-size:11px;color:#5A6667;font-weight:600;text-transform:uppercase;">House of Representatives</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://mainichi.jp/english/articles/20260914/p2g/00m/0na/049000c" style="color:#1B2A4A;text-decoration:underline;">Lower house speaker Eisuke Mori visits Kyiv — first such trip by HoR speaker</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;"><strong style="font-weight:700;">Eisuke Mori</strong>, speaker of Japan's House of Representatives, arrived in Kyiv on Monday in the first visit to Ukraine by a Japanese lower house speaker.</div>
+</div>
+</div>
+</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="polling" id="polling"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Public Sentiment &amp; Approval Polling</span></td></tr></table><table class="sentiment-table" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;"><tr style="background:#F2F3F5;"><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#5F6672;font-weight:600;">Pollster</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#5F6672;font-weight:600;">Approve</td><td style="padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#5F6672;font-weight:600;">Disapprove</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">JNN</strong> <span style="color:#6B7280;">&middot; Sep 7, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62.5%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">34.9%</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Nikkei</strong> <span style="color:#6B7280;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Asahi</strong> <span style="color:#6B7280;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">53%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33%</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">ANN</strong> <span style="color:#6B7280;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">55.4%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">29.9%</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Kyodo</strong> <span style="color:#6B7280;">&middot; Sep 10, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">50.2%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33.9%</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">Yomiuri</strong> <span style="color:#6B7280;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">56%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">FNN</strong> <span style="color:#6B7280;">&middot; Sep 5, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">62.5%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">32%</td></tr><tr style="border-top:1px solid #EAEBEE;"><td style="padding:12px;font-size:13px;color:#1B2A4A;"><strong style="color:#1B2A4A;">NHK</strong> <span style="color:#6B7280;">&middot; Sep 10, 2026</span></td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">52.8%</td><td style="padding:12px;font-size:14px;color:#1B2A4A;font-weight:600;">33.2%</td></tr></table><div style="font-size:13px;color:#555;margin-top:10px;padding-top:8px;border-top:1px solid #EEE;"><strong>Discourse:</strong> September 16 cabinet and LDP executive reshuffle is imminent, with Ishin's anticipated entry into cabinet signaling a potential coalition realignment and fresh opposition bloc dynamics following the opposition alliance's decision to split along founding party lines.</div><div style="margin-top:12px;padding-top:8px;border-top:1px solid #EEE;font-size:11px;color:#6B7280;">Poll tracker: <a href="https://observingjapan.substack.com/p/tracking-the-japanese-governments-423" style="color:#BC002D;text-decoration:none;font-weight:600;">Observing Japan approval-rating aggregator &#8594;</a></div></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="business" id="business"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Business &amp; Economy</span></td></tr></table><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
+<div style="font-size:11px;color:#6B7280;text-transform:uppercase;">macro · Mainichi</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://mainichi.jp/english/articles/20260914/p2g/00m/0na/019000c" style="color:#1B2A4A;text-decoration:underline;">Okinawa voters shifted priority from base relocation to economy in governor race</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Mainichi exit-poll analysis finds Okinawa voters placed greater weight on economic revitalization than on the Henoko base relocation question, with approximately <em>30%</em> of those who backed Tamaki in the prior election switching to governor-elect Koja.</div>
+</div><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
+<div style="font-size:11px;color:#6B7280;text-transform:uppercase;">semiconductors · Nikkei Asia · Applied Materials</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://asia.nikkei.com/business/tech/semiconductors/applied-materials-using-ai-to-speed-chip-materials-discovery-japan-chief-says" style="color:#1B2A4A;text-decoration:underline;">Applied Materials using AI to accelerate chip materials discovery, Japan chief says</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Applied Materials' Japan chief said the company is deploying AI tools to speed semiconductor materials discovery, a development relevant to Japan's Rapidus and TSMC Kumamoto (JASM) advanced chip programs.</div>
+</div></div>
+
+<div style="padding:20px 32px;background:#0E1C33;color:#E4EAF2;border-top:3px solid #BC002D;border-bottom:1px solid rgba(255,255,255,0.1);" class="sec watch-dark">
+<a name="watch" id="watch"></a>
+<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#F2718A;font-family:Arial,sans-serif;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid rgba(242,113,138,0.55);">Regional Pressure Watch</div>
+<div style='font-size:11px;color:#9DB2CE;margin-top:-8px;margin-bottom:12px;'>High — 38 items (26 DPRK, 8 BOJ, 4 Chief Cabinet Sec)</div>
+<div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">China</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">China raised visa fees *sevenfold* for Japanese nationals, citing reciprocity for Japan's July fee hike for foreign nationals — the latest in a sequence of economic-pressure measures following September's anti-dumping levies on Japanese dichlorosilane. Chinese state media (Xinhua, Global Times) separately framed Okinawa's conservative election result as potentially 'fueling Japan's neo-militarism' and deepening regional divisions.</div></div><div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">North Korea</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">North Korean state media confirmed the September 12 launches were a joint firepower strike drill combining long-range artillery, ballistic missiles, and attack drones, claiming 'huge destructive power'; Chosun Ilbo reported the exercise was framed as 'Kill Chain' training following defense chief Pak Jong-chon's return from Russia.</div></div><div style="margin-bottom:12px;padding-left:12px;border-left:3px solid #F2718A;"><div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#F2718A;font-weight:700;margin-bottom:3px;">Russia</div><div style="font-size:13px;line-height:1.6;color:#E4EAF2;">TASS reported Japan maintains its presence in Russian oil and gas projects despite bilateral tensions, citing a Russian diplomat — underscoring the energy-dependence constraint on Tokyo's sanctions options identified in recent Japan Times analysis.</div></div>
+<div style="margin:6px 0 12px;padding:9px 13px;background:rgba(255,255,255,0.07);border-radius:4px;font-size:13px;line-height:1.55;color:#E4EAF2;"><strong style="color:#F2718A;">Senkaku / ECS:</strong> No new acute Senkaku CCG intrusion or JASDF scramble event appears in today's articles; the prior streak of five consecutive scramble days (through September 10) is not extended by today's reporting.</div>
+<blockquote style="margin:8px 0;padding:9px 13px;background:rgba(255,255,255,0.07);border-left:3px solid #F2718A;font-style:italic;font-size:13px;line-height:1.55;color:#E4EAF2;">&ldquo;Fueling Japan's neo-militarism will push region toward dangerous vortex&rdquo;<div style="font-style:normal;font-size:11px;color:#9DB2CE;margin-top:4px;">Chinese government spokesperson (via Xinhua) &middot; Fueling Japan's neo-militarism will push region toward dangerous vortex: Chinese spokesperson — Xinhua</div></blockquote>
+<div style='margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.15);font-size:14px;line-height:1.55;color:#FFFFFF;'><strong style='color:#F2718A;'>Bottom line:</strong> China's sevenfold visa-fee hike and continued state-media framing of Okinawa's election as militaristic escalation form a coordinated pressure campaign; the DPRK drill confirmation adds regional tension but no Japan-directed launch or overflight is reported.</div>
+</div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="us-japan" id="us-japan"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">U.S.-Japan Relations</span></td></tr></table><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #BC002D;">
+<div style="font-size:11px;color:#BC002D;text-transform:uppercase;font-weight:600;">Basing &middot; Reuters</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://www.reuters.com/world/china/okinawa-election-win-may-give-tokyo-freer-hand-military-build-up-2026-09-13/" style="color:#1B2A4A;text-decoration:underline;">Koja's Okinawa win seen giving Tokyo freer hand on military build-up — USFJ basing implications</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Reuters reports that Koja's election removes 12 years of gubernatorial opposition to the Henoko relocation, potentially enabling Tokyo to accelerate base construction and the broader southwestern island defense buildup that underpins extended deterrence with US forces. The new governor's alignment with Tokyo's base position reduces the political friction that had slowed USFJ realignment in Okinawa.</div>
+</div></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="indo-pacific" id="indo-pacific"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Indo-Pacific Partners</span></td></tr></table><div style="margin-bottom:10px;padding-left:12px;border-left:3px solid #1B2A4A;">
+<div style="font-size:11px;color:#1B2A4A;text-transform:uppercase;font-weight:600;">Australia · Nikkei Asia</div>
+<div style="font-size:13px;font-weight:600;color:#1B2A4A;"><a href="https://asia.nikkei.com/business/automobiles/electric-vehicles/japan-s-astemo-to-boost-us-motor-capacity-as-client-honda-shifts-to-hybrids" style="color:#1B2A4A;text-decoration:underline;">Japan's Astemo to boost US motor capacity as Honda client shifts to hybrids</a></div>
+<div style="font-size:13px;line-height:1.4;color:#555;">Astemo, a Honda-aligned automotive components maker, will expand US electric-motor production capacity as Honda accelerates its hybrid vehicle pivot.</div>
+</div></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="analysis" id="analysis"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Expert Analysis and Events</span></td></tr></table><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#1B2A4A;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E8E8E8;">Op-Eds &amp; Think Tank Commentary</div><div style="margin-bottom:14px;padding:12px 14px;background:#fff;border-radius:2px;border-left:3px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+<div style="font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">The Japan Times</div>
+<div style="font-size:14px;font-weight:700;color:#1B2A4A;font-family:Georgia,serif;line-height:1.35;margin-bottom:6px;"><a href="https://www.japantimes.co.jp/commentary/2026/09/14/japan/japans-economic-growth-gamble/" style="color:#1B2A4A;text-decoration:none;">The Takaichi administration's high-stakes growth gamble</a></div>
+<div style='font-size:13px;color:#444;font-style:italic;line-height:1.45;margin-bottom:5px;padding-left:8px;border-left:2px solid #D5D5D5;'>Japan is using fiscal spending to mobilize private investment as a long-term strategy for securing national strength, a bet with significant downside risk if growth targets are not met.</div>
+<div style='font-family:Georgia,serif;font-size:13px;line-height:1.5;color:#4A5260;'>The commentary examines the Takaichi administration's economic framework, which pairs fiscal stimulus with incentives designed to crowd in private capital. The piece contextualizes this against Japan's structural fiscal constraints and the political pressures bearing on the cabinet ahead of the September 16 reshuffle. It frames the strategy as a high-variance gamble whose success depends on private-sector response.</div>
+</div></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="wire" id="wire"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">The Wire</span></td></tr></table><div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#55607A;margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">Defense</div><div style="margin-bottom:11px;padding-left:12px;border-left:3px solid #BC002D;"><div style="font-family:Arial,sans-serif;font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;">Nikkei Asia</div><div style="font-family:Georgia,serif;font-size:14px;font-weight:600;color:#1A222E;line-height:1.4;"><a href="https://asia.nikkei.com/politics/okinawa-political-shift-clears-way-for-japan-defense-buildup-near-taiwan" style="color:#1B2A4A;text-decoration:underline;">Okinawa political shift clears path for Japan's defense buildup near Taiwan</a></div><div style="font-family:Georgia,serif;font-size:13px;line-height:1.5;color:#4A5260;margin-top:2px;">Nikkei Asia's analysis finds Koja's election removes a persistent local political veto over Nansei island base construction, accelerating Tokyo's southwestern defense posture.</div></div><div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#55607A;margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">Technology</div><div style="margin-bottom:11px;padding-left:12px;border-left:3px solid #BC002D;"><div style="font-family:Arial,sans-serif;font-size:10px;color:#6B7280;text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:2px;">Mainichi</div><div style="font-family:Georgia,serif;font-size:14px;font-weight:600;color:#1A222E;line-height:1.4;"><a href="https://mainichi.jp/english/articles/20260914/p2g/00m/0bu/053000c" style="color:#1B2A4A;text-decoration:underline;">Fujitsu to begin global sales of Japan-made AI chip 'Monaka' from November</a></div><div style="font-family:Georgia,serif;font-size:13px;line-height:1.5;color:#4A5260;margin-top:2px;">Fujitsu said it will begin global sales of its Japan-made central processing unit 'Monaka' in November, positioning it for sovereign AI infrastructure applications.</div></div></div>
+<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec"><a name="upcoming" id="upcoming"></a><table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec-bar" style="background:#14181F;margin-bottom:14px;"><tr><td style="padding:9px 14px;"><span style="font-family:Arial,sans-serif;font-size:12px;color:#FF144C;line-height:1;vertical-align:middle;margin-right:9px;">&#9679;</span><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#FFFFFF;vertical-align:middle;">Upcoming</span></td></tr></table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Sep</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">14</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">September Sumo Grand Tournament opens (Day 1)</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">The Autumn Grand Sumo Tournament opened in Tokyo on September 14, with Yokozuna Onosato and three ozeki posting victories on opening day.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Sep</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">16</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">Takaichi cabinet and LDP executive reshuffle</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">Prime Minister Takaichi is scheduled to carry out a cabinet reshuffle and LDP party executive changes on September 16; Ishin's secretary general is being adjusted for a cabinet post and Hideki Murai for the LDP Diet affairs chairmanship.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Sep</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">18</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">Bank of Japan Monetary Policy Meeting (Day 1 of 2)</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">The BOJ policy board convenes September 18-19; multiple outlets treat a hike to 1.25% as near-certain, with Governor Ueda navigating pressure from the Takaichi government and US Treasury Secretary Bessent.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Sep</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">22</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">PM Takaichi addresses UN General Assembly</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">Prime Minister Takaichi is confirmed to address the United Nations General Assembly on September 22, per prior reporting carried in the PM appearance tracker.</div>
+</td>
+</tr>
+</table><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #E8E8E8;">
+<tr>
+<td width="54" style="padding:9px 12px 9px 0;vertical-align:top;">
+<table cellpadding="0" cellspacing="0" border="0" style="background:#BC002D;">
+<tr><td align="center" style="padding:4px 0 5px;width:46px;">
+<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:rgba(255,255,255,0.85);">Nov</div>
+<div style="font-family:Georgia,serif;font-size:16px;font-weight:700;color:#fff;line-height:1;">3</div>
+</td></tr>
+</table>
+</td>
+<td style="padding:9px 0;vertical-align:top;">
+<div style="font-family:Georgia,serif;font-size:14px;font-weight:700;color:#1B2A4A;">Culture Day (文化の日)</div>
+<div style="font-family:Georgia,serif;font-size:13px;line-height:1.45;color:#4A5260;margin-top:3px;">The 1946 constitution was promulgated on this date.</div>
+</td>
+</tr>
+</table></div>
+
+<!-- The house footer. Korea carries a CSIS lockup built in HTML; the other
+     editions have no wordmark to reproduce, so this leads with the chair
+     name instead. Everything else matches: centred, the city and domain on
+     their own line, the links as links rather than a run-on sentence, and
+     the disclaimer set in the reading face rather than the label face. -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="sec footer" style="background:#14181F;border-top:4px solid #BC002D;">
+  <tr><td style="padding:20px 32px 6px;text-align:center;">
+    <div style="font-family:Georgia,serif;font-size:38px;font-weight:700;color:#FFFFFF;letter-spacing:1px;line-height:1.1;">CSIS Japan Chair</div>
+    <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.72);margin-top:6px;">Japan Daily Brief</div>
+    <div style="font-family:Georgia,serif;font-size:13px;color:rgba(255,255,255,0.72);margin-top:12px;">Washington, D.C.</div>
+    <div style="margin-top:11px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.5px;"><a href="https://andysaulim.github.io/Daily-Japan-Digest/index.html" style="display:inline-block;padding:6px 15px;margin:0 4px;font-family:Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.5px;color:#14181F;background:#FFFFFF;border-radius:3px;text-decoration:none;white-space:nowrap;">Read online</a><span style="color:rgba(255,255,255,0.45);">&nbsp;&middot;&nbsp;</span><a href="https://andysaulim.github.io/Daily-Japan-Digest/archive.html" style="display:inline-block;padding:6px 15px;margin:0 4px;font-family:Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.5px;color:#14181F;background:#FFFFFF;border-radius:3px;text-decoration:none;white-space:nowrap;">Past issues</a></div>
+  </td></tr>
+  <tr><td style="padding:16px 32px 4px;text-align:center;">
+    <div style="font-family:Georgia,serif;font-size:12px;line-height:1.6;color:rgba(255,255,255,0.80);max-width:none;margin:0 auto;white-space:normal;">
+      You are receiving the Japan Daily Brief as a member of the CSIS Japan Chair distribution list.
+    </div>
+  </td></tr>
+  <tr><td style="padding:14px 32px 10px;text-align:center;">
+    <div style="border-top:1px solid rgba(255,255,255,0.14);padding-top:12px;font-family:Georgia,serif;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.82);max-width:560px;margin:0 auto;">
+      This newsletter is automatically generated, so it may contain errors. Please check all information and sources before citing.
+      To report errors or other issues, please contact Deirdre Martin at <a href="mailto:dmartin@csis.org" style="color:rgba(255,255,255,0.95);">dmartin@csis.org</a>.
+    </div>
+  </td></tr>
+  <tr><td style="padding:0 32px 20px;text-align:center;">
+    <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:rgba(255,255,255,0.70);margin-bottom:9px;">generated 9:35 AM ET</div>
+    <a href="#top" style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.95);text-decoration:none;">&#8593; Back to top</a>
+  </td></tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="footer-end" style="background:#FFFFFF;">
+  <tr><td style="padding:12px 32px 18px;text-align:center;font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.5px;color:#6B7280;">
+    &copy; 2026 Center for Strategic and International Studies
+  </td></tr>
+</table>
+</td>
+</tr>
+</table>
+<!--[if mso]></td></tr></table><![endif]-->
+</td>
+</tr>
+</table>
+</body>
+</html>

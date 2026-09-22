@@ -1,6 +1,62 @@
 {
   "appearances": [
     {
+      "date": "2026-09-22",
+      "activity": "Prime Minister Sanae Takaichi arrived in New York and held a bilateral meeting with President Trump on the sidelines of the UN General Assembly, with her investment-in-the-US message as the central talking point.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-22T11:06:56.290476+00:00"
+    },
+    {
+      "date": "2026-09-21",
+      "activity": "Prime Minister Sanae Takaichi departed Japan for New York to attend the UN General Assembly, with a confirmed bilateral with President Trump on Tuesday, September 22.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-21T11:05:55.023398+00:00"
+    },
+    {
+      "date": "2026-09-20",
+      "activity": "PM Takaichi is en route to or present in New York for the UN General Assembly, with a confirmed Trump bilateral set for Tuesday and a Ukrainian bilateral meeting request pending, following her instruction to the new cabinet to focus on market stability and the Middle East.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-20T11:05:48.562180+00:00"
+    },
+    {
+      "date": "2026-09-19",
+      "activity": "PM Takaichi's travel to New York for the UN General Assembly was confirmed, with a Trump bilateral set for Tuesday September 22 ahead of Xi Jinping's Washington state visit.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-19T11:06:31.644498+00:00"
+    },
+    {
+      "date": "2026-09-18",
+      "activity": "PM Takaichi held a post-reshuffle press conference recommitting to key policies including a strong-economy agenda, following the completion of her first cabinet reshuffle on September 17.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-18T11:06:27.410862+00:00"
+    },
+    {
+      "date": "2026-09-17",
+      "activity": "Prime Minister Sanae Takaichi presided over her first cabinet reshuffle, retaining core ministers and incorporating a Japan Innovation Party member for the first time.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-17T11:05:59.668563+00:00"
+    },
+    {
+      "date": "2026-09-16",
+      "activity": "PM Takaichi presided over the LDP executive reshuffle on September 16, appointing a new party leadership team that retains most senior figures ahead of the fall Diet session.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-16T11:05:24.215487+00:00"
+    },
+    {
+      "date": "2026-09-14",
+      "activity": "Prime Minister Sanae Takaichi met IEA Executive Director Fatih Birol in Tokyo and called for closer Japan-IEA cooperation on energy security.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-14T13:35:25.065871+00:00"
+    },
+    {
       "date": "2026-09-09",
       "activity": "PM Takaichi demanded Russia remove the war-victory statue in Khabarovsk and government confirmed the September 16 cabinet reshuffle plan, with Chief Cabinet Secretary Kihara holding the afternoon press conference to announce Japan's response to China's dichlorosilane anti-dumping measures.",
       "source": "digest",
@@ -419,63 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-24T12:18:42.154539+00:00"
-    },
-    {
-      "date": "2026-06-23",
-      "activity": "PM Takaichi published a contributed article to France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan posting dated June 22-23.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-23T12:32:49.031737+00:00"
-    },
-    {
-      "date": "2026-06-22",
-      "activity": "PM Takaichi published a contributed article in France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-22T15:17:17.099787+00:00"
-    },
-    {
-      "date": "2026-06-21",
-      "activity": "PM Takaichi conducted informal dining outreach to senior LDP members and issued a statement asserting US commitment to the Indo-Pacific has not declined, per arabnews.jp and Asahi Shimbun.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-21T12:08:37.995625+00:00"
-    },
-    {
-      "date": "2026-06-20",
-      "activity": "PM Takaichi's food-tax reduction talks were confirmed advancing per Kyodo News, and she is reported preparing an upcoming India visit with a business delegation including Suzuki and Itochu executives.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-20T11:54:29.661441+00:00"
-    },
-    {
-      "date": "2026-06-19",
-      "activity": "PM Takaichi's office posted the G7 Evian Summit Day 3 readout confirming her participation in an AI adoption working lunch and bilateral meetings; she separately acknowledged advancing food-tax reduction talks.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-19T13:32:52.481810+00:00"
-    },
-    {
-      "date": "2026-06-18",
-      "activity": "PM Takaichi concluded the G7 Evian Summit, confirmed all her proposals were adopted in the final communique, held a bilateral with Italian President Meloni, and issued statements on the US-Iran deal and Strait of Hormuz.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-18T18:39:14.152630+00:00"
-    },
-    {
-      "date": "2026-06-16",
-      "activity": "SEED DATA — Prime Minister attended an Upper House plenary session and held a brief press availability (placeholder seed; verify against live articles).",
-      "source": "seed",
-      "url": "",
-      "recorded_at": "2026-06-16T09:00:00+00:00"
-    },
-    {
-      "date": "2026-06-13",
-      "activity": "SEED DATA — Prime Minister met with a visiting foreign delegation at the Kantei (placeholder seed; verify against live articles).",
-      "source": "seed",
-      "url": "",
-      "recorded_at": "2026-06-13T09:00:00+00:00"
     }
   ],
-  "last_updated": "2026-09-09T13:42:18.813586+00:00"
+  "last_updated": "2026-09-22T11:06:56.290529+00:00"
 }

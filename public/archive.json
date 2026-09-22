@@ -1,5 +1,77 @@
 [
   {
+    "date": "2026-09-22",
+    "filename": "2026-09-22.html",
+    "re_line": "Takaichi-Trump bilateral at UNGA \u00b7 Typhoon Dujuan kills 6 \u00b7 DPRK hypersonic launch \u00b7 BOJ rate-hike pace \u00b7 US-Japan-ROK trilateral",
+    "top_stories": 4,
+    "overnight_items": 5,
+    "word_count": 1797
+  },
+  {
+    "date": "2026-09-21",
+    "filename": "2026-09-21.html",
+    "re_line": "Takaichi-Trump UNGA summit Tuesday \u00b7 DPRK dual missile launch \u00b7 BOJ rate check lifts yen \u00b7 Typhoon Dujuan hits Tokyo area",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1252
+  },
+  {
+    "date": "2026-09-20",
+    "filename": "2026-09-20.html",
+    "re_line": "DPRK dual missile launch \u00b7 BOJ rate check after 1.25% hike disappoints markets \u00b7 Takaichi-Trump NY summit Tuesday \u00b7 Global Hawk wreckage recovered \u00b7 Aichi-Nagoya Asian Games open",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 970
+  },
+  {
+    "date": "2026-09-19",
+    "filename": "2026-09-19.html",
+    "re_line": "BOJ hikes to 31-yr high \u00b7 Takaichi-Trump NY summit Tuesday \u00b7 Russia protests Typhon \u00b7 Asian Games open",
+    "top_stories": 3,
+    "overnight_items": 5,
+    "word_count": 1771
+  },
+  {
+    "date": "2026-09-18",
+    "filename": "2026-09-18.html",
+    "re_line": "BOJ hikes to 1.25% (31-yr high) \u00b7 Takaichi post-reshuffle \u00b7 US potato pressure \u00b7 DPRK sports minister \u00b7 chip-factory talks",
+    "top_stories": 3,
+    "overnight_items": 5,
+    "word_count": 1929
+  },
+  {
+    "date": "2026-09-17",
+    "filename": "2026-09-17.html",
+    "re_line": "Takaichi cabinet reshuffle \u00b7 BOJ rate hike expected \u00b7 Fed hike jolts yen \u00b7 $550B chip factory talks \u00b7 Global Hawk crash",
+    "top_stories": 3,
+    "overnight_items": 4,
+    "word_count": 1381
+  },
+  {
+    "date": "2026-09-16",
+    "filename": "2026-09-16.html",
+    "re_line": "BOJ rate hike imminent \u00b7 LDP reshuffle \u00b7 Global Hawk crash \u00b7 DPRK drill confirmed \u00b7 trade deficit widens",
+    "top_stories": 4,
+    "overnight_items": 5,
+    "word_count": 1696
+  },
+  {
+    "date": "2026-09-15",
+    "filename": "2026-09-15.html",
+    "re_line": "BOJ rate hike imminent \u00b7 Japan eyes 3.5% GDP defense \u00b7 Global Hawk crash \u00b7 Okinawa governor shift \u00b7 LDP reshuffle tomorrow",
+    "top_stories": 3,
+    "overnight_items": 5,
+    "word_count": 1789
+  },
+  {
+    "date": "2026-09-14",
+    "filename": "2026-09-14.html",
+    "re_line": "Okinawa elects pro-base governor \u00b7 BOJ rate hike imminent \u00b7 Chubu nuclear scandal \u00b7 DPRK drill \u00b7 China visa hike",
+    "top_stories": 3,
+    "overnight_items": 5,
+    "word_count": 1435
+  },
+  {
     "date": "2026-09-13",
     "filename": "2026-09-13.html",
     "re_line": "Okinawa gov race underway \u00b7 DPRK missiles post-Freedom Edge \u00b7 BOJ rate hike imminent \u00b7 Chubu Electric fraud \u00b7 China visa hikes",
