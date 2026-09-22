@@ -179,9 +179,7 @@ _SEC_ALERT = 'style="padding:20px 32px;border-top:3px solid #E8697A;border-botto
 # decides the running order. A section that produced nothing is simply absent
 # from the dict, which is how an empty section stays absent from the brief.
 SECTION_ORDER = (
-    "memo",          # Today at a Glance
     "top-stories",   # Top Stories
-    "overnight",     # Overnight
     "key-stat",      # Stat of the Day
     "tokyo",         # Japanese Government (+ PM Watch, Personnel, Diet Sessions)
     "polling",       # Public Sentiment & Approval Polling
@@ -191,7 +189,6 @@ SECTION_ORDER = (
     "indo-pacific",  # Indo-Pacific Partners
     "analysis",      # Expert Analysis and Events
     "social",        # Social Statements
-    "wire",          # The Wire
     "upcoming",      # Upcoming
     "on-this-day",   # On This Day
 )
@@ -204,44 +201,6 @@ MUTE = "#6B7280"
 
 
 RING_ON_DARK = "#FF144C"   # the accent, lightened to read on the black bar
-
-def _subhead(text: str) -> str:
-    """A group label inside a section.
-
-    The Wire ran every category together, so it read as one undifferentiated
-    stream. One heading per subject beats a category badge repeated on every
-    row.
-    """
-    return (f'<div style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;'
-            f'text-transform:uppercase;letter-spacing:1.5px;color:#55607A;'
-            f'margin:18px 0 9px;padding-bottom:5px;border-bottom:1px solid #E4E7EB;">'
-            f'{text}</div>')
-
-
-def _compact_row(cat: str, headline: str, url: str, src: str, body: str = "") -> str:
-    """One wire item, in the same shape as every other news item in the brief.
-
-    This was a two-column table: a category cell on the left, headline and a
-    grey meta line on the right. It read as a different kind of object from
-    the sections around it — the eye had to change mode to scan it, which is
-    the opposite of what a wire is for.
-
-    It is now the house item: a rule down the left, TAG · SOURCE in small grey
-    caps, the headline, then the body. Same as the sections that read tightest,
-    so The Wire scans like the rest of the brief instead of like a table.
-    """
-    tag_line = " &middot; ".join(x for x in (cat, src) if x)
-    return (f'<div style="margin-bottom:11px;padding-left:12px;'
-            f'border-left:3px solid {HINOMARU_RED};">'
-            + (f'<div style="font-family:Arial,sans-serif;font-size:10px;color:{MUTE};'
-               f'text-transform:uppercase;letter-spacing:1px;font-weight:600;'
-               f'margin-bottom:2px;">{tag_line}</div>' if tag_line else "")
-            + f'<div style="font-family:Georgia,serif;font-size:14px;font-weight:600;'
-              f'color:{INK};line-height:1.4;">{_link_or_text(headline, url)}</div>'
-            + (f'<div style="font-family:Georgia,serif;font-size:13px;line-height:1.5;'
-               f'color:#4A5260;margin-top:2px;">{body}</div>' if body else "")
-            + '</div>')
-
 
 def _site_root(web_url: str) -> str:
     """The published site root, with a trailing slash, from any page URL.
@@ -357,9 +316,6 @@ def _word_count(d: dict) -> int:
     # Header
     w += _w(d.get("re_line"))
 
-    # Morning memo
-    for mi in (d.get("morning_memo") or []):
-        w += _w(mi) if isinstance(mi, str) else _w(mi.get("text", "")) if isinstance(mi, dict) else 0
 
     # Δ Since Yesterday
     for item in ((d.get("delta_since_yesterday") or {}).get("items") or []):
@@ -371,7 +327,7 @@ def _word_count(d: dict) -> int:
             w += _w(s.get(f, ""))
 
     # Lists with headline + body_text
-    for key in ("overnight_items", "also_today", "business_economy", "indo_pacific",
+    for key in ("business_economy", "indo_pacific",
                 "us_japan_relations"):
         for it in (d.get(key) or []):
             w += _w(it.get("headline", ""))
@@ -593,38 +549,6 @@ def render_html(digest: dict) -> str:
     # then the way into the brief.
     sections_pre.append("%%NAV%%")
 
-    # 3. Morning Memo
-    memo = digest.get("morning_memo") or []
-    if memo:
-        memo_html = ""
-        for idx, mi in enumerate(memo[:3], 1):
-            # The memo is the first thing read and the place the prompt most
-            # wants a name bolded, so it converts emphasis like any body copy.
-            t = _emphasis(_esc(mi) if isinstance(mi, str) else _esc(mi.get("text", "") if isinstance(mi, dict) else str(mi or "")))
-            memo_html += f"""<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
-<tr>
-<td width="28" style="vertical-align:top;padding-top:1px;">
-<div style="width:22px;height:22px;border-radius:50%;background:#1B2A4A;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;font-family:Arial,sans-serif;">{idx}</div>
-</td>
-<td style="vertical-align:top;padding-left:8px;">
-<div style="font-size:14px;line-height:1.5;color:#222;font-family:Georgia,serif;">{t}</div>
-</td>
-</tr>
-</table>"""
-        # The memo sits on a tinted panel with a rule down the left, as in
-        # Korea. Flat on white it read as the first of the news sections
-        # rather than as the summary of all of them.
-        body_sections["memo"] = (f"""
-<div style="padding:20px 32px;border-bottom:1px solid #EBEBEB;" class="sec">
-<a name="memo" id="memo"></a>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="glance-panel" style="background:#FBEEF1;border-left:3px solid {HINOMARU_RED};">
-  <tr><td style="padding:0;">{_sec_label("Today at a Glance")}</td></tr>
-            <tr><td style="padding:0 20px 8px;">
-    {memo_html}
-  </td></tr>
-</table>
-</div>""")
-
     # 4. Top Stories
     stories = digest.get("top_stories") or []
     if stories:
@@ -658,47 +582,6 @@ def render_html(digest: dict) -> str:
 <div style="font-size:10px;color:#6B7280;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
         body_sections["top-stories"] = f'<div {_SEC}><a name="top-stories" id="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>'
-
-    # 4b. Overnight Flash
-    overnight = digest.get("overnight_items") or []
-    if overnight:
-        # A scan list, not a second Top Stories. One rule down the left, one
-        # line per item, so the eye runs vertically instead of stopping at a
-        # card border every three lines. The cards above carry the weight;
-        # this section carries the breadth.
-        #
-        # It is also no longer dressed as an alarm. Every issue has an
-        # overnight section, so a red top rule and a lightning bolt on all of
-        # them said nothing about any of them.
-        fh = ""
-        for it in overnight:
-            cat = _esc(_str(it.get("category", "")))
-            h = _emphasis(_esc(it.get("headline", "")))
-            b = _emphasis(_esc(it.get("body_text", "")))
-            src = _esc(_clean_src(it.get("source", "")))
-            url = it.get("url", "")
-            # Headline on its own line, the clause beneath it. Running them
-            # together behind an em-dash made a two-line wrap read as one long
-            # sentence, and the eye could not find where an item ended.
-            tail = (f'<div style="font-family:Georgia,serif;font-size:13px;'
-                    f'line-height:1.45;color:{MUTE};margin-top:2px;">{b}</div>'
-                    if b else "")
-            fh += (f'<tr>'
-                   f'<td style="padding:7px 10px 7px 0;vertical-align:top;white-space:nowrap;'
-                   f'font-family:Arial,sans-serif;font-size:10px;font-weight:700;'
-                   f'letter-spacing:0.5px;text-transform:uppercase;color:{HINOMARU_RED};'
-                   f'border-bottom:1px solid #EEF0F3;">{cat}</td>'
-                   f'<td style="padding:7px 0;vertical-align:top;font-family:Georgia,serif;'
-                   f'font-size:13px;line-height:1.45;color:{INK};'
-                   f'border-bottom:1px solid #EEF0F3;">'
-                   f'<div>{_link_or_text(h, url)}'
-                   f'<span style="font-family:Arial,sans-serif;font-size:11px;color:{MUTE};">'
-                   f' &middot; {src}</span></div>{tail}</td>'
-                   f'</tr>')
-        fh = (f'<table width="100%" cellpadding="0" cellspacing="0" border="0" '
-              f'class="flash-table" style="border-top:2px solid {HINOMARU_RED};">{fh}</table>')
-        body_sections["overnight"] = (
-            f'<div {_SEC}><a name="overnight" id="overnight"></a>{_sec_label("Overnight")}{fh}</div>')
 
     # 5. Key Stat
     stat = digest.get("key_stat") or {}
@@ -1146,32 +1029,6 @@ def render_html(digest: dict) -> str:
 </div>"""
         body_sections["social"] = f'<div {_SEC}><a name="social" id="social"></a>{_sec_label("Social Statements")}{sh}</div>'
 
-    # 16. Also Today
-    also = digest.get("also_today") or []
-    if also:
-        # Grouped by subject. Ungrouped, the section was a run of identical
-        # bars whose only distinguishing mark was a category repeated in grey
-        # on every row; a reader looking for the trade item had to read all of
-        # them.
-        _groups = {}
-        for a in also[:6]:
-            key = _str(a.get("category", "")).strip() or "Other"
-            _groups.setdefault(key.title(), []).append(a)
-        ah = ""
-        _multi = len(_groups) > 1
-        for _cat, _items in _groups.items():
-            rows = "".join(
-                _compact_row(cat="" if _multi else _esc(_cat),
-                             headline=_emphasis(_esc(i.get("headline", ""))),
-                             url=i.get("url", ""),
-                             src=_esc(_clean_src(i.get("source", ""))),
-                             body=_emphasis(_esc(i.get("body_text", ""))))
-                for i in _items)
-            ah += ((_subhead(_esc(_cat)) if _multi else "")
-                   + rows)
-        body_sections["wire"] = (
-            f'<div {_SEC}><a name="wire" id="wire"></a>{_sec_label("The Wire")}{ah}</div>')
-
     # 17. On This Day
     otd = digest.get("on_this_day") or []
     if otd:
@@ -1258,12 +1115,12 @@ def render_html(digest: dict) -> str:
     # carries no anchor of its own) and "Tokyo" at the government round-up.
     # A pair is kept only when its anchor is present, so listing a section
     # that produced nothing today costs nothing.
-    _NAV = [("Top Stories", "top-stories"), ("Overnight", "overnight"),
+    _NAV = [("Top Stories", "top-stories"),
             ("Stat", "key-stat"), ("Government", "tokyo"),
             ("Polling", "polling"), ("Business", "business"),
             ("Pressure", "watch"), ("U.S.-Japan", "us-japan"),
             ("Partners", "indo-pacific"), ("Analysis", "analysis"),
-            ("The Wire", "wire"), ("Upcoming", "upcoming")]
+            ("Upcoming", "upcoming")]
     body_html = "\n".join(s for s in sections if s)
     _links = [f'<a href="#{_a}" style="color:{HINOMARU_RED};text-decoration:underline;'
               f'text-underline-offset:2px;white-space:nowrap;">{_l}</a>'

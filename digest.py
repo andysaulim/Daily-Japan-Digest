@@ -50,7 +50,7 @@ SOURCE-OR-SKIP PRINCIPLE: For EVERY factual claim you write, you must be able to
 
 - POLLING — SAME-POLL-DATE RULE: For the public_sentiment block, NEVER mix pollsters or survey dates in one figure set. Cabinet approval, disapproval, and party support shares must all come from the SAME survey by the SAME pollster (NHK, Jiji, Yomiuri, Asahi, or Kyodo) for the SAME date range. Always cite the pollster and the date range. If today's articles do not contain a fresh poll, carry forward the most recent cited poll and label it with its original date — do NOT blend numbers from different polls.
 
-- EVERY ARTICLE MUST EXIST IN THE INPUT: Every item in top_stories, overnight_items, also_today, opeds_today, business_economy, us_japan_relations, indo_pacific, and social_statements MUST correspond to an actual article from the input data above — with a real URL from that input. Do NOT generate articles from your training data. Do NOT present old events as today's news. Do NOT fabricate generic think tank analyses when no such article exists in today's feed. If a section has fewer qualifying articles than its target count, return fewer items or an empty array. An empty section is ALWAYS better than a fabricated entry.
+- EVERY ARTICLE MUST EXIST IN THE INPUT: Every item in top_stories, opeds_today, business_economy, us_japan_relations, indo_pacific, and social_statements MUST correspond to an actual article from the input data above — with a real URL from that input. Do NOT generate articles from your training data. Do NOT present old events as today's news. Do NOT fabricate generic think tank analyses when no such article exists in today's feed. If a section has fewer qualifying articles than its target count, return fewer items or an empty array. An empty section is ALWAYS better than a fabricated entry.
 
 - THINK TANK FABRICATION — HARD BLOCK: You have a strong tendency to fabricate generic-sounding think tank articles from CSIS, CFR, Brookings, Carnegie, RAND, etc. when the feed is thin. These fabrications follow a telltale pattern: vague titles ("examines evolving security environment", "analyzes the alliance"), no specific data points, and no real URL. STOP. If a think tank article does not appear in the input data with a real URL, it does not exist. Do NOT create it.
 
@@ -73,9 +73,9 @@ The CSIS Japan Chair covers the US-Japan alliance, Japanese domestic politics (L
 
 ALLIANCE AS SPINE: The US-Japan alliance is the central axis of Japan policy analysis. Tariffs, host-nation support, USFJ posture, defense industrial cooperation, and regional deterrence all route back to it. When a story has alliance implications, surface them.
 
-PRESTIGE OUTLET RULE — MANDATORY INCLUSION: If ANY Japan-related article appears from WSJ, Washington Post, NYT, Bloomberg, Financial Times, The Economist, CNN, Reuters, CNBC, NHK, Kyodo, Japan Times, or Nikkei Asia, it MUST be included in the digest — in top_stories if it is a major story, otherwise in overnight_items or also_today. When these outlets publish on Japan it is inherently noteworthy. Never drop such a story.
+PRESTIGE OUTLET RULE — MANDATORY INCLUSION: If ANY Japan-related article appears from WSJ, Washington Post, NYT, Bloomberg, Financial Times, The Economist, CNN, Reuters, CNBC, NHK, Kyodo, Japan Times, or Nikkei Asia, it MUST be included in the digest — in top_stories, or in the topical section whose scope it fits (us_japan_relations, indo_pacific, business_economy, the government trackers). Top Stories is the default home: it now runs 4-6 items precisely so a prestige story has somewhere to go. When these outlets publish on Japan it is inherently noteworthy. Never drop such a story.
 
-CSIS PRODUCTS — MANDATORY INCLUSION: If ANY same-day article appears from the CSIS Japan Chair, it MUST appear in opeds_today or also_today. These are the in-house products of the institution publishing this digest; they must surface.
+CSIS PRODUCTS — MANDATORY INCLUSION: If ANY same-day article appears from the CSIS Japan Chair, it MUST appear in opeds_today. These are the in-house products of the institution publishing this digest; they must surface.
 
 JOURNALIST FLAGGING: The following reporters have special Japan expertise. When their bylines appear, treat the story as higher priority and note the journalist in your analysis:
 
@@ -138,7 +138,7 @@ DEDUPLICATION — CRITICAL (ZERO TOLERANCE):
 
 - Pick the BEST source for each topic and place it in the HIGHEST appropriate section.
 
-- ACROSS SECTIONS AND TRACKERS: a single event gets ONE placement only. If a government action is itemized in the Japanese Government tracker (prc_government) or Personnel Changes, do NOT also list it as a separate item elsewhere (Top Stories, Overnight, Regional Pressure Watch, Op-Eds) — e.g., a new consular-post appointment belongs in EITHER the MOFA tracker OR Personnel Changes, not both, and should not be re-itemized in the Regional Pressure Watch narrative. The narrative sections may reference an event for context but must not repeat it as a discrete headline entry.
+- ACROSS SECTIONS AND TRACKERS: a single event gets ONE placement only. If a government action is itemized in the Japanese Government tracker (prc_government) or Personnel Changes, do NOT also list it as a separate item elsewhere (Top Stories, Regional Pressure Watch, Op-Eds) — e.g., a new consular-post appointment belongs in EITHER the MOFA tracker OR Personnel Changes, not both, and should not be re-itemized in the Regional Pressure Watch narrative. The narrative sections may reference an event for context but must not repeat it as a discrete headline entry.
 
 - LIFESTYLE / ENTERTAINMENT — HARD BLOCK: NEVER include J-pop, idol/celebrity, anime-only, fashion, or cultural-only content in any section. This newsletter covers geopolitics, trade policy, technology, security, and foreign affairs ONLY. Cultural content qualifies ONLY if it has a clear policy or security implication.
 
@@ -517,7 +517,7 @@ TIER 1: NEWS ARTICLES (last 24h)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {tier_json(payload.get("tier1", []))}
 
-Score and triage these Tier 1 articles INTERNALLY — do NOT emit a per-article array for Tier 1. Use them to populate the curated output sections defined under DIGEST SYNTHESIS below (top_stories, overnight_items, also_today, us_japan_relations, indo_pacific, business_economy). Only those synthesized sections are part of the output.
+Score and triage these Tier 1 articles INTERNALLY — do NOT emit a per-article array for Tier 1. Use them to populate the curated output sections defined under DIGEST SYNTHESIS below (top_stories, us_japan_relations, indo_pacific, business_economy). Only those synthesized sections are part of the output.
 
 When triaging, for each article weigh:
 - categories: Alliance / China-Japan / Korea-Japan / DPRK / Economy-BOJ / Politics-Diet / Defense / Technology / Indo-Pacific / Energy
@@ -571,7 +571,7 @@ TIER 4: JAPANESE GOVERNMENT PRIMARY + ADVERSARY SIGNAL (last 48h)
 DIGEST SYNTHESIS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-TARGET LENGTH — 1,900-2,200 WORDS, HARD CEILING 2,400 (an 8-minute read). This is a band, not a floor: reach it by covering MORE stories, not by inflating individual items. HARD MINIMUM 1,600 words. Anything over the ceiling is trimmed from the tail of the weaker sections after you return, so a draft that runs long loses items you chose rather than words you wrote.
+TARGET LENGTH — 1,400-1,700 WORDS, HARD CEILING 1,900 (a 6-minute read). This is a band, not a floor: reach it by covering MORE stories, not by inflating individual items. HARD MINIMUM 1,100 words. The band came down with the removal of Today at a Glance, Overnight and The Wire — roughly a quarter of the old brief. Writing to the old number from fewer sections would mean padding what remains, and a padded item is a fabricated one. Anything over the ceiling is trimmed from the tail of the weaker sections after you return, so a draft that runs long loses items you chose rather than words you wrote.
 
 Return a digest object with:
 
@@ -582,8 +582,6 @@ Return a digest object with:
 - editor_note: 1-2 sentence framing of today's news. Factual, no editorializing.
 
 - market_indicators: pass through the pre-collected market data object exactly as provided.
-
-- morning_memo: EXACTLY 3 items. Each one sentence summarizing one of today's top Japan stories. What a Japan desk officer tells their boss in the elevator. Lead with the verb. Sourced from today's actual articles.
 
 - on_this_day: array with at most 1 historical Japan event matching TODAY's EXACT calendar date (month + day). Use VERIFIED JAPAN DATES list ONLY. Empty array if no verified event falls on today's date. Each: date (e.g. "August 15, 1945"), event (1 sentence), relevance (1 sentence connecting to current situation).
 
@@ -596,11 +594,7 @@ Return a digest object with:
 
 - calendar_watch: array of 4-5 key upcoming events in next 14-30 days (MIN 4, MAX 5). Only use events from (a) today's articles with dates, (b) VERIFIED UPCOMING DATES, or (c) baselines. Each: month (3-letter), day (int), headline, detail (1-2 sentences).
 
-- overnight_items: 6 items MAX. Source diversity MANDATORY (max 3 from any single source). Topic diversity MANDATORY. Each: url (verbatim from input), source, category, headline (under 100 chars), body_text (2 sentences, ~35-45 words).
-
-- top_stories: 2-4 biggest HARD NEWS stories — aim for 3 typical, 2 slow days, 4 when multiple major stories. From wires/correspondents/Japanese press/government — NOT op-eds or think tank commentary. TOPIC DIVERSITY MANDATORY. Each: url (verbatim from input), source, category_tag (Alliance/China-Japan/Korea-Japan/DPRK/Economy-BOJ/Politics-Diet/Defense/Technology/Indo-Pacific/Energy), headline, body (MAX 2 sentences — facts: who/what/when/specifics), src_line.
-
-- also_today: up to 6 remaining articles score >= 4. Each: url (verbatim from input), source, category, headline, body_text (1 sentence), color_bar_class (cb-navy=Alliance, cb-red=Defense, cb-lt=Trade/Economy, cb-mid=Diplomacy, cb-tech=Technology, cb-biz=Politics).
+- top_stories: 4-6 biggest HARD NEWS stories — aim for 5 typical, 4 slow days, 6 when the day is heavy. From wires/correspondents/Japanese press/government — NOT op-eds or think tank commentary. TOPIC DIVERSITY MANDATORY. This section absorbed the general-news load when Overnight and The Wire were removed, so it is now the default home for any hard-news story that no topical section covers. SOURCE DIVERSITY: no more than 3 items from any single outlet. Each: url (verbatim from input), source, category_tag (Alliance/China-Japan/Korea-Japan/DPRK/Economy-BOJ/Politics-Diet/Defense/Technology/Indo-Pacific/Energy), headline, body (MAX 2 sentences — facts: who/what/when/specifics), src_line.
 
 - business_economy: array up to 6 Japan business/economy items. Each: url (verbatim from input), source, headline, body_text (1-2 sentences with specific numbers), companies (array of names), sector (tech/auto/energy/finance/manufacturing/semiconductors/macro). PRIORITY: if today's articles carry any item on the $550 billion US-Japan strategic investment framework (structure, project selection, disbursement, governance, or drawdown), include it here — the framework stays in this section and does NOT move to us_japan_relations, so the Chair finds it in the same place every morning.
 
@@ -609,7 +603,7 @@ Return a digest object with:
   The $550 billion strategic investment framework belongs to business_economy, not here.
 
 - indo_pacific: RENAMED INDO-PACIFIC PARTNERS — array of 4-6 items on Japan's relations with its PARTNERS in the region: South Korea, Southeast Asia (the ASEAN states), India, Australia, New Zealand and the Pacific Islands. Also in scope: the US-Japan-ROK trilateral and the Quad, both of which are partner groupings. Each: url (verbatim from input), source, headline, body_text (1 sentence), category (korea-japan, trilateral, southeast-asia, india, australia, new-zealand, pacific-islands, quad), region_tag ("Korea-Japan" / "Trilateral" / "Southeast Asia" / "India" / "Australia" / "New Zealand" / "Pacific Islands" / "Quad").
-  EXCLUDED — this is the change that defines the section: China, North Korea, Russia and Taiwan do NOT belong here. The adversary read on those three is carried by the Regional Pressure Watch (xinhua_delta) and their news belongs in top_stories, overnight_items or also_today according to its weight. A China-Japan, DPRK, Russia or Taiwan item placed in this section is a placement error, not a judgement call.
+  EXCLUDED — this is the change that defines the section: China, North Korea, Russia and Taiwan do NOT belong here. The adversary read on those three is carried by the Regional Pressure Watch (xinhua_delta) and their news belongs in top_stories, or in the Regional Pressure Watch (xinhua_delta) narrative, according to its weight. A China-Japan, DPRK, Russia or Taiwan item placed in this section is a placement error, not a judgement call.
   This section is partner-facing and will therefore run shorter than it used to on days when partner news is thin. Return fewer items, or an empty array, rather than reaching for a China or DPRK story to fill it.
 
 - social_statements: 0-4 VERBATIM quotes from senior officials. This is a QUOTATION section, not a headline digest. HARD RULES:
@@ -639,7 +633,7 @@ Each: avatar_initials (2 letters), who (name), handle_context (title/role), plat
 - xinhua_delta: the REGIONAL PRESSURE WATCH object built per the Tier 4 instructions above (keep the top-level key name "xinhua_delta")
 - timeline_candidates: list of urls flagged for any CSIS bilateral event database (Senkaku/ECS incidents, DPRK launches over/near Japan, US-Japan alliance milestones)
 
-PLACEMENT PRIORITY (highest wins): top_stories > us_japan_relations > overnight_items > prc_government > personnel_changes > npc_politburo > indo_pacific > business_economy > also_today. Each article appears in exactly ONE section — deduplicate by URL AND topic.
+PLACEMENT PRIORITY (highest wins): top_stories > us_japan_relations > prc_government > personnel_changes > npc_politburo > indo_pacific > business_economy. Each article appears in exactly ONE section — deduplicate by URL AND topic.
 This list used to name only five sections, which left the government trackers unranked even though the pipeline's own deduplication ranks them above indo_pacific and business_economy — so a story placed in both was silently dropped from the section you had chosen for it. Place each story once, at the highest-ranked section whose scope it fits.
 
 - story_count: total Tier 1 articles processed
@@ -657,20 +651,18 @@ _TEXT_FIELDS = ("body", "body_text", "summary", "detail", "quote_text",
                "central_argument", "analyst_note")
 
 
+# Every section carrying items the reader sees. Named once: the word count and
+# the per-attempt status line both read it, so a section cannot be counted by
+# one and missed by the other.
+_CONTENT_SECTIONS = ("top_stories", "business_economy",
+                     "opeds_today", "academic_today", "social_statements",
+                     "indo_pacific", "us_japan_relations", "prc_government",
+                     "npc_politburo", "personnel_changes", "events_today")
+
+
 def _count_digest_words(digest: dict) -> int:
     words = 0
-    for mi in (digest.get("morning_memo") or []):
-        if isinstance(mi, dict):
-            for v in mi.values():
-                if isinstance(v, str):
-                    words += len(v.split())
-        elif isinstance(mi, str):
-            words += len(mi.split())
-
-    for section_key in ("top_stories", "overnight_items", "also_today", "business_economy",
-                       "opeds_today", "academic_today", "social_statements",
-                       "indo_pacific", "us_japan_relations", "prc_government",
-                       "npc_politburo"):
+    for section_key in _CONTENT_SECTIONS:
         for item in (digest.get(section_key) or []):
             if not isinstance(item, dict):
                 continue
@@ -691,17 +683,11 @@ def _count_digest_words(digest: dict) -> int:
 def _check_content_minimums(digest: dict) -> list[str]:
     failures = []
     word_count = _count_digest_words(digest)
-    if word_count < 1000:
-        failures.append(f"WORD COUNT: {word_count} words (hard minimum 1000)")
+    if word_count < 800:
+        failures.append(f"WORD COUNT: {word_count} words (hard minimum 800)")
     top = len(digest.get("top_stories") or [])
-    if top < 2:
-        failures.append(f"TOP STORIES: {top} (minimum 2)")
-    overnight = len(digest.get("overnight_items") or [])
-    if overnight < 3:
-        failures.append(f"OVERNIGHT ITEMS: {overnight} (minimum 3)")
-    memo = len(digest.get("morning_memo") or [])
-    if memo != 3:
-        failures.append(f"MORNING MEMO: {memo} (must be exactly 3)")
+    if top < 4:
+        failures.append(f"TOP STORIES: {top} (minimum 4)")
     return failures
 
 
@@ -894,7 +880,7 @@ def generate_digest(payload: dict, db_context: str = "") -> dict:
             if attempt == 0 or digest is None:
                 digest = _call_claude(client, user_prompt, model=retry_model)
             else:
-                word_deficit = max(0, 1000 - _count_digest_words(digest))
+                word_deficit = max(0, 800 - _count_digest_words(digest))
                 expansion_prompt = (
                     f"Your previous digest output failed content minimums:\n"
                     + "\n".join(f"  • {f}" for f in content_failures)
@@ -924,11 +910,11 @@ def generate_digest(payload: dict, db_context: str = "") -> dict:
 
             content_failures = _check_content_minimums(digest)
             top_count = len(digest.get("top_stories") or [])
-            overnight_count = len(digest.get("overnight_items") or [])
+            item_count = sum(len(digest.get(k) or []) for k in _CONTENT_SECTIONS)
 
             if content_failures and attempt < MAX_ATTEMPTS - 1:
                 print(f"   ⚠ Attempt {attempt + 1}: ~{word_count} words, "
-                      f"{top_count} top, {overnight_count} overnight — retrying")
+                      f"{top_count} top, {item_count} items — retrying")
                 time.sleep(2)
                 continue
 
@@ -938,11 +924,11 @@ def generate_digest(payload: dict, db_context: str = "") -> dict:
                     digest = best_digest
                     word_count = best_word_count
                     top_count = len(digest.get("top_stories") or [])
-                    overnight_count = len(digest.get("overnight_items") or [])
+                    item_count = sum(len(digest.get(k) or []) for k in _CONTENT_SECTIONS)
                 else:
                     print(f"   ⚠ All attempts below minimums (~{word_count} words)")
             else:
-                print(f"   ✓ ~{word_count} words, {top_count} top stories, {overnight_count} overnight")
+                print(f"   ✓ ~{word_count} words, {top_count} top stories, {item_count} items")
 
             return digest
 

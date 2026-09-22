@@ -53,22 +53,19 @@ A Japan story from **WSJ, NYT, WaPo, Bloomberg, FT, The Economist, CNN, Reuters,
 ## 3. Newsletter structure (sections in delivery order)
 
 1. **Header** — date, RE: line (one-sentence theme summary), market strip (Nikkei · USD/JPY · Brent · BOJ rate), jump row
-2. **Today at a Glance** — exactly 3 one-line items (the elevator brief)
-3. **Top Stories** — 2–4 biggest hard-news items
-4. **Overnight** — up to 6 secondary items
-5. **Stat of the Day** — one striking number from the day's news
-6. **Japanese Government** — PM Watch, then Kantei, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ, plus Personnel Changes and Diet Sessions / LDP (floor and committee business, bills, the budget, LDP and coalition manoeuvring)
-7. **Public Sentiment & Approval Polling** — cabinet approval & party support (see §6)
-8. **Business & Economy** — corporates, BOJ, macro, the $550bn investment framework
-9. **Regional Pressure Watch** *(dark section)* — adversary signals: China/Senkaku, North Korea, Russia (see §5)
-10. **U.S.-Japan Relations** — up to 4: alliance, basing/USFJ, host-nation support, defence-industrial, tariffs and trade, US Congress action on Japan
-11. **Indo-Pacific Partners** — 4–6: South Korea, Southeast Asia, India, Australia, New Zealand, Pacific Islands, trilateral, Quad. China, DPRK, Russia and Taiwan are deliberately excluded
-12. **Expert Analysis and Events** — Tier 2 op-eds + Tier 3 academic + think-tank events
-13. **Social Statements** — 0–4 verbatim quotes from senior officials
-14. **The Wire** — up to 6 brief items
-15. **Upcoming** — 4–5 dated events in the next two to four weeks
-16. **On This Day** — a verified historical Japan event matching today's date
-17. **Footer**
+2. **Top Stories** — 4–6 biggest hard-news items, and the default home for general news
+3. **Stat of the Day** — one striking number from the day's news
+4. **Japanese Government** — PM Watch, then Kantei, Chief Cabinet Secretary, MOFA, MOD/Joint Staff, METI, MOF, BOJ, plus Personnel Changes and Diet Sessions / LDP (floor and committee business, bills, the budget, LDP and coalition manoeuvring)
+5. **Public Sentiment & Approval Polling** — cabinet approval & party support (see §6)
+6. **Business & Economy** — corporates, BOJ, macro, the $550bn investment framework
+7. **Regional Pressure Watch** *(dark section)* — adversary signals: China/Senkaku, North Korea, Russia (see §5)
+8. **U.S.-Japan Relations** — up to 4: alliance, basing/USFJ, host-nation support, defence-industrial, tariffs and trade, US Congress action on Japan
+9. **Indo-Pacific Partners** — 4–6: South Korea, Southeast Asia, India, Australia, New Zealand, Pacific Islands, trilateral, Quad. China, DPRK, Russia and Taiwan are deliberately excluded
+10. **Expert Analysis and Events** — Tier 2 op-eds + Tier 3 academic + think-tank events
+11. **Social Statements** — 0–4 verbatim quotes from senior officials
+12. **Upcoming** — 4–5 dated events in the next two to four weeks
+13. **On This Day** — a verified historical Japan event matching today's date
+14. **Footer**
 
 ---
 
@@ -102,9 +99,9 @@ Cabinet approval and party support drawn from **NHK, Jiji, Yomiuri, Asahi, and K
 - **Deduplication:** one topic = one entry across the whole digest.
 
 ### Automated validation gates (pre-send)
-- Word count ≥ 1,000 (target 1,200–1,400)
-- Top Stories 2–4 · Overnight ≥ 3 · Morning Memo exactly 3
-- No single source more than 3× across Top + Overnight
+- Word count ≥ 550 (prompt band 1,400–1,700, ceiling 1,900)
+- Top Stories 4–6
+- No single source more than 3× in Top Stories — trimmed to fit before the gate, never below 3 stories
 - No placeholder/blocked URLs; digest date matches today
 
 ---

@@ -15,20 +15,20 @@ README = ROOT / "README.md"
 DIGEST_JSON = ROOT / "digest.json"
 
 
+# Sections counted as articles, and the wider set counted for words and
+# sources. These were three separate literals that had already drifted — one
+# of them omitted social_statements — so they are named once here.
+_ARTICLE_SECTIONS = ("top_stories", "business_economy", "indo_pacific",
+                     "us_japan_relations")
+_TEXT_SECTIONS = _ARTICLE_SECTIONS + ("social_statements",)
+
+
 def _count_words(digest: dict) -> int:
     """Approximate readable word count across all text fields."""
     fields = ("body", "body_text", "summary", "detail", "quote_text",
               "so_what", "pattern_note", "headline", "action")
     words = 0
-    for memo in (digest.get("morning_memo") or []):
-        if isinstance(memo, dict):
-            for v in memo.values():
-                if isinstance(v, str):
-                    words += len(v.split())
-        elif isinstance(memo, str):
-            words += len(memo.split())
-    for key in ("top_stories", "overnight_items", "also_today",
-                "business_economy", "indo_pacific", "us_japan_relations", "social_statements"):
+    for key in _TEXT_SECTIONS:
         for item in (digest.get(key) or []):
             for f in fields:
                 if isinstance(item, dict) and item.get(f):
@@ -38,8 +38,7 @@ def _count_words(digest: dict) -> int:
 
 def _unique_sources(digest: dict) -> int:
     sources = set()
-    for key in ("top_stories", "overnight_items", "also_today",
-                "business_economy", "indo_pacific", "us_japan_relations", "social_statements"):
+    for key in _TEXT_SECTIONS:
         for item in (digest.get(key) or []):
             src = (item.get("source") if isinstance(item, dict) else "") or ""
             if src.strip():
@@ -68,15 +67,10 @@ def update_readme() -> bool:
 
     article_count = digest.get("story_count")
     if not article_count:
-        article_count = sum(
-            len(digest.get(k) or [])
-            for k in ("top_stories", "overnight_items", "also_today",
-                     "business_economy", "indo_pacific", "us_japan_relations")
-        )
+        article_count = sum(len(digest.get(k) or []) for k in _ARTICLE_SECTIONS)
 
     unique_sources = _unique_sources(digest)
     top_count = len(digest.get("top_stories") or [])
-    overnight_count = len(digest.get("overnight_items") or [])
     word_count = _count_words(digest)
 
     pm_appeared = "Yes" if (digest.get("xinhua_delta") or {}).get("pm_appearance_today") else "No"
@@ -89,7 +83,6 @@ def update_readme() -> bool:
         f"| Articles collected | {article_count} |\n"
         f"| Unique sources | {unique_sources} |\n"
         f"| Top stories | {top_count} |\n"
-        f"| Overnight items | {overnight_count} |\n"
         f"| Word count | ~{word_count:,} |\n"
         f"| PM appeared | {pm_appeared} |\n"
     )
