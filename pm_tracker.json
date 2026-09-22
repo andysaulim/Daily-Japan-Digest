@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-22",
+      "activity": "Prime Minister Sanae Takaichi arrived in New York and held a bilateral meeting with President Trump on the sidelines of the UN General Assembly, with her investment-in-the-US message as the central talking point.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-22T11:06:56.290476+00:00"
+    },
+    {
       "date": "2026-09-21",
       "activity": "Prime Minister Sanae Takaichi departed Japan for New York to attend the UN General Assembly, with a confirmed bilateral with President Trump on Tuesday, September 22.",
       "source": "digest",
@@ -468,14 +475,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-06-24T12:18:42.154539+00:00"
-    },
-    {
-      "date": "2026-06-23",
-      "activity": "PM Takaichi published a contributed article to France's Le Figaro ahead of her France visit, per the Prime Minister's Office of Japan posting dated June 22-23.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-23T12:32:49.031737+00:00"
     }
   ],
-  "last_updated": "2026-09-21T11:05:55.023436+00:00"
+  "last_updated": "2026-09-22T11:06:56.290529+00:00"
 }

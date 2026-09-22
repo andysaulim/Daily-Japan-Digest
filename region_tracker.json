@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-23": {
-      "signals": {
-        "china_signal": "China's foreign ministry rejected Japan's formal protest over last week's joint Chinese-Russian live-fire drills inside Japan's claimed EEZ near Okinotorishima, defending the exercise as 'consistent with international law' and invoking the formulation 'Japan's neo-militarism has bared its fangs.' Ch",
-        "russia_signal": "Russia deployed a Tu-95 Bear strategic bomber near Japan escorted by a Su-35 fighter, per Zona Militar — a step up from unescorted Tu-95 flights reported on July 22 and following Russian naval vessels' participation in joint live-fire drills with a Chinese destroyer inside Japan's claimed EEZ near O"
-      },
-      "watch_flag": true
-    },
     "2026-07-24": {
       "signals": {
         "china_signal": "The Japan-China foreign ministers' phone call on July 24 — the first since ties deteriorated over PM Takaichi's Taiwan-related remarks — breaks a ministerial-level communication blackout. Separately, the US, Japan, and South Korea issued a joint statement expressing concern over China's ICBM test la",
@@ -466,7 +459,15 @@
         "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles beyond the sustained rhetorical escalation of recent weeks; the NYT profiles Nemuro's dual dependence on Russia economically and politically, illustrating the local dimension of the dispute."
       },
       "watch_flag": false
+    },
+    "2026-09-22": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun used the September 21 press conference to label Japan's hosting of the US Typhon intermediate-range missile system 'another example of Japan's accelerated remilitarization' and called on Japan to halt what Beijing frames as a return to militarism. The",
+        "dprk_signal": "North Korea fired two ballistic missiles toward the Sea of Japan — South Korea's JCS confirmed one traveled approximately 440 km from the Wonsan area — and subsequently announced a 'successful' test of a 'new-type weapon' that outside experts assess as a hypersonic missile system. Kim Jong Un descri",
+        "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-09-21T11:05:55.023962+00:00"
+  "last_updated": "2026-09-22T11:06:56.291553+00:00"
 }
