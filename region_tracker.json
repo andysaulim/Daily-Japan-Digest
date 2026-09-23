@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-24": {
-      "signals": {
-        "china_signal": "The Japan-China foreign ministers' phone call on July 24 — the first since ties deteriorated over PM Takaichi's Taiwan-related remarks — breaks a ministerial-level communication blackout. Separately, the US, Japan, and South Korea issued a joint statement expressing concern over China's ICBM test la",
-        "dprk_signal": "No new North Korean missile launch, EEZ splashdown, or overflight reported in today's feed. The US-Japan-ROK joint statement on China's ICBM test is the primary trilateral signal today.",
-        "russia_signal": "Japan announced it will resume youth exchanges with Russia after a seven-year hiatus, per Jiji Press — a limited people-to-people channel opening even as Japan pledged not to change its Russia policy on sanctions. No new Northern Territories or Hokkaido air-sea incursion reported today."
-      },
-      "watch_flag": false
-    },
     "2026-07-25": {
       "signals": {
         "china_signal": "China's foreign minister called on Russia not to allow Japan to 'rearm,' per NHK, in a statement that publicly aligns Beijing and Moscow against Japan's defense buildup. Separately, Japan identified a large rare-earth deposit in deep-sea mud off a remote island — a potential supply-chain hedge again",
@@ -467,7 +459,15 @@
         "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles."
       },
       "watch_flag": true
+    },
+    "2026-09-23": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson, responding to Japan's UNGA speech and Typhon missile deployment, cited 'risks over Typhon in Japan' via ECNS, continuing Beijing's sustained framing of Japan's defense posture as escalatory remilitarization. China separately urged Japan to 'draw lessons from hi",
+        "dprk_signal": "North Korea claimed a successful test of a new hypersonic weapon system following two ballistic missile launches on September 20 — the 14th provocation in the US-Japan-ROK trilateral tracking series — with **Kim Jong Un** calling the weapon an 'incurable headache' for adversaries; outside analysts a",
+        "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles; the NYT's in-depth profile of Nemuro's economic dependence on Russia continues to circulate, illustrating the structural constraints on Tokyo's escalation options."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-09-22T11:06:56.291553+00:00"
+  "last_updated": "2026-09-23T11:06:09.169365+00:00"
 }
