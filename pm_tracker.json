@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-24",
+      "activity": "Prime Minister Takaichi delivered Japan's UNGA address calling for removal of 'enemy state' clauses, held a bilateral with Trump, met Turkish President Erdogan to confirm defense equipment cooperation, and separately avoided being drawn into discussion of US ICC sanctions during her Trump meeting.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-24T11:06:09.451323+00:00"
+    },
+    {
       "date": "2026-09-23",
       "activity": "Prime Minister Takaichi delivered Japan's first UNGA address of her term on September 22, met President Trump bilaterally, and held her first meeting with Ukrainian President Zelenskyy on the UNGA sidelines in New York.",
       "source": "digest",
@@ -477,5 +484,5 @@
       "recorded_at": "2026-06-26T12:11:25.065309+00:00"
     }
   ],
-  "last_updated": "2026-09-23T11:06:09.168498+00:00"
+  "last_updated": "2026-09-24T11:06:09.451374+00:00"
 }

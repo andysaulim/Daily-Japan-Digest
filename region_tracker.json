@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-25": {
-      "signals": {
-        "china_signal": "China's foreign minister called on Russia not to allow Japan to 'rearm,' per NHK, in a statement that publicly aligns Beijing and Moscow against Japan's defense buildup. Separately, Japan identified a large rare-earth deposit in deep-sea mud off a remote island — a potential supply-chain hedge again",
-        "russia_signal": "A Russian warplane violated Japanese airspace over Japan-claimed islands in the Northern Territories, per Jiji Press — the most acute Russian incursion in the current tracker window, escalating from Tu-95 bomber transits and joint Sino-Russian live-fire drills inside Japan's EEZ near Okinotorishima "
-      },
-      "watch_flag": true
-    },
     "2026-07-26": {
       "signals": {
         "china_signal": "China Coast Guard ships intercepted a Japanese patrol vessel near a Chinese research ship off eastern Taiwan, per Global Times. China state media simultaneously characterized the ongoing China-Russia joint naval patrol as demonstrating the ability to 'break through the so-called island chain blockad",
@@ -467,7 +460,14 @@
         "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles; the NYT's in-depth profile of Nemuro's economic dependence on Russia continues to circulate, illustrating the structural constraints on Tokyo's escalation options."
       },
       "watch_flag": true
+    },
+    "2026-09-24": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson, in the September 23 regular press conference, directly refuted Takaichi's UNGA call to remove the 'enemy state' clauses, declaring them 'extremely relevant today' and framing Japan's security posture as renewed militarism. Global Times published an editorial st",
+        "dprk_signal": "North Korea claimed a successful test of an upgraded hypersonic missile system following two ballistic missile launches on September 20; KCNA described the weapon as a 'new-type weapon' and Janes assessed it as an apparent HGV-equipped Hwaseongpho-11 variant. Kim Jong Un called the system an 'incura"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-09-23T11:06:09.169365+00:00"
+  "last_updated": "2026-09-24T11:06:09.452385+00:00"
 }
