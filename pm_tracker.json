@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-25",
+      "activity": "Prime Minister Takaichi's bilateral with President Trump and her UNGA engagements from September 24 continued to generate coverage on September 25, with Finance Minister Katayama disclosing the yen exchange in those talks; no new confirmed Takaichi public appearance on September 25 itself is reported in today's articles.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-25T11:06:17.868506+00:00"
+    },
+    {
       "date": "2026-09-24",
       "activity": "Prime Minister Takaichi delivered Japan's UNGA address calling for removal of 'enemy state' clauses, held a bilateral with Trump, met Turkish President Erdogan to confirm defense equipment cooperation, and separately avoided being drawn into discussion of US ICC sanctions during her Trump meeting.",
       "source": "digest",
@@ -475,14 +482,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-01T12:33:18.073249+00:00"
-    },
-    {
-      "date": "2026-06-26",
-      "activity": "PM Takaichi spoke to the press regarding the M7.2 earthquake off the coast of Iwate Prefecture, per the Prime Minister's Office of Japan.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-06-26T12:11:25.065309+00:00"
     }
   ],
-  "last_updated": "2026-09-24T11:06:09.451374+00:00"
+  "last_updated": "2026-09-25T11:06:17.868539+00:00"
 }

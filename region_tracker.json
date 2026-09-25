@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-26": {
-      "signals": {
-        "china_signal": "China Coast Guard ships intercepted a Japanese patrol vessel near a Chinese research ship off eastern Taiwan, per Global Times. China state media simultaneously characterized the ongoing China-Russia joint naval patrol as demonstrating the ability to 'break through the so-called island chain blockad",
-        "dprk_signal": "No new North Korean missile launch, EEZ splashdown, or overflight reported in today's feed. Japan's forthcoming national intelligence bureau launch on July 31 was the primary DPRK-tagged Tier 4 item, though it is an organizational rather than DPRK-provocation story.",
-        "russia_signal": "TASS reported that Japanese lawmakers signaled Japanese companies want to resume business with Russia. No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity is reported in today's articles, following last week's Russian airspace violation over Northern Territories-"
-      },
-      "watch_flag": false
-    },
     "2026-07-27": {
       "signals": {
         "china_signal": "China and Japan remain at public odds over whether their foreign ministers met at ASEAN in Manila, with Beijing's CGTN reiterating no exchange occurred between Wang Yi and the Japanese foreign minister — a direct contradiction of Tokyo's account. Japan's identification of a large rare-earth deposit ",
@@ -467,7 +459,15 @@
         "dprk_signal": "North Korea claimed a successful test of an upgraded hypersonic missile system following two ballistic missile launches on September 20; KCNA described the weapon as a 'new-type weapon' and Janes assessed it as an apparent HGV-equipped Hwaseongpho-11 variant. Kim Jong Un called the system an 'incura"
       },
       "watch_flag": true
+    },
+    "2026-09-25": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry continued pushing back against Takaichi's UNGA call to remove the UN Charter 'enemy state' clauses, with Chinese state media (ECNS) urging Japan to 'earn trust through concrete actions.' US-Japan officials separately coordinated ahead of the Trump-Xi summit on China's yttriu",
+        "dprk_signal": "North Korea confirmed via KCNA a test of an upgraded rocket launcher system; Janes assessed the weapon as an apparent HGV-equipped Hwaseongpho-11 variant hypersonic system. North Korea's foreign minister simultaneously declared the country's nuclear weapons commitment 'irreversible' and stated Pyong",
+        "russia_signal": "Russia's deputy foreign minister confirmed Russia-Japan relations 'continue to deteriorate,' per TASS. NHK World reported Russia is tightening administrative and economic control over the Northern Territories, reinforcing the trajectory of the dispute since Japan joined Western sanctions over Ukrain"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-24T11:06:09.452385+00:00"
+  "last_updated": "2026-09-25T11:06:17.869209+00:00"
 }
