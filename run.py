@@ -207,6 +207,59 @@ def _enforce_source_diversity(digest: dict) -> list[str]:
     return log
 
 
+# Words that mark a source as reporting an intention rather than an outcome,
+# and words that mark the brief as reporting it as done.
+_FORTHCOMING_RE = _re.compile(
+    # Scheduling language...
+    r"\b(set to|due to|expected to|scheduled to|plans? to|will|ahead of|"
+    r"to meet|to hold|to visit|to announce|to sign|to discuss|to attend|"
+    r"preview|upcoming|prepares? to|preparing to|in talks to"
+    # ...and intent language, which is how headlines carry a forthcoming event.
+    # These were missing at first and the case that prompted this check slipped
+    # straight through: the NYT title was "Japan Meets With Trump, HOPING TO GET
+    # His Help on China" — present tense, intent in a gerund, no scheduling word
+    # anywhere in it.
+    r"|hopes? to|hoping to|seeks? to|seeking|aims? to|aiming to|"
+    r"looks? to|looking to|pushes? for|pushing for|bids? to)\b", _re.I)
+_COMPLETED_RE = _re.compile(
+    r"\b(met|held|concluded|signed|agreed|announced|wrapped up|told reporters|"
+    r"said after|hailed|praised|rejected|reached a deal)\b", _re.I)
+
+
+def _flag_tense_risk(digest: dict) -> list[str]:
+    """Warn where a forward-looking source may have been written up as done.
+
+    On 22 September the brief said the Prime Minister "held talks with
+    President Donald Trump ... on Tuesday". The meeting was at noon; the brief
+    was written at 7 AM. The model had only the DATE, never the clock, so a
+    story five hours away was indistinguishable from one already finished.
+    The fix for that is upstream — digest.py now passes the time and states the
+    rule — because the model was short of information, not disobeying.
+
+    This is the backstop for what still slips through. It is deliberately a
+    WARNING and not a gate: the signal is a word list, the false-positive rate
+    on ordinary copy is real, and holding a brief over a regex would trade a
+    rare wrong tense for a missed morning. It prints so a person can catch it.
+    """
+    warnings = []
+    for section in ("top_stories", "us_japan_relations", "indo_pacific",
+                    "business_economy"):
+        for item in (digest.get(section) or []):
+            if not isinstance(item, dict):
+                continue
+            src = str(item.get("orig_title", ""))
+            if not src or not _FORTHCOMING_RE.search(src):
+                continue
+            body = " ".join(str(item.get(f, "")) for f in ("body", "body_text"))
+            hit = _COMPLETED_RE.search(body)
+            if hit:
+                warnings.append(
+                    f"TENSE CHECK ({section}): source reads as forthcoming but the "
+                    f"brief says \"{hit.group(0)}\" — verify it has happened. "
+                    f"Source: \"{src[:80]}\"")
+    return warnings
+
+
 def _validate_digest(digest: dict) -> list[str]:
     """Run pre-send quality checks. Returns list of failures (empty = pass)."""
     failures = []
@@ -631,10 +684,25 @@ def _sanitise_urls(digest: dict, collected: dict) -> dict:
                 if fixed:
                     item["url"] = fixed
                     recovered += 1
+                    # Recovery has positively identified the collected article,
+                    # which _attach_orig_titles could not: it looks the URL up
+                    # exactly, and this item's URL was wrong until a moment ago.
+                    # Top Stories now DISPLAYS orig_title, so an unstamped item
+                    # falls back to the model's own headline — stamp it here,
+                    # where the answer is known, rather than leave the gap.
+                    if not str(item.get("orig_title", "")).strip():
+                        t = collected.get(fixed, "")
+                        if t and str(t).strip():
+                            item["orig_title"] = str(t).strip()
                 else:
                     untraceable.append(
                         (section, str(item.get("headline", ""))[:70]))
                     continue                 # asserted a source it cannot show
+            # NOT stamped here: an item that passed _url_allowed on a bare
+            # DOMAIN match. That means the outlet was in the feed, not that this
+            # article was, so no collected title belongs to this URL — and
+            # borrowing a different article's headline is the exact mistake this
+            # change exists to prevent. Those items keep the model's headline.
             if "news.google.com" in item.get("url", ""):
                 google_urls[item["url"]] = item["url"]
             kept.append(item)
@@ -1597,6 +1665,8 @@ def run_pipeline(args: argparse.Namespace) -> int:
     print("\n🔍 Validating digest...")
     for _line in _enforce_source_diversity(digest):
         print(f"   • {_line}")
+    for _line in _flag_tense_risk(digest):
+        print(f"   ⚠ {_line}")
     failures = _validate_digest(digest)
     validation_passed = not failures
     if failures:

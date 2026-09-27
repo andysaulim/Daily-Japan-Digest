@@ -367,7 +367,8 @@ def rank_for_prompt(articles: list) -> list:
     return [a for _, a in keyed]
 
 
-def build_user_prompt(payload: dict, date_str: str, db_context: str = "") -> str:
+def build_user_prompt(payload: dict, date_str: str, db_context: str = "",
+                      time_str: str = "") -> str:
     def tier_json(articles: list, max_items: int = 140) -> str:
         trimmed = rank_for_prompt(articles)[:max_items]
         result = []
@@ -480,8 +481,13 @@ carry one. Numbers only — no prose in the figure fields."""
         tier4_block = _REGIONAL_NO_DATA_STUB
 
     return f"""Today's date: {date_str}
+Current time: {time_str} — this brief is being written NOW, part-way through the day.
 
 Process each tier according to its instructions and return a single JSON object.
+
+CRITICAL — TIME OF DAY, FORTHCOMING vs COMPLETED: It is {time_str}. Anything scheduled for later today HAS NOT HAPPENED YET. Write it as forthcoming — "is due to meet", "meets later today", "is expected to announce" — and NEVER in the past tense.
+A same-day article is very often a PREVIEW written before the event. "Tuesday" in a piece published Tuesday morning does not mean the thing is done; a headline like "Japan Meets With Trump, Hoping to Get His Help on China" is reporting an intention, not an outcome. Look for the tell: "is set to", "will", "ahead of", "plans to", "expected to", "hopes to", "is due to". If the source does not report the event as having occurred, you must not either.
+This rule exists because the brief stated that a Prime Minister "held talks" with the President five hours before the meeting took place. Getting the tense wrong on a scheduled event is a factual error, not a stylistic one.
 
 CRITICAL — SOURCE GROUNDING: Every name, title, number, and fact you write MUST come from the source articles below. Do NOT fill in names from memory. Use the CURRENT POLITICAL LEADERS reference below only when the source article clearly refers to that role. The sitting Prime Minister may have changed since your training cutoff — always use the name from today's articles.
 
@@ -861,8 +867,15 @@ def generate_digest(payload: dict, db_context: str = "") -> dict:
         raise RuntimeError("Missing ANTHROPIC_API_KEY environment variable.")
 
     client = anthropic.Anthropic(api_key=api_key)
-    date_str = datetime.now(ZoneInfo("America/New_York")).strftime("%A, %B %-d, %Y")
-    user_prompt = build_user_prompt(payload, date_str, db_context=db_context)
+    _now_et = datetime.now(ZoneInfo("America/New_York"))
+    date_str = _now_et.strftime("%A, %B %-d, %Y")
+    # The clock, not just the calendar. See the TIME OF DAY rule in the prompt:
+    # without this the model cannot tell a story that has happened from one
+    # scheduled for later the same day, and on 22 September it reported a noon
+    # meeting as completed in a brief written at 7 AM.
+    time_str = _now_et.strftime("%-I:%M %p ET")
+    user_prompt = build_user_prompt(payload, date_str, db_context=db_context,
+                                   time_str=time_str)
 
     total_articles = sum(len(v) for k, v in payload.items() if isinstance(v, list))
     print(f"   {total_articles} articles → Claude")

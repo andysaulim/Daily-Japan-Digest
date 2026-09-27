@@ -3,7 +3,7 @@
 **For:** CSIS Japan Chair (final approval)
 **Prepared by:** Andy Lim
 **Status:** Built, not yet live. **Nothing sends until the Japan Chair signs off.**
-**Cadence:** Daily, 6:00 AM ET · HTML email + public web archive
+**Cadence:** Daily, 7:00 AM ET · HTML email + public web archive
 
 This document is for editorial review. It lays out every **source**, the **newsletter structure**, the **topics covered**, the **polling inputs**, and the **editorial rules**. Mark up anything you want added, dropped, or reweighted. A short list of **items needing your decision** is at the bottom.
 
@@ -108,7 +108,7 @@ Cabinet approval and party support drawn from **NHK, Jiji, Yomiuri, Asahi, and K
 
 ## 8. Schedule & delivery
 
-- **Daily 6:00 AM ET** via GitHub Actions (with later fallback runs). Manual trigger available.
+- **Daily 7:00 AM ET** via GitHub Actions (with later fallback runs). Manual trigger available.
 - HTML email via Gmail (recipient list configured separately) + permanent web archive on GitHub Pages.
 - Models: Claude Sonnet (primary) with Opus escalation on retry.
 

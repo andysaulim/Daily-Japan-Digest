@@ -156,6 +156,42 @@ def _cds_arrow(val) -> str:
     return '<span style="color:#5A6667;">— flat</span>'
 
 
+def _strip_publisher_suffix(title: str, publisher: str) -> str:
+    """Drop a trailing " - Publisher" / " | Publisher" from a feed title.
+
+    Google News hands back titles with the outlet appended, which was invisible
+    while the title only ever appeared in a small "per ..." reference line. Now
+    that it IS the headline, "North Korea fires ballistic missile into waters
+    outside Japan EEZ - The Japan Times" reads as a mistake.
+
+    The suffix is removed ONLY when it matches the publisher we already know
+    from the link. A headline can legitimately end in a dash clause, and
+    stripping whatever follows the last dash would eat real words; requiring
+    the match means an unrecognised tail is left exactly as the outlet wrote it.
+    """
+    if not title or not publisher:
+        return title
+    def _key(x: str) -> str:
+        return "".join(c for c in str(x).lower() if c.isalnum())
+    pub = _key(publisher)
+    if not pub:
+        return title
+    for sep in (" - ", " | ", " \u2014 ", " \u2013 "):
+        head, found, tail = title.rpartition(sep)
+        if not found or not head.strip():
+            continue
+        tail_key = _key(tail)
+        # Containment either way, not a prefix test: the feed title and the
+        # link's publisher disagree about the leading article and about
+        # suffixes, so "The Washington Post" has to match "Washington Post"
+        # and "Bloomberg.com" has to match "Bloomberg". The four-character
+        # floor keeps a short tail that merely happens to appear inside the
+        # publisher's name from taking real words off the end of a headline.
+        if len(tail_key) >= 4 and (tail_key in pub or pub in tail_key):
+            return head.strip()
+    return title
+
+
 def _link_or_text(text: str, url: str,
                   style: str = "color:#1B2A4A;text-decoration:underline;") -> str:
     if url and url != "#" and url.startswith("http"):
@@ -555,30 +591,41 @@ def render_html(digest: dict) -> str:
         sh = ""
         for s in stories:
             cat = _esc(_str(s.get("category_tag", s.get("category", ""))))
-            h = _emphasis(_esc(s.get("headline", "")))
-            b_raw = s.get("body", "") or ""
-            b = _emphasis(_esc(b_raw)) if b_raw.strip() and b_raw.strip() != s.get("headline", "").strip() else ""
             # Primary source = the publisher the link actually opens (link_source,
             # domain-derived), NOT the model's free-text multi-source line.
             ls = s.get("link_source", "")
             sl = _esc(_clean_src(ls or s.get("src_line", s.get("source", ""))))
             url = s.get("url", "")
-            # Verbatim original article title behind the link — shown when the
-            # display headline was synthesized/paraphrased, so the exact source is
-            # always recoverable.
-            orig = str(s.get("orig_title", "")).strip()
-            _key = lambda x: "".join(c for c in str(x).lower() if c.isalnum())
-            ref = ""
-            if orig and _key(orig) != _key(s.get("headline", "")):
-                _lead = _esc(ls) + ": " if ls else ""
-                ref = (f"<div style='margin-top:6px;font-size:11px;line-height:1.45;color:#6B7280;font-style:italic;'>"
-                       f"per {_lead}&ldquo;{_link_or_text(_esc(orig), url, style='color:#6B7280;text-decoration:underline;')}&rdquo;</div>")
+            # THE HEADLINE IS THE SOURCE'S OWN, not the model's.
+            #
+            # On 25 September the brief ran "Trump hails China as WWII ally,
+            # calls for Taiwan independence opposition at summit close". Xi
+            # called for that, not Trump. The Japan Times headline this was
+            # built from said so plainly — "Xi calls for U.S. to 'oppose'
+            # Taiwan independence as Trump hails China as WWII ally" — and the
+            # brief printed it, in grey italics, directly beneath the wrong
+            # one: the model had reordered the two clauses and dropped Xi as
+            # the subject of the second, so "calls for" attached to Trump.
+            #
+            # A rewrite that can invert who said what has no upside here worth
+            # that risk, so the feed's title is what the reader sees. orig_title
+            # is stamped from the collected article by URL in run.py, so it is
+            # not the model's text at all. The model's headline remains as the
+            # fallback for the minority of items that never matched a collected
+            # article, and it still feeds dedup and the ledger.
+            orig = _strip_publisher_suffix(str(s.get("orig_title", "")).strip(),
+                                           ls or s.get("source", ""))
+            h = _esc(orig) if orig else _emphasis(_esc(s.get("headline", "")))
+            b_raw = s.get("body", "") or ""
+            # Compared against the displayed headline, whichever it turned out
+            # to be — the body is dropped only when it would repeat it.
+            _shown = orig or str(s.get("headline", ""))
+            b = _emphasis(_esc(b_raw)) if b_raw.strip() and b_raw.strip() != _shown.strip() else ""
             sh += f"""
 <div class="story-card" style="margin-bottom:14px;padding:14px 16px;background:#fff;border-radius:3px;border-left:4px solid #1B2A4A;box-shadow:0 1px 3px rgba(0,0,0,0.06);">
 <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#6B7280;font-weight:700;margin-bottom:6px;">{cat}</div>
 <h3 style="margin:0 0 8px 0;font-size:16px;line-height:1.4;color:#1B2A4A;font-family:Georgia,serif;font-weight:700;">{_link_or_text(h, url, style="color:#1B2A4A;text-decoration:none;")}</h3>
 {"<p style='margin:0 0 10px 0;font-size:13px;line-height:1.55;color:#444;'>" + b + "</p>" if b else ""}
-{ref}
 <div style="font-size:10px;color:#6B7280;margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;">{sl}</div>
 </div>"""
         body_sections["top-stories"] = f'<div {_SEC}><a name="top-stories" id="top-stories"></a>{_sec_label("Top Stories")}{sh}</div>'

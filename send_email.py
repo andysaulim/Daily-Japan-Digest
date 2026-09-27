@@ -29,6 +29,17 @@ def send_digest(html: str, subject: str | None = None,
     # Gmail shows App Passwords as "xxxx xxxx xxxx xxxx"; strip ALL whitespace
     # (internal spaces included) so a pasted-with-spaces secret still authenticates.
     gmail_pass = "".join(os.environ.get("GMAIL_APP_PASS", "").split())
+    # Where a reader's reply goes, decoupled from which account sends.
+    #
+    # Reply-To used to be GMAIL_USER, so moving the brief to a different
+    # sending account silently moved reader mail with it — while the footer
+    # kept naming someone else. shared/EDITIONS.md calls that out as worse
+    # than either alone, because the reader cannot tell which is intended,
+    # and already documented this variable as though it existed. It does now.
+    #
+    # Unset falls back to the sending account, which is the previous
+    # behaviour, so nothing changes until the secret is set.
+    reply_to = os.environ.get("DIGEST_REPLY_TO", "").strip() or None
 
     if not gmail_user or not gmail_pass:
         print("⚠ Missing GMAIL_USER or GMAIL_APP_PASS — skipping send")
@@ -59,7 +70,7 @@ def send_digest(html: str, subject: str | None = None,
     # are passed only in the SMTP envelope (to_addrs below) — so no recipient
     # sees the distribution list or any other recipient.
     msg["To"] = f"Japan Daily Brief <{gmail_user}>"
-    msg["Reply-To"] = gmail_user
+    msg["Reply-To"] = reply_to or gmail_user
     # Plain-text fallback (most clients prefer HTML when available)
     msg.set_content("This email requires an HTML-capable client to render properly.")
     msg.add_alternative(html, subtype="html")

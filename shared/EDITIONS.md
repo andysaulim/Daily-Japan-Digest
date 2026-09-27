@@ -22,9 +22,14 @@ Changing it means changing all of them:
 
 - the footer disclaimer in `render.py` ("To report errors or other issues,
   please contact …")
-- `DIGEST_REPLY_TO` in `send_email.py`, which is where a reader's reply goes
-- the failure-alert address in `.github/workflows/daily-digest.yml`, which is
-  who hears about it when a run dies
+- `DIGEST_REPLY_TO`, the secret `send_email.py` reads for where a reader's
+  reply goes. Unset, Reply-To falls back to the sending account — so on an
+  edition that has not set it, moving the sending Gmail moves reader mail too
+- the `TEST_SEND_TO` default in `.github/workflows/daily-digest.yml`, which is
+  where a test send lands
+
+(There is no failure-alert step in the Japan workflow; an earlier version of
+this page named one. A dead run is visible only in the Actions log.)
 
 A brief whose footer names one person and whose Reply-To goes to another is
 worse than either alone, because the reader cannot tell which is intended.

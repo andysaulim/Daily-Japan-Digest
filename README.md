@@ -1,6 +1,6 @@
 # Japan Daily Brief
 
-Automated daily intelligence briefing on Japan and the US-Japan alliance for the CSIS Japan Chair. Sibling pipeline to [Daily-Korea-Digest](https://github.com/andysaulim/Daily-Korea-Digest) and [Daily-China-Digest](https://github.com/andysaulim/Daily-China-Digest). Collects from 60+ sources, generates an analyst-grade digest via Claude, and delivers a styled HTML email at **6:00 AM ET**.
+Automated daily intelligence briefing on Japan and the US-Japan alliance for the CSIS Japan Chair. Sibling pipeline to [Daily-Korea-Digest](https://github.com/andysaulim/Daily-Korea-Digest) and [Daily-China-Digest](https://github.com/andysaulim/Daily-China-Digest). Collects from 60+ sources, generates an analyst-grade digest via Claude, and delivers a styled HTML email at **7:00 AM ET**.
 
 **Live archive:** `andysaulim.github.io/Daily-Japan-Digest` (planned)
 
@@ -117,9 +117,9 @@ python run.py --force-send   # Send even if validation gates fail
 
 ## Schedule
 
-GitHub Actions workflow (`.github/workflows/daily-digest.yml`) runs daily at **10:00 UTC (6:00 AM ET)** with manual `workflow_dispatch`. Cron handles both EST and EDT.
+GitHub Actions workflow (`.github/workflows/daily-digest.yml`) sends at **7:00 AM ET**, with `workflow_dispatch` for manual runs. An external cron dispatches at 11:00 UTC as the primary; the workflow's own crons (11:05, 11:35, 12:35, 13:35, 14:35 UTC) are staggered fallbacks for the slots GitHub drops, and the once-a-day guard makes every attempt after a successful send a no-op.
 
-Required secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASS`, `DIGEST_TO`, `GH_PAT`. Optional variable: `WEB_URL`.
+Required secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASS`, `DIGEST_TO`, `GH_PAT`. Optional secret: `DIGEST_REPLY_TO` (reader replies; defaults to the sending account). Optional variable: `WEB_URL`.
 
 ---
 
@@ -152,7 +152,7 @@ Required secrets: `ANTHROPIC_API_KEY`, `GMAIL_USER`, `GMAIL_APP_PASS`, `DIGEST_T
 ├── update_readme.py         # README auto-updater
 ├── requirements.txt
 ├── .github/workflows/
-│   └── daily-digest.yml     # 10:00 UTC cron
+│   └── daily-digest.yml     # 11:00 UTC primary + staggered fallbacks
 └── public/                  # GitHub Pages archive (generated)
 ```
 

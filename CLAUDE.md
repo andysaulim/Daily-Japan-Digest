@@ -1,6 +1,6 @@
 # Japan Daily Brief
 
-Automated intelligence briefing on Japan and the US-Japan alliance, delivered daily at 6 AM ET to senior policymakers and analysts.
+Automated intelligence briefing on Japan and the US-Japan alliance, delivered daily at 7 AM ET to senior policymakers and analysts.
 
 ## Architecture
 
@@ -8,7 +8,7 @@ Automated intelligence briefing on Japan and the US-Japan alliance, delivered da
 COLLECT (60+ RSS feeds, 25 threads) → DIGEST (Claude Sonnet/Opus) → VALIDATE (dedup, URL repair, source caps) → RENDER (HTML email) → SEND (Gmail SMTP)
 ```
 
-Orchestrated by `run.py`. Triggered via GitHub Actions `workflow_dispatch` + a 10:00 UTC daily cron.
+Orchestrated by `run.py`. Triggered via GitHub Actions `workflow_dispatch`, an external cron dispatching at 11:00 UTC, and staggered fallback crons for the slots GitHub drops. A 7 AM ET floor and a once-a-day guard (`last_sent.txt`) make the send exactly-once.
 
 ## Key Files
 
@@ -40,6 +40,8 @@ Tracker files (`pm_tracker.json`, `region_tracker.json`) are cached across GitHu
 
 - **SOURCE-OR-SKIP**: Every claim in the digest must trace to a collected article or a prompt baseline. No memory-based assertions.
 - **PM identity**: The sitting Prime Minister may have changed since the model's training cutoff. ALWAYS use the name from today's articles. Current seed: Sanae Takaichi (LDP, first female PM; succeeded Ishiba) — verify.
+- **Top Stories headlines are the source's own**: the `<h3>` renders `orig_title` — the verbatim feed title stamped in `run.py` by URL — not the model's `headline`, which survives only as the fallback for items that never matched a collected article, and as dedup input. On 25 September a model-written headline reordered a Japan Times title and dropped Xi as the subject of a clause, so it read as Trump calling for opposition to Taiwan independence. A rewrite that can invert who said what is not worth the editorial gloss. A trailing `- Publisher` is stripped only when it matches the link's known publisher.
+- **Forthcoming is not completed**: the prompt carries the generation *time*, not just the date (`digest.py`, TIME OF DAY). It used to carry only the date, and a brief written at 7 AM reported a noon meeting as "held talks". Anything scheduled later today is forthcoming. `run.py::_flag_tense_risk` warns in the run log where a forward-looking source pairs with completed-action copy — a warning, never a gate.
 - **Same-poll-date rule**: All `public_sentiment` polling numbers must come from the same pollster (NHK/Jiji/Yomiuri/Asahi/Kyodo) and the same survey date range — never mix.
 - **Prestige enforcement**: Japan stories from WSJ, NYT, WaPo, Bloomberg, FT, Economist, CNN, Reuters, CNBC, NHK, Kyodo, Japan Times, Nikkei Asia must appear if they published.
 - **Section-key coupling**: `digest.py`, `render.py`, and `run.py` share top-level dict keys. Several China-era keys are retained but relabeled in the UI: `xinhua_delta` = Regional Pressure Watch, `prc_government` = Japanese Government, `npc_politburo` = Diet Sessions / LDP (inside Japanese Government, and now carrying all Diet and party business). `us_china_trade` (US-Japan Alliance & Trade), `congressional_watch` (Diet Watch), `morning_memo` (Today at a Glance), `overnight_items` (Overnight) and `also_today` (The Wire) no longer exist.
