@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-28": {
-      "signals": {
-        "china_signal": "China's MOFA and CGTN reiterated on July 28 that no exchange occurred between Wang Yi and Japan's foreign minister at the ASEAN ministerial in Manila, directly contradicting Tokyo's account. China separately expressed strong dissatisfaction over Japan's delayed handling of an SDF member's illegal kn",
-        "dprk_signal": "Japan's government formally condemned North Korea for sending troops to Russia, per Chief Cabinet Secretary Kihara's morning press conference on July 28; no new DPRK missile launch, EEZ splashdown, or overflight was reported.",
-        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity is reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25."
-      },
-      "watch_flag": false
-    },
     "2026-07-29": {
       "signals": {
         "china_signal": "China's foreign ministry denied a second consecutive day that Wang Yi and Japan's foreign minister exchanged any communication at ASEAN in Manila, directly contradicting Tokyo's account. Separately, Beijing registered strong dissatisfaction over Japan's handling of an SDF member's alleged knife intr"
@@ -466,7 +458,14 @@
         "dprk_signal": "North Korea's foreign ministry declared the country's nuclear weapons status 'irreversible' and explicitly rebuffed the US-Japan-South Korea trilateral denuclearization push, compounding last week's claimed hypersonic missile test of what Janes assessed as an HGV-equipped Hwaseongpho-11 variant. Asi"
       },
       "watch_flag": false
+    },
+    "2026-09-27": {
+      "signals": {
+        "china_signal": "A Chinese marine research vessel conducted repeated surveys in Japan's EEZ near the disputed Senkaku Islands, per Kyodo, raising security concerns in Tokyo about the pattern of activity. Beijing is separately pressing its counter-narrative following PM Takaichi's UNGA call to remove UN Charter 'enem",
+        "dprk_signal": "North Korea's foreign ministry has declared the country's nuclear weapons status 'irreversible' and rebuffed the US-Japan-South Korea trilateral denuclearization push; the trilateral economic-security talks launched a new round of consultations despite the Trump-Xi summit backdrop."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-26T11:04:37.527746+00:00"
+  "last_updated": "2026-09-27T11:05:17.197722+00:00"
 }
