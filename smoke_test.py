@@ -196,6 +196,102 @@ def test_render():
     check("no Korea contact left behind", "alim@csis.org" not in html)
 
 
+# ── 1b. Headlines come from the source ───────────────────────────────────
+def test_source_headlines():
+    """The 25 September inversion, pinned.
+
+    The brief ran "Trump hails China as WWII ally, calls for Taiwan
+    independence opposition at summit close". Xi called for that. The Japan
+    Times headline it was built from said so, and the brief printed it in grey
+    italics directly underneath — the model had reordered the clauses and
+    dropped Xi as the subject of the second. Top Stories now shows the feed's
+    title, so this shape cannot recur.
+    """
+    section("source headlines")
+
+    _real = {"top_stories": [{
+        "headline": "Trump hails China as WWII ally, calls for Taiwan "
+                    "independence opposition at summit close",
+        "orig_title": "Xi calls for U.S. to \u2018oppose\u2019 Taiwan independence "
+                      "as Trump hails China as WWII ally",
+        "body": "Trump concluded his Washington summit with Xi Jinping.",
+        "source": "The Japan Times", "link_source": "The Japan Times",
+        "url": "https://example.org/jt-1", "category_tag": "China-Japan"}]}
+    html = render.render_html(dict(_real, re_line="x"))
+    check("the headline is the source's wording",
+          "Xi calls for U.S. to" in html)
+    check("the model's inverted wording is nowhere in the brief",
+          "Trump hails China as WWII ally, calls for" not in html)
+
+    # Fallback: an item that never matched a collected article still renders.
+    _nomatch = {"re_line": "x", "top_stories": [{
+        "headline": "Cabinet approves the budget request",
+        "body": "A record sum.", "source": "Yomiuri",
+        "url": "https://example.org/y-1", "category_tag": "Politics"}]}
+    _fb = render.render_html(_nomatch)
+    check("no orig_title falls back to the model's headline",
+          "Cabinet approves the budget request" in _fb)
+    check("the fallback leaves no empty headline", "<h3" in _fb)
+
+    # Publisher suffix: strip only on a match, never on a real dash clause.
+    _strip = render._strip_publisher_suffix
+    check("a matching publisher suffix is stripped",
+          _strip("North Korea fires ballistic missile into waters outside "
+                 "Japan EEZ - The Japan Times", "Japan Times")
+          == "North Korea fires ballistic missile into waters outside Japan EEZ")
+    check("the leading article does not defeat the match",
+          _strip("Russia lodges protest with Japan - The Washington Post",
+                 "Washington Post") == "Russia lodges protest with Japan")
+    check("a dot-com suffix still matches",
+          _strip("Japan 10-Year Yield Climbs - Bloomberg.com", "Bloomberg")
+          == "Japan 10-Year Yield Climbs")
+    check("a real dash clause survives",
+          _strip("Takaichi wins - and now must govern", "Reuters")
+          == "Takaichi wins - and now must govern")
+    check("a suffix that is not the publisher survives",
+          _strip("Some story - Kyodo News", "The Japan Times")
+          == "Some story - Kyodo News")
+
+
+# ── 1c. Forthcoming events are not reported as done ───────────────────────
+def test_tense_risk():
+    """The 22 September failure: a noon meeting written up at 7 AM as held.
+
+    The cause was missing information — the prompt carried the date and never
+    the clock — so the fix is in digest.py. This checks the prompt now says so,
+    and that the run-log backstop catches the real shape.
+    """
+    section("forthcoming vs completed")
+    dsrc = inspect.getsource(digest_mod)
+    check("the prompt states the current time", "Current time:" in dsrc)
+    check("the prompt carries the forthcoming rule", "TIME OF DAY" in dsrc)
+    check("the generation clock is computed",
+          'strftime("%-I:%M %p ET")' in dsrc)
+
+    _flag = run_mod._flag_tense_risk
+    _real = {"top_stories": [{
+        "orig_title": "Japan Meets With Trump, Hoping to Get His Help on China",
+        "body": "Takaichi held talks with Trump in New York on Tuesday."}]}
+    check("the real 22 September shape is flagged", bool(_flag(_real)))
+    # Intent in a gerund, with no scheduling word anywhere — the form that
+    # slipped past the first version of this check.
+    check("intent language counts, not just scheduling language",
+          bool(_flag({"top_stories": [{
+              "orig_title": "Japan seeking US assurances ahead of summit",
+              "body": "Tokyo announced it had reached a deal on Friday."}]})))
+    check("a genuinely completed story is not flagged",
+          not _flag({"top_stories": [{
+              "orig_title": "Xi calls for U.S. to oppose Taiwan independence",
+              "body": "Trump concluded his summit with Xi on Friday."}]}))
+    check("a forthcoming story written as forthcoming is not flagged",
+          not _flag({"top_stories": [{
+              "orig_title": "Takaichi is set to meet Trump on Tuesday",
+              "body": "The two are due to meet later today."}]}))
+    check("the check is a warning, not a gate",
+          not [f for f in run_mod._validate_digest(_digest())
+               if "TENSE" in f])
+
+
 # ── 2. Dark mode ─────────────────────────────────────────────────────────
 def test_dark_mode():
     section("dark mode")
@@ -496,6 +592,11 @@ def test_email():
     os.environ["DIGEST_TO"] = "a@csis.org, b@csis.org , c@csis.org"
     parsed = [p.strip() for p in os.environ["DIGEST_TO"].split(",") if p.strip()]
     check("comma-separated recipients parse", len(parsed) == 3, str(parsed))
+    # Reply-To is decoupled from the sending account, so moving the sending
+    # Gmail does not silently move reader mail away from the footer contact.
+    check("reply-to is its own variable", "DIGEST_REPLY_TO" in src)
+    check("unset reply-to falls back to the sender",
+          "reply_to or gmail_user" in src)
 
 
 
@@ -635,7 +736,8 @@ check("metrics.jsonl is not gitignored (a committed file that git skips is a sil
       not (_gi.exists() and any(l.strip() == "metrics.jsonl" for l in _gi.read_text().splitlines())))
 
 def main() -> int:
-    for t in (test_render, test_source_diversity, test_dark_mode, test_print_and_mobile, test_length,
+    for t in (test_render, test_source_headlines, test_tense_risk,
+              test_source_diversity, test_dark_mode, test_print_and_mobile, test_length,
               test_validation_gate, test_feeds, test_calendar, test_email):
         try:
             t()

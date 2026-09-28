@@ -31,6 +31,7 @@ The pipeline runs unattended on **GitHub Actions** (daily cron + manual trigger)
 | `GMAIL_USER` | For sending | The sending Gmail address, e.g. `you@gmail.com` |
 | `GMAIL_APP_PASS` | For sending | The 16-char Gmail App Password (spaces OK) |
 | `DIGEST_TO` | For sending | Recipients, comma-separated: `a@x.com,b@y.com` |
+| `DIGEST_REPLY_TO` | Optional | Where reader replies go. Unset → the sending account. Set it to the footer contact so replies survive a change of sending Gmail |
 | `GH_PAT` | Optional | PAT for archive push; falls back to the built-in `GITHUB_TOKEN` if unset |
 
 ### 2b. Add the variable (optional)
@@ -61,7 +62,7 @@ The pipeline runs unattended on **GitHub Actions** (daily cron + manual trigger)
 3. `live_send = true` (with Gmail secrets set) → real send to `DIGEST_TO`. *Use a test recipient first.*
 
 ### Daily schedule
-The workflow runs automatically at **10:00 UTC (6:00 AM ET)** every day via cron (`.github/workflows/daily-digest.yml`). Scheduled runs always run the full pipeline (collect → digest → render → **send** → archive). It will simply skip the send if the Gmail secrets aren't present.
+The workflow sends at **7:00 AM ET**, via an 11:00 UTC external dispatch plus staggered fallback crons (`.github/workflows/daily-digest.yml`). Scheduled runs always run the full pipeline (collect → digest → render → **send** → archive). It will simply skip the send if the Gmail secrets aren't present.
 
 > **To pause automated runs before go-live:** comment out the `schedule:` / `cron:` lines in `.github/workflows/daily-digest.yml`. Manual `workflow_dispatch` still works. Re-enable at launch.
 
