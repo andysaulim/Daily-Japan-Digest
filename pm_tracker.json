@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-28",
+      "activity": "PM Takaichi convened the first closed-door session of her 17-member intelligence panel and made a public statement on strengthening Japan's intelligence capabilities.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-28T11:04:38.000114+00:00"
+    },
+    {
       "date": "2026-09-27",
       "activity": "PM Takaichi held a press briefing on her post-Trump-Xi summit telephone call with President Trump, announcing Japan-US agreement to collaborate on China-related issues and describing herself as having received a 'detailed' briefing from Trump on his Xi summit.",
       "source": "digest",
@@ -491,5 +498,5 @@
       "recorded_at": "2026-07-01T12:33:18.073249+00:00"
     }
   ],
-  "last_updated": "2026-09-27T11:05:17.196566+00:00"
+  "last_updated": "2026-09-28T11:04:38.000155+00:00"
 }
