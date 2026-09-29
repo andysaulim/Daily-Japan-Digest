@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-30": {
-      "signals": {
-        "china_signal": "China's foreign ministry reiterated concerns over Japan's handling of abandoned chemical weapons, characterized Japanese right-wing use of AI to distort WWII history as an 'open provocation,' and expressed condolences for the Kumamoto earthquake while pledging assistance to Chinese nationals. The pu",
-        "dprk_signal": "Japan conducted its first Tomahawk cruise missile launch in the Pacific, placing North Korea, China, and Russia within range — a milestone in Japan's counterstrike capability operationalization, per Korean media reporting.",
-        "russia_signal": "Russia announced plans to rename an island in the Japan-claimed Northern Territories after Soviet spy Richard Sorge, adding a deliberate symbolic provocation following last week's Russian airspace violation over Northern Territories-claimed islands."
-      },
-      "watch_flag": false
-    },
     "2026-07-31": {
       "signals": {
         "china_signal": "China's foreign ministry characterized Japan's National Intelligence Bureau launch as a 'negative security policy shift' and urged Japan to 'act prudently,' warning against remilitarization — the strongest Chinese diplomatic rebuke tied to a single-day Japanese security announcement in the current t",
@@ -466,7 +458,15 @@
         "russia_signal": "Russia's TASS quoted a diplomat saying Moscow 'does not believe Japan's promises to remove US missiles after drills,' directly responding to the Typhon indefinite storage announcement. Chief Cabinet Secretary Kihara formally rebutted Russian FM Lavrov's UNGA accusation of Japanese militarization."
       },
       "watch_flag": false
+    },
+    "2026-09-29": {
+      "signals": {
+        "china_signal": "China's top diplomat told former Japanese Foreign Minister **Takeshi Iwaya** during Beijing talks that Japan-China ties must be 'normalized,' while simultaneously — on the 54th anniversary of diplomatic normalization — demanding Japan 'correct erroneous words and deeds' on Taiwan. Global Times and X",
+        "dprk_signal": "NHK World reported Tuesday that North Korea has reiterated its position that its nuclear state status is 'irreversible,' continuing the pattern of declaratory defiance of the US-Japan-ROK trilateral denuclearization push documented across the past week.",
+        "russia_signal": "Chief Cabinet Secretary Kihara formally rejected Russian Foreign Minister Lavrov's UNGA claim that Japan is on a path to militarization, with Mainichi and JIJI both reporting the Tuesday morning rebuttal. Russia's posture of linking Japan's defense buildup to militarism accusations continues."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-28T11:04:38.001077+00:00"
+  "last_updated": "2026-09-29T11:06:00.701299+00:00"
 }
