@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-09-30",
+      "activity": "PM Takaichi's draft policy address for the October 5 extra Diet session — pledging a 'nimble response to unexpected market moves' and active fiscal stance — was reported by Nikkei and Reuters, constituting a substantive public policy statement.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-09-30T11:07:24.040109+00:00"
+    },
+    {
       "date": "2026-09-28",
       "activity": "PM Takaichi convened the first closed-door session of her 17-member intelligence panel and made a public statement on strengthening Japan's intelligence capabilities.",
       "source": "digest",
@@ -489,14 +496,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-02T12:07:07.689995+00:00"
-    },
-    {
-      "date": "2026-07-01",
-      "activity": "PM Takaichi departed Japan for New Delhi on July 1 for a summit with Indian PM Modi, published a contributed article in the Times of India, and recorded a video message for the 50th anniversary of the NARA Treaty commemorative dinner.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-01T12:33:18.073249+00:00"
     }
   ],
-  "last_updated": "2026-09-28T11:04:38.000155+00:00"
+  "last_updated": "2026-09-30T11:07:24.040165+00:00"
 }

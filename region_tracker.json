@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-07-31": {
-      "signals": {
-        "china_signal": "China's foreign ministry characterized Japan's National Intelligence Bureau launch as a 'negative security policy shift' and urged Japan to 'act prudently,' warning against remilitarization — the strongest Chinese diplomatic rebuke tied to a single-day Japanese security announcement in the current t",
-        "dprk_signal": "North Korean state media condemned Japan's first ship-based Tomahawk cruise missile test launch from JS Chokai and characterized the expansion of US Forces Japan as raising the risk of a Korean Peninsula clash, per NK News and Asahi Shimbun.",
-        "russia_signal": "No new Northern Territories air-sea incursion or Hokkaido-area Russian military activity reported in today's feed; the most recent acute incident remains the Russian airspace violation over Northern Territories-claimed islands reported July 25 and Russia's announced plan to rename a Northern Territo"
-      },
-      "watch_flag": false
-    },
     "2026-08-01": {
       "signals": {
         "china_signal": "China's foreign ministry issued a multi-channel rebuke of Japan's National Intelligence Bureau launch on July 31, characterizing it as 'another negative move' and warning against remilitarization — with coordinated messaging across CGTN, Global Times, and the foreign ministry spokesperson. Japan's M"
@@ -466,7 +458,14 @@
         "russia_signal": "Chief Cabinet Secretary Kihara formally rejected Russian Foreign Minister Lavrov's UNGA claim that Japan is on a path to militarization, with Mainichi and JIJI both reporting the Tuesday morning rebuttal. Russia's posture of linking Japan's defense buildup to militarism accusations continues."
       },
       "watch_flag": false
+    },
+    "2026-09-30": {
+      "signals": {
+        "china_signal": "On the 54th anniversary of Japan-China diplomatic normalization, Beijing delivered a coordinated multi-channel demand across China MOFA, Global Times, CGTN, and Anadolu Agency, ordering Tokyo to 'correct erroneous words and deeds' on Taiwan, honor NPT obligations and abandon what China frames as nuc",
+        "dprk_signal": "North Korea issued a statement via TASS-carried reporting warning that Japan's rearmament expansion is 'casting war clouds,' framing Tokyo's defense buildup as preparation for 'protracted war' — continuing Pyongyang's declaratory campaign against Japan's Three Strategic Documents implementation."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-09-29T11:06:00.701299+00:00"
+  "last_updated": "2026-09-30T11:07:24.041155+00:00"
 }
