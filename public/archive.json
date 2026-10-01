@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-01",
+    "filename": "2026-10-01.html",
+    "re_line": "BOJ hawkish shift \u00b7 Residency fee hike takes effect \u00b7 AI data center push \u00b7 GSDF chief Seoul visit \u00b7 China nuclear pressure",
+    "top_stories": 6,
+    "word_count": 1351
+  },
+  {
     "date": "2026-09-30",
     "filename": "2026-09-30.html",
     "re_line": "China-Japan normalization anniversary pressure \u00b7 BOJ October hike talk \u00b7 Nidec $3.6bn loss \u00b7 Defense startup fund \u00b7 Extra Diet session Monday",
