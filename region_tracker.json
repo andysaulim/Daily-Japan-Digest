@@ -1,11 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-02": {
-      "signals": {
-        "china_signal": "Japan lodged a formal diplomatic protest with China over an alleged new structure in the East China Sea and called for revival of the 2008 bilateral resource development pact. China's Xinhua separately characterized Japan's National Intelligence Bureau as raising concerns over accelerated military e"
-      },
-      "watch_flag": false
-    },
     "2026-08-03": {
       "signals": {
         "china_signal": "No new acute China Coast Guard intrusion or PLA activity near the Senkakus is reported in today's Tier 1 or Tier 4 articles. The prior baseline of Japan's formal diplomatic protest over a new East China Sea structure (August 2) and China's multi-day rebuke of Japan's National Intelligence Bureau lau"
@@ -466,7 +460,15 @@
         "dprk_signal": "North Korea fired several ballistic missiles as the APEC Summit approaches, per TOLOnews citing KCNA-Xinhua. The launches continue Pyongyang's pattern of missile activity timed to multilateral diplomatic events and sustain the pressure campaign against Japan's defense buildup documented over the pas"
       },
       "watch_flag": false
+    },
+    "2026-10-02": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via CGTN, stated Japan has 'no room for bargaining over nuclear obligations,' continuing Beijing's sustained pressure campaign against Defense Minister Koizumi's nuclear-debate remarks. Chinese state media also cited 'undeniable facts' in the case of a former SDF officer's ",
+        "dprk_signal": "North Korea fired a ballistic missile over Japan, per Eye Radio citing wire reports, triggering J-Alert warnings; the launch continues Pyongyang's pattern of missile activity correlated with regional diplomatic events and extends the pressure campaign against Japan's defense buildup documented acros",
+        "russia_signal": "Japan imposed additional sanctions on Russia designating 35 'shadow fleet' vessels, per Jiji Press; Chief Cabinet Secretary Kihara said Tokyo 'takes note' of Putin's recent positive bilateral remarks but issued no reciprocal signal. The Diplomat separately reported a steady uptick in Russian naval a"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-01T11:05:23.358402+00:00"
+  "last_updated": "2026-10-02T11:06:34.182223+00:00"
 }
