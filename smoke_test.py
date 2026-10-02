@@ -598,6 +598,38 @@ def test_email():
     check("unset reply-to falls back to the sender",
           "reply_to or gmail_user" in src)
 
+    # A send that was attempted and failed must fail the RUN. It used to print
+    # a warning and exit 0, so a wrong App Password produced a green workflow
+    # that emailed nobody — found while moving the brief to the Japan Chair
+    # account, when a green test run could not be distinguished from a
+    # delivered one.
+    _saved = {k: os.environ.get(k) for k in ("GMAIL_USER", "GMAIL_APP_PASS")}
+    try:
+        os.environ["GMAIL_USER"] = ""
+        os.environ["GMAIL_APP_PASS"] = ""
+        # Behavioural: missing credentials are reported as a failed send, not
+        # swallowed. This is the signal the exit code now depends on.
+        check("missing credentials report a failed send",
+              send_email.send_digest("<p>x</p>", recipients=["a@csis.org"]) is False)
+    finally:
+        for k, v in _saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+    rsrc = Path("run.py").read_text(encoding="utf-8")
+    check("a failed send sets the flag", "send_failed = True" in rsrc)
+    check("and the flag fails the run",
+          "if send_blocked or send_failed:" in rsrc)
+    check("the exit message says which happened",
+          'else "the email could not be sent"' in rsrc)
+    # --no-send declines to send by request; it must stay green.
+    check("--no-send does not mark a failure",
+          "--no-send: skipping email send" in rsrc
+          and rsrc.index("--no-send: skipping email send")
+              < rsrc.index("send_failed = True"))
+
 
 
 # ── Subject line ─────────────────────────────────────────────────────────────

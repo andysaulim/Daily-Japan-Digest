@@ -1741,6 +1741,9 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── Send ────────────────────────────────────────────────────────────
     sent_ok = False
     send_blocked = False
+    # A send that was ATTEMPTED and failed is tracked separately from one the
+    # validation gate refused, so the exit message can name which happened.
+    send_failed = False
     if not validation_passed and not args.force_send:
         # Fail closed. This printed "Use --force-send to override validation
         # gate" and then sent the brief regardless, so every failure it ever
@@ -1758,7 +1761,16 @@ def run_pipeline(args: argparse.Namespace) -> int:
             print(f"\n   TEST SEND to {', '.join(_test_to)} — no archive or tracker writes")
         sent_ok = bool(send_digest(html, recipients=_test_to or None))
         if not sent_ok:
-            print("   ⚠ Send failed or skipped")
+            # This used to print and then let the run exit 0, so a wrong App
+            # Password, a rejected login or an absent Gmail secret produced a
+            # GREEN run that emailed nobody — the same silence the comment at
+            # the exit below was written to stop, but wired only to the
+            # validation gate. A send we tried and could not complete is a
+            # failed run. --no-send is unaffected: it declines to send by
+            # request and never reaches here.
+            send_failed = True
+            print("   ⚠ Send failed: SMTP error, or GMAIL_USER / "
+                  "GMAIL_APP_PASS missing (see the lines above)")
 
     # Record the edition AND stamp the once-a-day marker ONLY after the email
     # actually went out. This makes the send exactly-once-per-day robust:
@@ -1806,12 +1818,14 @@ def run_pipeline(args: argparse.Namespace) -> int:
     print(f"  ✅ Pipeline complete in {elapsed:.0f}s")
     print(f"{'=' * 64}\n")
 
-    if send_blocked:
+    if send_blocked or send_failed:
         # Exit non-zero so the workflow goes red and the failure alert fires.
         # A green run that sent nothing is silent, and silence is what made
         # this morning's miss invisible until someone noticed an empty inbox.
-        print("\n✖  Run failed: the brief was generated but NOT sent "
-              "(validation gate). The rendered HTML is in the artifact.")
+        _why = ("validation gate" if send_blocked
+                else "the email could not be sent")
+        print(f"\n✖  Run failed: the brief was generated but NOT sent "
+              f"({_why}). The rendered HTML is in the artifact.")
         return 1
     return 0
 
