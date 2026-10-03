@@ -1,11 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-03": {
-      "signals": {
-        "china_signal": "No new acute China Coast Guard intrusion or PLA activity near the Senkakus is reported in today's Tier 1 or Tier 4 articles. The prior baseline of Japan's formal diplomatic protest over a new East China Sea structure (August 2) and China's multi-day rebuke of Japan's National Intelligence Bureau lau"
-      },
-      "watch_flag": false
-    },
     "2026-08-04": {
       "signals": {
         "china_signal": "Japan's 2026 Defense White Paper explicitly warns of deepening China-Russia-North Korea military ties, drawing continued Chinese diplomatic attention. China previously expressed strong opposition to Japan's Tomahawk test launch from JS Chokai and the July 31 National Intelligence Bureau launch — the",
@@ -468,7 +462,15 @@
         "russia_signal": "Japan imposed additional sanctions on Russia designating 35 'shadow fleet' vessels, per Jiji Press; Chief Cabinet Secretary Kihara said Tokyo 'takes note' of Putin's recent positive bilateral remarks but issued no reciprocal signal. The Diplomat separately reported a steady uptick in Russian naval a"
       },
       "watch_flag": true
+    },
+    "2026-10-03": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, per reporting in the adversary-signal tracker, dropped the 'Prime Minister' title when referring to Takaichi — a deliberate diplomatic slight documented in Korean-language reporting — continuing Beijing's coordinated messaging campaign that has included denying Takaichi the",
+        "dprk_signal": "North Korea launched a ballistic missile toward the Sea of Japan on Saturday, with Japan's Defense Ministry tracking an approximately *680 km* flight terminating outside Japan's EEZ; Kim Jong Un's sister confirmed via Yonhap it was an intermediate-range strategic missile fired during a 'firing drill",
+        "russia_signal": "Japan imposed its first Russia sanctions package since Putin's visit to a disputed Northern Territory island, designating shadow-fleet vessels and Russian individuals under the Foreign Exchange and Foreign Trade Act. Chief Cabinet Secretary Kihara said Tokyo 'takes note' of Putin's recent positive r"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-02T11:06:34.182223+00:00"
+  "last_updated": "2026-10-03T11:05:52.783806+00:00"
 }
