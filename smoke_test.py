@@ -394,6 +394,52 @@ def test_source_diversity():
            if f.startswith("SOURCE DIVERSITY")])
 
 
+def test_cross_day():
+    """Repeats from a recent edition must not starve Top Stories.
+
+    On 4 October the model wrote six Top Stories, the cross-day ledger then
+    removed three as already published, and the gate held the brief through
+    four runs. Two changes: repeats are withheld from the model's input, and
+    the post-hoc sweep never takes Top Stories below the validator's floor.
+    """
+    section("cross-day repeats")
+    stories = [{"source": f"S{i}", "headline": f"story {i}",
+                "url": f"https://example.org/s{i}"} for i in range(6)]
+    prev_urls = {f"https://example.org/s{i}" for i in (0, 2, 3, 5)}
+    d = run_mod._dedupe_cross_day({"top_stories": [dict(x) for x in stories]},
+                                  prev_urls, set())
+    kept = [x["url"] for x in d["top_stories"]]
+    check("repeats never take Top Stories below the floor",
+          len(kept) == run_mod._TOP_STORIES_FLOOR, str(kept))
+    check("the earliest repeats come back, in the model's order",
+          kept == [f"https://example.org/s{i}" for i in (0, 1, 2, 4)], str(kept))
+    check("the gate then passes on count",
+          not [f for f in run_mod._validate_digest(d) if f.startswith("TOP STORIES")])
+    d = run_mod._dedupe_cross_day(
+        {"top_stories": [dict(x) for x in stories],
+         "business_economy": [{"headline": "b", "url": "https://example.org/s0"}]},
+        {"https://example.org/s0"}, set())
+    check("above the floor a repeat is still removed",
+          len(d["top_stories"]) == 5, str(len(d["top_stories"])))
+    check("the floor applies to Top Stories only", d["business_economy"] == [])
+
+    payload = {"tier1": [{"title": "Fresh story", "url": "https://example.org/new"},
+                         {"title": "Old story", "url": "https://example.org/old"},
+                         {"title": "Ran Yesterday - Kyodo",
+                          "url": "https://news.google.com/rss/articles/x"}],
+               "tier4": [{"title": "Old story", "url": "https://example.org/old"}]}
+    entries = [{"date": "2026-10-03", "url": "https://example.org/old", "title": "x"},
+               {"date": "2026-10-03", "url": "https://kyodo.example/y",
+                "title": "model headline", "orig": "ran yesterday kyodo"}]
+    urls, titles = run_mod._ledger_recent_keys(entries, date(2026, 10, 4))
+    n = run_mod._filter_published_inputs(payload, urls, titles)
+    check("already-published articles are withheld from the model",
+          [a["title"] for a in payload["tier1"]] == ["Fresh story"],
+          str(payload["tier1"]))
+    check("a decoded Google News repeat is caught by its feed title", n == 2, str(n))
+    check("Tier 4 signal baseline is left whole", len(payload["tier4"]) == 1)
+
+
 # ── 5. Validation gate ───────────────────────────────────────────────────
 def test_validation_gate():
     section("validation gate")
@@ -737,7 +783,7 @@ check("metrics.jsonl is not gitignored (a committed file that git skips is a sil
 
 def main() -> int:
     for t in (test_render, test_source_headlines, test_tense_risk,
-              test_source_diversity, test_dark_mode, test_print_and_mobile, test_length,
+              test_source_diversity, test_cross_day, test_dark_mode, test_print_and_mobile, test_length,
               test_validation_gate, test_feeds, test_calendar, test_email):
         try:
             t()
