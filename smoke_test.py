@@ -529,6 +529,22 @@ def test_validation_gate():
                                 "source": "S", "url": "https://example.org/z"}])
     check("too few top stories is a failure",
           any("TOP STORIES" in f for f in run_mod._validate_digest(bad)))
+    # 4 October: the gate demanded four stories, a quiet day produced three,
+    # and the brief was held through four runs and went out seven hours late.
+    # The 4-6 band is the editorial target; the gate is the floor below which
+    # a brief is not worth sending, and they are not the same number.
+    _three = _digest(top_stories=[
+        {"headline": f"story {i}", "body": "b", "source": f"S{i}",
+         "url": f"https://example.org/t{i}"} for i in range(3)])
+    check("three top stories still send",
+          not [f for f in run_mod._validate_digest(_three)
+               if f.startswith("TOP STORIES")],
+          "; ".join(f for f in run_mod._validate_digest(_three)
+                    if f.startswith("TOP STORIES")))
+    check("the pipeline still protects four when it has them",
+          run_mod._TOP_STORIES_FLOOR >= 4, str(run_mod._TOP_STORIES_FLOOR))
+    check("the floor never drops below what the gate demands",
+          run_mod._TOP_STORIES_FLOOR >= 2)
     # The word-count minimum is about a real brief, not a fixture, so it is
     # the one failure a fixture is allowed to trip.
     check("a complete digest passes every structural check",

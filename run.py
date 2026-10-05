@@ -140,11 +140,19 @@ def _count_words(digest: dict) -> int:
 # caps and drops the excess before validating; this is that, ported.
 _SOURCE_CAP = 3
 
-# Top Stories is never taken below this. It is deliberately the SAME number as
-# the validator's own minimum: trimming for breadth must never hand the gate a
-# count failure instead, which is what a lower floor would do — drop the fourth
-# item to satisfy the cap and the very next check rejects the brief for having
-# three stories. Move one of these and move the other.
+# What the pipeline PROTECTS, which is not what the gate REQUIRES.
+#
+# Nothing downstream may cut Top Stories below this: not the source-diversity
+# trim, not the cross-day repeat sweep. It must stay at or above the
+# validator's minimum below, so protecting breadth can never hand the gate a
+# count failure instead.
+#
+# It used to be the same number as that minimum, and raising both to 4 on
+# 30 September is what held the 4 October brief for seven hours: the model
+# wrote six stories, the sweep removed three repeats, and three survived a
+# gate that demanded four. The sweep no longer cuts below this floor, and the
+# gate no longer demands it — a target the pipeline aims for is not a
+# condition for sending at all.
 _TOP_STORIES_FLOOR = 4
 
 
@@ -269,8 +277,13 @@ def _validate_digest(digest: dict) -> list[str]:
         failures.append(f"WORD COUNT: {word_count} words (minimum {MIN_WORD_COUNT})")
 
     top_count = len(digest.get("top_stories") or [])
-    if top_count < 4:
-        failures.append(f"TOP STORIES: {top_count} (minimum 4)")
+    # The floor below which a brief is not worth sending — NOT the editorial
+    # target, which is 4-6 and lives in the prompt. Those were briefly the same
+    # number, and a quiet Sunday that yielded three stories then blocked the
+    # send through four runs. A three-story brief at 7 AM beats a five-story
+    # brief at 2 PM, and beats no brief at all.
+    if top_count < 2:
+        failures.append(f"TOP STORIES: {top_count} (minimum 2)")
     if top_count > 6:
         failures.append(f"TOP STORIES: {top_count} (maximum 6)")
 
