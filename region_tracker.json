@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-05": {
-      "signals": {
-        "china_signal": "China's reaction to Japan's 2026 Defense White Paper and the JS Chokai Tomahawk test — both subjects of prior-day Chinese diplomatic rebukes — continues as the sustained backdrop; no new acute Senkaku CCG intrusion or PLA aerial activity is reported in today's feed, but the 19FortyFive article notes",
-        "dprk_signal": "Kim Yo Jong issued a formal statement via KCNA warning that North Korea will 'never remain passive spectators' over Japan's Tomahawk missile test and signaling new unspecified military options — the most senior and explicit DPRK threat linked to Japan's counterstrike operationalization, carried acro"
-      },
-      "watch_flag": true
-    },
     "2026-08-06": {
       "signals": {
         "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. The sustained backdrop of Chinese diplomatic rebuke over Japan's Tomahawk test, National Intelligence Bureau launch, and 2026 Defense White Paper continues; no new rare-earth or critical-m",
@@ -471,7 +464,15 @@
         "russia_signal": "Japan imposed its latest Russia sanctions package designating shadow-fleet vessels and Russian individuals — framed by Nikkei Asia as the first measures since Putin's visit to a disputed Northern Territory island — continuing Tokyo's G7-aligned Russia pressure track."
       },
       "watch_flag": true
+    },
+    "2026-10-05": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry continued its deliberate protocol slight of referring to Prime Minister Takaichi by name only — dropping her title — continuing a coordinated diplomatic-messaging campaign documented across the past two weeks. Separately, Japanese companies are exiting China at a record pace",
+        "dprk_signal": "North Korea conducted a hypersonic intermediate-range strategic missile drill personally overseen by **Kim Jong Un**, with Pyongyang claiming via KCNA that the AI-guided weapon flew *1,000 km* — exceeding South Korean and Japanese tracking estimates by approximately 300 km — and executed evasive 'sk",
+        "russia_signal": "TASS reported Prime Minister Takaichi stated Japan will continue to pursue a course toward signing a peace treaty with Russia — a public diplomatic signal delivered at the opening of the extraordinary Diet session — while Japan's recently imposed shadow-fleet sanctions (the first since Putin's visit"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-04T17:52:20.211130+00:00"
+  "last_updated": "2026-10-05T11:06:00.021520+00:00"
 }
