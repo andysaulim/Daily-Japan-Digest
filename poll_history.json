@@ -64,9 +64,9 @@
   },
   "jnn": {
     "pollster": "JNN",
-    "approval": 62.5,
-    "disapproval": 34.9,
-    "as_of": "2026-09-07",
-    "poll_date": "Sep 7, 2026"
+    "approval": 63.0,
+    "disapproval": 33.9,
+    "as_of": "2026-10-04",
+    "poll_date": "Oct 4, 2026"
   }
 }

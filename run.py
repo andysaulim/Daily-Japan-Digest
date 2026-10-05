@@ -1072,6 +1072,8 @@ def _ledger_recent_keys(entries: list, today, window: int = _LEDGER_WINDOW_DAYS)
             urls.add(e["url"])
         if e.get("title"):
             titles.add(e["title"])
+        if e.get("orig"):
+            titles.add(e["orig"])
     return urls, titles
 
 
@@ -1094,13 +1096,56 @@ def _dedupe_cross_day(digest: dict, prev_urls: set, prev_titles: set) -> dict:
 
     for section in _DEDUPE_ORDER:
         items = digest.get(section)
-        if isinstance(items, list):
-            digest[section] = [it for it in items if _keep(it)]
+        if not isinstance(items, list):
+            continue
+        keep = [_keep(it) for it in items]
+        # Top Stories never drops below the validator's minimum on repeats
+        # alone. On 4 October a slow Sunday's six stories lost three here and
+        # the gate held the brief through four runs, seven hours late. A story
+        # carried again is a smaller failure than no brief: re-admit repeats in
+        # the model's order until the floor is met. _filter_published_inputs
+        # keeps this rare by withholding repeats from the model up front.
+        need = min(len(items), _TOP_STORIES_FLOOR) - sum(keep)
+        if section == "top_stories" and need > 0:
+            for i, k in enumerate(keep):
+                if need and not k:
+                    keep[i], need = True, need - 1
+                    removed -= 1
+                    print(f"   ⚠ Kept a repeat Top Story to hold the "
+                          f"{_TOP_STORIES_FLOOR}-story floor: {_primary_title(items[i])[:60]}")
+        digest[section] = [it for it, k in zip(items, keep) if k]
 
     if removed:
         print(f"   ✓ Removed {removed} item(s) already published in the last "
               f"{_LEDGER_WINDOW_DAYS} days")
     return digest
+
+
+def _filter_published_inputs(payload: dict, prev_urls: set, prev_titles: set) -> int:
+    """Withhold articles a recent edition already carried from the model.
+
+    _dedupe_cross_day only runs after the model has written the brief, so a
+    model that never knew what ran yesterday spent its Top Stories on repeats
+    and lost them afterward. Filtering the news tiers first lets it choose from
+    what is actually new. Tier 4 is left whole: the government and adversary
+    trackers read it as a signal baseline, not as story candidates.
+    Returns the number of articles withheld.
+    """
+    withheld = 0
+    for tier in ("tier1", "tier2", "tier3"):
+        arts = payload.get(tier)
+        if not isinstance(arts, list):
+            continue
+        kept = []
+        for a in arts:
+            u = (a.get("url") or "").strip() if isinstance(a, dict) else ""
+            t = _norm_title(a.get("title")) if isinstance(a, dict) else ""
+            if (u and u in prev_urls) or (t and t in prev_titles):
+                withheld += 1
+                continue
+            kept.append(a)
+        payload[tier] = kept
+    return withheld
 
 
 def _record_ledger(digest: dict, today_iso: str) -> None:
@@ -1113,7 +1158,15 @@ def _record_ledger(digest: dict, today_iso: str) -> None:
             return
         u, t = _item_url(it), _primary_title(it)
         if u or t:
-            entries.append({"date": today_iso, "url": u, "title": t})
+            e = {"date": today_iso, "url": u, "title": t}
+            # The verbatim feed title. `title` is usually the model's headline,
+            # which never matches a collected article; this is what lets
+            # _filter_published_inputs recognise a repeat before the model
+            # sees it, including Google News items whose URL was decoded.
+            o = _norm_title(it.get("orig_title"))
+            if o and o != t:
+                e["orig"] = o
+            entries.append(e)
 
     for section in _DEDUPE_ORDER:
         for it in (digest.get(section) or []):
@@ -1576,6 +1629,14 @@ def run_pipeline(args: argparse.Namespace) -> int:
     except Exception as e:
         print(f"⚠ Reference context unavailable: {e}")
 
+    # ─── Withhold stories already sent (before the model chooses) ────────
+    today_et = datetime.now(ZoneInfo("America/New_York")).date()
+    _prev_urls, _prev_titles = _ledger_recent_keys(_load_ledger(), today_et)
+    _withheld = _filter_published_inputs(payload, _prev_urls, _prev_titles)
+    if _withheld:
+        print(f"♻️  Withheld {_withheld} article(s) already published in the last "
+              f"{_LEDGER_WINDOW_DAYS} days")
+
     # ─── Digest ──────────────────────────────────────────────────────────
     print("\n🤖 Generating digest...")
     from digest import generate_digest
@@ -1604,8 +1665,6 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── De-duplicate across sections (one article, one section) ─────────
     digest = _dedupe_sections(digest)
     # ─── De-duplicate across DAYS (drop stories already sent recently) ───
-    today_et = datetime.now(ZoneInfo("America/New_York")).date()
-    _prev_urls, _prev_titles = _ledger_recent_keys(_load_ledger(), today_et)
     digest = _dedupe_cross_day(digest, _prev_urls, _prev_titles)
     # ─── Polls: authoritative structured figures (Wikipedia fetch → baseline) ─
     # Never fatal. This reaches out to Wikipedia and parses a table that can be

@@ -1,5 +1,26 @@
 [
   {
+    "date": "2026-10-05",
+    "filename": "2026-10-05.html",
+    "re_line": "Diet opens \u00b7 Takaichi fiscal speech \u00b7 Okinawa Marine murder \u00b7 DPRK hypersonic AI missile \u00b7 BOJ 2% inflation declaration",
+    "top_stories": 6,
+    "word_count": 1408
+  },
+  {
+    "date": "2026-10-04",
+    "filename": "2026-10-04.html",
+    "re_line": "Okinawa marine murder triggers formal protest \u00b7 DPRK hypersonic missile drill \u00b7 Autumn Diet preview \u00b7 Komeito new leadership",
+    "top_stories": 4,
+    "word_count": 1109
+  },
+  {
+    "date": "2026-10-03",
+    "filename": "2026-10-03.html",
+    "re_line": "DPRK IRBM launch \u00b7 Takaichi disavows reflation \u00b7 Komeito new leader \u00b7 BOJ rate-hike debate \u00b7 Russia shadow-fleet sanctions",
+    "top_stories": 5,
+    "word_count": 1476
+  },
+  {
     "date": "2026-10-02",
     "filename": "2026-10-02.html",
     "re_line": "BOJ hike signals multiply \u00b7 PM Takaichi disavows reflation \u00b7 NMESIS Yonaguni \u00b7 DPRK overflight \u00b7 residency fee surge",

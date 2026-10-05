@@ -1,6 +1,20 @@
 {
   "appearances": [
     {
+      "date": "2026-10-05",
+      "activity": "Prime Minister Takaichi delivered her policy address to the extraordinary Diet session, pledging proactive fiscal policy and a consumption tax cut without new bond issuance, and separately told markets to 'rest assured' on debt control.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-05T11:06:00.020338+00:00"
+    },
+    {
+      "date": "2026-10-04",
+      "activity": "PM Takaichi issued a formal protest to Washington over the Okinawa Marine murder arrest, publicly describing the crime as 'exceptionally brutal and vicious' and demanding US military authorities take action.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-04T17:52:20.209975+00:00"
+    },
+    {
       "date": "2026-10-02",
       "activity": "PM Takaichi met with Qatari PM Sheikh Mohammed bin Abdulrahman Al-Thani in Tokyo, agreeing on close coordination for Middle East de-escalation, and separately made a public statement warning retailers against absorbing food tax cuts without passing savings to consumers.",
       "source": "digest",
@@ -498,5 +512,5 @@
       "recorded_at": "2026-07-08T11:48:09.986051+00:00"
     }
   ],
-  "last_updated": "2026-10-02T11:06:34.179742+00:00"
+  "last_updated": "2026-10-05T11:06:00.020398+00:00"
 }

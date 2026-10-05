@@ -1,25 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-03": {
-      "signals": {
-        "china_signal": "No new acute China Coast Guard intrusion or PLA activity near the Senkakus is reported in today's Tier 1 or Tier 4 articles. The prior baseline of Japan's formal diplomatic protest over a new East China Sea structure (August 2) and China's multi-day rebuke of Japan's National Intelligence Bureau lau"
-      },
-      "watch_flag": false
-    },
-    "2026-08-04": {
-      "signals": {
-        "china_signal": "Japan's 2026 Defense White Paper explicitly warns of deepening China-Russia-North Korea military ties, drawing continued Chinese diplomatic attention. China previously expressed strong opposition to Japan's Tomahawk test launch from JS Chokai and the July 31 National Intelligence Bureau launch — the",
-        "dprk_signal": "The 19FortyFive report in today's Tier 4 data recaps China's reaction to Japan's first ship-based Tomahawk missile launch from JS Chokai; no new North Korean missile launch, EEZ splashdown, or overflight is reported in today's feed."
-      },
-      "watch_flag": false
-    },
-    "2026-08-05": {
-      "signals": {
-        "china_signal": "China's reaction to Japan's 2026 Defense White Paper and the JS Chokai Tomahawk test — both subjects of prior-day Chinese diplomatic rebukes — continues as the sustained backdrop; no new acute Senkaku CCG intrusion or PLA aerial activity is reported in today's feed, but the 19FortyFive article notes",
-        "dprk_signal": "Kim Yo Jong issued a formal statement via KCNA warning that North Korea will 'never remain passive spectators' over Japan's Tomahawk missile test and signaling new unspecified military options — the most senior and explicit DPRK threat linked to Japan's counterstrike operationalization, carried acro"
-      },
-      "watch_flag": true
-    },
     "2026-08-06": {
       "signals": {
         "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. The sustained backdrop of Chinese diplomatic rebuke over Japan's Tomahawk test, National Intelligence Bureau launch, and 2026 Defense White Paper continues; no new rare-earth or critical-m",
@@ -468,7 +448,31 @@
         "russia_signal": "Japan imposed additional sanctions on Russia designating 35 'shadow fleet' vessels, per Jiji Press; Chief Cabinet Secretary Kihara said Tokyo 'takes note' of Putin's recent positive bilateral remarks but issued no reciprocal signal. The Diplomat separately reported a steady uptick in Russian naval a"
       },
       "watch_flag": true
+    },
+    "2026-10-03": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, per reporting in the adversary-signal tracker, dropped the 'Prime Minister' title when referring to Takaichi — a deliberate diplomatic slight documented in Korean-language reporting — continuing Beijing's coordinated messaging campaign that has included denying Takaichi the",
+        "dprk_signal": "North Korea launched a ballistic missile toward the Sea of Japan on Saturday, with Japan's Defense Ministry tracking an approximately *680 km* flight terminating outside Japan's EEZ; Kim Jong Un's sister confirmed via Yonhap it was an intermediate-range strategic missile fired during a 'firing drill",
+        "russia_signal": "Japan imposed its first Russia sanctions package since Putin's visit to a disputed Northern Territory island, designating shadow-fleet vessels and Russian individuals under the Foreign Exchange and Foreign Trade Act. Chief Cabinet Secretary Kihara said Tokyo 'takes note' of Putin's recent positive r"
+      },
+      "watch_flag": true
+    },
+    "2026-10-04": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry continued its deliberate diplomatic slight of dropping the 'Prime Minister' title when referring to Takaichi, referring to her by name only — a protocol signal documented in Korean-language reporting and continuing a coordinated messaging campaign that has tracked her since ",
+        "dprk_signal": "North Korea conducted a hypersonic intermediate-range strategic missile drill with Kim Jong Un personally overseeing the launch; Pyongyang claimed the weapon flew *1,000 km*, exceeding South Korean and Japanese tracking estimates by approximately 300 km, and featured AI guidance and evasive flight c",
+        "russia_signal": "Japan imposed its latest Russia sanctions package designating shadow-fleet vessels and Russian individuals — framed by Nikkei Asia as the first measures since Putin's visit to a disputed Northern Territory island — continuing Tokyo's G7-aligned Russia pressure track."
+      },
+      "watch_flag": true
+    },
+    "2026-10-05": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry continued its deliberate protocol slight of referring to Prime Minister Takaichi by name only — dropping her title — continuing a coordinated diplomatic-messaging campaign documented across the past two weeks. Separately, Japanese companies are exiting China at a record pace",
+        "dprk_signal": "North Korea conducted a hypersonic intermediate-range strategic missile drill personally overseen by **Kim Jong Un**, with Pyongyang claiming via KCNA that the AI-guided weapon flew *1,000 km* — exceeding South Korean and Japanese tracking estimates by approximately 300 km — and executed evasive 'sk",
+        "russia_signal": "TASS reported Prime Minister Takaichi stated Japan will continue to pursue a course toward signing a peace treaty with Russia — a public diplomatic signal delivered at the opening of the extraordinary Diet session — while Japan's recently imposed shadow-fleet sanctions (the first since Putin's visit"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-02T11:06:34.182223+00:00"
+  "last_updated": "2026-10-05T11:06:00.021520+00:00"
 }
