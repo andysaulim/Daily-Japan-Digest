@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-06": {
-      "signals": {
-        "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. The sustained backdrop of Chinese diplomatic rebuke over Japan's Tomahawk test, National Intelligence Bureau launch, and 2026 Defense White Paper continues; no new rare-earth or critical-m",
-        "dprk_signal": "North Korea fired a short-range ballistic missile toward the East Sea on August 6, landing outside Japan's EEZ, confirmed by Japan's Defense Ministry, NHK, and South Korea's military. The launch followed Kim Yo Jong's August 5 statement warning of new military options in response to Japan's Tomahawk",
-        "russia_signal": "No new Russian Northern Territories air-sea incursion or Hokkaido-area military activity is reported in today's feed. The prior baseline — Russia's island-renaming provocation and airspace violation over Northern Territories-claimed islands reported July 25 — remains the most recent acute incident. "
-      },
-      "watch_flag": true
-    },
     "2026-08-07": {
       "signals": {
         "china_signal": "China's foreign ministry lodged 'serious representations' with Japan over the 2026 Defense White Paper, with CGTN and Global Times running coordinated messaging urging Japan to 'reflect on history and stop military expansion.' No new Senkaku CCG intrusion or PLA aerial incursion is reported in today",
@@ -472,7 +464,15 @@
         "russia_signal": "TASS reported Prime Minister Takaichi stated Japan will continue to pursue a course toward signing a peace treaty with Russia — a public diplomatic signal delivered at the opening of the extraordinary Diet session — while Japan's recently imposed shadow-fleet sanctions (the first since Putin's visit"
       },
       "watch_flag": true
+    },
+    "2026-10-06": {
+      "signals": {
+        "china_signal": "Global Times published a piece characterizing Prime Minister Takaichi's 'important neighbor' framing of China as masking 'continued provocation,' continuing Beijing's coordinated messaging campaign against Tokyo's regional posture. No new China Coast Guard or PLA activity near the Senkakus was repor",
+        "dprk_signal": "North Korea's hypersonic intermediate-range missile test — in which Pyongyang claims AI-guided evasive flight over *1,000 km*, exceeding South Korean and Japanese tracking estimates — continues to generate analytical coverage; Pyongyang specifically claimed the weapon's 'skip points' expose gaps in ",
+        "russia_signal": "TASS reported Russia's position that Japan 'continues to provoke deterioration of relations,' maintaining Moscow's declaratory campaign linking Tokyo's defense buildup to bilateral tensions. No new air or naval incursions near Hokkaido or the Northern Territories were reported today."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-05T11:06:00.021520+00:00"
+  "last_updated": "2026-10-06T11:06:51.609549+00:00"
 }
