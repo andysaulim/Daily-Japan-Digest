@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-09",
+      "activity": "Takaichi's cabinet approved and submitted the food consumption-tax cut bill to the Diet, and she pledged to keep watching yen and inflation moves carefully.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-09T11:08:46.868717+00:00"
+    },
+    {
       "date": "2026-10-08",
       "activity": "Prime Minister Takaichi issued a public congratulatory statement on the Nobel Prize in Chemistry for Professor Emeritus Kenso Soai, placed a congratulatory telephone call to Soai, and in Diet proceedings again refused opposition demands to dismiss Agriculture Minister Yana.",
       "source": "digest",
@@ -519,5 +526,5 @@
       "recorded_at": "2026-07-15T11:25:49.720986+00:00"
     }
   ],
-  "last_updated": "2026-10-08T11:05:15.227188+00:00"
+  "last_updated": "2026-10-09T11:08:46.868763+00:00"
 }
