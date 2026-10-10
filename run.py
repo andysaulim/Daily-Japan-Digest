@@ -140,11 +140,19 @@ def _count_words(digest: dict) -> int:
 # caps and drops the excess before validating; this is that, ported.
 _SOURCE_CAP = 3
 
-# Top Stories is never taken below this. It is deliberately the SAME number as
-# the validator's own minimum: trimming for breadth must never hand the gate a
-# count failure instead, which is what a lower floor would do — drop the fourth
-# item to satisfy the cap and the very next check rejects the brief for having
-# three stories. Move one of these and move the other.
+# What the pipeline PROTECTS, which is not what the gate REQUIRES.
+#
+# Nothing downstream may cut Top Stories below this: not the source-diversity
+# trim, not the cross-day repeat sweep. It must stay at or above the
+# validator's minimum below, so protecting breadth can never hand the gate a
+# count failure instead.
+#
+# It used to be the same number as that minimum, and raising both to 4 on
+# 30 September is what held the 4 October brief for seven hours: the model
+# wrote six stories, the sweep removed three repeats, and three survived a
+# gate that demanded four. The sweep no longer cuts below this floor, and the
+# gate no longer demands it — a target the pipeline aims for is not a
+# condition for sending at all.
 _TOP_STORIES_FLOOR = 4
 
 
@@ -269,8 +277,13 @@ def _validate_digest(digest: dict) -> list[str]:
         failures.append(f"WORD COUNT: {word_count} words (minimum {MIN_WORD_COUNT})")
 
     top_count = len(digest.get("top_stories") or [])
-    if top_count < 4:
-        failures.append(f"TOP STORIES: {top_count} (minimum 4)")
+    # The floor below which a brief is not worth sending — NOT the editorial
+    # target, which is 4-6 and lives in the prompt. Those were briefly the same
+    # number, and a quiet Sunday that yielded three stories then blocked the
+    # send through four runs. A three-story brief at 7 AM beats a five-story
+    # brief at 2 PM, and beats no brief at all.
+    if top_count < 2:
+        failures.append(f"TOP STORIES: {top_count} (minimum 2)")
     if top_count > 6:
         failures.append(f"TOP STORIES: {top_count} (maximum 6)")
 
@@ -1800,6 +1813,9 @@ def run_pipeline(args: argparse.Namespace) -> int:
     # ─── Send ────────────────────────────────────────────────────────────
     sent_ok = False
     send_blocked = False
+    # A send that was ATTEMPTED and failed is tracked separately from one the
+    # validation gate refused, so the exit message can name which happened.
+    send_failed = False
     if not validation_passed and not args.force_send:
         # Fail closed. This printed "Use --force-send to override validation
         # gate" and then sent the brief regardless, so every failure it ever
@@ -1817,7 +1833,16 @@ def run_pipeline(args: argparse.Namespace) -> int:
             print(f"\n   TEST SEND to {', '.join(_test_to)} — no archive or tracker writes")
         sent_ok = bool(send_digest(html, recipients=_test_to or None))
         if not sent_ok:
-            print("   ⚠ Send failed or skipped")
+            # This used to print and then let the run exit 0, so a wrong App
+            # Password, a rejected login or an absent Gmail secret produced a
+            # GREEN run that emailed nobody — the same silence the comment at
+            # the exit below was written to stop, but wired only to the
+            # validation gate. A send we tried and could not complete is a
+            # failed run. --no-send is unaffected: it declines to send by
+            # request and never reaches here.
+            send_failed = True
+            print("   ⚠ Send failed: SMTP error, or GMAIL_USER / "
+                  "GMAIL_APP_PASS missing (see the lines above)")
 
     # Record the edition AND stamp the once-a-day marker ONLY after the email
     # actually went out. This makes the send exactly-once-per-day robust:
@@ -1865,12 +1890,14 @@ def run_pipeline(args: argparse.Namespace) -> int:
     print(f"  ✅ Pipeline complete in {elapsed:.0f}s")
     print(f"{'=' * 64}\n")
 
-    if send_blocked:
+    if send_blocked or send_failed:
         # Exit non-zero so the workflow goes red and the failure alert fires.
         # A green run that sent nothing is silent, and silence is what made
         # this morning's miss invisible until someone noticed an empty inbox.
-        print("\n✖  Run failed: the brief was generated but NOT sent "
-              "(validation gate). The rendered HTML is in the artifact.")
+        _why = ("validation gate" if send_blocked
+                else "the email could not be sent")
+        print(f"\n✖  Run failed: the brief was generated but NOT sent "
+              f"({_why}). The rendered HTML is in the artifact.")
         return 1
     return 0
 
