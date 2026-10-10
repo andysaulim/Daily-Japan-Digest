@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-10",
+      "activity": "Prime Minister Takaichi publicly declared US ICC sanctions 'incompatible with Japan's position,' joined a multilateral MOFA joint statement, and the Cabinet submitted the food consumption tax cut bill to the Diet.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-10T11:04:43.832846+00:00"
+    },
+    {
       "date": "2026-10-09",
       "activity": "Takaichi's cabinet approved and submitted the food consumption-tax cut bill to the Diet, and she pledged to keep watching yen and inflation moves carefully.",
       "source": "digest",
@@ -526,5 +533,5 @@
       "recorded_at": "2026-07-15T11:25:49.720986+00:00"
     }
   ],
-  "last_updated": "2026-10-09T11:08:46.868763+00:00"
+  "last_updated": "2026-10-10T11:04:43.832889+00:00"
 }
