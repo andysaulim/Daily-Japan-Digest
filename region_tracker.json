@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-12": {
-      "signals": {
-        "china_signal": "No new acute China Coast Guard intrusion or PLA aerial incursion near the Senkakus is reported in today's feed. China's approval of Japan's Chongqing consul general after an eight-month vacancy represents a discrete consular normalization step, running counter to the broader bilateral friction backd",
-        "dprk_signal": "North Korea launched a ballistic missile toward the Sea of Japan on August 12 — its second in six days — reaching approximately 56 miles altitude before falling west of Hokkaido outside Japan's EEZ; Japan lodged a formal protest and South Korea, the US, and Japan jointly called on Pyongyang to halt "
-      },
-      "watch_flag": true
-    },
     "2026-08-13": {
       "signals": {
         "china_signal": "Japan filled an eight-month consular vacancy in Chongqing — a discrete bilateral normalization step — while the ongoing backdrop of Chinese rare-earth export restrictions bearing on Japan-US supply chains continues; no new acute PLA aerial incursion or China Coast Guard intrusion near the Senkakus i",
@@ -474,7 +467,15 @@
         "dprk_signal": "An expert analysis reported via Inquirer.net assesses North Korea as capable of overwhelming US homeland missile defense, a finding with direct implications for Japan's extended deterrence calculus. No new DPRK launch or EEZ splashdown was reported today."
       },
       "watch_flag": false
+    },
+    "2026-10-12": {
+      "signals": {
+        "china_signal": "No new Tier 4 China Coast Guard or PLA activity data collected today. Prior tracker: four CCG vessels entered Senkaku territorial waters October 10; Beijing's protocol-slight campaign against PM Takaichi continues. No update available from today's scrape.",
+        "dprk_signal": "North Korea fired multiple ballistic missiles into the Sea of Japan; at least two fell outside Japan's EEZ. South Korea's Joint Chiefs of Staff confirmed the launch. The event follows the hypersonic IRBM test in early October and multiple short- and medium-range launches in recent weeks.",
+        "russia_signal": "No new Tier 4 Russia data collected today. Prior tracker: Japan protested Russia's ICC extradition request (October 9-10); TASS reporting on Japan's shadow-fleet sanctions and peace treaty signals ongoing. No update from today's scrape."
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-11T11:05:19.500706+00:00"
+  "last_updated": "2026-10-12T11:04:34.026655+00:00"
 }
