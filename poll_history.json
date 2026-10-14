@@ -50,10 +50,10 @@
   },
   "nhk": {
     "pollster": "NHK",
-    "approval": 52.8,
-    "disapproval": 30.8,
-    "as_of": "2026-09-10",
-    "poll_date": "Sep 10, 2026"
+    "approval": 50.8,
+    "disapproval": 32.0,
+    "as_of": "2026-10-14",
+    "poll_date": "Oct 14, 2026"
   },
   "jiji": {
     "pollster": "Jiji",

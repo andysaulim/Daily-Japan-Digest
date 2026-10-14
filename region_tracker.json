@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-14": {
-      "signals": {
-        "china_signal": "Japan's Self-Defense Forces intercepted a Chinese spy plane near Okinawa, per The Defence Blog — the most acute China military signal in today's feed. No new China Coast Guard intrusion into Senkaku territorial waters was reported in today's articles.",
-        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises and vowed stronger nuclear deterrence; multiple outlets report North Korea fired ballistic missiles in the lead-up period, with Pyongyang declaring it must possess the capability to make enemy 'survival impossible.' T",
-        "russia_signal": "Putin made his first-ever personal visit to Etorofu island (Iturup) in the Japan-claimed Northern Territories on August 13, asserting Russian sovereignty; PM Takaichi called the visit 'absolutely unacceptable,' Foreign Minister Motegi summoned Russian Ambassador Nikolay Nozdrev, and Tokyo opened a r"
-      },
-      "watch_flag": true
-    },
     "2026-08-15": {
       "signals": {
         "china_signal": "China's MOFA and state media lodged formal protests against both PM Takaichi's Yasukuni offering and Defense Minister Koizumi's shrine visit, with CGTN and Xinhua characterizing the actions as 'negative moves.' China also expressed support for Russia's position on the Kuril Islands. Japan separately",
@@ -475,7 +467,15 @@
         "russia_signal": "No new Russian military activity near Hokkaido or the Northern Territories was reported in today's Tier 4 data; the prior tracker records Japan's ongoing protest of Russia's extradition request targeting ICC President Akane."
       },
       "watch_flag": true
+    },
+    "2026-10-14": {
+      "signals": {
+        "china_signal": "A Chinese aircraft carrier group entered the western Pacific — Japan's defense establishment is monitoring the deployment closely. Separately, a Chinese delegation from Heilongjiang visited a Russia-held island claimed by Japan, drawing a formal Japanese diplomatic protest; China's Foreign Ministry ",
+        "dprk_signal": "North Korea confirmed via KCNA that its October 13 launches constituted a 'tactical ballistic missile' test described as a 'big success,' with KCNA claiming the test validated a key technical upgrade; South Korea, the United States, and Japan held trilateral consultations in response. Kim Jong Un si",
+        "russia_signal": "Russia's FSB arrested Hokkaido Shimbun reporter Yuki Imai in Sakhalin on espionage allegations, the most significant Russia-Japan bilateral incident in the current period; Japan is requesting information and impartial treatment and is reported to be summoning the Russian ambassador. The detention fo"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-13T11:06:06.236247+00:00"
+  "last_updated": "2026-10-14T11:06:03.976521+00:00"
 }
