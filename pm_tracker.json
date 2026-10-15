@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-15",
+      "activity": "PM Takaichi held a formal press conference on Agriculture Minister Yana's resignation, announced Arata Takebe as successor, and denied Japanese espionage in Russia in connection with the Hokkaido Shimbun journalist detention.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-15T11:05:30.661051+00:00"
+    },
+    {
       "date": "2026-10-14",
       "activity": "Prime Minister Takaichi confirmed Japan-US talks on tightening off-duty troop conduct rules, stated she would not hesitate to dismiss Yana if illegality was confirmed, and was reported publicly on Diet schedule and personal schedule remarks.",
       "source": "digest",
@@ -503,49 +510,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-17T11:18:55.569712+00:00"
-    },
-    {
-      "date": "2026-07-16",
-      "activity": "PM Takaichi publicly stated tax-cut talks are expected to conclude by early August and is engaged in Diet session extension deliberations.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-16T01:09:47.984856+00:00"
-    },
-    {
-      "date": "2026-07-16",
-      "activity": "PM Takaichi publicly stated that tax-cut inter-party talks are expected to conclude by early August and the administration plans to extend the Diet session.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-16T01:35:43.309532+00:00"
-    },
-    {
-      "date": "2026-07-16",
-      "activity": "PM Takaichi publicly stated that inter-party tax-cut talks are expected to conclude by early August and the administration plans to extend the current Diet session.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-16T11:31:25.952367+00:00"
-    },
-    {
-      "date": "2026-07-16",
-      "activity": "PM Takaichi publicly stated that inter-party tax-cut talks are expected to conclude by early August and the Takaichi administration announced plans to extend the current Diet session.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-16T13:22:20.202589+00:00"
-    },
-    {
-      "date": "2026-07-16",
-      "activity": "PM Takaichi stated publicly that inter-party tax-cut talks are expected to conclude by early August and the administration plans to extend the Diet session.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-16T17:57:42.786025+00:00"
-    },
-    {
-      "date": "2026-07-16",
-      "activity": "PM Takaichi publicly stated inter-party tax-cut talks are expected to conclude by early August and the administration plans to extend the current Diet session.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-16T20:26:19.274706+00:00"
     }
   ],
-  "last_updated": "2026-10-14T11:06:03.975584+00:00"
+  "last_updated": "2026-10-15T11:05:30.661140+00:00"
 }

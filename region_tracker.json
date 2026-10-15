@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-15": {
-      "signals": {
-        "china_signal": "China's MOFA and state media lodged formal protests against both PM Takaichi's Yasukuni offering and Defense Minister Koizumi's shrine visit, with CGTN and Xinhua characterizing the actions as 'negative moves.' China also expressed support for Russia's position on the Kuril Islands. Japan separately",
-        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises and vowed stronger nuclear deterrence, per KCNA-sourced reporting; The Diplomat reports a new 700-km ballistic missile test amid sustained escalatory rhetoric specifically targeting Japan and the trilateral alliance f",
-        "russia_signal": "Putin's first-ever personal visit to Etorofu island in the Japan-claimed Northern Territories continues to dominate the Russia-Japan signal; Russia has formally rejected Japan's protest and sovereignty claims, former Security Council chair Medvedev threatened Japan with 'terrible consequences,' and "
-      },
-      "watch_flag": true
-    },
     "2026-08-16": {
       "signals": {
         "china_signal": "China's Defense Ministry spokesperson, CGTN, Global Times, and the Chinese embassy all issued formal protests against Defense Minister Koizumi's physical Yasukuni visit and Takaichi's ritual offering, with Beijing's embassy calling the moves a 'serious challenge to the postwar international order.' ",
@@ -475,7 +467,15 @@
         "russia_signal": "Russia's FSB arrested Hokkaido Shimbun reporter Yuki Imai in Sakhalin on espionage allegations, the most significant Russia-Japan bilateral incident in the current period; Japan is requesting information and impartial treatment and is reported to be summoning the Russian ambassador. The detention fo"
       },
       "watch_flag": true
+    },
+    "2026-10-15": {
+      "signals": {
+        "china_signal": "China's Global Times published pieces urging Japan's leadership to 'face history and break with the militarist past' following new Yasukuni shrine records; China's Foreign Ministry spokesperson also responded to reports of a Heilongjiang provincial delegation visiting a Russia-held island claimed by",
+        "dprk_signal": "North Korea test-fired two types of submarine-launched strategic cruise missiles in the Sea of Japan on Wednesday — confirmed by KCNA — marking the first underwater-launched missile tests in nearly three years; South Korea, the United States, and Japan held trilateral consultations in response, and ",
+        "russia_signal": "Russia's FSB arrested Hokkaido Shimbun reporter Yuki Imai in Sakhalin on espionage allegations; a Russian court ordered two months' pre-trial detention with potential sentence up to 20 years. Russia separately notified Japan of bombing drills in the Kuril Islands (Northern Territories), adding to bi"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-10-14T11:06:03.976521+00:00"
+  "last_updated": "2026-10-15T11:05:30.662184+00:00"
 }
