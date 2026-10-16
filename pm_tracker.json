@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-16",
+      "activity": "PM Takaichi held two press conferences — one on the resignation of Agriculture Minister Yana and one on ministerial appointments — and publicly denied Japan has conducted espionage activities in Russia.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-16T11:05:53.537564+00:00"
+    },
+    {
       "date": "2026-10-15",
       "activity": "PM Takaichi held a formal press conference on Agriculture Minister Yana's resignation, announced Arata Takebe as successor, and denied Japanese espionage in Russia in connection with the Hokkaido Shimbun journalist detention.",
       "source": "digest",
@@ -503,14 +510,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-21T11:46:32.660640+00:00"
-    },
-    {
-      "date": "2026-07-17",
-      "activity": "PM Takaichi stated publicly that GPIF investing in domestic assets is a key priority and that inter-party tax-cut talks are expected to conclude by early August, per Bloomberg and Nippon.com reporting.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-17T11:18:55.569712+00:00"
     }
   ],
-  "last_updated": "2026-10-15T11:05:30.661140+00:00"
+  "last_updated": "2026-10-16T11:05:53.537629+00:00"
 }
