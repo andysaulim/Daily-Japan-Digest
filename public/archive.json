@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-17",
+    "filename": "2026-10-17.html",
+    "re_line": "BOJ Ueda signals rate hikes \u00b7 Yasukuni offering draws Seoul/Beijing protest \u00b7 TSMC Kumamoto 3nm \u00b7 Russia journalist swap speculation \u00b7 False M9.9 alert",
+    "top_stories": 6,
+    "word_count": 1324
+  },
+  {
     "date": "2026-10-16",
     "filename": "2026-10-16.html",
     "re_line": "DPRK submarine missile test \u00b7 Okinawa Osprey reversal \u00b7 BOJ rate hike signal \u00b7 Farm minister replaced \u00b7 Yen FX warnings",

@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-17",
+      "activity": "PM Takaichi sent a ritual masakaki offering to Yasukuni Shrine for the autumn grand festival, skipping a personal visit, and is expected to continue the Diet's deliberations on the consumption tax cut bill.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-17T11:04:59.382596+00:00"
+    },
+    {
       "date": "2026-10-16",
       "activity": "PM Takaichi held two press conferences — one on the resignation of Agriculture Minister Yana and one on ministerial appointments — and publicly denied Japan has conducted espionage activities in Russia.",
       "source": "digest",
@@ -512,5 +519,5 @@
       "recorded_at": "2026-07-21T11:46:32.660640+00:00"
     }
   ],
-  "last_updated": "2026-10-16T11:05:53.537629+00:00"
+  "last_updated": "2026-10-17T11:04:59.382651+00:00"
 }
