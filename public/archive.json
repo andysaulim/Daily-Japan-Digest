@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-18",
+    "filename": "2026-10-18.html",
+    "re_line": "BOJ Ueda signals rate hikes \u00b7 Takaichi approval below 50% \u00b7 Keen Sword 27 \u00b7 DPRK AI torpedo \u00b7 Yasukuni fallout",
+    "top_stories": 6,
+    "word_count": 1271
+  },
+  {
     "date": "2026-10-17",
     "filename": "2026-10-17.html",
     "re_line": "BOJ Ueda signals rate hikes \u00b7 Yasukuni offering draws Seoul/Beijing protest \u00b7 TSMC Kumamoto 3nm \u00b7 Russia journalist swap speculation \u00b7 False M9.9 alert",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1960
-  },
-  {
-    "date": "2026-06-18",
-    "filename": "2026-06-18.html",
-    "top_stories": 4,
-    "overnight_items": 6,
-    "word_count": 2761
   }
 ]
