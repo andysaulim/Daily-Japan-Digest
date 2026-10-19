@@ -8,24 +8,24 @@
   },
   "asahi": {
     "pollster": "Asahi",
-    "approval": 51.0,
-    "disapproval": 33.0,
-    "as_of": "2026-09-28",
-    "poll_date": "Sep 28, 2026"
+    "approval": 50.0,
+    "disapproval": 35.0,
+    "as_of": "2026-10-19",
+    "poll_date": "Oct 19, 2026"
   },
   "ann": {
     "pollster": "ANN",
-    "approval": 58.3,
-    "disapproval": 27.6,
-    "as_of": "2026-09-23",
-    "poll_date": "Sep 23, 2026"
+    "approval": 47.1,
+    "disapproval": 33.3,
+    "as_of": "2026-10-19",
+    "poll_date": "Oct 19, 2026"
   },
   "kyodo": {
     "pollster": "Kyodo",
-    "approval": 53.4,
-    "disapproval": 30.9,
-    "as_of": "2026-09-23",
-    "poll_date": "Sep 23, 2026"
+    "approval": 49.1,
+    "disapproval": 33.0,
+    "as_of": "2026-10-19",
+    "poll_date": "Oct 19, 2026"
   },
   "mainichi": {
     "pollster": "Mainichi",
@@ -36,17 +36,17 @@
   },
   "yomiuri": {
     "pollster": "Yomiuri",
-    "approval": 59.0,
+    "approval": 57.0,
     "disapproval": 30.0,
-    "as_of": "2026-09-19",
-    "poll_date": "Sep 19, 2026"
+    "as_of": "2026-10-19",
+    "poll_date": "Oct 19, 2026"
   },
   "fnn": {
     "pollster": "FNN",
-    "approval": 61.6,
-    "disapproval": 32.2,
-    "as_of": "2026-09-15",
-    "poll_date": "Sep 15, 2026"
+    "approval": 62.6,
+    "disapproval": 32.3,
+    "as_of": "2026-10-19",
+    "poll_date": "Oct 19, 2026"
   },
   "nhk": {
     "pollster": "NHK",

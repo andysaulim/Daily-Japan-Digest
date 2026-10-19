@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-19": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson, cited by Global Times, Xinhua, and CGTN, condemned PM Takaichi's WWII memorial address for 'blurring Japan's responsibility for its acts of aggression' and called on the international community to 'jointly resist and stop dangerous moves by Japan's right-wing f",
-        "dprk_signal": "North Korea formally denounced upcoming US-South Korea combined military exercises via KCNA and vowed stronger nuclear deterrence; Defense Minister Koizumi separately urged vigilance and called US-ROK cooperation 'critical' for Japan's security, while the Japan Times reports Trump's DPRK diplomatic ",
-        "russia_signal": "Russia summoned Japan's ambassador in Moscow over PM Takaichi's 'anti-Russian' remarks and formally rejected US backing for Japan's Northern Territories position; Russian Foreign Ministry spokesperson Zakharova responded directly to the US statement, and Russia lodged a formal protest with Japan's a"
-      },
-      "watch_flag": false
-    },
     "2026-08-20": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson publicly aligned with Russian Foreign Minister Lavrov's remarks on Japan per Xinhua, and CGTN reported China's call for international 'vigilance against Japan's right-wing forces' — deepening the China-Russia joint posture against Tokyo across both the Northern ",
@@ -475,7 +467,15 @@
         "russia_signal": "The Hokkaido Shimbun formally denied that its reporter Yuki Imai, detained by Russia's FSB in Sakhalin on espionage allegations, was acting at the Japanese government's direction; Russia continues to deny consular access, and the case remains the most significant Russia-Japan bilateral incident in t"
       },
       "watch_flag": false
+    },
+    "2026-10-19": {
+      "signals": {
+        "china_signal": "China's Ministry of Foreign Affairs lodged a formal protest over PM Takaichi's monetary offering to Yasukuni and the visit by a second cabinet minister. State media Xinhua and Global Times issued coordinated condemnations, with Xinhua calling on Japan to 'confront its past' and Global Times labeling",
+        "dprk_signal": "KCNA confirmed a successful test of the 'Zam-2.0' AI-assisted high-speed torpedo system, consistent with tracker data from October 17-18. The test adds an autonomous underwater strike dimension to North Korea's October weapons-testing campaign, which has already included submarine-launched cruise mi",
+        "russia_signal": "On the 70th anniversary of the 1956 Japan-Soviet Joint Declaration, Japan reaffirmed pursuit of a territorial solution while Russia maintains its position that the dispute is settled; FSB continues to deny consular access to detained Hokkaido Shimbun reporter Yuki Imai. A Nikkei Asia interview with "
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-18T11:04:56.506544+00:00"
+  "last_updated": "2026-10-19T11:05:23.370098+00:00"
 }

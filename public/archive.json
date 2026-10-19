@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-19",
+    "filename": "2026-10-19.html",
+    "re_line": "Takaichi approval hits record low 49.1% \u00b7 BOJ Ueda signals inflation near 2% \u00b7 Yasukuni offerings draw China protest \u00b7 Japan-Russia territorial talks at 70yr mark \u00b7 MMX Mars mission launch",
+    "top_stories": 6,
+    "word_count": 1326
+  },
+  {
     "date": "2026-10-18",
     "filename": "2026-10-18.html",
     "re_line": "BOJ Ueda signals rate hikes \u00b7 Takaichi approval below 50% \u00b7 Keen Sword 27 \u00b7 DPRK AI torpedo \u00b7 Yasukuni fallout",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1680
-  },
-  {
-    "date": "2026-06-19",
-    "filename": "2026-06-19.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1960
   }
 ]
