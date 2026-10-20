@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-20": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson publicly aligned with Russian Foreign Minister Lavrov's remarks on Japan per Xinhua, and CGTN reported China's call for international 'vigilance against Japan's right-wing forces' — deepening the China-Russia joint posture against Tokyo across both the Northern ",
-        "dprk_signal": "North Korea fired approximately 10 short-range ballistic missiles from the Pyongyang area toward the Sea of Japan on August 20, hours after President Trump announced plans to meet Kim Jong Un later this year; Japan's Defense Ministry confirmed the launches, which landed outside Japan's EEZ, and Defe",
-        "russia_signal": "Russia summoned Japan's ambassador in Moscow, rejected US backing for Japan's Northern Territories position (Russian MFA spokesperson Zakharova responding directly to the US statement), and China publicly aligned with Moscow's position — a continuation of the diplomatic escalation triggered by Putin"
-      },
-      "watch_flag": true
-    },
     "2026-08-21": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson publicly aligned with Russian Foreign Minister Lavrov's remarks on Japan, and CGTN continued to call for international 'vigilance against Japan's right-wing forces,' sustaining the China-Russia joint posture against Tokyo. A separate China MOFA message urged Jap",
@@ -475,7 +467,15 @@
         "russia_signal": "On the 70th anniversary of the 1956 Japan-Soviet Joint Declaration, Japan reaffirmed pursuit of a territorial solution while Russia maintains its position that the dispute is settled; FSB continues to deny consular access to detained Hokkaido Shimbun reporter Yuki Imai. A Nikkei Asia interview with "
       },
       "watch_flag": false
+    },
+    "2026-10-20": {
+      "signals": {
+        "china_signal": "Tokyo asked the US to help persuade Beijing to ease a chokehold on yttrium, warning Japan is 'months' from running out of the critical rare earth and risking a manufacturing shutdown. A China-linked AI agent was separately identified as being used in cyberattacks on Japanese firms, and Chinese state",
+        "dprk_signal": "Seoul vowed 'resolute punishment' after North Korea threatened new border measures, per the Japan Times; no new missile launch toward Japan was reported in today's data.",
+        "russia_signal": "Japan criticized Russia over its handling of detained Hokkaido Shimbun reporter Yuki Imai and slammed the lack of consular access; an ex-detainee told Nikkei that Russia wants something in return for the journalist. On the 70th anniversary of the 1956 Japan-Soviet Joint Declaration, Tokyo reaffirmed"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-19T11:05:23.370098+00:00"
+  "last_updated": "2026-10-20T11:10:27.419285+00:00"
 }
