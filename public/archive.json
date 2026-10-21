@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-21",
+    "filename": "2026-10-21.html",
+    "re_line": "Takaichi year-1 \u00b7 September trade deficit \u00b7 BOJ Oct hold expected \u00b7 Quad summit Nov \u00b7 China AI hacks \u00b7 Typhoon Champi",
+    "top_stories": 6,
+    "word_count": 1374
+  },
+  {
     "date": "2026-10-20",
     "filename": "2026-10-20.html",
     "re_line": "BOJ holds, hints hikes \u00b7 $550B chip split \u00b7 Japan-US island drills \u00b7 rare-earth squeeze \u00b7 Takaichi approval slips",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1739
-  },
-  {
-    "date": "2026-06-21",
-    "filename": "2026-06-21.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1268
   }
 ]
