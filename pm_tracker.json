@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-22",
+      "activity": "Prime Minister Takaichi pressed the BOJ to buy more bonds via public statement, met Yokohama's mayor to coordinate on the 2027 horticultural expo, and issued an urgent social-media advisory on PHP cybersecurity vulnerabilities.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-22T11:06:54.874038+00:00"
+    },
+    {
       "date": "2026-10-21",
       "activity": "PM Takaichi marks one year in office; Chief Cabinet Secretary Kihara stated at the morning press conference that the government has steadily delivered on its pledges, while Diet debate on the food consumption tax cut continued.",
       "source": "digest",
@@ -524,14 +531,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-24T11:35:13.672530+00:00"
-    },
-    {
-      "date": "2026-07-23",
-      "activity": "Chief Cabinet Secretary Kihara defended PM Takaichi's sleep schedule in morning press conferences on July 22 and July 23, and PM Takaichi's aide submitted a statement in the smear-video scandal, with Takaichi-attributed actions continuing to generate domestic political coverage.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-23T11:51:11.706951+00:00"
     }
   ],
-  "last_updated": "2026-10-21T11:06:21.796790+00:00"
+  "last_updated": "2026-10-22T11:06:54.874084+00:00"
 }
