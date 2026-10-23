@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-23",
+      "activity": "PM Takaichi instructed METI Minister Akazawa to review and scale back gasoline subsidies from December, adding a fiscal policy directive to her cybersecurity-related public communications this week.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-23T11:05:43.781555+00:00"
+    },
+    {
       "date": "2026-10-22",
       "activity": "Prime Minister Takaichi pressed the BOJ to buy more bonds via public statement, met Yokohama's mayor to coordinate on the 2027 horticultural expo, and issued an urgent social-media advisory on PHP cybersecurity vulnerabilities.",
       "source": "digest",
@@ -524,14 +531,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-25T11:06:42.109068+00:00"
-    },
-    {
-      "date": "2026-07-24",
-      "activity": "PM Takaichi met with chairpersons of prefectural assemblies at the Prime Minister's Office on July 24.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-24T11:35:13.672530+00:00"
     }
   ],
-  "last_updated": "2026-10-22T11:06:54.874084+00:00"
+  "last_updated": "2026-10-23T11:05:43.781617+00:00"
 }

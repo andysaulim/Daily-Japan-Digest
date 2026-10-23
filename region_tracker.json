@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-23": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Lin Jian held a regular press conference on August 21 addressing Japan-related topics; separately, China formalized 'war criminals shrine' as its official state designation for Yasukuni Shrine per The Straits Times, marking a rhetorical escalation sustained from",
-        "dprk_signal": "North Korea formally denounced Japan's $56 billion record defense budget as 'extremely dangerous expansion of war spending' and threatened a counterattack; the US, Japan, and South Korea convened trilateral consultations urging Pyongyang to halt provocations following the August 20 multi-missile lau",
-        "russia_signal": "No new acute Russia-Japan territorial or military incident reported in today's Tier 4 or Tier 1 feed beyond the sustained diplomatic standoff over Putin's Etorofu visit and Russia's Pacific Fleet Bastion missile drill from the island on August 21."
-      },
-      "watch_flag": false
-    },
     "2026-08-24": {
       "signals": {
         "china_signal": "China formally adopted 'war criminals shrine' as its official state designation for Yasukuni Shrine, per The Straits Times, sharpening Beijing's rhetorical posture against Japan in a sustained escalation from the August 15-16 ministerial visits. China's Foreign Ministry continued to use the Japan-Be",
@@ -475,7 +467,15 @@
         "russia_signal": "Japan sent a senior diplomat to Moscow to press for consular access to detained Hokkaido Shimbun reporter Yuki Imai, held by Russia's FSB in Sakhalin on espionage allegations; Russia continues to deny consular access. TASS separately reported that Japanese companies are remaining in Russia while awa"
       },
       "watch_flag": false
+    },
+    "2026-10-23": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry—via CGTN and Global Times—reiterated that rare-earth export controls targeting Japan are designed to prevent Japanese 'remilitarization' and 'nuclear ambitions,' maintaining the framing that Beijing's supply restrictions are legitimate policy rather than economic coercion. T",
+        "dprk_signal": "Indo-Pacific Defense FORUM assessed that Japan-South Korea technology cooperation is reinforcing the US-Japan-ROK trilateral missile-tracking network, with North Korea's sustained missile-testing campaign continuing to serve as the operational driver for that trilateral integration.",
+        "russia_signal": "Nikkei Asia analysis published today examines how energy ties keep Japan-Russia relations 'hanging on by a thread,' with Japanese companies remaining in Russian energy projects while awaiting policy clarity; the detained Hokkaido Shimbun reporter Yuki Imai case continues as Russia denies consular ac"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-22T11:06:54.875032+00:00"
+  "last_updated": "2026-10-23T11:05:43.782669+00:00"
 }

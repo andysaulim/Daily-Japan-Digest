@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-23",
+    "filename": "2026-10-23.html",
+    "re_line": "Japan CPI tops 2% for first time in 2026 \u00b7 BOJ rate hold expected next week \u00b7 PHP cyber crisis \u00b7 Finland defense talks \u00b7 BYD Okinawa ban",
+    "top_stories": 6,
+    "word_count": 1320
+  },
+  {
     "date": "2026-10-22",
     "filename": "2026-10-22.html",
     "re_line": "PHP cyber crisis hits banks/gov't \u00b7 BOJ holds next week, Dec hike expected \u00b7 Typhoon disrupts Keen Sword \u00b7 Yttrium crunch deepens \u00b7 Takaichi year-two fiscal test",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1840
-  },
-  {
-    "date": "2026-06-23",
-    "filename": "2026-06-23.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1815
   }
 ]
