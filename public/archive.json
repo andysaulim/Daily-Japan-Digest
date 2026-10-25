@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-25",
+    "filename": "2026-10-25.html",
+    "re_line": "US Marine indicted Okinawa \u00b7 Kim visits China \u00b7 Imperial succession law \u00b7 Keen Sword 27 \u00b7 Takaichi EV push Germany",
+    "top_stories": 6,
+    "word_count": 1357
+  },
+  {
     "date": "2026-10-24",
     "filename": "2026-10-24.html",
     "re_line": "Imperial House Law takes effect \u00b7 BOJ 2% inflation threshold \u00b7 PHP cyber crisis \u00b7 Keen Sword 27 \u00b7 Takaichi year-one reviews",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 1990
-  },
-  {
-    "date": "2026-06-25",
-    "filename": "2026-06-25.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 928
   }
 ]

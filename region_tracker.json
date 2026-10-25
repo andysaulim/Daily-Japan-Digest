@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-25": {
-      "signals": {
-        "china_signal": "China formally adopted 'war criminals shrine' as its official state designation for Yasukuni Shrine, per Asia News Network, extending the rhetorical escalation that began around August 15. Cross-party Japanese lawmakers arrived in Beijing to seek diplomatic repair, with the bilateral relationship de",
-        "dprk_signal": "South China Morning Post reported on China's muted response to North Korea's most recent ballistic missile launches, with US-Japan-ROK trilateral consultations ongoing following the August 20 launches into the Sea of Japan that landed outside Japan's EEZ.",
-        "russia_signal": "PM Takaichi pledged to continue Russia sanctions at the Coalition of the Willing virtual summit, maintaining Tokyo's posture against Moscow amid the unresolved diplomatic standoff over Putin's Etorofu visit and the August 21 Bastion missile drill from the disputed island."
-      },
-      "watch_flag": false
-    },
     "2026-08-26": {
       "signals": {
         "china_signal": "No new Senkaku intrusion or CCG incident reported in today's feed. Japan's rare-earth diversification drive — including government funding for overseas rare-earth mining and a separate initiative to salvage rare earths using nuclear reprocessing technology — continues as Tokyo's structural hedge aga",
@@ -475,7 +467,15 @@
         "russia_signal": "Russia's FSB detention of Hokkaido Shimbun reporter Yuki Imai on espionage charges continues; the Panay News item confirms the arrest remains live. Nikkei Asia analysis concludes Japan-Russia ties are 'hanging on by a thread' with energy ties as the sole remaining binding element."
       },
       "watch_flag": false
+    },
+    "2026-10-25": {
+      "signals": {
+        "china_signal": "No new China Coast Guard or PLA activity near the Senkakus is reported in today's Tier 1 or Tier 4 data. China's sustained rare-earth export-control pressure on Japan — framed by Beijing as a response to Japanese 'remilitarization' — continues as the active economic-coercion vector from the prior we",
+        "dprk_signal": "Kim Jong Un entered China via a border bridge and met with Wang, China's fourth-ranked official, per Kyodo and South Korean media confirmed by NHK World. North Korea's Kim separately issued calls for a 'military revolution' to strengthen army units, per GMA Network, maintaining sustained militarist ",
+        "russia_signal": "Russia's FSB detention of Hokkaido Shimbun reporter Yuki Imai on espionage charges continues as confirmed by Panay News today, with Russia still denying consular access to Japan."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-24T11:04:45.154232+00:00"
+  "last_updated": "2026-10-25T11:05:00.855885+00:00"
 }
