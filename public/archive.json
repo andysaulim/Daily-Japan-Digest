@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-26",
+    "filename": "2026-10-26.html",
+    "re_line": "Fukuda dies at 90 \u00b7 BOJ holds this week \u00b7 US Marine indicted Okinawa \u00b7 China-Russia spy flights \u00b7 cyber surge",
+    "top_stories": 6,
+    "word_count": 1233
+  },
+  {
     "date": "2026-10-25",
     "filename": "2026-10-25.html",
     "re_line": "US Marine indicted Okinawa \u00b7 Kim visits China \u00b7 Imperial succession law \u00b7 Keen Sword 27 \u00b7 Takaichi EV push Germany",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 2105
-  },
-  {
-    "date": "2026-06-26",
-    "filename": "2026-06-26.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 1990
   }
 ]

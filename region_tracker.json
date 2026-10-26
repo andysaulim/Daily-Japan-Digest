@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-26": {
-      "signals": {
-        "china_signal": "No new Senkaku intrusion or CCG incident reported in today's feed. Japan's rare-earth diversification drive — including government funding for overseas rare-earth mining and a separate initiative to salvage rare earths using nuclear reprocessing technology — continues as Tokyo's structural hedge aga",
-        "dprk_signal": "North Korea confirmed it will send approximately 100 athletes to the Asian Games in Japan, per Japan Times, signaling a selective diplomatic opening; separately, DW.com reported a North Korean missile test ahead of US-South Korea drills, continuing the pattern of launches that followed the August 20",
-        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island continues as the baseline, with PM Takaichi having pledged continuation of Russia sanction"
-      },
-      "watch_flag": false
-    },
     "2026-08-27": {
       "signals": {
         "china_signal": "A Japanese cross-party lawmaker delegation — the first visit to Beijing since bilateral ties deteriorated following PM Takaichi's November Taiwan remarks — ended without breakthrough; China's Foreign Ministry stated only that 'relevant authorities' would release information on the meeting 'in due co",
@@ -475,7 +467,15 @@
         "russia_signal": "Russia's FSB detention of Hokkaido Shimbun reporter Yuki Imai on espionage charges continues as confirmed by Panay News today, with Russia still denying consular access to Japan."
       },
       "watch_flag": false
+    },
+    "2026-10-26": {
+      "signals": {
+        "china_signal": "Chinese intelligence aircraft escalated operations around Japan's periphery coinciding with a major US-led exercise, per Military Watch Magazine and The Defence Blog, continuing the joint China-Russia surveillance surge pattern. China's rare-earth and critical-mineral export-control pressure on Japa",
+        "dprk_signal": "KCNA via GMA Network denied that North Korea detonated a mine, claiming South Korea fabricated the incident; the statement is part of ongoing Korean Peninsula tensions but does not represent a new missile or nuclear signal directed at Japan today.",
+        "russia_signal": "Japan Times reports no progress in Tokyo's efforts to secure the release of Hokkaido Shimbun reporter Yuki Imai, held by Russia's FSB on espionage charges in Sakhalin; Russia has not softened its stance and continues to deny consular access, now confirmed for multiple consecutive weeks. Russian inte"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-25T11:05:00.855885+00:00"
+  "last_updated": "2026-10-26T11:18:01.067782+00:00"
 }

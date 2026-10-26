@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-26",
+      "activity": "PM Takaichi convened a national cybersecurity meeting amid surging attacks on Japanese companies and declared she will 'execute all response options including active cyber defense,' per Bloomberg and Asahi.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-26T11:18:01.066706+00:00"
+    },
+    {
       "date": "2026-10-24",
       "activity": "PM Takaichi directed METI Minister Akazawa to review gasoline subsidies and is confirmed active via Japan Today and Japan Times reporting on Oct. 24.",
       "source": "digest",
@@ -524,14 +531,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-28T11:53:45.594894+00:00"
-    },
-    {
-      "date": "2026-07-27",
-      "activity": "PM Takaichi stated Japan must exit excessively tight fiscal policy, defended the ¥340 trillion growth drive, confirmed no plans for a new imperial succession panel, and is scheduled to hold a press conference this evening.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-27T12:54:05.596904+00:00"
     }
   ],
-  "last_updated": "2026-10-24T11:04:45.153126+00:00"
+  "last_updated": "2026-10-26T11:18:01.066763+00:00"
 }
