@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-27",
+      "activity": "PM Takaichi convened a press conference on the passing of former PM Fukuda, directed the government to compile an emergency cybersecurity package by next week, and her active cyber defense posture statement was reported by Asahi and Kyodo.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-27T11:15:03.919506+00:00"
+    },
+    {
       "date": "2026-10-26",
       "activity": "PM Takaichi convened a national cybersecurity meeting amid surging attacks on Japanese companies and declared she will 'execute all response options including active cyber defense,' per Bloomberg and Asahi.",
       "source": "digest",
@@ -524,14 +531,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-29T11:57:22.108686+00:00"
-    },
-    {
-      "date": "2026-07-28",
-      "activity": "PM Takaichi vowed to submit a consumption tax cut bill promptly following the inter-party panel's collapse and stressed readiness to decide on a food tax cut.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-28T11:53:45.594894+00:00"
     }
   ],
-  "last_updated": "2026-10-26T11:18:01.066763+00:00"
+  "last_updated": "2026-10-27T11:15:03.919573+00:00"
 }
