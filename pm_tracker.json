@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-10-28",
+      "activity": "Prime Minister Takaichi held a press conference on the passing of former PM Fukuda and confirmed the Japan-Bangladesh Summit outcome including a 1 trillion yen investment plan.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-10-28T11:06:11.105506+00:00"
+    },
+    {
       "date": "2026-10-27",
       "activity": "PM Takaichi convened a press conference on the passing of former PM Fukuda, directed the government to compile an emergency cybersecurity package by next week, and her active cyber defense posture statement was reported by Asahi and Kyodo.",
       "source": "digest",
@@ -524,14 +531,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-07-30T11:50:02.454824+00:00"
-    },
-    {
-      "date": "2026-07-29",
-      "activity": "PM Takaichi held a press conference on the M7.1 Kumamoto earthquake, confirmed 13 deaths, convened the Emergency Headquarters for the 2026 Kumamoto Earthquake, and directed overnight rescue operations.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-07-29T11:57:22.108686+00:00"
     }
   ],
-  "last_updated": "2026-10-27T11:15:03.919573+00:00"
+  "last_updated": "2026-10-28T11:06:11.105557+00:00"
 }

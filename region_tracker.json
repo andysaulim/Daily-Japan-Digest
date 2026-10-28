@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-28": {
-      "signals": {
-        "china_signal": "A CCP official stated that China's policy toward Japan 'remains unchanged' following last week's cross-party Japanese lawmaker visit to Beijing — the first since bilateral ties deteriorated after PM Takaichi's November Taiwan remarks — with China's Foreign Ministry indicating 'relevant authorities' ",
-        "dprk_signal": "The US, South Korea, and Japan confirmed Freedom Edge 2026 will proceed in early September near Jeju Island, focused on nuclear and missile threat scenarios from North Korea; North Korea separately condemned a planned US arms sale to South Korea and vowed a 'powerful response,' extending its rhetori",
-        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline, with Foreign Minister Motegi departing Saturday for a four-country to"
-      },
-      "watch_flag": false
-    },
     "2026-08-29": {
       "signals": {
         "china_signal": "A CCP official stated China's policy toward Japan 'remains unchanged' following last week's cross-party Japanese lawmaker delegation to Beijing — the first visit since bilateral ties deteriorated after PM Takaichi's November Taiwan remarks — providing no signal of diplomatic breakthrough. China sepa",
@@ -475,7 +467,15 @@
         "russia_signal": "Japanese embassy staff in Moscow confirmed they met with detained Hokkaido Shimbun reporter Yuki Imai, confirming his well-being; Japan formally urged Russia to release him, but Russian authorities maintain espionage charges and continue to hold him in Sakhalin. The Economist assessed this week that"
       },
       "watch_flag": false
+    },
+    "2026-10-28": {
+      "signals": {
+        "china_signal": "Chinese President Xi Jinping sent condolences over former PM Fukuda's death, calling on Japan via Reuters to 'protect the political foundation' of bilateral ties — diplomatic language directed at Tokyo's pro-engagement faction at a moment of bilateral friction over rare earths and Japan's defense bu",
+        "dprk_signal": "Japan conducted its first public live-fire drill with the Type-25 anti-ship missile — a long-range system within range of North Korean territory — per Asia News Network and UPI, signaling Japan's counterstrike capability has moved from procurement to operational demonstration. ASPI analysis warns th",
+        "russia_signal": "Moscow's foreign ministry called on Tokyo to drop what it described as 'unfriendly policies' per TASS, maintaining pressure on Japan at a moment when the detained Hokkaido Shimbun reporter Yuki Imai case remains unresolved. Japanese journalists, including prominent figures, issued a protest statemen"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-27T11:15:03.920696+00:00"
+  "last_updated": "2026-10-28T11:06:11.106512+00:00"
 }
