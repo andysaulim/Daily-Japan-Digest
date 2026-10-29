@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-29",
+    "filename": "2026-10-29.html",
+    "re_line": "DPRK fires ~12 SRBMs \u00b7 US-Japan missile co-production \u00b7 Koizumi at J-ASEAN/ADMM \u00b7 Japan-Germany summit \u00b7 BOJ holds \u00b7 Sanrio-China row",
+    "top_stories": 6,
+    "word_count": 1526
+  },
+  {
     "date": "2026-10-28",
     "filename": "2026-10-28.html",
     "re_line": "Koizumi-Hegseth bilateral \u00b7 BOJ hold expected \u00b7 Takaichi-Merz tech pact \u00b7 GMO cyberattack \u00b7 Lower House seat cuts",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 2072
-  },
-  {
-    "date": "2026-06-29",
-    "filename": "2026-06-29.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 2024
   }
 ]
