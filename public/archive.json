@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-30",
+    "filename": "2026-10-30.html",
+    "re_line": "BOJ hits 2% inflation target \u00b7 US-Japan joint missile facility \u00b7 DPRK fires ~10 SRBMs \u00b7 Koizumi at ADMM-Plus \u00b7 Fuel subsidy rollback",
+    "top_stories": 5,
+    "word_count": 1433
+  },
+  {
     "date": "2026-10-29",
     "filename": "2026-10-29.html",
     "re_line": "DPRK fires ~12 SRBMs \u00b7 US-Japan missile co-production \u00b7 Koizumi at J-ASEAN/ADMM \u00b7 Japan-Germany summit \u00b7 BOJ holds \u00b7 Sanrio-China row",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 2216
-  },
-  {
-    "date": "2026-06-30",
-    "filename": "2026-06-30.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 2072
   }
 ]

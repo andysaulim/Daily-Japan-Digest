@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-30": {
-      "signals": {
-        "china_signal": "No new Senkaku intrusion or CCG incident reported in today's Tier 1 or Tier 4 feed. The sustained diplomatic standoff following PM Takaichi's November Taiwan remarks and China's formal adoption of 'war criminals shrine' as its official designation for Yasukuni Shrine remain the baseline; the cross-p",
-        "dprk_signal": "Kim Jong Un dismissed defense minister No Kwang Chol in a military shake-up immediately before Freedom Edge 2026 US-Japan-ROK trilateral exercises are scheduled to begin September 7; a North Korean provocation in the exercise window is a recognized pattern from prior trilateral drill cycles.",
-        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline."
-      },
-      "watch_flag": false
-    },
     "2026-08-31": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson demanded Japan 'severely punish' the SDF officer who intruded into the Chinese embassy compound following his dismissal, with both Global Times and Xinhua carrying the demand — extending Beijing's pressure posture toward Tokyo. No new Senkaku CCG intrusion was r",
@@ -475,7 +467,15 @@
         "russia_signal": "No new Russia-specific signal toward Japan in today's Tier 1 or Tier 4 data beyond the persistent baseline of the Hokkaido Shimbun reporter Yuki Imai's detention and Moscow's standing demand that Tokyo drop 'unfriendly policies.'"
       },
       "watch_flag": true
+    },
+    "2026-10-30": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry urged 'vigilance against forces in Japan smearing China through cultural products' in direct response to the Japanese spy drama 'Vivant,' per Xinhua and CGTN — escalating state-media pressure on Japanese cultural exports into official diplomatic language. Separately, the NYT",
+        "dprk_signal": "North Korea fired approximately ten short-range ballistic missiles toward the Sea of Japan from the Wonsan area on October 29-30, with the projectiles landing outside Japan's EEZ per South Korean and Japanese defense assessments. The salvo — described by multiple outlets as among the largest in rece",
+        "russia_signal": "The Japan Times editorial board called on Tokyo to press Moscow harder over the detention of Hokkaido Shimbun reporter Yuki Imai on espionage charges in Sakhalin, with Russian consular access still denied and no resolution in sight. No new military or territorial signal from Russia toward Japan in t"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-29T11:07:09.140425+00:00"
+  "last_updated": "2026-10-30T11:06:33.407093+00:00"
 }
