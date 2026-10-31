@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-08-31": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson demanded Japan 'severely punish' the SDF officer who intruded into the Chinese embassy compound following his dismissal, with both Global Times and Xinhua carrying the demand — extending Beijing's pressure posture toward Tokyo. No new Senkaku CCG intrusion was r",
-        "dprk_signal": "North Korea's KCNA officially labeled Freedom Edge 2026 a 'threat' and Kim Jong Un dismissed Defense Minister No Kwang Chol in a military reshuffle days before the September 7 exercise start near Jeju Island; separately, an expert flagged that falsified data could trigger Japan's J-Alert emergency w",
-        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline."
-      },
-      "watch_flag": false
-    },
     "2026-09-01": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson demanded Japan 'severely punish' the SDF officer who intruded into the Chinese embassy compound following his dismissal, with both Global Times and Xinhua amplifying the demand — extending Beijing's public pressure posture toward Tokyo and keeping the embassy in",
@@ -475,7 +467,15 @@
         "russia_signal": "The Japan Times editorial board called on Tokyo to press Moscow harder over the detention of Hokkaido Shimbun reporter Yuki Imai on espionage charges in Sakhalin, with Russian consular access still denied and no resolution in sight. No new military or territorial signal from Russia toward Japan in t"
       },
       "watch_flag": false
+    },
+    "2026-10-31": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry, via Xinhua and CGTN, urged 'vigilance against forces in Japan smearing China through cultural products' — a continued escalation of Beijing's state-media pressure campaign targeting Japanese cultural exports into official diplomatic language. Separately, the Global Times re",
+        "dprk_signal": "North Korea fired approximately ten ballistic missiles into the Sea of Japan on October 29-30, with projectiles assessed as landing outside Japan's EEZ per South Korean and Japanese defense authorities; the salvo — described as among the largest in recent months — was met with a phone consultation a",
+        "russia_signal": "Foreign Minister Motegi met Russian FM Lavrov in Atlanta on October 31 in a rare high-level bilateral contact and formally demanded the release of Hokkaido Shimbun reporter Yuki Imai, held by Russia's FSB on espionage charges in Sakhalin with consular access still denied. TASS confirmed the meeting "
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-30T11:06:33.407093+00:00"
+  "last_updated": "2026-10-31T11:05:57.234241+00:00"
 }

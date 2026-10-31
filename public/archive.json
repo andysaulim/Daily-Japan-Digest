@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-10-31",
+    "filename": "2026-10-31.html",
+    "re_line": "BOJ declares inflation target reached, holds rates \u00b7 US-Japan-ROK FMs vow DPRK denuclearization \u00b7 Motegi presses Lavrov on detained journalist \u00b7 Japan security strategy may soften China label",
+    "top_stories": 6,
+    "word_count": 1517
+  },
+  {
     "date": "2026-10-30",
     "filename": "2026-10-30.html",
     "re_line": "BOJ hits 2% inflation target \u00b7 US-Japan joint missile facility \u00b7 DPRK fires ~10 SRBMs \u00b7 Koizumi at ADMM-Plus \u00b7 Fuel subsidy rollback",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 2079
-  },
-  {
-    "date": "2026-07-01",
-    "filename": "2026-07-01.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 2216
   }
 ]
