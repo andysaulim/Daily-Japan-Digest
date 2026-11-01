@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-01",
+    "filename": "2026-11-01.html",
+    "re_line": "BOJ declares 2% inflation 'generally achieved' \u00b7 DPRK cluster-warhead test \u00b7 Quad FM joint statement \u00b7 GCAP Germany question \u00b7 Tax-bill Diet standoff",
+    "top_stories": 5,
+    "word_count": 1288
+  },
+  {
     "date": "2026-10-31",
     "filename": "2026-10-31.html",
     "re_line": "BOJ declares inflation target reached, holds rates \u00b7 US-Japan-ROK FMs vow DPRK denuclearization \u00b7 Motegi presses Lavrov on detained journalist \u00b7 Japan security strategy may soften China label",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1977
-  },
-  {
-    "date": "2026-07-02",
-    "filename": "2026-07-02.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 2079
   }
 ]

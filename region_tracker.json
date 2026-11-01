@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-01": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson demanded Japan 'severely punish' the SDF officer who intruded into the Chinese embassy compound following his dismissal, with both Global Times and Xinhua amplifying the demand — extending Beijing's public pressure posture toward Tokyo and keeping the embassy in",
-        "dprk_signal": "North Korea conducted a missile test ahead of the scheduled start of US-South Korea exercises, per DW, and KCNA labeled Freedom Edge 2026 — set to begin September 7 near Jeju Island — a 'threat'; South Korea confirmed the trilateral US-Japan-ROK drills will proceed unchanged; North Korea separately ",
-        "russia_signal": "No new acute Russia-Japan territorial or military incident reported today; the sustained diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed island remain the baseline."
-      },
-      "watch_flag": false
-    },
     "2026-09-02": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson, per Xinhua, again urged Japan to bring the SDF officer who intruded into the Chinese embassy compound 'to account,' extending Beijing's sustained public pressure posture toward Tokyo; the demand follows the officer's dismissal and continues the pattern of daily",
@@ -475,7 +467,15 @@
         "russia_signal": "Foreign Minister Motegi met Russian FM Lavrov in Atlanta on October 31 in a rare high-level bilateral contact and formally demanded the release of Hokkaido Shimbun reporter Yuki Imai, held by Russia's FSB on espionage charges in Sakhalin with consular access still denied. TASS confirmed the meeting "
       },
       "watch_flag": false
+    },
+    "2026-11-01": {
+      "signals": {
+        "china_signal": "Global Times published a piece citing an unnamed expert calling the US-Japan-ROK coordination framework evidence of 'strategic anxiety' and claiming it 'could undermine regional stability under the guise of stability maintenance' — Beijing's standard framing against trilateral alliance deepening. No",
+        "dprk_signal": "North Korea tested a new cluster-munition warhead for tactical ballistic missiles, with Kim Jong Un observing; KCNA claimed the system can destroy *130 hectares* and vowed to field multiple variants by year-end. USNI News also reported a coordinated Russia-North Korea missile test in the Western Pac",
+        "russia_signal": "Former residents of the Northern Territories conducted an aerial memorial flight near the disputed islands, which has become necessary because Russia and Japan have suspended exchange programs; no new Russian military activity near Hokkaido or the Sea of Okhotsk is reported in today's data. The Mote"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-10-31T11:05:57.234241+00:00"
+  "last_updated": "2026-11-01T12:05:19.185953+00:00"
 }
