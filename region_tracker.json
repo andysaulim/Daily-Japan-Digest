@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-04": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry, amplified by Global Times, stated that China and 'peace-loving countries' will act to curb Japan's defense expansion, framing it as 'neo-militarism under the guise of national normalization' — the latest iteration of a sustained public pressure campaign running through Augu",
-        "dprk_signal": "No new North Korean missile launch or KCNA statement specifically targeting Japan was reported in today's articles; Freedom Edge 2026 trilateral exercises remain scheduled to begin September 7 near Jeju Island despite DPRK's prior 'threat' labeling.",
-        "russia_signal": "Russian President Putin publicly lauded tax break programs in the Russian-administered islands claimed by Japan as the Northern Territories, deepening Moscow's administrative integration posture and extending the diplomatic standoff with Tokyo following Putin's Etorofu visit and the August 21 Bastio"
-      },
-      "watch_flag": false
-    },
     "2026-09-05": {
       "signals": {
         "china_signal": "The sustained Chinese Foreign Ministry pressure campaign framing Japan's defense buildup as 'neo-militarism under the guise of national normalization' continues from prior days; RBC-Ukraine reporting on Japan's special weapons development references the China threat vector. No new Senkaku CCG intrus",
@@ -467,7 +459,15 @@
         "russia_signal": "Russia's parliament speaker expressed concern over Japan's 'accelerated remilitarization,' per TASS — a standing rhetorical signal that does not represent new operational or territorial pressure. No new Russian military activity near Hokkaido or the Sea of Okhotsk is reported in today's data; the Ho"
       },
       "watch_flag": false
+    },
+    "2026-11-04": {
+      "signals": {
+        "china_signal": "Japan's Defense Ministry reported spotting a Chinese WZ-7 high-altitude reconnaissance drone transiting the Miyako Strait, a key chokepoint in the Nansei island chain; Beijing dismissed Japanese concern, calling such transits normal. No new China Coast Guard or PLA vessel activity in the Senkaku ter",
+        "dprk_signal": "North Korea confirmed via KCNA a test of a strategic cruise missile fitted with a cluster-dispersal warhead claimed to devastate *six hectares* per strike — its fourth weapons launch in a month and the first confirmed cruise missile cluster-warhead test — while separately firing multiple projectiles",
+        "russia_signal": "No new Russian military or territorial signal toward Japan is reported in today's Tier 1 or Tier 4 data beyond the persistent baseline; the Hokkaido Shimbun reporter Yuki Imai detention case in Sakhalin remains unresolved."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-03T12:07:14.250943+00:00"
+  "last_updated": "2026-11-04T12:04:55.776666+00:00"
 }
