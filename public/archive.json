@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-05",
+    "filename": "2026-11-05.html",
+    "re_line": "BOJ Sept minutes signal faster hikes \u00b7 US midterm 'blue wave' rattles Tokyo \u00b7 DPRK tests SAM + cruise missile \u00b7 China blocks SoftBank deal \u00b7 Quad Malabar begins",
+    "top_stories": 6,
+    "word_count": 1578
+  },
+  {
     "date": "2026-11-04",
     "filename": "2026-11-04.html",
     "re_line": "US midterms shift Tokyo calculus \u00b7 DPRK cluster-warhead cruise missile test \u00b7 Nikkei sinks \u00b7 food tax bill at crossroads",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 2591
-  },
-  {
-    "date": "2026-07-06",
-    "filename": "2026-07-06.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 2135
   }
 ]

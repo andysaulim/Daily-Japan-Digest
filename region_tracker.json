@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-05": {
-      "signals": {
-        "china_signal": "The sustained Chinese Foreign Ministry pressure campaign framing Japan's defense buildup as 'neo-militarism under the guise of national normalization' continues from prior days; RBC-Ukraine reporting on Japan's special weapons development references the China threat vector. No new Senkaku CCG intrus",
-        "dprk_signal": "Freedom Edge 2026 US-Japan-ROK trilateral exercises are set to begin September 7 near Jeju Island, with North Korea having labeled them a 'threat'; no new missile launch or KCNA statement specifically targeting Japan appears in today's articles.",
-        "russia_signal": "No new acute Russia-Japan territorial or military incident appears in today's articles; the baseline diplomatic standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territories islands continues."
-      },
-      "watch_flag": false
-    },
     "2026-09-06": {
       "signals": {
         "china_signal": "No new Senkaku CCG intrusion or acute China-Japan incident appears in today's articles. The sustained China Foreign Ministry pressure campaign framing Japan's defense buildup as 'neo-militarism' continues as the standing baseline from prior days; no new escalatory statement specifically targeting Ja",
@@ -467,7 +459,15 @@
         "russia_signal": "No new Russian military or territorial signal toward Japan is reported in today's Tier 1 or Tier 4 data beyond the persistent baseline; the Hokkaido Shimbun reporter Yuki Imai detention case in Sakhalin remains unresolved."
       },
       "watch_flag": false
+    },
+    "2026-11-05": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson, via Global Times, stated that Japan's plan to revise its Three Strategic Documents 'lays bare ambition to speed up remilitarization' and poses 'a serious threat to the Asia-Pacific region' — Beijing's sharpest official framing yet of the 2026 security-document ",
+        "dprk_signal": "North Korea confirmed via KCNA that it test-fired a 'newly designed' advanced air-defense missile system on Wednesday — described by multiple outlets as resembling Russia's S-400 — and separately conducted a strike drill with a strategic cruise missile (Hwasal-1) fitted with a cluster-dispersal warh",
+        "russia_signal": "No new Russian military or territorial signal toward Japan is reported in today's data beyond the persistent baseline; the detention of Hokkaido Shimbun reporter Yuki Imai by Russia's FSB in Sakhalin on espionage charges remains unresolved with consular access still denied."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-04T12:04:55.776666+00:00"
+  "last_updated": "2026-11-05T12:05:56.287451+00:00"
 }
