@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-06": {
-      "signals": {
-        "china_signal": "No new Senkaku CCG intrusion or acute China-Japan incident appears in today's articles. The sustained China Foreign Ministry pressure campaign framing Japan's defense buildup as 'neo-militarism' continues as the standing baseline from prior days; no new escalatory statement specifically targeting Ja",
-        "dprk_signal": "Freedom Edge 2026 US-Japan-ROK trilateral exercises are set to begin September 7 near Jeju Island; no new DPRK missile launch or KCNA statement specifically targeting Japan appears in today's articles, though North Korea's prior 'threat' labeling of the exercises remains the active baseline.",
-        "russia_signal": "Jiji Press reports a statue depicting destruction of a Japanese symbol has been displayed in Russia, extending the pattern of Russian symbolic-provocation activity; the baseline standoff over Putin's Etorofu visit and Russia's August 21 Bastion missile live-fire from the disputed Northern Territorie"
-      },
-      "watch_flag": false
-    },
     "2026-09-07": {
       "signals": {
         "china_signal": "Chinese Foreign Ministry Spokesperson Mao Ning held the regular September 7 press conference; no new acute Senkaku CCG intrusion or escalatory China-Japan incident appears in today's articles. The sustained Chinese Foreign Ministry framing of Japan's defense buildup as 'neo-militarism under the guis",
@@ -467,7 +459,15 @@
         "russia_signal": "No new Russian military or territorial signal toward Japan is reported in today's data beyond the persistent baseline; the detention of Hokkaido Shimbun reporter Yuki Imai by Russia's FSB in Sakhalin on espionage charges remains unresolved with consular access still denied."
       },
       "watch_flag": false
+    },
+    "2026-11-06": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson issued its sharpest framing to date of Japan's Three Strategic Documents review, stating via Xinhua that Japan's defense plans 'lay bare ambition to speed up remilitarization' and constitute a 'reckless' threat to regional peace — timed to the one-year anniversa",
+        "dprk_signal": "North Korea confirmed via KCNA a test of a 'newly designed' advanced air-defense missile system described by multiple outlets as resembling Russia's S-400, and separately conducted a strike drill with a Hwasal-1 strategic cruise missile fitted with a cluster-dispersal warhead targeting Riwon Airfiel",
+        "russia_signal": "Russia's seizure of Japan Tobacco's four manufacturing plants under presidential order represents a direct economic action against a major Japanese corporate asset in Russia, the most concrete bilateral escalation since the Hokkaido Shimbun journalist detention. Separately, Russia stated that detain"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-05T12:05:56.287451+00:00"
+  "last_updated": "2026-11-06T12:07:42.774180+00:00"
 }

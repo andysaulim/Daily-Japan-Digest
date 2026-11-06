@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-06",
+    "filename": "2026-11-06.html",
+    "re_line": "Russia seizes Japan Tobacco assets \u00b7 Nikkei plunges 6% on AI selloff \u00b7 BOJ December hike expected \u00b7 Consumption tax bill clears Lower House \u00b7 Okinawa Policy Council convenes \u00b7 China-Japan Taiwan row enters year two",
+    "top_stories": 6,
+    "word_count": 1497
+  },
+  {
     "date": "2026-11-05",
     "filename": "2026-11-05.html",
     "re_line": "BOJ Sept minutes signal faster hikes \u00b7 US midterm 'blue wave' rattles Tokyo \u00b7 DPRK tests SAM + cruise missile \u00b7 China blocks SoftBank deal \u00b7 Quad Malabar begins",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 2280
-  },
-  {
-    "date": "2026-07-07",
-    "filename": "2026-07-07.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 2591
   }
 ]
