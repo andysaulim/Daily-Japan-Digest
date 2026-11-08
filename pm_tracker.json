@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-08",
+      "activity": "PM Takaichi attended a Tokyo rally of families of North Korean abductees, where participants adopted a resolution demanding the immediate collective return of abductees.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-08T12:05:27.583251+00:00"
+    },
+    {
       "date": "2026-11-06",
       "activity": "Prime Minister Takaichi's emergency cybersecurity package was publicly released and she stated Japan is 'vigilant to market moves' and focused on boosting the economy amid the Nikkei selloff.",
       "source": "digest",
@@ -489,21 +496,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-08-11T10:44:42.540810+00:00"
-    },
-    {
-      "date": "2026-08-09",
-      "activity": "PM Takaichi attended and delivered remarks at the 81st Nagasaki atomic bombing memorial ceremony, again declining to give an explicit future commitment to the three non-nuclear principles.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-09T10:24:10.134718+00:00"
-    },
-    {
-      "date": "2026-08-08",
-      "activity": "PM Takaichi's office is implicitly active through Chief Cabinet Secretary Kihara's August 7 morning press conference and Japan's formal protest of North Korea's missile launch; no direct Takaichi appearance is confirmed in today's articles beyond the prior-day Hiroshima ceremony coverage.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-08T10:23:12.260171+00:00"
     }
   ],
-  "last_updated": "2026-11-06T12:07:42.773339+00:00"
+  "last_updated": "2026-11-08T12:05:27.583310+00:00"
 }

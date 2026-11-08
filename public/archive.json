@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-08",
+    "filename": "2026-11-08.html",
+    "re_line": "M5.7 quake injures 22 \u00b7 Russia expands JT asset seizure \u00b7 BOJ Ueda IMF inflation signals \u00b7 Vietnam PM visits \u00b7 LDP targets Ishiba",
+    "top_stories": 6,
+    "word_count": 1451
+  },
+  {
     "date": "2026-11-07",
     "filename": "2026-11-07.html",
     "re_line": "BOJ Ueda flags inflation upside risks at IMF \u00b7 Russia seizes JT assets \u00b7 China-Japan row enters year two \u00b7 Japan cybersecurity package \u00b7 G7 FM meeting ahead",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 1777
-  },
-  {
-    "date": "2026-07-09",
-    "filename": "2026-07-09.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 2122
   }
 ]

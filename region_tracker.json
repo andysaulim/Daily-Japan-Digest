@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-08": {
-      "signals": {
-        "china_signal": "China's Commerce Ministry imposed provisional anti-dumping measures on Japanese dichlorosilane, requiring cash deposits of up to 99.2% from Tuesday; Japan urged withdrawal and said it would assess impact on chip supply chains. Chinese Foreign Ministry Spokesperson Mao Ning held the September 7 regul",
-        "dprk_signal": "North Korea commissioned its second nuclear-capable Choe Hyon-class destroyer — the vessel that capsized on its May 2025 launch — with Kim Jong Un calling it part of Pyongyang's nuclear response system and vowing a nuclear-armed navy; the DPRK defense minister condemned the US-Japan-ROK Freedom Edge"
-      },
-      "watch_flag": false
-    },
     "2026-09-09": {
       "signals": {
         "china_signal": "The JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance aircraft flights, the most sustained recent streak of Chinese aerial surveillance activity near Japanese airspace. China's Foreign Ministry Spokesperson Mao Ning's September 8 press conference reiterated t",
@@ -467,7 +460,15 @@
         "russia_signal": "Russia's seizure of Japan Tobacco's manufacturing units under a Putin presidential order remains the dominant bilateral signal; Russia separately stated that detained Hokkaido Shimbun journalist Yuki Imai's fate 'hinges on the probe,' per Mainichi — continuing to deny a consular resolution timeline."
       },
       "watch_flag": false
+    },
+    "2026-11-08": {
+      "signals": {
+        "china_signal": "On the one-year anniversary of PM Takaichi's Taiwan remark, China's Foreign Ministry — via Global Times — stated that 'Japan bears full responsibility for strained ties,' maintaining maximum diplomatic pressure. China's Ministry of State Security separately published a warning citing data leaks at J",
+        "dprk_signal": "No new North Korean missile launches or EEZ splashdown activity toward Japan is reported in today's Tier 1 or Tier 4 data; the tracker carries forward DPRK's October 29-30 ballistic missile salvo and Kim Jong Un's November 7 Nampho Shipyard inspection as the most recent signals.",
+        "russia_signal": "President Putin signed orders expanding Russia's temporary administration to additional Japan Tobacco International manufacturing units; Japan formally demanded reversal via MOFA. The Hokkaido Shimbun journalist Yuki Imai's detention by Russia's FSB in Sakhalin on espionage charges remains unresolve"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-07T12:05:48.429731+00:00"
+  "last_updated": "2026-11-08T12:05:27.584305+00:00"
 }
