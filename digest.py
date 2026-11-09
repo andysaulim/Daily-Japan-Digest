@@ -692,6 +692,9 @@ def _check_content_minimums(digest: dict) -> list[str]:
     if word_count < 800:
         failures.append(f"WORD COUNT: {word_count} words (hard minimum 800)")
     top = len(digest.get("top_stories") or [])
+    # Stays at the 4-6 target: this drives RETRIES inside the model loop and
+    # never blocks a send, so aiming high here costs an attempt, not a brief.
+    # run.py's send gate is the one that must stay low.
     if top < 4:
         failures.append(f"TOP STORIES: {top} (minimum 4)")
     return failures

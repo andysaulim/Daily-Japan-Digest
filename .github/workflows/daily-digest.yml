@@ -235,14 +235,14 @@ jobs:
           # agrees with the hand-verified baseline on overlapping pollsters, else it
           # falls back to the baseline. Set repo variable TRUST_WIKI_POLLS=0 to disable.
           TRUST_WIKI_POLLS: ${{ vars.TRUST_WIKI_POLLS || '1' }}
-          TEST_SEND_TO: ${{ vars.TEST_SEND_TO || 'dmartin@csis.org' }}
+          TEST_SEND_TO: ${{ vars.TEST_SEND_TO || 'alim@csis.org' }}
         run: |
           if [ "${{ steps.guard.outputs.should_run }}" = "dry" ]; then
             echo "::notice::Push without a send tag — collection only."
             python run.py --dry-run
           elif [ "${{ steps.guard.outputs.should_run }}" = "test" ]; then
             echo "::notice::Push tagged [test-send] — full pipeline to the test address only."
-            python run.py --send-to "${TEST_SEND_TO:-dmartin@csis.org}" --no-archive
+            python run.py --send-to "${TEST_SEND_TO:-alim@csis.org}" --no-archive
           elif [ "${{ github.event_name }}" = "push" ]; then
             echo "::notice::Push tagged [live-send] — full pipeline, live send."
             # Not --force-send. The gate blocks a brief that failed validation
