@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-09",
+      "activity": "PM Takaichi is due to hold a summit with Vietnamese President To Lam in Tokyo today covering energy security, economic security, AI, and quantum technology cooperation.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-09T12:05:39.903368+00:00"
+    },
+    {
       "date": "2026-11-08",
       "activity": "PM Takaichi attended a Tokyo rally of families of North Korean abductees, where participants adopted a resolution demanding the immediate collective return of abductees.",
       "source": "digest",
@@ -498,5 +505,5 @@
       "recorded_at": "2026-08-11T10:44:42.540810+00:00"
     }
   ],
-  "last_updated": "2026-11-08T12:05:27.583310+00:00"
+  "last_updated": "2026-11-09T12:05:39.903404+00:00"
 }

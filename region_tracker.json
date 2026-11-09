@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-09": {
-      "signals": {
-        "china_signal": "The JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance aircraft flights, the most sustained recent streak of Chinese aerial surveillance activity near Japanese airspace. China's Foreign Ministry Spokesperson Mao Ning's September 8 press conference reiterated t",
-        "dprk_signal": "North Korea commissioned the Kang Kon, its second Choe Hyon-class 5,000-tonne guided-missile destroyer in 75 days — carrying 88 vertical launch cells — with Kim Jong Un declaring it integrated into Pyongyang's nuclear response system and pledging a nuclear-armed navy; North Korea's defense minister ",
-        "russia_signal": "The Kremlin formally rejected Tokyo's request to dismantle the WWII memorial statue in Khabarovsk depicting a Soviet soldier destroying a Japanese imperial border marker, extending the symbolic provocation standoff following President Putin's Etorofu visit and Russia's August 21 Bastion missile live"
-      },
-      "watch_flag": true
-    },
     "2026-09-10": {
       "signals": {
         "china_signal": "The JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance aircraft flights near Japanese airspace, extending the most sustained aerial surveillance streak in recent weeks. China's Global Times published two pieces rebutting Australia's ambassador to Japan's remar",
@@ -468,7 +460,15 @@
         "russia_signal": "President Putin signed orders expanding Russia's temporary administration to additional Japan Tobacco International manufacturing units; Japan formally demanded reversal via MOFA. The Hokkaido Shimbun journalist Yuki Imai's detention by Russia's FSB in Sakhalin on espionage charges remains unresolve"
       },
       "watch_flag": false
+    },
+    "2026-11-09": {
+      "signals": {
+        "china_signal": "Japanese government officials are conducting intensive behind-the-scenes diplomacy to secure even a brief Takaichi-Xi encounter at APEC in Beijing, with multiple outlets reporting Beijing has not confirmed a formal bilateral; Global Times simultaneously ran pieces labeling Japan's posture on China r",
+        "dprk_signal": "North Korea's weapons testing pace has surged to twice the rate of Trump's first term, per The Star; a separate Military Watch Magazine report highlighted North Korea's top air-defense system demonstrating long-range interception capabilities — systems that bear directly on Japan's missile-defense p",
+        "russia_signal": "Reuters reported Japan Tobacco shares were halted after Russia placed all JTI entities — not just manufacturing units — under temporary administration via a Putin presidential order, escalating the economic seizure of Japanese corporate assets in Russia beyond the scope reported last week."
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-08T12:05:27.584305+00:00"
+  "last_updated": "2026-11-09T12:05:39.904122+00:00"
 }

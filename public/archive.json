@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-09",
+    "filename": "2026-11-09.html",
+    "re_line": "APEC Xi-snub risk \u00b7 Japan-Vietnam summit \u00b7 JTI Russia seizure \u00b7 LDP discipline \u00b7 FX intervention data \u00b7 Nikkei bounce \u00b7 JSR deal",
+    "top_stories": 6,
+    "word_count": 1380
+  },
+  {
     "date": "2026-11-08",
     "filename": "2026-11-08.html",
     "re_line": "M5.7 quake injures 22 \u00b7 Russia expands JT asset seizure \u00b7 BOJ Ueda IMF inflation signals \u00b7 Vietnam PM visits \u00b7 LDP targets Ishiba",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1662
-  },
-  {
-    "date": "2026-07-10",
-    "filename": "2026-07-10.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 1777
   }
 ]
