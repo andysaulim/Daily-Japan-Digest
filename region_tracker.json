@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-10": {
-      "signals": {
-        "china_signal": "The JASDF scrambled fighters for a fifth consecutive day in response to Chinese reconnaissance aircraft flights near Japanese airspace, extending the most sustained aerial surveillance streak in recent weeks. China's Global Times published two pieces rebutting Australia's ambassador to Japan's remar",
-        "dprk_signal": "North Korea commissioned the Kang Kon, its second Choe Hyon-class 5,000-tonne guided-missile destroyer carrying *88 vertical launch cells*, within roughly two months of the first commissioning, with Kim Jong Un declaring both vessels integrated into Pyongyang's nuclear response system and pledging t",
-        "russia_signal": "Russia's Foreign Ministry formally rejected Japan's demand to remove the Khabarovsk memorial statue depicting destruction of a Japanese imperial border marker, telling Japan to stay out of Russian internal affairs per Jiji Press reporting. Japan separately demanded correction of the Equal Earth map'"
-      },
-      "watch_flag": false
-    },
     "2026-09-11": {
       "signals": {
         "china_signal": "China's Foreign Ministry confirmed Beijing raised visa fees for Japanese citizens on reciprocity grounds, the latest in an accelerating sequence of economic-pressure measures following September's anti-dumping levies on Japanese dichlorosilane. Russia separately screened a Soviet anti-Japan WWII doc",
@@ -468,7 +460,15 @@
         "russia_signal": "Reuters reported Japan Tobacco shares were halted after Russia placed all JTI entities — not just manufacturing units — under temporary administration via a Putin presidential order, escalating the economic seizure of Japanese corporate assets in Russia beyond the scope reported last week."
       },
       "watch_flag": false
+    },
+    "2026-11-10": {
+      "signals": {
+        "china_signal": "Global Times published an editorial mocking Japan's concern about a potential 'snub' by President Xi at APEC, stating 'Tokyo has a guilty conscience,' maintaining maximum diplomatic pressure as Japan works behind the scenes to secure even a brief Takaichi-Xi encounter on the sidelines. A separate Gl",
+        "dprk_signal": "North Korea tested a new high-speed torpedo system and claimed plans to deploy it early next year, per Stars and Stripes and multiple outlets; Military Watch Magazine separately reported that North Korea's top air-defense system, the Pyongae-6, demonstrated long-range interception capabilities with ",
+        "russia_signal": "No new Russian military or territorial signal toward Japan is reported in today's Tier 1 or Tier 4 data beyond the persistent baseline; the ongoing Russia seizure of Japan Tobacco International assets and the detention of Hokkaido Shimbun journalist Yuki Imai by Russia's FSB in Sakhalin remain unres"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-09T12:05:39.904122+00:00"
+  "last_updated": "2026-11-10T12:06:09.612449+00:00"
 }

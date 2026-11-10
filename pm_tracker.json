@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-10",
+      "activity": "PM Takaichi participated in a France-hosted online G7 AI security meeting, calling for international coordination on AI safety, and the Kantei published the Japan-Vietnam summit summary from yesterday's meeting with President To Lam.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-10T12:06:09.611397+00:00"
+    },
+    {
       "date": "2026-11-09",
       "activity": "PM Takaichi is due to hold a summit with Vietnamese President To Lam in Tokyo today covering energy security, economic security, AI, and quantum technology cooperation.",
       "source": "digest",
@@ -496,14 +503,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-08-13T10:55:08.255396+00:00"
-    },
-    {
-      "date": "2026-08-11",
-      "activity": "PM Takaichi called on Oman to facilitate consultations among Strait of Hormuz-using countries and formally announced she will forgo all summer foreign travel to focus on Kumamoto earthquake response and domestic Diet business.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-11T10:44:42.540810+00:00"
     }
   ],
-  "last_updated": "2026-11-09T12:05:39.903404+00:00"
+  "last_updated": "2026-11-10T12:06:09.611453+00:00"
 }

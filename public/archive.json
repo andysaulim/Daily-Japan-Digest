@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-10",
+    "filename": "2026-11-10.html",
+    "re_line": "BOJ December hike likely \u00b7 Japan-Vietnam summit \u00b7 Rapidus delays \u00b7 Nuclear taboos debate \u00b7 Quad defense aid",
+    "top_stories": 6,
+    "word_count": 1499
+  },
+  {
     "date": "2026-11-09",
     "filename": "2026-11-09.html",
     "re_line": "APEC Xi-snub risk \u00b7 Japan-Vietnam summit \u00b7 JTI Russia seizure \u00b7 LDP discipline \u00b7 FX intervention data \u00b7 Nikkei bounce \u00b7 JSR deal",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1598
-  },
-  {
-    "date": "2026-07-11",
-    "filename": "2026-07-11.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1662
   }
 ]
