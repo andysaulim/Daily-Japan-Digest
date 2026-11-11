@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-11",
+      "activity": "PM Takaichi issued formal avian influenza emergency instructions to relevant ministries at 13:40 on November 11, per the Kantei.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-11T12:06:40.045220+00:00"
+    },
+    {
       "date": "2026-11-10",
       "activity": "PM Takaichi participated in a France-hosted online G7 AI security meeting, calling for international coordination on AI safety, and the Kantei published the Japan-Vietnam summit summary from yesterday's meeting with President To Lam.",
       "source": "digest",
@@ -505,5 +512,5 @@
       "recorded_at": "2026-08-13T10:55:08.255396+00:00"
     }
   ],
-  "last_updated": "2026-11-10T12:06:09.611453+00:00"
+  "last_updated": "2026-11-11T12:06:40.045272+00:00"
 }

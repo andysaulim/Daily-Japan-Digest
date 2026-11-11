@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-11": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry confirmed Beijing raised visa fees for Japanese citizens on reciprocity grounds, the latest in an accelerating sequence of economic-pressure measures following September's anti-dumping levies on Japanese dichlorosilane. Russia separately screened a Soviet anti-Japan WWII doc",
-        "dprk_signal": "Chief Cabinet Secretary Kihara stated Japan will address the abductee issue firmly at any North Korea summit, reaffirming Tokyo's position as diplomatic signals around a potential Japan-DPRK leadership meeting continue to circulate. Breaking Defense and UA.NEWS reporting highlighted Japan and South ",
-        "russia_signal": "The Equal Earth UN world map dispute — in which the newly UN-endorsed projection shaded Japan's claimed Northern Territories the same color as Russia — prompted a Japanese government demand for correction and the mapmaker's agreement to recolor the islands, extending the sustained Russia-Japan symbo"
-      },
-      "watch_flag": false
-    },
     "2026-09-12": {
       "signals": {
         "china_signal": "China's Foreign Ministry confirmed a sevenfold hike in visa fees for Japanese nationals, citing Japan's July introduction of higher fees for foreign nationals as the reciprocity basis; the move follows September's anti-dumping levies on Japanese dichlorosilane and extends Beijing's multi-instrument ",
@@ -468,7 +460,15 @@
         "russia_signal": "No new Russian military or territorial signal toward Japan is reported in today's Tier 1 or Tier 4 data beyond the persistent baseline; the ongoing Russia seizure of Japan Tobacco International assets and the detention of Hokkaido Shimbun journalist Yuki Imai by Russia's FSB in Sakhalin remain unres"
       },
       "watch_flag": false
+    },
+    "2026-11-11": {
+      "signals": {
+        "china_signal": "Beijing has not confirmed a formal Takaichi-Xi bilateral at the APEC summit, with Kyodo reporting such a meeting is unlikely amid continued tensions over PM Takaichi's Taiwan remarks; Global Times simultaneously published commentary calling Japan's outreach 'insincere' and labeling Tokyo's posture a",
+        "dprk_signal": "North Korea claimed a successful test of a new high-speed torpedo system and announced plans for early deployment next year, per Stars and Stripes; G7 Foreign Ministers meeting in Paris separately urged joint action against North Korea's nuclear and cyber threats.",
+        "russia_signal": "Russia's expansion of temporary administration to all Japan Tobacco International entities under a Putin presidential order remains the dominant bilateral economic-coercion signal; Russia's Medvedev commented sarcastically on the resulting JTI share drop via TASS. The detention of Hokkaido Shimbun j"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-10T12:06:09.612449+00:00"
+  "last_updated": "2026-11-11T12:06:40.046269+00:00"
 }
