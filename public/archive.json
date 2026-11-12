@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-12",
+    "filename": "2026-11-12.html",
+    "re_line": "Yen near \u00a5160, intervention warnings \u00b7 Host-nation support hike under US pressure \u00b7 Security docs add denial capabilities \u00b7 BOJ dove pushes back \u00b7 APEC Takaichi-Xi summit remains unlikely",
+    "top_stories": 6,
+    "word_count": 1353
+  },
+  {
     "date": "2026-11-11",
     "filename": "2026-11-11.html",
     "re_line": "BOJ rate-hike signals intensify \u00b7 China-Japan summit blocked at APEC \u00b7 Nuclear sub option surfaces \u00b7 JGB yields jump",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 2074
-  },
-  {
-    "date": "2026-07-13",
-    "filename": "2026-07-13.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 1594
   }
 ]

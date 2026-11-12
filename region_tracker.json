@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-12": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry confirmed a sevenfold hike in visa fees for Japanese nationals, citing Japan's July introduction of higher fees for foreign nationals as the reciprocity basis; the move follows September's anti-dumping levies on Japanese dichlorosilane and extends Beijing's multi-instrument ",
-        "dprk_signal": "North Korea fired multiple ballistic missiles toward the Sea of Japan on September 12, one day after Freedom Edge 2026 US-Japan-South Korea trilateral exercises concluded near Jeju Island; South Korea's Joint Chiefs of Staff confirmed the launches and the US stated they posed no immediate threat.",
-        "russia_signal": "The Japanese government confirmed the Equal Earth map — which had shaded Japan's claimed Northern Territories the same color as Russia — was corrected after Tokyo demanded recoloring; the resolution addresses one specific symbolic provocation while the broader Russia-Japan standoff over the Khabarov"
-      },
-      "watch_flag": true
-    },
     "2026-09-13": {
       "signals": {
         "china_signal": "China confirmed a sevenfold visa-fee hike for Japanese nationals, citing Japan's July fee increase for foreign nationals as the reciprocity basis — the latest in an accelerating sequence of economic-pressure measures that has also included September's anti-dumping levies on Japanese dichlorosilane. ",
@@ -468,7 +460,15 @@
         "russia_signal": "Russia's expansion of temporary administration to all Japan Tobacco International entities under a Putin presidential order remains the dominant bilateral economic-coercion signal; Russia's Medvedev commented sarcastically on the resulting JTI share drop via TASS. The detention of Hokkaido Shimbun j"
       },
       "watch_flag": false
+    },
+    "2026-11-12": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson, via Global Times, asserted that accepting the verdicts of the Tokyo War Crimes Trials is 'a prerequisite for Japan's return to the international community after World War II' — a maximalist historical-grievance framing timed as APEC approaches and Beijing conti",
+        "dprk_signal": "G7 Foreign Ministers meeting in Paris issued a joint call for coordinated action against North Korea's nuclear and cyber threats, per Chosun Ilbo; the statement follows DPRK's claimed high-speed torpedo test reported earlier this week.",
+        "russia_signal": "Foreign Minister Motegi publicly labeled Russia's seizure of Japan Tobacco International assets 'unusual' and demanded reversal, per Kyodo via Mainichi — Japan's clearest diplomatic language yet on the JTI seizure. The Foreign Correspondents' Club of Korea separately voiced concern over Russia's det"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-11T12:06:40.046269+00:00"
+  "last_updated": "2026-11-12T12:06:44.945394+00:00"
 }
