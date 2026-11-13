@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-13",
+    "filename": "2026-11-13.html",
+    "re_line": "Yen hits 160, intervention risk rises \u00b7 Defense budget squeeze \u00b7 Takaichi-Xi at APEC uncertain \u00b7 Host-nation support gap \u00b7 Quad Philippines",
+    "top_stories": 6,
+    "word_count": 1473
+  },
+  {
     "date": "2026-11-12",
     "filename": "2026-11-12.html",
     "re_line": "Yen near \u00a5160, intervention warnings \u00b7 Host-nation support hike under US pressure \u00b7 Security docs add denial capabilities \u00b7 BOJ dove pushes back \u00b7 APEC Takaichi-Xi summit remains unlikely",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 2073
-  },
-  {
-    "date": "2026-07-14",
-    "filename": "2026-07-14.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 2074
   }
 ]

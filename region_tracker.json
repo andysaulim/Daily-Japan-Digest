@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-13": {
-      "signals": {
-        "china_signal": "China confirmed a sevenfold visa-fee hike for Japanese nationals, citing Japan's July fee increase for foreign nationals as the reciprocity basis — the latest in an accelerating sequence of economic-pressure measures that has also included September's anti-dumping levies on Japanese dichlorosilane. ",
-        "dprk_signal": "North Korea fired multiple short-range ballistic missiles toward the Sea of Japan on September 12, one day after Freedom Edge 2026 US-Japan-South Korea trilateral exercises concluded near Jeju Island; South Korea's Joint Chiefs confirmed the launches and the US stated they posed no immediate threat ",
-        "russia_signal": "Japan Times analysis published today finds Tokyo constrained in its response to Putin's Northern Territories visit one month ago, as dependence on Russian oil and natural gas — with Brent above $104/barrel — limits the sanctions options available to the Takaichi government."
-      },
-      "watch_flag": true
-    },
     "2026-09-14": {
       "signals": {
         "china_signal": "China raised visa fees *sevenfold* for Japanese nationals, citing reciprocity for Japan's July fee hike for foreign nationals — the latest in a sequence of economic-pressure measures following September's anti-dumping levies on Japanese dichlorosilane. Chinese state media (Xinhua, Global Times) sepa",
@@ -468,7 +460,15 @@
         "russia_signal": "Foreign Minister Motegi publicly labeled Russia's seizure of Japan Tobacco International assets 'unusual' and demanded reversal, per Kyodo via Mainichi — Japan's clearest diplomatic language yet on the JTI seizure. The Foreign Correspondents' Club of Korea separately voiced concern over Russia's det"
       },
       "watch_flag": false
+    },
+    "2026-11-13": {
+      "signals": {
+        "china_signal": "Beijing continues to withhold confirmation of a Takaichi-Xi bilateral at APEC, with NHK and Asahi reporting the meeting remains unlikely amid persistent tensions over PM Takaichi's Taiwan remarks. China's Foreign Ministry spokesperson — via Global Times — reiterated the maximalist position that acce",
+        "dprk_signal": "Stars and Stripes reports Japan is considering nuclear-powered submarines in response to pressure from potential adversaries, with the report framing North Korea's accelerating weapons-test pace as a driver of that debate. No new DPRK launch or EEZ splashdown activity toward Japan is reported in tod",
+        "russia_signal": "Jiji Press reports Russia is 'ramping up pressure' on Japan one month after the FSB detention of Hokkaido Shimbun journalist Yuki Imai in Sakhalin; Nikkei Asia separately reports the full JTI asset seizure under a Putin presidential order is clouding Tokyo's investment plans, and Japan is now seekin"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-12T12:06:44.945394+00:00"
+  "last_updated": "2026-11-13T12:07:00.551200+00:00"
 }

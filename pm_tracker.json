@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-13",
+      "activity": "PM Takaichi hosted a roundtable at the Kantei with companies involved in physical AI and separately confirmed the government will consider a worker benefit program covering over 50 percent of Japan's workforce linked to the food tax cut bill.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-13T12:07:00.550089+00:00"
+    },
+    {
       "date": "2026-11-12",
       "activity": "PM Takaichi issued formal avian influenza emergency instructions to relevant ministries at 13:40 on November 11; the Kantei published the instruction on the same date.",
       "source": "digest",
@@ -503,14 +510,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-08-15T10:15:28.233825+00:00"
-    },
-    {
-      "date": "2026-08-14",
-      "activity": "PM Takaichi publicly condemned Putin's visit to Etorofu island as 'absolutely unacceptable' and her office coordinated the summoning of the Russian ambassador by Foreign Minister Motegi; Tokyo also announced consideration of additional Russia sanctions.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-14T10:51:08.227134+00:00"
     }
   ],
-  "last_updated": "2026-11-12T12:06:44.944404+00:00"
+  "last_updated": "2026-11-13T12:07:00.550145+00:00"
 }
