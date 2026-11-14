@@ -1,105 +1,6 @@
 {
   "entries": [
     {
-      "date": "2026-10-30",
-      "url": "https://www.ft.com/content/0c1f7cbb-c893-4563-b3b4-f63df47ea5e5",
-      "title": "boj holds rates declares 2 inflation target reached signals near term hikes",
-      "orig": "bank of japan holds rates and guides to further tightening"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://www.washingtonpost.com/world/2026/10/28/association-of-southeast-asian-nations-defense-ministers-pete-hegseth-shinjiro-koizumi/104c9eb2-d32c-11f1-9931-2a41b76fc976_story.html",
-      "title": "us and japan agree to establish joint missile production facility in japan"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://japan.kantei.go.jp/105/statement/202610/29shiji.html",
-      "title": "north korea fires 10 short range ballistic missiles toward sea of japan pm takaichi issues instructions"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://www.nytimes.com/2026/10/30/world/asia/japan-vivant-spy-show-china.html",
-      "title": "beijing s official media attack japanese spy drama vivant as state directed information campaign",
-      "orig": "how the japanese spy drama vivant became the target of china s anger"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://www.bloomberg.com/news/articles/2026-10-29/japan-s-cyberattack-surge-tests-its-push-to-strengthen-defenses",
-      "title": "surge of cyberattacks tests japan s push to strengthen defenses gmo shares data with police"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://www.japantimes.co.jp/news/2026/10/30/japan/us-japan-joint-military-exercise/",
-      "title": "japan and us commit to more realistic joint military exercises with china in mind",
-      "orig": "with china in mind japan eyes more realistic joint military exercises"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030a.pdf",
-      "title": "boj holds policy rate at 1 25 declares 2 inflation target reached signals near term hikes",
-      "orig": "statement on monetary policy"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030c.pdf",
-      "title": "boj amends etf j reit disposal principles more than doubling sales pace from january 2027",
-      "orig": "reference decisions regarding a change in the pace of sales of etfs october 2026"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030c.pdf",
-      "title": "boj publishes october 2026 quarterly jgb purchase schedule and usd funds supply timetable nov 2026 mar 2027",
-      "orig": "quarterly schedule of outright purchases of japanese government bonds competitive auction method october december 2026 schedule updates"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://en.fnnews.com/news/202610291440483343",
-      "title": "ruling bloc and dpfp agree to cut 31 lower house seats reducing chamber from 465 to 434"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://japan-forward.com/team-mirai-ai-ldp-digital-agency-cross-party/",
-      "title": "team mirai cross party group calls for a cyberattack investigation board as data breaches mount",
-      "orig": "team mirai pushes cybersecurity reforms"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://news.google.com/search?q=US%2C+South+Korea%2C+Japan+foreign+ministers+to+meet+to+discuss+North+Korea+and+trilateral+cooperation&hl=en-US&gl=US&ceid=US:en",
-      "title": "us south korea japan foreign ministers to meet to discuss north korea and trilateral cooperation"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://en.yna.co.kr/view/AEN20261030008100315",
-      "title": "south korea us japan hold phone consultations on north korea missile launches"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://japan-forward.com/bangladesh-tarique-rahman-visit-matarbari-economic-partnership/",
-      "title": "japan and bangladesh eye matarbari deep sea port as anchor for 1 trillion investment framework",
-      "orig": "japan and bangladesh look to matarbari for growth"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://www.bloomberg.com/news/articles/2026-10-30/japan-to-scale-back-fuel-subsidies-as-iran-war-costs-mount",
-      "title": "japan to scale back fuel subsidies from december as iran war costs mount"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://asia.nikkei.com/business/tech/semiconductors/ai-boom-soaring-memory-prices-lift-japan-s-chip-exports-41",
-      "title": "ai boom and soaring memory prices lift japan s chip exports 41",
-      "orig": "ai boom soaring memory prices lift japan s chip exports 41"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://www.reuters.com/world/asia-pacific/japans-nikkei-slumps-3-tech-stocks-tumble-ai-worries-2026-10-30/",
-      "title": "nikkei slumps up to 3 on ai worries before recovering on boj etf signal"
-    },
-    {
-      "date": "2026-10-30",
-      "url": "https://www.reuters.com/business/finance/boj-governor-uedas-comments-news-conference-2026-10-30/",
-      "title": "kazuo ueda"
-    },
-    {
       "date": "2026-10-31",
       "url": "https://www.reuters.com/world/asia-pacific/bank-japan-hold-rates-signal-further-hikes-2026-10-29/",
       "title": "boj declares 2 inflation target reached holds rate at 1 25 signals further hikes",
@@ -1742,6 +1643,136 @@
       "url": "https://asia.nikkei.com/spotlight/supply-chain/japan-eyes-state-takeover-of-aging-plants-making-critical-materials",
       "title": "japan considers state takeover of aging plants producing critical materials",
       "orig": "japan eyes state takeover of aging plants making critical materials"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.japantimes.co.jp/news/2026/11/14/japan/politics/japan-triple-host-nation-support-us/",
+      "title": "us demands japan nearly triple host nation support to 3 trillion over five years from fy2027",
+      "orig": "white house demanding japan triple host nation support for u s troops"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.japantimes.co.jp/news/2026/11/14/japan/politics/defense-spending-defense-ministry-finance-ministry/",
+      "title": "japan considers capping five year defense plan at 60 trillion despite ministry estimates of 70 80 trillion",
+      "orig": "japan considers setting five year defense spending plan at 60 trillion"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://news.google.com/search?q=PM+Takaichi+to+visit+Philippines+and+China+for+four+days+beginning+Monday+for+APEC+and+bilateral+meetings&hl=en-US&gl=US&ceid=US:en",
+      "title": "pm takaichi to visit philippines and china for four days beginning monday for apec and bilateral meetings"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.japantimes.co.jp/news/2026/11/14/japan/crime-legal/okinawa-us-captain-arrest/",
+      "title": "us air force captain arrested in okinawa for alleged drunk driving one week after new bilateral crime prevention measures",
+      "orig": "u s air force captain arrested in okinawa for alleged drunk driving"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://asia.nikkei.com/politics/international-relations/us-wants-japan-to-nearly-triple-budget-for-hosting-american-troops",
+      "title": "white house host nation support demand confirmed by nikkei asia alongside japan times reporting",
+      "orig": "us wants japan to nearly triple budget for hosting american troops"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.stripes.com/theaters/asia_pacific/2026-11-13/japan-nuclear-powered-submarines-23450638.html",
+      "title": "japan considers nuclear powered submarines as pressure from potential adversaries mounts",
+      "orig": "japan feeling pressure from potential foes considers nuclear powered submarines stars and stripes"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.pacom.mil/Media/News/News-Articles/Article/4648568/japan-us-participate-in-annual-joint-senior-leader-seminar/",
+      "title": "japan and us participate in annual joint senior leader seminar",
+      "orig": "japan u s participate in annual joint senior leader seminar u s pacific command news articles pacom mil"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://japan.kantei.go.jp/105/actions/202611/12teigen02.html",
+      "title": "received azec 2 0 proposals from keidanren and ldp parliamentary association",
+      "orig": "proposal from keidanren on the realization of the azec 2 0 concept prime minister in action prime minister s office of japan"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.mofa.go.jp/press/release/pressite_000001_02849.html",
+      "title": "japan mexico foreign ministers meeting and working dinner",
+      "orig": "japan mexico foreign ministers meeting and working dinner ministry of foreign affairs of japan"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.mofa.go.jp/press/release/pressite_000001_02848.html",
+      "title": "japan s onoe re elected as itu telecommunication standardization bureau director",
+      "orig": "re election of mr onoe as director of the telecommunication standardization bureau of the international telecommunication union itu ministry of foreign affairs of japan"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.nippon.com/en/articles/-/57370",
+      "title": "government response to microsoft outage affecting japanese government systems",
+      "orig": "japan govt hit by microsoft massive outage nippon com"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://mainichi.jp/english/articles/20261113/p2g/00m/0na/040000c",
+      "title": "japan to host chilean and peruvian presidents next week for bilateral summits",
+      "orig": "japan to host chile peru presidents next week for summit meetings gov t"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.japantimes.co.jp/news/2026/11/13/japan/politics/tax-cut-debate-komeito-dpp/",
+      "title": "opposition presses to expand food tax cut relief period in upper chamber",
+      "orig": "opposition in upper house seeks to expand relief during and after food tax cut the japan times"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://japan.kantei.go.jp/105/actions/202611/12teigen.html",
+      "title": "ldp parliamentary association of azec submits formal proposal to pm takaichi",
+      "orig": "proposal from the liberal democratic party s parliamentary association of azec prime minister s office of japan"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.japantimes.co.jp/business/2026/11/14/japan-philippines-oil-reserve-deal/",
+      "title": "japan philippines oil reserve cooperation deal to be signed during takaichi s manila visit",
+      "orig": "japan and philippines to ink deal on oil reserve cooperation"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://pacforum.org/publications/a-changing-indo-pacific-demands-a-stronger-india-japan-partnership/",
+      "title": "pacific forum changing indo pacific demands stronger india japan partnership",
+      "orig": "a changing indo pacific demands a stronger india japan partnership pacific forum"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://www.ft.com/content/3ba2bcd1-b80c-48a2-91c7-35f25366f8aa?syn-25a6b1a6=1",
+      "title": "italy blocks germany from joining uk japan italy gcap fighter jet programme as equal partner",
+      "orig": "germany suffers setback in joining fighter jet project"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://asia.nikkei.com/business/markets/currencies/us-treasury-bought-nearly-500mn-in-yen-during-joint-july-forex-intervention",
+      "title": "us treasury purchased nearly 500 million in yen during joint july forex intervention",
+      "orig": "us treasury bought nearly 500mn in yen during joint july forex intervention"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://asia.nikkei.com/business/business-trends/growth-beyond-ai-puts-corporate-japan-on-track-for-20-profit-gain",
+      "title": "corporate japan on track for 20 profit gain driven by growth beyond ai sector",
+      "orig": "growth beyond ai puts corporate japan on track for 20 profit gain"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://asia.nikkei.com/business/markets/ipo/bain-and-gic-backed-whi-on-track-for-japan-s-largest-ipo-in-2026",
+      "title": "bain and gic backed whi on track for japan s largest ipo in 2026"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://asia.nikkei.com/business/energy/japan-oil-companies-keep-profits-growing-despite-hormuz-closure",
+      "title": "japan oil companies sustain profit growth despite strait of hormuz closure",
+      "orig": "japan oil companies keep profits growing despite hormuz closure"
+    },
+    {
+      "date": "2026-11-14",
+      "url": "https://asia.nikkei.com/politics/international-relations/japan-tobacco-seizure-by-russia-clouds-tokyo-s-investment-plans",
+      "title": "russia s seizure of japan tobacco assets clouds tokyo s broader investment plans in russia",
+      "orig": "japan tobacco seizure by russia clouds tokyo s investment plans"
     }
   ]
 }

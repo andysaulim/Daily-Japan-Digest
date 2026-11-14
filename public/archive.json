@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-14",
+    "filename": "2026-11-14.html",
+    "re_line": "Host-nation support tripling demand \u00b7 Defense \u00a560T plan \u00b7 APEC Takaichi-Xi impasse \u00b7 Quad summit \u00b7 Okinawa arrest",
+    "top_stories": 6,
+    "word_count": 1378
+  },
+  {
     "date": "2026-11-13",
     "filename": "2026-11-13.html",
     "re_line": "Yen hits 160, intervention risk rises \u00b7 Defense budget squeeze \u00b7 Takaichi-Xi at APEC uncertain \u00b7 Host-nation support gap \u00b7 Quad Philippines",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1743
-  },
-  {
-    "date": "2026-07-15",
-    "filename": "2026-07-15.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 2073
   }
 ]

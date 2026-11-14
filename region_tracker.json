@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-14": {
-      "signals": {
-        "china_signal": "China raised visa fees *sevenfold* for Japanese nationals, citing reciprocity for Japan's July fee hike for foreign nationals — the latest in a sequence of economic-pressure measures following September's anti-dumping levies on Japanese dichlorosilane. Chinese state media (Xinhua, Global Times) sepa",
-        "dprk_signal": "North Korean state media confirmed the September 12 launches were a joint firepower strike drill combining long-range artillery, ballistic missiles, and attack drones, claiming 'huge destructive power'; Chosun Ilbo reported the exercise was framed as 'Kill Chain' training following defense chief Pak",
-        "russia_signal": "TASS reported Japan maintains its presence in Russian oil and gas projects despite bilateral tensions, citing a Russian diplomat — underscoring the energy-dependence constraint on Tokyo's sanctions options identified in recent Japan Times analysis."
-      },
-      "watch_flag": false
-    },
     "2026-09-15": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 15 regular press conference, with China expressing hope that Japan-China friendship groups create conditions for improving bilateral ties — a measured formulation that falls short of an endorsement of the cross-party parliamentary d",
@@ -468,7 +460,15 @@
         "russia_signal": "Jiji Press reports Russia is 'ramping up pressure' on Japan one month after the FSB detention of Hokkaido Shimbun journalist Yuki Imai in Sakhalin; Nikkei Asia separately reports the full JTI asset seizure under a Putin presidential order is clouding Tokyo's investment plans, and Japan is now seekin"
       },
       "watch_flag": false
+    },
+    "2026-11-14": {
+      "signals": {
+        "china_signal": "Beijing has not confirmed a formal Takaichi-Xi bilateral at APEC, with the Asahi Shimbun reporting the meeting remains unlikely as China continues to cite PM Takaichi's Taiwan remarks as the core obstacle. Multiple outlets confirm Takaichi departs Monday for her first China visit as prime minister w",
+        "dprk_signal": "Stars and Stripes reports Japan is actively considering nuclear-powered submarines in response to pressure from potential adversaries, with North Korea's accelerating weapons-test pace cited as a primary driver of that internal debate; no new DPRK launch or EEZ splashdown activity toward Japan is re",
+        "russia_signal": "Nippon.com reports Russia is 'ramping up pressure' on Japan one month after the FSB detention of Hokkaido Shimbun journalist Yuki Imai in Sakhalin; Nikkei Asia separately reports the full JTI asset seizure under a Putin presidential order is clouding Tokyo's broader investment posture toward Russia,"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-13T12:07:00.551200+00:00"
+  "last_updated": "2026-11-14T12:05:13.939352+00:00"
 }
