@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-15",
+    "filename": "2026-11-15.html",
+    "re_line": "US demands Japan triple host-nation support \u00b7 Takaichi departs Monday for Philippines, China \u00b7 Quad summit Manila Tuesday \u00b7 Cabinet approval 50.4% \u00b7 AI cyberattack probe",
+    "top_stories": 5,
+    "word_count": 1323
+  },
+  {
     "date": "2026-11-14",
     "filename": "2026-11-14.html",
     "re_line": "Host-nation support tripling demand \u00b7 Defense \u00a560T plan \u00b7 APEC Takaichi-Xi impasse \u00b7 Quad summit \u00b7 Okinawa arrest",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 2100
-  },
-  {
-    "date": "2026-07-16",
-    "filename": "2026-07-16.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1743
   }
 ]

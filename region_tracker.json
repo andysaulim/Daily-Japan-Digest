@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-15": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 15 regular press conference, with China expressing hope that Japan-China friendship groups create conditions for improving bilateral ties — a measured formulation that falls short of an endorsement of the cross-party parliamentary d",
-        "dprk_signal": "North Korea formally confirmed via state media that the September 12 launches were a 'joint firepower strike drill' combining long-range artillery, ballistic missiles, and attack drones — claiming 'huge destructive power' — after multiple international outlets reported the launches; USNI News report",
-        "russia_signal": "Nikkei Asia reported today that Japan's LNG dependency is constraining its response options following President Putin's visit to the disputed Northern Territories islands, with Brent above $102/barrel reinforcing Japan's energy-dependence on Russian supplies."
-      },
-      "watch_flag": false
-    },
     "2026-09-16": {
       "signals": {
         "china_signal": "Chinese Defense Minister Dong Jun used the Xiangshan Forum to warn against 'militarism and revisionism' in remarks widely read as directed at Japan, coming days after a cross-party Japanese parliamentary delegation's Beijing visit. Chinese state media framed the lawmakers' visit as an 'exploratory g",
@@ -468,7 +460,15 @@
         "russia_signal": "Nippon.com reports Russia is 'ramping up pressure' on Japan one month after the FSB detention of Hokkaido Shimbun journalist Yuki Imai in Sakhalin; Nikkei Asia separately reports the full JTI asset seizure under a Putin presidential order is clouding Tokyo's broader investment posture toward Russia,"
       },
       "watch_flag": false
+    },
+    "2026-11-15": {
+      "signals": {
+        "china_signal": "PM Takaichi departs Monday for her first visit to China as prime minister to attend APEC; Beijing has not confirmed a formal Takaichi-Xi bilateral, with tensions over her Taiwan remarks persisting as the central obstacle. Japan simultaneously watches warily as a US-China-Russia trilateral summit is ",
+        "dprk_signal": "Sunday marks the 49th anniversary of the kidnapping of Megumi Yokota from Niigata (November 15, 1977); PM Takaichi issued a public statement reiterating her determination to secure the return of abductees. No new North Korean missile launches or EEZ splashdown activity toward Japan is reported in to",
+        "russia_signal": "Japan is considering replacing its ambassador to Russia, Akira Muto, as early as year-end, per government sources cited by Kyodo/Mainichi — a potential personnel signal amid sustained bilateral strain over the JTI asset seizure and the FSB detention of Hokkaido Shimbun journalist Yuki Imai in Sakhal"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-14T12:05:13.939352+00:00"
+  "last_updated": "2026-11-15T12:05:12.425746+00:00"
 }
