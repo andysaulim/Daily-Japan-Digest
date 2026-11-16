@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-16",
+    "filename": "2026-11-16.html",
+    "re_line": "Takaichi departs for ASEAN/APEC \u00b7 Japan Q3 GDP contracts \u00b7 BOJ hawks signal rate hike \u00b7 Fugaku breach \u00b7 F-15EX deployment",
+    "top_stories": 6,
+    "word_count": 1346
+  },
+  {
     "date": "2026-11-15",
     "filename": "2026-11-15.html",
     "re_line": "US demands Japan triple host-nation support \u00b7 Takaichi departs Monday for Philippines, China \u00b7 Quad summit Manila Tuesday \u00b7 Cabinet approval 50.4% \u00b7 AI cyberattack probe",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1253
-  },
-  {
-    "date": "2026-07-17",
-    "filename": "2026-07-17.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 2100
   }
 ]
