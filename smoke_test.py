@@ -529,6 +529,22 @@ def test_validation_gate():
                                 "source": "S", "url": "https://example.org/z"}])
     check("too few top stories is a failure",
           any("TOP STORIES" in f for f in run_mod._validate_digest(bad)))
+    # 4 October: the gate demanded four stories, a quiet day produced three,
+    # and the brief was held through four runs and went out seven hours late.
+    # The 4-6 band is the editorial target; the gate is the floor below which
+    # a brief is not worth sending, and they are not the same number.
+    _three = _digest(top_stories=[
+        {"headline": f"story {i}", "body": "b", "source": f"S{i}",
+         "url": f"https://example.org/t{i}"} for i in range(3)])
+    check("three top stories still send",
+          not [f for f in run_mod._validate_digest(_three)
+               if f.startswith("TOP STORIES")],
+          "; ".join(f for f in run_mod._validate_digest(_three)
+                    if f.startswith("TOP STORIES")))
+    check("the pipeline still protects four when it has them",
+          run_mod._TOP_STORIES_FLOOR >= 4, str(run_mod._TOP_STORIES_FLOOR))
+    check("the floor never drops below what the gate demands",
+          run_mod._TOP_STORIES_FLOOR >= 2)
     # The word-count minimum is about a real brief, not a fixture, so it is
     # the one failure a fixture is allowed to trip.
     check("a complete digest passes every structural check",
@@ -643,6 +659,38 @@ def test_email():
     check("reply-to is its own variable", "DIGEST_REPLY_TO" in src)
     check("unset reply-to falls back to the sender",
           "reply_to or gmail_user" in src)
+
+    # A send that was attempted and failed must fail the RUN. It used to print
+    # a warning and exit 0, so a wrong App Password produced a green workflow
+    # that emailed nobody — found while moving the brief to the Japan Chair
+    # account, when a green test run could not be distinguished from a
+    # delivered one.
+    _saved = {k: os.environ.get(k) for k in ("GMAIL_USER", "GMAIL_APP_PASS")}
+    try:
+        os.environ["GMAIL_USER"] = ""
+        os.environ["GMAIL_APP_PASS"] = ""
+        # Behavioural: missing credentials are reported as a failed send, not
+        # swallowed. This is the signal the exit code now depends on.
+        check("missing credentials report a failed send",
+              send_email.send_digest("<p>x</p>", recipients=["a@csis.org"]) is False)
+    finally:
+        for k, v in _saved.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+
+    rsrc = Path("run.py").read_text(encoding="utf-8")
+    check("a failed send sets the flag", "send_failed = True" in rsrc)
+    check("and the flag fails the run",
+          "if send_blocked or send_failed:" in rsrc)
+    check("the exit message says which happened",
+          'else "the email could not be sent"' in rsrc)
+    # --no-send declines to send by request; it must stay green.
+    check("--no-send does not mark a failure",
+          "--no-send: skipping email send" in rsrc
+          and rsrc.index("--no-send: skipping email send")
+              < rsrc.index("send_failed = True"))
 
 
 
