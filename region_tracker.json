@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-17": {
-      "signals": {
-        "china_signal": "A cross-party Japanese parliamentary delegation met a senior Chinese official in Beijing, per NHK, as the most recent diplomatic outreach channel between the two governments; Tokyo Game Show data showing a sharp drop in Chinese exhibitors illustrates the commercial-sector spillover from bilateral te",
-        "dprk_signal": "North Korea's September 12 joint firepower strike drill targeting an island in the Sea of Japan — combining ballistic missiles, long-range artillery, and attack drones — continues to be analyzed in regional defense media, with no new launch activity reported today; North Korea's sports minister sepa",
-        "russia_signal": "Russia's foreign ministry, via Xinhua, stated that Japan's remilitarization threatens Russian national security — the latest in a series of official Russian statements escalating rhetoric toward Japan's defense buildup. Russian companies are separately in talks with Japan and South Korea on resuming"
-      },
-      "watch_flag": false
-    },
     "2026-09-18": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 18 regular press conference; separately, Chinese state media marked the 95th anniversary of the September 18 (Mukden/Liutiaohu) Incident with explicit calls on Japan to face its history of aggression and warnings against militarism'",
@@ -466,7 +458,15 @@
         "china_signal": "Chinese Premier Li Qiang departed ASEAN sessions in Manila where Japan was present without direct contact with PM Takaichi, per Asahi Shimbun — a continuation of Beijing's freeze over her Taiwan remarks. Jiji Press reports a US-China-Russia trilateral leaders' meeting is scheduled for the afternoon "
       },
       "watch_flag": false
+    },
+    "2026-11-17": {
+      "signals": {
+        "china_signal": "Prime Minister Takaichi had a brief first encounter with a Chinese minister on the margins of the ASEAN sessions in Manila after Premier Li Qiang departed — the first contact since the freeze over her Taiwan remarks — but Beijing has not confirmed a formal Takaichi-Xi bilateral at the upcoming APEC ",
+        "dprk_signal": "No new North Korean missile launches, EEZ splashdowns, or KCNA statements naming Japan are reported in today's articles; the DPRK signal in today's Tier 4 data concerns North Korea's use of Ukraine as a missile test site, not direct activity toward Japan.",
+        "russia_signal": "Two suspected Russian military aircraft separately violated Japanese airspace near Fukuoka's Okinoshima island on November 17; Japan's ASDF scrambled fighters, issued warnings, and Tokyo lodged a formal diplomatic protest. Taiwan and South Korea also reported Russian military aircraft near their air"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-11-16T12:06:12.309044+00:00"
+  "last_updated": "2026-11-17T12:07:22.654737+00:00"
 }
