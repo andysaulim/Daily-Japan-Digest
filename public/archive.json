@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-18",
+    "filename": "2026-11-18.html",
+    "re_line": "Takaichi-Trump bilateral in Manila \u00b7 Quad summit \u00b7 Russian airspace violation \u00b7 BOJ rate-hike signal \u00b7 October export record",
+    "top_stories": 6,
+    "word_count": 1382
+  },
+  {
     "date": "2026-11-17",
     "filename": "2026-11-17.html",
     "re_line": "Russian airspace violations \u00b7 Takaichi-Xi first meeting \u00b7 ASEAN oil framework \u00b7 Nikkei near bear market \u00b7 Quad in Manila",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1924
-  },
-  {
-    "date": "2026-07-21",
-    "filename": "2026-07-21.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1721
   }
 ]
