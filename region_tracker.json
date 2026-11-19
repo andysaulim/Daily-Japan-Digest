@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-19": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun held the September 18 regular press conference, and Chinese state media (Global Times) continued framing the 95th anniversary of the September 18 Mukden Incident with warnings against Japan's military revival. Separately, Chinese tourist arrivals to J",
-        "dprk_signal": "North Korean leader Kim Jong Un inspected munitions factories per NHK, following the September 12 integrated strike exercise. North Korean hackers linked to group WaterPlum conducted cryptocurrency thefts across 100 countries including Japan between December 2025 and July 2026, infecting more than 3",
-        "russia_signal": "Russia's Foreign Ministry lodged a formal protest with Japan over the deployment of US Typhon mid-range ground-launched cruise missile systems on Japanese territory and urged removal; TASS separately reported the Russian MFA spokeswomen's demand. This follows a sustained Russian escalation narrative"
-      },
-      "watch_flag": false
-    },
     "2026-09-20": {
       "signals": {
         "china_signal": "No new China Coast Guard, PLA, or MOFA incidents toward Japan are reported today; Global Times continues its framing of Japan's military revival as a regional threat, and Chinese state media published a piece debunking what it calls 'colonial glorification' of Japanese rule in Taiwan, sustaining the",
@@ -467,7 +459,14 @@
         "russia_signal": "Two suspected Russian military aircraft violated Japanese airspace near Fukuoka Prefecture's Okinoshima island on November 17 as President Putin traveled to China for APEC; Japan scrambled ASDF fighters, issued warnings, and lodged a formal diplomatic protest. Nikkei Asia separately reports Russia a"
       },
       "watch_flag": true
+    },
+    "2026-11-19": {
+      "signals": {
+        "china_signal": "Takaichi departed Shenzhen after APEC without a formal bilateral summit with Xi Jinping, confirmed by Kyodo; the two leaders exchanged only brief protocol greetings. China's Foreign Ministry defended the subdued tarmac reception as following 'international practice,' while Beijing's withholding of a",
+        "russia_signal": "Japan confirmed that two suspected Russian military aircraft violated Japanese airspace near Fukuoka Prefecture's Okinoshima island on November 17 as Putin traveled to China for APEC; ASDF fighters scrambled and Tokyo lodged a formal diplomatic protest. Separately, Putin's presidential order seizing"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-11-18T12:07:42.949440+00:00"
+  "last_updated": "2026-11-19T12:11:32.616904+00:00"
 }
