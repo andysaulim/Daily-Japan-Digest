@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-20": {
-      "signals": {
-        "china_signal": "No new China Coast Guard, PLA, or MOFA incidents toward Japan are reported today; Global Times continues its framing of Japan's military revival as a regional threat, and Chinese state media published a piece debunking what it calls 'colonial glorification' of Japanese rule in Taiwan, sustaining the",
-        "dprk_signal": "North Korea fired two suspected short-range ballistic missiles on September 20 — the second launch in two weeks — into the East Sea; South Korea's JCS reports one flew approximately 450 km from the Wonsan area. Both fell outside Japan's EEZ. Japan tightened security in response. Separately, reportin"
-      },
-      "watch_flag": false
-    },
     "2026-09-21": {
       "signals": {
         "china_signal": "China's Foreign Ministry labeled Japan's deployment of the US Typhon intermediate-range ground-launched cruise missile system 'another indication of its accelerating remilitarization,' per Global Times. Beijing's FM spokesperson separately declined to confirm whether the US-China Washington summit w",
@@ -466,7 +459,14 @@
         "russia_signal": "Japan confirmed that two suspected Russian military aircraft violated Japanese airspace near Fukuoka Prefecture's Okinoshima island on November 17 as Putin traveled to China for APEC; ASDF fighters scrambled and Tokyo lodged a formal diplomatic protest. Separately, Putin's presidential order seizing"
       },
       "watch_flag": true
+    },
+    "2026-11-20": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry stated Friday that Japan's 'immediate priority is to correct its erroneous words and deeds on Taiwan' and that Japan 'has a political responsibility to abide by four bilateral political documents,' following Beijing's refusal to hold a formal Takaichi-Xi bilateral at APEC. A",
+        "russia_signal": "Prime Minister Takaichi held her first bilateral with President Putin at APEC in Shenzhen on November 19, one day after two suspected Russian military aircraft violated Japanese airspace near Fukuoka Prefecture's Okinoshima island on November 17 — an incident for which Tokyo scrambled ASDF fighters "
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-19T12:11:32.616904+00:00"
+  "last_updated": "2026-11-20T12:05:46.300904+00:00"
 }
