@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-21",
+      "activity": "Prime Minister Takaichi's post-APEC diplomatic activity continues to generate coverage, with the Japan Times reporting on the domestic political implications of Beijing's snub; Takaichi is due to meet ICC President Akane on Tuesday.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-21T12:04:54.440651+00:00"
+    },
+    {
       "date": "2026-11-20",
       "activity": "Prime Minister Takaichi held bilateral summits with Peruvian President Keiko Fujimori and Chilean President Jose Antonio Kast on the margins of APEC in Shenzhen, agreeing on critical mineral supply chain cooperation, and previously held her first meeting with Russian President Putin at the same venue.",
       "source": "digest",
@@ -496,14 +503,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-08-24T10:29:52.134496+00:00"
-    },
-    {
-      "date": "2026-08-22",
-      "activity": "Takaichi held her inaugural telephone call with UK PM Burnham, agreeing to promote bilateral security ties, per a PM's office readout.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-22T10:24:18.796189+00:00"
     }
   ],
-  "last_updated": "2026-11-20T12:05:46.299940+00:00"
+  "last_updated": "2026-11-21T12:04:54.440712+00:00"
 }

@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-21": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry labeled Japan's deployment of the US Typhon intermediate-range ground-launched cruise missile system 'another indication of its accelerating remilitarization,' per Global Times. Beijing's FM spokesperson separately declined to confirm whether the US-China Washington summit w",
-        "dprk_signal": "North Korea fired two suspected short-range ballistic missiles toward the East Sea on Sunday within a three-hour window; South Korea's JCS reported one flew approximately 440 km from the Wonsan area. Both splashed down outside Japan's EEZ; Japan tightened surveillance and joined US and South Korea i",
-        "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles beyond the sustained rhetorical escalation of recent weeks; the NYT profiles Nemuro's dual dependence on Russia economically and politically, illustrating the local dimension of the dispute."
-      },
-      "watch_flag": false
-    },
     "2026-09-22": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson Guo Jiakun used the September 21 press conference to label Japan's hosting of the US Typhon intermediate-range missile system 'another example of Japan's accelerated remilitarization' and called on Japan to halt what Beijing frames as a return to militarism. The",
@@ -466,7 +458,14 @@
         "russia_signal": "Prime Minister Takaichi held her first bilateral with President Putin at APEC in Shenzhen on November 19, one day after two suspected Russian military aircraft violated Japanese airspace near Fukuoka Prefecture's Okinoshima island on November 17 — an incident for which Tokyo scrambled ASDF fighters "
       },
       "watch_flag": false
+    },
+    "2026-11-21": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry continued its post-APEC pressure campaign Saturday, stating that Japan's 'immediate priority is to correct its erroneous words and deeds on Taiwan' and that Tokyo 'has a political responsibility to abide by four bilateral political documents.' The Global Times separately cha",
+        "russia_signal": "Japan Tobacco International's Russia asset seizure — formalised under a Putin presidential order — continues to generate market fallout, with JTI shares falling 10% and hitting an estimated 900,000 investors. No new military incidents near Japan's airspace or waters are reported in today's articles;"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-20T12:05:46.300904+00:00"
+  "last_updated": "2026-11-21T12:04:54.441741+00:00"
 }
