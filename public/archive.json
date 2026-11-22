@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-22",
+    "filename": "2026-11-22.html",
+    "re_line": "Japan defense cuts weighed \u00b7 rare-earth supply chain \u00b7 BOJ Dec hike \u00b7 Shuri Castle restored \u00b7 LDP minister scandal",
+    "top_stories": 6,
+    "word_count": 892
+  },
+  {
     "date": "2026-11-21",
     "filename": "2026-11-21.html",
     "re_line": "BOJ Dec hike near-certain \u00b7 China presses Taiwan retraction \u00b7 nuclear sub policy \u00b7 ICC funding \u00b7 JTI seizure \u00b7 education minister pressure",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1180
-  },
-  {
-    "date": "2026-07-25",
-    "filename": "2026-07-25.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 1947
   }
 ]
