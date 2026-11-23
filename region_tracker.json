@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-23": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson, responding to Japan's UNGA speech and Typhon missile deployment, cited 'risks over Typhon in Japan' via ECNS, continuing Beijing's sustained framing of Japan's defense posture as escalatory remilitarization. China separately urged Japan to 'draw lessons from hi",
-        "dprk_signal": "North Korea claimed a successful test of a new hypersonic weapon system following two ballistic missile launches on September 20 — the 14th provocation in the US-Japan-ROK trilateral tracking series — with **Kim Jong Un** calling the weapon an 'incurable headache' for adversaries; outside analysts a",
-        "russia_signal": "No new Russian military or territorial-dispute activity toward Japan is reported in today's articles; the NYT's in-depth profile of Nemuro's economic dependence on Russia continues to circulate, illustrating the structural constraints on Tokyo's escalation options."
-      },
-      "watch_flag": true
-    },
     "2026-09-24": {
       "signals": {
         "china_signal": "China's Foreign Ministry spokesperson, in the September 23 regular press conference, directly refuted Takaichi's UNGA call to remove the 'enemy state' clauses, declaring them 'extremely relevant today' and framing Japan's security posture as renewed militarism. Global Times published an editorial st",
@@ -464,7 +456,15 @@
         "russia_signal": "Russia's formalization of the Japan Tobacco International asset seizure under a Putin presidential order sent JTI shares down 10% and affected approximately 900,000 Japanese retail investors, per Nikkei Asia. No new military incidents near Japanese airspace or waters are reported in today's articles"
       },
       "watch_flag": false
+    },
+    "2026-11-23": {
+      "signals": {
+        "china_signal": "Beijing's post-APEC pressure on Tokyo continues: Chinese state media (Global Times) is amplifying domestic Japanese netizen criticism of Prime Minister Takaichi's diplomatic performance at APEC and contrasting footage of former PM Ishiba being surrounded by leaders while Takaichi was left isolated. ",
+        "dprk_signal": "Japanese and North Korean intelligence officials likely made contact during the Asian Games, with a North Korean official reported to have entered Japan as a member of the DPRK delegation for the Games, per the Japan Times. No new missile launches, EEZ splashdowns, or KCNA statements naming Japan ap",
+        "russia_signal": "No new Russian military incidents near Japanese airspace or waters are reported in today's articles. The November 17 Russian airspace violation near Fukuoka Prefecture's Okinoshima island and the Japan Tobacco International asset seizure under a Putin presidential order remain the most recent active"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-22T12:03:57.807894+00:00"
+  "last_updated": "2026-11-23T12:04:39.308073+00:00"
 }
