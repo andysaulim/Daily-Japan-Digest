@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-24": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry spokesperson, in the September 23 regular press conference, directly refuted Takaichi's UNGA call to remove the 'enemy state' clauses, declaring them 'extremely relevant today' and framing Japan's security posture as renewed militarism. Global Times published an editorial st",
-        "dprk_signal": "North Korea claimed a successful test of an upgraded hypersonic missile system following two ballistic missile launches on September 20; KCNA described the weapon as a 'new-type weapon' and Janes assessed it as an apparent HGV-equipped Hwaseongpho-11 variant. Kim Jong Un called the system an 'incura"
-      },
-      "watch_flag": true
-    },
     "2026-09-25": {
       "signals": {
         "china_signal": "China's Foreign Ministry continued pushing back against Takaichi's UNGA call to remove the UN Charter 'enemy state' clauses, with Chinese state media (ECNS) urging Japan to 'earn trust through concrete actions.' US-Japan officials separately coordinated ahead of the Trump-Xi summit on China's yttriu",
@@ -464,7 +457,14 @@
         "russia_signal": "No new Russian military incidents near Japanese airspace or waters are reported in today's articles. The November 17 Russian airspace violation near Fukuoka Prefecture's Okinoshima island and the Japan Tobacco International asset seizure under a Putin presidential order remain the most recent active"
       },
       "watch_flag": false
+    },
+    "2026-11-24": {
+      "signals": {
+        "china_signal": "Chinese state media and analysts continue to frame the APEC episode — in which Prime Minister Takaichi departed Shenzhen without a formal Xi bilateral — as reflecting a frozen China-Japan relationship, with multiple outlets characterizing the brief handshake as deliberate signaling. The boarding-sta",
+        "russia_signal": "Russia's embassy in Tokyo stated that Russian aircraft 'breached no international rules' in their flight over the Sea of Japan, responding to Japan's formal protest over the November 17 airspace violation near Fukuoka Prefecture's Okinoshima island. Japan separately confirmed its ambassador conducte"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-23T12:04:39.308073+00:00"
+  "last_updated": "2026-11-24T12:04:32.797084+00:00"
 }

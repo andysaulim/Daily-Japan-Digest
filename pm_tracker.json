@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-24",
+      "activity": "Prime Minister Takaichi met ICC President Tomoko Akane in Tokyo on Tuesday, pledging to advance Japan's 2027 ICC financial contribution ahead of schedule in direct tension with US sanctions against the court.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-24T12:04:32.796061+00:00"
+    },
+    {
       "date": "2026-11-21",
       "activity": "Prime Minister Takaichi's post-APEC diplomatic activity continues to generate coverage, with the Japan Times reporting on the domestic political implications of Beijing's snub; Takaichi is due to meet ICC President Akane on Tuesday.",
       "source": "digest",
@@ -489,21 +496,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-08-26T10:26:25.192814+00:00"
-    },
-    {
-      "date": "2026-08-25",
-      "activity": "PM Takaichi participated in the virtual Coalition of the Willing Leaders Meeting on Ukraine and pledged to steadily continue sanctions on Russia, per MOFA and Jiji Press.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-25T10:23:56.538453+00:00"
-    },
-    {
-      "date": "2026-08-24",
-      "activity": "Chief Cabinet Secretary Kihara held the regular morning press conference on August 24; Japan reiterated support for US-sanctioned ICC President Tomoko Akane.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-24T10:29:52.134496+00:00"
     }
   ],
-  "last_updated": "2026-11-21T12:04:54.440712+00:00"
+  "last_updated": "2026-11-24T12:04:32.796116+00:00"
 }

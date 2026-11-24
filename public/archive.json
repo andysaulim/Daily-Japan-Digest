@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-24",
+    "filename": "2026-11-24.html",
+    "re_line": "Takaichi-ICC meeting defies Trump \u00b7 Education minister scandal escalates \u00b7 Defense budget vs. tax cut \u00b7 Japan PMI expands \u00b7 Auto-to-arms shift",
+    "top_stories": 6,
+    "word_count": 1443
+  },
+  {
     "date": "2026-11-23",
     "filename": "2026-11-23.html",
     "re_line": "APEC fallout \u00b7 Education minister scandal \u00b7 BOJ rate hike expected \u00b7 Okinawa base council \u00b7 Japan-DPRK intel contact",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 3,
     "word_count": 1345
-  },
-  {
-    "date": "2026-07-27",
-    "filename": "2026-07-27.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1587
   }
 ]
