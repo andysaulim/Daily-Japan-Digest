@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-25",
+    "filename": "2026-11-25.html",
+    "re_line": "BOJ December hike bets surge \u00b7 Defense budget showdown \u00b7 Minister censure threat \u00b7 Russia warplanes alarm allies \u00b7 ICC split with US",
+    "top_stories": 6,
+    "word_count": 1454
+  },
+  {
     "date": "2026-11-24",
     "filename": "2026-11-24.html",
     "re_line": "Takaichi-ICC meeting defies Trump \u00b7 Education minister scandal escalates \u00b7 Defense budget vs. tax cut \u00b7 Japan PMI expands \u00b7 Auto-to-arms shift",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1403
-  },
-  {
-    "date": "2026-07-28",
-    "filename": "2026-07-28.html",
-    "top_stories": 4,
-    "overnight_items": 3,
-    "word_count": 1345
   }
 ]

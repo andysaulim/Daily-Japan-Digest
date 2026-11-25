@@ -1,13 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-25": {
-      "signals": {
-        "china_signal": "China's Foreign Ministry continued pushing back against Takaichi's UNGA call to remove the UN Charter 'enemy state' clauses, with Chinese state media (ECNS) urging Japan to 'earn trust through concrete actions.' US-Japan officials separately coordinated ahead of the Trump-Xi summit on China's yttriu",
-        "dprk_signal": "North Korea confirmed via KCNA a test of an upgraded rocket launcher system; Janes assessed the weapon as an apparent HGV-equipped Hwaseongpho-11 variant hypersonic system. North Korea's foreign minister simultaneously declared the country's nuclear weapons commitment 'irreversible' and stated Pyong",
-        "russia_signal": "Russia's deputy foreign minister confirmed Russia-Japan relations 'continue to deteriorate,' per TASS. NHK World reported Russia is tightening administrative and economic control over the Northern Territories, reinforcing the trajectory of the dispute since Japan joined Western sanctions over Ukrain"
-      },
-      "watch_flag": false
-    },
     "2026-09-26": {
       "signals": {
         "china_signal": "China's state media (ECNS) continued pressing Japan to 'earn trust through concrete actions' following PM Takaichi's UNGA call to remove UN Charter 'enemy state' clauses, maintaining Beijing's sustained counter-narrative framing Japan's security posture as revived militarism. Tokyo is separately war",
@@ -464,7 +456,14 @@
         "russia_signal": "Russia's embassy in Tokyo stated that Russian aircraft 'breached no international rules' in their flight over the Sea of Japan, responding to Japan's formal protest over the November 17 airspace violation near Fukuoka Prefecture's Okinoshima island. Japan separately confirmed its ambassador conducte"
       },
       "watch_flag": false
+    },
+    "2026-11-25": {
+      "signals": {
+        "china_signal": "Chinese state media and analysts continue to frame the APEC episode — in which Takaichi departed Shenzhen without a formal Xi bilateral — as reflecting a frozen China-Japan relationship; a Fortune piece cites the brief handshake as deliberate signaling. No new Senkaku intrusion or rare-earth coercio",
+        "russia_signal": "Russian military aircraft activity near allied airspace in Asia is continuing: South Korea scrambled fighter jets over a Russian military aircraft near Ulleung Island, and the WSJ reports a broader pattern of Russian warplanes skirting or entering the airspace of US allies in the region in recent da"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-24T12:04:32.797084+00:00"
+  "last_updated": "2026-11-25T12:05:40.036710+00:00"
 }
