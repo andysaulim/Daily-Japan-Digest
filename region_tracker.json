@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-26": {
-      "signals": {
-        "china_signal": "China's state media (ECNS) continued pressing Japan to 'earn trust through concrete actions' following PM Takaichi's UNGA call to remove UN Charter 'enemy state' clauses, maintaining Beijing's sustained counter-narrative framing Japan's security posture as revived militarism. Tokyo is separately war",
-        "dprk_signal": "North Korea's foreign ministry declared the country's nuclear weapons status 'irreversible' and explicitly rebuffed the US-Japan-South Korea trilateral denuclearization push, compounding last week's claimed hypersonic missile test of what Janes assessed as an HGV-equipped Hwaseongpho-11 variant. Asi"
-      },
-      "watch_flag": false
-    },
     "2026-09-27": {
       "signals": {
         "china_signal": "A Chinese marine research vessel conducted repeated surveys in Japan's EEZ near the disputed Senkaku Islands, per Kyodo, raising security concerns in Tokyo about the pattern of activity. Beijing is separately pressing its counter-narrative following PM Takaichi's UNGA call to remove UN Charter 'enem",
@@ -463,7 +456,15 @@
         "russia_signal": "Russian military aircraft activity near allied airspace in Asia is continuing: South Korea scrambled fighter jets over a Russian military aircraft near Ulleung Island, and the WSJ reports a broader pattern of Russian warplanes skirting or entering the airspace of US allies in the region in recent da"
       },
       "watch_flag": false
+    },
+    "2026-11-26": {
+      "signals": {
+        "china_signal": "China's Foreign Ministry spokesperson lodged a formal protest with Japan over what Beijing called an \"illegal intrusion\" into the waters of Diaoyu Dao (Senkakus), with the China Coast Guard reporting it took \"lawful control measures\" over vessels in the area — the first confirmed CCG operational act",
+        "dprk_signal": "North Korea conducted its third ballistic missile launch of the week, per statements from Japan and South Korea. Separately, North Korea is reported to have frozen KN-23 ballistic missile deliveries to Russia amid Moscow's de-escalation overtures toward Seoul, a triangular dynamic with implications ",
+        "russia_signal": "The wife of Hokkaido Shimbun journalist Yuki Imai, detained by Russia's FSB on espionage suspicion since mid-October in Yuzhno-Sakhalinsk, issued a public plea for his release — the case continues to strain Tokyo-Moscow relations. No new military incidents near Japanese airspace or waters are report"
+      },
+      "watch_flag": true
     }
   },
-  "last_updated": "2026-11-25T12:05:40.036710+00:00"
+  "last_updated": "2026-11-26T12:05:49.310884+00:00"
 }
