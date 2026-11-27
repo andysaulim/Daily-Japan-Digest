@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-27",
+    "filename": "2026-11-27.html",
+    "re_line": "Tokyo CPI 16-mo high bolsters BOJ Dec hike \u00b7 Japan rejects US tariff proposal \u00b7 MOD releases Defense AI Vision \u00b7 Seki censure motion fails",
+    "top_stories": 6,
+    "word_count": 1363
+  },
+  {
     "date": "2026-11-26",
     "filename": "2026-11-26.html",
     "re_line": "Trump tariffs hit Japan \u00b7 BOJ hawk eyes Dec hike \u00b7 Senkaku CCG clash \u00b7 DPRK missile \u00b7 Defense budget rise",
@@ -844,12 +851,5 @@
     "top_stories": 3,
     "overnight_items": 4,
     "word_count": 1929
-  },
-  {
-    "date": "2026-07-30",
-    "filename": "2026-07-30.html",
-    "top_stories": 4,
-    "overnight_items": 4,
-    "word_count": 1689
   }
 ]

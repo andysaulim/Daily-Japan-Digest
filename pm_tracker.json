@@ -1,6 +1,13 @@
 {
   "appearances": [
     {
+      "date": "2026-11-27",
+      "activity": "Prime Minister Sanae Takaichi's office participated in the Japan-Marshall Islands summit meeting, with MOFA releasing a formal readout; she also hosted the Marshall Islands president at a broader engagement, per Jiji and MOFA sources.",
+      "source": "digest",
+      "url": "",
+      "recorded_at": "2026-11-27T12:04:52.620781+00:00"
+    },
+    {
       "date": "2026-11-25",
       "activity": "Prime Minister Takaichi on Tuesday ordered officials to draft a second FY2026 supplementary budget for disaster response and met with ICC President Tomoko Akane, pledging to advance Japan's 2027 ICC financial contribution ahead of schedule.",
       "source": "digest",
@@ -482,21 +489,7 @@
       "source": "digest",
       "url": "",
       "recorded_at": "2026-09-01T11:05:52.875640+00:00"
-    },
-    {
-      "date": "2026-08-28",
-      "activity": "PM Takaichi chaired a meeting of the Emergency Headquarters for the 2026 Kumamoto Earthquake and a Meeting of Relevant Ministers on Heavy Rain in Chiba, per the Prime Minister's Office, while the Kuwait Foreign Minister paid a courtesy call on her at the Kantei.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-28T15:36:34.480782+00:00"
-    },
-    {
-      "date": "2026-08-27",
-      "activity": "PM Takaichi began consultations with LDP executives ahead of an expected Cabinet reshuffle and chaired the GX Implementation Council, while the LDP's Disaster Response Headquarters submitted Kumamoto earthquake restoration proposals to her.",
-      "source": "digest",
-      "url": "",
-      "recorded_at": "2026-08-27T23:54:34.531171+00:00"
     }
   ],
-  "last_updated": "2026-11-25T12:05:40.035736+00:00"
+  "last_updated": "2026-11-27T12:04:52.620827+00:00"
 }
