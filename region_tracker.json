@@ -1,12 +1,5 @@
 {
   "daily_signals": {
-    "2026-09-28": {
-      "signals": {
-        "china_signal": "Global Times published two pieces framing the Trump-Xi Washington summit as exposing Japan's 'illusions' about its strategic role, and invoking WWII history to delegitimize Japanese right-wing narratives — continuing Beijing's sustained counter-messaging following PM Takaichi's UNGA 'enemy state cla",
-        "russia_signal": "Russia's TASS quoted a diplomat saying Moscow 'does not believe Japan's promises to remove US missiles after drills,' directly responding to the Typhon indefinite storage announcement. Chief Cabinet Secretary Kihara formally rebutted Russian FM Lavrov's UNGA accusation of Japanese militarization."
-      },
-      "watch_flag": false
-    },
     "2026-09-29": {
       "signals": {
         "china_signal": "China's top diplomat told former Japanese Foreign Minister **Takeshi Iwaya** during Beijing talks that Japan-China ties must be 'normalized,' while simultaneously — on the 54th anniversary of diplomatic normalization — demanding Japan 'correct erroneous words and deeds' on Taiwan. Global Times and X",
@@ -464,7 +457,15 @@
         "russia_signal": "NHK World reports that Moscow has formally confirmed the Takaichi-Putin informal talks held in China at APEC, with a Russian diplomat stating Moscow 'counts on better Russia-Japan relations' following the meeting. Russia's Foreign Ministry separately rejected Japan's assertion that the Russian threa"
       },
       "watch_flag": false
+    },
+    "2026-11-28": {
+      "signals": {
+        "china_signal": "China's Global Times, citing China Coast Guard statements, reports that a Japanese vessel was expelled from waters Beijing claims as the territorial waters of Diaoyu Dao (the Senkaku Islands), continuing the operational pattern that began with Beijing's formal protest on November 26. China's MOFA se",
+        "dprk_signal": "Ukraine states that North Korea temporarily halted ballistic missile deliveries to Russia following a diplomatic dispute between Pyongyang and Moscow, per the Japan Times. The freeze — if sustained — would reduce a key DPRK revenue and military-cooperation channel but does not directly reduce the mi",
+        "russia_signal": "Russian state media have picked up reporting on the wife of detained Hokkaido Shimbun journalist Yuki Imai, who is being held by Russia's FSB on espionage suspicion in Yuzhno-Sakhalinsk; NHK World reports Russian state coverage of her public plea for his release. No new military incidents near Japan"
+      },
+      "watch_flag": false
     }
   },
-  "last_updated": "2026-11-27T12:04:52.621723+00:00"
+  "last_updated": "2026-11-28T12:04:15.023930+00:00"
 }

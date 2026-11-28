@@ -1,5 +1,12 @@
 [
   {
+    "date": "2026-11-28",
+    "filename": "2026-11-28.html",
+    "re_line": "Nuclear subs debate \u00b7 CPTPP support office \u00b7 Ministerial scandals \u00b7 DPRK halts Russia missiles \u00b7 Births rise",
+    "top_stories": 5,
+    "word_count": 1117
+  },
+  {
     "date": "2026-11-27",
     "filename": "2026-11-27.html",
     "re_line": "Tokyo CPI 16-mo high bolsters BOJ Dec hike \u00b7 Japan rejects US tariff proposal \u00b7 MOD releases Defense AI Vision \u00b7 Seki censure motion fails",
@@ -844,12 +851,5 @@
     "top_stories": 4,
     "overnight_items": 4,
     "word_count": 1928
-  },
-  {
-    "date": "2026-07-31",
-    "filename": "2026-07-31.html",
-    "top_stories": 3,
-    "overnight_items": 4,
-    "word_count": 1929
   }
 ]
